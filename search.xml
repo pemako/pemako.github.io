@@ -4,18 +4,19 @@
   
     
     <entry>
-      <title><![CDATA[hexo]]></title>
+      <title><![CDATA[使用hexo搭建博客过程]]></title>
       <url>https://pemako.github.com/2017/01/21/hexo/</url>
       <content type="html"><![CDATA[<p>今天下午折腾了一下博客，终于可以正常的运作了，对整个搭建的过程做一个记录</p>
-<h3 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h3><pre><code>- Mac OS 10.12.2
-- 安装工具使用 brew
-- 使用 hexo 
-- 代码部署到 github 及 coding 两个平台
-</code></pre><h3 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h3><pre><code>1. `brew install node`
-2. `npm install hexo-cli -g`
-3. `npm install hexo -g --no-optional` 在 mac 出现的问题
-4. `hexo init you_project_name`
-5. `配置 _config.yml 进行部署`
+<h3 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h3><pre><code>`Mac OS 10.12.2`
+`安装工具使用 brew`
+`使用 hexo`
+`代码部署到 github 及 coding 两个平台`
+</code></pre><h3 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h3><pre><code>```
+1. brew install node
+2. npm install hexo-cli -g
+3. npm install hexo -g --no-optional 在 mac 出现的问题
+4. hexo init you_project_name
+5. 配置 _config.yml 进行部署
     delpoy:
         type: git
         repo:
@@ -24,10 +25,11 @@
         branch: master
 6. 进行 hexo g -d 进行生成静态文件部署
 7. 如出现权限等问题，可能是 public key 没有配置，可以进行生成公钥
-    - `ssh-keygen -t rsa -b 4096 -C &quot;you_github_email@mail.com&quot;`
-    - 在 ~/.ssh/ 目录下生成id_rsa.pub id_rsa 文件 复制 id_rsa.pub中的内容
-    - Github 填写在 https://github.com/settings/keys相应位置即可
-    - Coding 填写到 https://coding.net/u/you_name/p/you_project_name/setting/deploy_key 相应位置
+    ssh-keygen -t rsa -b 4096 -C &quot;you_github_email@mail.com&quot;
+    在 ~/.ssh/ 目录下生成id_rsa.pub id_rsa 文件 复制 id_rsa.pub中的内容
+    Github 填写在 https://github.com/settings/keys相应位置即可
+    Coding 填写到 https://coding.net/u/you_name/p/you_project_name/setting/deploy_key 相应位置
+```        
 </code></pre>]]></content>
     </entry>
     

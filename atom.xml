@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://pemako.github.com/"/>
-  <updated>2017-01-21T14:57:13.000Z</updated>
+  <updated>2017-01-21T15:02:38.000Z</updated>
   <id>https://pemako.github.com/</id>
   
   <author>
@@ -16,18 +16,20 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>hexo</title>
+    <title>使用hexo搭建博客过程</title>
     <link href="https://pemako.github.com/2017/01/21/hexo/"/>
     <id>https://pemako.github.com/2017/01/21/hexo/</id>
     <published>2017-01-21T14:42:11.000Z</published>
-    <updated>2017-01-21T14:57:13.000Z</updated>
+    <updated>2017-01-21T15:02:38.000Z</updated>
     
     <summary type="html">
     
       &lt;p&gt;今天下午折腾了一下博客，终于可以正常的运作了，对整个搭建的过程做一个记录&lt;/p&gt;
-&lt;h3 id=&quot;环境说明&quot;&gt;&lt;a href=&quot;#环境说明&quot; class=&quot;headerlink&quot; title=&quot;环境说明&quot;&gt;&lt;/a&gt;环境说明&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;- Mac OS 1
+&lt;h3 id=&quot;环境说明&quot;&gt;&lt;a href=&quot;#环境说明&quot; class=&quot;headerlink&quot; title=&quot;环境说明&quot;&gt;&lt;/a&gt;环境说明&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;`Mac OS 10
     
     </summary>
+    
+      <category term="hexo" scheme="https://pemako.github.com/categories/hexo/"/>
     
     
       <category term="hexo" scheme="https://pemako.github.com/tags/hexo/"/>
