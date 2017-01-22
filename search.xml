@@ -4,6 +4,47 @@
   
     
     <entry>
+      <title><![CDATA[NPM包管理器使用]]></title>
+      <url>https://pemako.github.com/2017/01/22/npm-package-manage/</url>
+      <content type="html"><![CDATA[<p>OSX use <code>brew install node</code> 目前安装的版本是 <code>v7.4.0</code>。安装完成 <code>nodejs</code> 后就可以使用 <code>npm</code> 进行相应的包管理。</p>
+<h3 id="Updating-npm"><a href="#Updating-npm" class="headerlink" title="Updating npm"></a>Updating npm</h3><p>如有需要把 <code>npm</code> 更新为最新的版本可以使用 <code>npm install npm@latest -g</code></p>
+<h3 id="Installing-package"><a href="#Installing-package" class="headerlink" title="Installing package"></a>Installing package</h3><p><code>npm install &lt;package_name&gt;</code><br>这个命令会在当前的目录下创建 <code>node_modules</code> 文件夹。如果需要全局安装包的话加上 <code>-g</code> 参数 </p>
+<h3 id="Using-a-package-json"><a href="#Using-a-package-json" class="headerlink" title="Using a package.json"></a>Using a package.json</h3><p>通过 <code>package.json</code> 来管理本地安装的 npm packages 是一种最好的方式。</p>
+<h4 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h4><p>最小版本的 <code>package.json</code> 必须包含 <code>name</code>和<code>version</code> </p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby"> name</span></div><div class="line">    -<span class="ruby"> 允许全部小写</span></div><div class="line">    -<span class="ruby"> 单词中不能有空格</span></div><div class="line">    -<span class="ruby"> 允许破折号和下滑下</span></div><div class="line">-<span class="ruby"> version</span></div><div class="line">    -<span class="ruby"> 版本的为 x.x.x</span></div><div class="line">    -<span class="ruby"> 遵循语义版本，如一个新版创建的时候应为 <span class="number">1.0</span>.<span class="number">0</span></span></div><div class="line">    </div><div class="line">For example:</div><div class="line">&#123;</div><div class="line">    "name": "my-awesome-package",</div><div class="line">    "version": "1.0.0"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Creating-a-package-json"><a href="#Creating-a-package-json" class="headerlink" title="Creating a package.json"></a>Creating a package.json</h4><p><code>npm init [--yes|-y]</code> 创建默认的 <code>package.json</code></p>
+<h3 id="Uninstall-packages"><a href="#Uninstall-packages" class="headerlink" title="Uninstall packages"></a>Uninstall packages</h3><p>删除 node_modules 中的模块可以直接是用 <code>npm uninstall &lt;package&gt;</code></p>
+<p>删除 package.json 中的依赖可以使用 <code>npm uninstall --save &lt;package&gt;</code></p>
+<p>注意：如果安装的包的是<code>devDependency</code>版本 <code>--save</code>不起作用的情况下可以使用 <code>--save-dev</code> unistall it.</p>
+<h3 id="Publishing-npm-packages"><a href="#Publishing-npm-packages" class="headerlink" title="Publishing npm packages"></a>Publishing npm packages</h3><ol>
+<li>必须在 <code>https://www.nmpjs.com/</code> 进行注册过</li>
+<li><code>npm init</code> 创建一个 package.json</li>
+<li>创建对应的 <code>index.js</code> 文件 内容如下</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">exports.printMsg = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"This is a message from the demo package"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><code>npm adduser</code></li>
+<li><code>npm login</code></li>
+<li><code>npm publish</code> 发布完成可以在<code>https://www.nmpjs.com</code> 中查看</li>
+<li>使用刚发布的包 <code>npm install npm-demo-pkg424</code></li>
+<li><code>echo &quot;var demo = require(&quot;npm-demo-pkg424&quot;); demo.printMsg();&quot;&gt; test.js &amp;&amp; node test.js</code></li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><h4 id="Semver-for-publishers"><a href="#Semver-for-publishers" class="headerlink" title="Semver for publishers"></a>Semver for publishers</h4><p>如果你的版本将要发布供其他人使用的话，版本应该从 <code>1.0.0</code> 开始。<br>当你的包有需要升级时，按照下面的原则修改版本号</p>
+<ol>
+<li>Bug fixes and other minor changes: Patch release 修改最后一位版本号 eg. <code>1.0.1</code></li>
+<li>New features which don’t break existing feature: Minor release, 修改中间版本号 eg.<code>1.1.0</code></li>
+<li>Changes which break backwards compatibility: Major relese,修改第一位版本号 eg. <code>2.0.0</code></li>
+</ol>
+<h4 id="Semver-for-consumers"><a href="#Semver-for-consumers" class="headerlink" title="Semver for consumers"></a>Semver for consumers</h4><p>作为使用者你必须指定需要更新的版本的。如果你想使用一个包的版本为 <code>1.0.4</code> 必须如下进行严格指定</p>
+<ol>
+<li>Patch release: <code>1.0</code> or <code>1.0.x</code> or <code>~1.0.4</code></li>
+<li>Minor release: <code>1</code> or <code>1.x</code> or <code>^1.0.4</code></li>
+<li>Major release: <code>*</code> or <code>x</code></li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[生成指定时间内的时间列表]]></title>
       <url>https://pemako.github.com/2017/01/21/python-gen-datalist/</url>
       <content type="html"><![CDATA[<h2 id="获取从指定开始时间到指定结束时间的列表"><a href="#获取从指定开始时间到指定结束时间的列表" class="headerlink" title="获取从指定开始时间到指定结束时间的列表"></a>获取从指定开始时间到指定结束时间的列表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">date_range1</span><span class="params">(start, end)</span>:</span></div><div class="line">    days = (datetime.datetime.strptime(end, <span class="string">"%Y%m%d"</span>) - datetime.datetime.strptime(start, <span class="string">"%Y%m%d"</span>)).days + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> [datetime.datetime.strftime(datetime.datetime.strptime(start, <span class="string">"%Y%m%d"</span>) + datetime.timedelta(i), <span class="string">"%Y%m%d"</span>) <span class="keyword">for</span> i <span class="keyword">in</span> xrange(days)]</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">date_range2</span><span class="params">(beginDate, endDate)</span>:</span></div><div class="line">    dates = []</div><div class="line">    dt = datetime.datetime.strptime(beginDate, <span class="string">"%Y%m%d"</span>)</div><div class="line">    date = beginDate[:]</div><div class="line">    <span class="keyword">while</span> date &lt;= endDate:</div><div class="line">        dates.append(date)</div><div class="line">        dt = dt + datetime.timedelta(<span class="number">1</span>)</div><div class="line">        date = dt.strftime(<span class="string">"%Y%m%d"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> dates</div><div class="line"></div><div class="line">dt_list = date_range1(<span class="string">'20161218'</span>, <span class="string">'20161220'</span>)</div><div class="line">// [<span class="string">'20161218'</span>, <span class="string">'20161219'</span>, <span class="string">'20161220'</span>]</div></pre></td></tr></table></figure>
