@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://pemako.github.com/"/>
-  <updated>2017-01-23T13:38:15.000Z</updated>
+  <updated>2017-01-23T13:48:55.000Z</updated>
   <id>https://pemako.github.com/</id>
   
   <author>
@@ -16,11 +16,32 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>这对父子</title>
+    <link href="https://pemako.github.com/2017/01/23/%E8%BF%99%E5%AF%B9%E7%88%B6%E5%AD%90/"/>
+    <id>https://pemako.github.com/2017/01/23/这对父子/</id>
+    <published>2017-01-23T13:41:29.000Z</published>
+    <updated>2017-01-23T13:48:55.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是关于自尊、自爱、自信、自强、自信、自律、信任、价值、爱国、礼貌、知识、内在美，最接地气的理解。&lt;br&gt;对话内容有相应的省略，原文请查看文章底部。&lt;/p&gt;
+&lt;h2 id=&quot;自尊&quot;&gt;&lt;a href=&quot;#自尊&quot; class=&quot;headerlink&quot; title=&quot;自尊&quot;&gt;&lt;/
+    
+    </summary>
+    
+      <category term="生活" scheme="https://pemako.github.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="生活" scheme="https://pemako.github.com/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
+  
+  <entry>
     <title>golang-overvies</title>
     <link href="https://pemako.github.com/2017/01/23/golang-overvies/"/>
     <id>https://pemako.github.com/2017/01/23/golang-overvies/</id>
     <published>2017-01-23T13:34:36.000Z</published>
-    <updated>2017-01-23T13:38:15.000Z</updated>
+    <updated>2017-01-23T13:39:34.000Z</updated>
     
     <summary type="html">
     
@@ -29,6 +50,8 @@
 &lt;li&gt;&lt;p&gt;&lt;code
     
     </summary>
+    
+      <category term="golang" scheme="https://pemako.github.com/categories/golang/"/>
     
     
       <category term="golang" scheme="https://pemako.github.com/tags/golang/"/>
