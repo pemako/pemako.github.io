@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title><![CDATA[composer-overview.md]]></title>
+      <url>https://pemako.github.com/2017/01/25/composer-overview-md/</url>
+      <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Composer 是 PHP 的一个依赖管理工具。它允许你声明项目所依赖的代码库，他会在你的项目中为你安装指明的依赖。</p>
+<p>Composer 不是一个包管理器。它涉及 “packages” 和 “libraries”，但它在每个项目的基础上进行管理，在你项目的某个目录中<br>(eg. vender) 进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。</p>
+<p>Composer 受到 node 的 <code>npm</code> 和 ruby的 <code>bundler</code>的强烈启发。</p>
+<p><code>Suppose</code>:</p>
+<pre><code>1. 你有一个项目依赖若干个库文件
+2. 其中一些库依赖于其它的库
+</code></pre><p><code>Composer</code>:</p>
+<pre><code>1. 声明你所依赖的库文件
+2. Composer 会找出那个版本的包需要安装，并按照它们（将它们下载到你的项目中）
+</code></pre><h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><pre><code>1. PHP 5.3.2+
+2. 一些敏感的 PHP 设置和编译标志也是必须的，但对于任何不兼容项安装程序都会抛出警告
+</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>由于本人使用 OSX 系统软件安装管理基本上都是采用`homebrew`进行。所有这里仅列出 OSX 下安装方式
+其余详细信息[请参考](https://getcomposer.org/doc/00-intro.md)
+</code></pre><h2 id="声明依赖关系"><a href="#声明依赖关系" class="headerlink" title="声明依赖关系"></a>声明依赖关系</h2>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[autologin]]></title>
       <url>https://pemako.github.com/2017/01/24/autologin/</url>
       <content type="html"><![CDATA[<p>在 Linux 下进行远程登陆的时候，总是要进行 ssh 输入账号，密码等操作，比较繁琐。<br>而且在工作中总是会先登陆到公司的中间机器(跳板机)然后才能登陆线上的机器，每次操作更加繁琐。<br>写了一个通过配置可以免输密码，直接到达指定机器并执行相应的指令。理论上可以配置 N 个中间机器。<br><a href="https://github.com/pemako/LearnShell/blob/master/lib/autologin" target="_blank" rel="external">autologin Git源码</a></p>
