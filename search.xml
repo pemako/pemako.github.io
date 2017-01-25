@@ -10,16 +10,21 @@
 <p>Composer 不是一个包管理器。它涉及 “packages” 和 “libraries”，但它在每个项目的基础上进行管理，在你项目的某个目录中<br>(eg. vender) 进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。</p>
 <p>Composer 受到 node 的 <code>npm</code> 和 ruby的 <code>bundler</code>的强烈启发。</p>
 <p><code>Suppose</code>:</p>
-<pre><code>1. 你有一个项目依赖若干个库文件
-2. 其中一些库依赖于其它的库
-</code></pre><p><code>Composer</code>:</p>
-<pre><code>1. 声明你所依赖的库文件
-2. Composer 会找出那个版本的包需要安装，并按照它们（将它们下载到你的项目中）
-</code></pre><h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><pre><code>1. PHP 5.3.2+
-2. 一些敏感的 PHP 设置和编译标志也是必须的，但对于任何不兼容项安装程序都会抛出警告
-</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>由于本人使用 OSX 系统软件安装管理基本上都是采用`homebrew`进行。所有这里仅列出 OSX 下安装方式
-其余详细信息[请参考](https://getcomposer.org/doc/00-intro.md)
-</code></pre><h2 id="声明依赖关系"><a href="#声明依赖关系" class="headerlink" title="声明依赖关系"></a>声明依赖关系</h2>]]></content>
+<ol>
+<li>你有一个项目依赖若干个库文件</li>
+<li>其中一些库依赖于其它的库</li>
+</ol>
+<p><code>Composer</code>:</p>
+<ol>
+<li>声明你所依赖的库文件</li>
+<li>Composer 会找出那个版本的包需要安装，并按照它们（将它们下载到你的项目中）</li>
+</ol>
+<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><ol>
+<li>PHP 5.3.2+</li>
+<li>一些敏感的 PHP 设置和编译标志也是必须的，但对于任何不兼容项安装程序都会抛出警告</li>
+</ol>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>由于本人使用 OSX 系统软件安装管理基本上都是采用<code>homebrew</code>进行。所有这里仅列出 OSX 下安装方式<br>其余详细信息<a href="https://getcomposer.org/doc/00-intro.md" target="_blank" rel="external">请参考</a>。</p>
+<h2 id="声明依赖关系"><a href="#声明依赖关系" class="headerlink" title="声明依赖关系"></a>声明依赖关系</h2>]]></content>
     </entry>
     
     <entry>
