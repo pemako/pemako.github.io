@@ -11,13 +11,13 @@
 <li>声明你所依赖的库文件</li>
 <li>Composer 会找出那个版本的包需要安装，并按照它们（将它们下载到你的项目中）</li>
 </ol>
-<h2 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h2><ol>
+<h2 id="①-系统要求"><a href="#①-系统要求" class="headerlink" title="① 系统要求"></a>① 系统要求</h2><ol>
 <li>PHP 5.3.2+</li>
 <li>一些敏感的 PHP 设置和编译标志也是必须的，但对于任何不兼容项安装程序都会抛出警告</li>
 </ol>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>由于本人使用 OSX 系统软件安装管理基本上都是采用<a href="http://brew.sh/" target="_blank" rel="external"><code>homebrew</code></a>进行。所有这里仅列出 OSX 下安装方式其余详细信息<a href="https://getcomposer.org/doc/00-intro.md" target="_blank" rel="external">请参考</a>。</p>
+<h2 id="②-安装"><a href="#②-安装" class="headerlink" title="② 安装"></a>② 安装</h2><p>由于本人使用 OSX 系统软件安装管理基本上都是采用<a href="http://brew.sh/" target="_blank" rel="external"><code>homebrew</code></a>进行。所有这里仅列出 OSX 下安装方式其余详细信息<a href="https://getcomposer.org/doc/00-intro.md" target="_blank" rel="external">请参考</a>。</p>
 <p>直接运行 <code>brew install composer</code></p>
-<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="1-composer-json-项目安装"><a href="#1-composer-json-项目安装" class="headerlink" title="1. composer.json: 项目安装"></a>1. <code>composer.json</code>: 项目安装</h3><p>使用 composer 的时候需要在你的项目目录下面包含 <code>composer.json</code> 文件。该文件包含了项目的依赖和其它的一些自定义数据，文件采用<a href="http://json.org/json-zh.html" target="_blank" rel="external"><code>JSON format</code></a>编写。</p>
+<h2 id="③-基本用法"><a href="#③-基本用法" class="headerlink" title="③ 基本用法"></a>③ 基本用法</h2><h4 id="1-composer-json-项目安装"><a href="#1-composer-json-项目安装" class="headerlink" title="1. composer.json: 项目安装"></a>1. <code>composer.json</code>: 项目安装</h4><p>使用 composer 的时候需要在你的项目目录下面包含 <code>composer.json</code> 文件。该文件包含了项目的依赖和其它的一些自定义数据，文件采用<a href="http://json.org/json-zh.html" target="_blank" rel="external"><code>JSON format</code></a>编写。</p>
 <h4 id="2-require-key"><a href="#2-require-key" class="headerlink" title="2. require key"></a>2. <code>require key</code></h4><p>在<code>composer.json</code> 文件中你需要指明项目依赖哪些包，使用 <code>require</code> key。格式如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"require"</span>: &#123;</div><div class="line">        <span class="attr">"monolog/monolog"</span>: <span class="string">"1.0.*"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="3-包名称"><a href="#3-包名称" class="headerlink" title="3. 包名称"></a>3. 包名称</h4><p>包名称由作者和项目名称构成。通常会产生相同的项目名称，而作者名称很好的解决了命名冲突的问题。它允许两个不同的人创建同样名为<code>json</code> 的库，而之后它们将被命名为<code>igorw/json</code> 和<code>seldaek/json</code>。</p>
