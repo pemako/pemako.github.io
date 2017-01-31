@@ -79,7 +79,60 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$log = <span class="keyword">new</span> Monolog\Logger(<span class="string">'name'</span>);</div><div class="line">$log-&gt;pushHandler(<span class="keyword">new</span> Monolog\Handler\StreamHandler(<span class="string">'app.log'</span>, Monolog\Logger::WARNING));</div><div class="line"></div><div class="line">$Log-&gt;addWarning(<span class="string">'Foo'</span>);</div></pre></td></tr></table></figure>
 <p>你可以在<code>composer.json</code> 的<code>autoload</code> 字段中增加自己的<code>autoloader</code>。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"autoload"</span>: &#123;</div><div class="line">        <span class="attr">"psr-4"</span>: &#123;<span class="attr">"Acme\\"</span>: <span class="string">"src/"</span>&#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
+<p><code>Composer</code> 将注册一个<code>PSR-4</code> autoloader 到<code>Acme</code> 命名空间。</p>
+<p>你可以定义一个从命名空间到目录的映射。此时 <code>src</code> 会在你项目的根目录，与 <code>vendor</code> 文件夹同级。例如 <code>src/Foo.php</code> 文件应该包含 <code>Acme\Foo</code> 类。</p>
+<p>添加<code>autoload</code> 字段后，你应该再次运行<code>install</code> 命令来生成<code>vendor/autoload.php</code> 文件。</p>
+<p>引用这个文件也将返回 autoloader 的实例，你可以将包含调用的返回值存储在变量中，并添加更多的命名空间。这对于在一个测试套件中自动加载类文件是非常有用的，例如。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$loader = reuqire_once(<span class="string">'vendor/autoload.php'</span>);</div><div class="line">$loader-&gt;add(<span class="string">'Acme\\Test\\'</span>, <span class="keyword">__DIR__</span>);</div></pre></td></tr></table></figure>
+<p><code>注意：</code> <code>Composer</code> 提供了自己的 <code>autoloader</code>。如果你不想使用它，你可以仅仅引入 <code>vendor/composer/autoload_*.php</code> 文件，它返回一个关联数组，你可以通过这个关联数组配置自己的 <code>autoloader</code>。</p>
+<h2 id="④-库-资源包"><a href="#④-库-资源包" class="headerlink" title="④  库 (资源包)"></a>④  库 (资源包)</h2><h3 id="1-每一个项目都是一个包"><a href="#1-每一个项目都是一个包" class="headerlink" title="1. 每一个项目都是一个包"></a>1. 每一个项目都是一个包</h3><p>只要你有一个 <code>composer.json</code> 文件在目录中，那么整个目录就是一个包。当你添加一个 <code>require</code> 到项目中，你就是在创建一个依赖于其它库的包。你的项目和库之间唯一的区别是，你的项目是一个没有名字的包。</p>
+<p>为了使它成为一个可安装的包，你需要给它一个名称。你可以通过 <code>composer.json</code> 中的 <code>name</code> 来定义：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"acme/hello-world"</span>,</div><div class="line">    <span class="attr">"require"</span> : &#123;</div><div class="line">        <span class="attr">"monolog/monolog"</span>: <span class="string">"1.0.*"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这种情况下项目的名称为<code>acme/hello-world</code>,其中<code>acme</code> 是供应商的名称。报名不区分大小写，但是管理是使用小写字母，并用连接符作为单词的分割。</p>
+<h3 id="2-平台软件包"><a href="#2-平台软件包" class="headerlink" title="2. 平台软件包"></a>2. 平台软件包</h3><p><code>Composer</code> 将那些已经安装在系统上，但并不是由<code>Composer</code> 安装的包视为一个虚拟的平台软件包。这包括<code>PHP</code>本身,<code>PHP</code>扩展和一些系统库。</p>
+<ul>
+<li><code>php</code> 表示用户的<code>PHP</code>版本要求，你可以对其作出限制。例如<code>&gt;=5.4.0</code>。如果需要64位版本的 PHP，你可以使用<code>php-64bit</code> 进行限制。</li>
+<li><code>hhvm</code> 代表的是 HHVM（也就是 HipHop Virtual Machine） 运行唤醒的版本，并且允许你设置一个版本限制，eg. <code>&gt;=2.3.3</code></li>
+<li><code>ext-&lt;name&gt;</code> 可以帮你指定需要的 PHP 扩展（包括核心扩展）。通常 PHP 拓展的版本可以是不一致的，将它们的版本约束为 <code>*</code> 是一个不错的主意。一个 PHP 扩展包的例子：包名可以写成 <code>ext-gd</code> </li>
+<li><p><code>lib-&lt;name&gt;</code> 允许对 PHP 库的版本进行限制。</p>
+<p>  以下是可供使用的名称：curl、iconv、icu、libxml、openssl、pcre、uuid、xsl</p>
+</li>
+</ul>
+<p>你可以使用 <code>composer show --platform</code> 命令来获取可用的平台软件包的列表。</p>
+<h3 id="3-指明版本"><a href="#3-指明版本" class="headerlink" title="3. 指明版本"></a>3. 指明版本</h3><p>你需要一些方法来指明自己开发的包的版本，当你在 <code>Packagist</code> 上发布自己的包，它能够从 <code>VCS (git, svn, hg)</code> 的信息推断出包的版本，因此你不必手动指明版本号，并且也不建议这样做。请查看<a href="http://docs.phpcomposer.com/02-libraries.html#Tags" target="_blank" rel="external">标签</a> 和 <a href="http://docs.phpcomposer.com/02-libraries.html#Branches" target="_blank" rel="external">分支</a> 来了解版本号是如何被提取的。</p>
+<p>如果你想要手动创建并且真的要明确指定它，你只需要添加一个 <code>version</code> 字段:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "version": "1.0.0"</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 注意： 应该尽量避免手动设置版本号，因为标签的值必须与标签名相匹配。</div></pre></td></tr></table></figure>
+<h4 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h4><p>对于每一个看起来像版本号的标签，都会相应的创建一个包的版本。它应该符合 ‘X.Y.Z’ 或者 ‘vX.Y.Z’ 的形式，<code>-patch</code>、<code>-alpha</code>、<code>-beta</code> 或 <code>-RC</code> 这些后缀是可选的。在后缀之后也可以再跟上一个数字。</p>
+<p>下面是有效的标签名称的几个例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1.0.0</div><div class="line">v1.0.0</div><div class="line">v.10.5-RC1</div><div class="line">v4.4.4beta2</div><div class="line">v2.0.0-alpha</div><div class="line">v2.0.4-p1</div></pre></td></tr></table></figure>
+<p><code>注意：</code>即使你的标签带有前缀<code>V</code>，由于需要<code>require</code> 一个版本的约束时不需要前缀的，因此<code>V</code>将被忽略（eg. <code>V1.0.0</code>将创建<code>1.0.0</code>版本）。</p>
+<h4 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h4><p>对于每一个分支，都会相应的创建一个包的开发版本。如果分支名看起来像一个版本号，那么将创建一个如同<code>{分支名}-dev</code>。例如一个分支<code>2.0</code>将产生一个<code>2.0.x-dev</code> 包版本(加入了<code>.x</code>是出于技术的原因，以确保它被识别为一个分支，而<code>2.0.x</code> 的分支名称也是允许的，它同样会转换为<code>2.0.x-dev</code>)。如果分支名看起来不像一个版本号，它将会创建<code>dev-{分支名}</code>形式的版本号。例如<code>master</code> 将产生一个<code>dev-master</code> 的版本号。</p>
+<p>下面是版本分支名称的一些示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.x</div><div class="line">1.0(equals 1.0.x)</div><div class="line">1.1.x</div></pre></td></tr></table></figure></p>
+<p><code>注意：</code>当你安装一个新的版本时，将会自动从<code>source</code> 中拉取。</p>
+<h4 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h4><p>它表示一个包版本的别名。例如，你可以为 <code>dev-master</code> 设置别名 <code>1.0.x-dev</code>，这样就可以通过 <code>require 1.0.x-dev</code> 来得到 <code>dev-master</code> 版本的包。</p>
+<p>详细请查看<a href="http://docs.phpcomposer.com/articles/aliases.html" target="_blank" rel="external">别名</a></p>
+<h3 id="4-锁文件"><a href="#4-锁文件" class="headerlink" title="4. 锁文件"></a>4. 锁文件</h3><p>如果你愿意，可以在你的项目中提交 <code>composer.lock</code> 文件。他将帮助你的团队始终针对同一个依赖版本进行测试。任何时候，这个锁文件都只对于你的项目产生影响。</p>
+<p>如果你不想提交锁文件，并且你正在使用 Git，那么请将它添加到 .gitignore 文件中。</p>
+<h3 id="5-发布到-VCS-Git"><a href="#5-发布到-VCS-Git" class="headerlink" title="5. 发布到 VCS/Git"></a>5. 发布到 VCS/Git</h3><p>一旦你有一个包含<code>composer.json</code>文件的库存储在线上版本控制系统（例如:Git）你的库就可以被<code>Composer</code> 所安装。在这个例子中，我盟将<code>acme/hello-world</code> 库发布到 <code>GitHub</code> 上的<code>github.com/username/hello-world</code> 中。</p>
+<p>现在测试这个<code>acme/hello-world</code>包，我们在本地创建一个新的项目。命名为<code>acme/blog</code>。此博客依赖<code>acme/hello-world</code>，而后者又依赖<code>monolog/monolog</code>。我们可以在某处创建一个新的<code>blog</code> 文件夹完成，并且需要包含<code>composer.json</code> 文件:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"acme/hello-world"</span>,</div><div class="line">    <span class="attr">"require"</span>: &#123;</div><div class="line">        <span class="attr">"acme/hello-world"</span>: <span class="string">"dev-master"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个例子中<code>name</code> 不是必须的，因为我们并不想将它发布为一个库。在这里为<code>composer.json</code> 文件添加描述。</p>
+<p>现在我们需要告诉我们的应用，在哪里可以找到<code>hello-world</code> 的依赖。为此我们需要在<code>composer.json</code> 中添加<code>repositories</code> 来源声明：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"acme/hello-world"</span>,</div><div class="line">    <span class="attr">"repositories"</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"type"</span>: <span class="string">"vcs"</span>,</div><div class="line">            <span class="attr">"url"</span>: <span class="string">"https://github.com/username/hello-world"</span></div><div class="line">        &#125;</div><div class="line">    ],</div><div class="line">    <span class="attr">"require"</span>: &#123;</div><div class="line">        <span class="attr">"acme/hello-world"</span>: <span class="string">"dev-master"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这就是全部了。你现在可以使用<code>Composer</code> 的 <code>install</code> 命令来安装你的依赖包了！</p>
+<p><code>小结</code> 任何含有<code>composer.json</code>的<code>Git</code>、<code>SVN</code>、<code>HG</code> 存储库，都可以通过<code>require</code> 字段指定”包来源” 和”声明依赖”来添加到你的项目中。</p>
+<h3 id="6-发布到-packagist"><a href="#6-发布到-packagist" class="headerlink" title="6. 发布到 packagist"></a>6. 发布到 packagist</h3><p>关于如何使用<code>Github</code>、<code>Composer</code>、<code>Packagist</code> 管理公开的<code>PHP</code> 包 <a href="https://rivsen.github.io/post/how-to-publish-package-to-packagist-using-github-and-composer-step-by-step" target="_blank" rel="external">请参考</a></p>
+<p>具体步骤可以分为以下几步:</p>
+<ol>
+<li>在<code>Github</code>创建一个<code>hello-wolrd</code>项目，<code>git@github.com:pemako/hello-world.git</code></li>
+<li><code>git clone git@github.com:pemako/hello-world.git</code> 到本地</li>
+<li>使用<code>composer init</code> 进行创建<code>composer.json</code> 文件，添加<code>readme.md</code> 文件</li>
+<li><code>git add --all; git commit -m&#39;init hello-world&#39;； git push origin master</code></li>
+<li>使用<code>GitHub</code>登陆<code>https://packagist.org</code> 点击最上面导航的<code>Submit</code>按钮</li>
+<li>在<code>Repository URL (Git/Svn/Hg)</code> 下面的输入框中填写具体的<code>Git</code>地址，点击<code>check</code> 然后<code>submit</code> 即可完成发布</li>
+</ol>
+<h2 id="⑤-命令行"><a href="#⑤-命令行" class="headerlink" title="⑤  命令行"></a>⑤  命令行</h2><p>要时常更新<code>composer</code> 命令，所有的命令具体使用可以通过<code>composer 命令 -h</code> 进行查看</p>
+<h2 id="⑥-composer-json-架构"><a href="#⑥-composer-json-架构" class="headerlink" title="⑥  composer.json 架构"></a>⑥  <code>composer.json</code> 架构</h2>]]></content>
     </entry>
     
     <entry>
