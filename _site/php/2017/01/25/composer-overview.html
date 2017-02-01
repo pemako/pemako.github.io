@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Composer使用总结 - pemako</title>
+    <meta name="description" content="Composer使用总结">
+    <meta name="keywords" content="php, composer">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/linux/2017/01/24/linux-autologin.html" title="Linux实现自动登陆远程机器" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Composer使用总结 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h1 id="简介">简介</h1>
+
+<p>Composer 是 PHP 的一个依赖管理工具。它允许你声明项目所依赖的代码库，他会在你的项目中为你安装指明的依赖。</p>
+
+<p>Composer 不是一个包管理器。它涉及 “packages” 和 “libraries”，但它在每个项目的基础上进行管理，在你项目的某个目录中
+(eg. vender) 进行安装。默认情况下它不会在全局安装任何东西。因此，这仅仅是一个依赖管理。</p>
+
+<p>Composer 受到 node 的 <code class="highlighter-rouge">npm</code> 和 ruby的 <code class="highlighter-rouge">bundler</code>的强烈启发。</p>
+
+<p><code class="highlighter-rouge">Suppose</code>:</p>
+
+<ol>
+  <li>你有一个项目依赖若干个库文件</li>
+  <li>其中一些库依赖于其它的库</li>
+</ol>
+
+<p><code class="highlighter-rouge">Composer</code>:</p>
+
+<ol>
+  <li>声明你所依赖的库文件</li>
+  <li>Composer 会找出那个版本的包需要安装，并按照它们（将它们下载到你的项目中）</li>
+</ol>
+
+<h2 id="-系统要求">① 系统要求</h2>
+
+<ol>
+  <li>PHP 5.3.2+</li>
+  <li>一些敏感的 PHP 设置和编译标志也是必须的，但对于任何不兼容项安装程序都会抛出警告</li>
+</ol>
+
+<h2 id="-安装">② 安装</h2>
+
+<p>由于本人使用 OSX 系统软件安装管理基本上都是采用<a href="http://brew.sh/"><code class="highlighter-rouge">homebrew</code></a>进行。所有这里仅列出 OSX 下安装方式其余详细信息<a href="https://getcomposer.org/doc/00-intro.md">请参考</a>。</p>
+
+<p>直接运行 <code class="highlighter-rouge">brew install composer</code></p>
+
+<h2 id="-基本用法">③ 基本用法</h2>
+
+<h4 id="1-composerjson-项目安装">1. <code class="highlighter-rouge">composer.json</code>: 项目安装</h4>
+
+<p>使用 composer 的时候需要在你的项目目录下面包含 <code class="highlighter-rouge">composer.json</code> 文件。该文件包含了项目的依赖和其它的一些自定义数据，文件采用<a href="http://json.org/json-zh.html"><code class="highlighter-rouge">JSON format</code></a>编写。</p>
+
+<h4 id="2-require-key">2. <code class="highlighter-rouge">require key</code></h4>
+
+<p>在<code class="highlighter-rouge">composer.json</code> 文件中你需要指明项目依赖哪些包，使用 <code class="highlighter-rouge">require</code> key。格式如下：</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"monolog/monolog"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.*"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h4 id="3-包名称">3. 包名称</h4>
+
+<p>包名称由作者和项目名称构成。通常会产生相同的项目名称，而作者名称很好的解决了命名冲突的问题。它允许两个不同的人创建同样名为<code class="highlighter-rouge">json</code> 的库，而之后它们将被命名为<code class="highlighter-rouge">igorw/json</code> 和<code class="highlighter-rouge">seldaek/json</code>。</p>
+
+<p>这里我们需要引入<a href="https://packagist.org/packages/monolog/monolog"><code class="highlighter-rouge">monolog /monolog</code></a>，作者和项目名称相同，对于一个具有唯一名称的项目，推荐这么做。</p>
+
+<p><code class="highlighter-rouge">注: 这里把作者理解为供应商(vendor)</code></p>
+
+<h4 id="4-包版本">4. 包版本</h4>
+
+<p>版本约束可以用一下不同的方式指定</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>实例</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>确切版本号</td>
+      <td><code class="highlighter-rouge">1.0.2</code></td>
+      <td>指定明确的版本号</td>
+    </tr>
+    <tr>
+      <td>范围</td>
+      <td><code class="highlighter-rouge">&gt;=1.0</code> <code class="highlighter-rouge">&gt;=1.0,&gt;2.0</code> <code class="highlighter-rouge">&gt;=1.0,&gt;1.1</code>|<code class="highlighter-rouge">&gt;=1.2</code></td>
+      <td>通过运算符指定有效版本范围可以是自动多个范围用逗号隔开，将被视作 ADN 处理。管道符号|将被视为OR 处理</td>
+    </tr>
+    <tr>
+      <td>通配符</td>
+      <td><code class="highlighter-rouge">1.0.*</code></td>
+      <td>使用同配置指定</td>
+    </tr>
+    <tr>
+      <td>赋值运算符</td>
+      <td><code class="highlighter-rouge">~1.2</code></td>
+      <td>对于遵循语义化版本号的项目非常有用。<code class="highlighter-rouge">~1.2</code>相当于<code class="highlighter-rouge">&gt;=1.2,&lt;2.0</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="5-稳定性">5. 稳定性</h4>
+
+<p>默认情况下只有稳定的发行版本才会被包含。如果你想要获取 RC, beta, alpha or dev 版本，你可以使用<a href="https://getcomposer.org/doc/04-schema.md#package-links">稳定标志</a>。你可以对所有的包做<a href="https://getcomposer.org/doc/04-schema.md#minimum-stability">最小稳定性</a>设置，而不需逐个设置。</p>
+
+<h4 id="6-安装依赖包">6. 安装依赖包</h4>
+
+<p><code class="highlighter-rouge">composer install</code> 会按照<code class="highlighter-rouge">composer.json</code> 文件中指明的依赖进行安装，该命令还会创建一个<code class="highlighter-rouge">composer.lock</code> 文件到你的项目根目录中。</p>
+
+<h4 id="7-锁文件-composerlock">7. 锁文件 <code class="highlighter-rouge">composer.lock</code></h4>
+
+<p>在安装依赖后，<code class="highlighter-rouge">Composer</code>将把安装时确切的版本号列表写入<code class="highlighter-rouge">composer.lock</code> 文件。这将锁定该项目的特定版本。</p>
+
+<p><code class="highlighter-rouge">请把 composer.lock 和 composer.json 加入到你的版本控制中</code></p>
+
+<p>这是非常重要的，因为<code class="highlighter-rouge">install</code> 命令将会监测锁文件是否存在，如果存在，它将下载指定的版本(忽略<code class="highlighter-rouge">composer.json</code> 文件中的定义)</p>
+
+<p>这意味着，任何人建立项目都将下载与指定版本完全相同的依赖。你的持续集成服务器、生产环境、你团队中的其他开发人员、每件事、每个人都使用相同的依赖，从而减轻潜在的错误对部署的影响。即使你独自开发项目，在六个月内重新安装项目时，你也可以放心的继续工作，即使从那时起你的依赖已经发布了许多新的版本。</p>
+
+<p>如果不存在 <code class="highlighter-rouge">composer.lock</code> 文件，<code class="highlighter-rouge">Composer</code> 将读取 <code class="highlighter-rouge">composer.json</code> 并创建锁文件。</p>
+
+<p>这意味着如果你的依赖更新了新的版本，你将不会获得任何更新。此时要更新你的依赖版本请使用 update 命令。这将获取最新匹配的版本（根据你的 composer.json 文件）并将新版本更新进锁文件。</p>
+
+<h4 id="8-packagist">8. Packagist</h4>
+
+<p><a href="https://packagist.org/">packagist</a>是 <code class="highlighter-rouge">Composer</code>的主要资源库。一个<code class="highlighter-rouge">Composer</code> 的库基本上是一个包的源。<code class="highlighter-rouge">Packageist</code> 的目标是成为大家使用库资源的中央存储平台。这意味着你可以<code class="highlighter-rouge">require</code> 哪里的任何包。</p>
+
+<h4 id="9-自动加载">9. 自动加载</h4>
+
+<p>对于库的自动加载信息，<code class="highlighter-rouge">Composer</code> 生成了一个<code class="highlighter-rouge">vendor/autoload.php</code> 文件。引用这个文件得到自动加载的支持。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>require 'vendor/autoload.php';
+</code></pre>
+</div>
+
+<p>这使得你可以很容易的使用第三方代码。例如：如果你的项目依赖 monolog，你就可以像这样开始使用这个类库，并且他们将被自动加载。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>$log = new Monolog\Logger('name');
+$log-&gt;pushHandler(new Monolog\Handler\StreamHandler('app.log', Monolog\Logger::WARNING));
+
+$Log-&gt;addWarning('Foo');
+</code></pre>
+</div>
+
+<p>你可以在<code class="highlighter-rouge">composer.json</code> 的<code class="highlighter-rouge">autoload</code> 字段中增加自己的<code class="highlighter-rouge">autoloader</code>。</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"autoload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"psr-4"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"Acme\\"</span><span class="p">:</span><span class="w"> </span><span class="s2">"src/"</span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><code class="highlighter-rouge">Composer</code> 将注册一个<code class="highlighter-rouge">PSR-4</code> autoloader 到<code class="highlighter-rouge">Acme</code> 命名空间。</p>
+
+<p>你可以定义一个从命名空间到目录的映射。此时 <code class="highlighter-rouge">src</code> 会在你项目的根目录，与 <code class="highlighter-rouge">vendor</code> 文件夹同级。例如 <code class="highlighter-rouge">src/Foo.php</code> 文件应该包含 <code class="highlighter-rouge">Acme\Foo</code> 类。</p>
+
+<p>添加<code class="highlighter-rouge">autoload</code> 字段后，你应该再次运行<code class="highlighter-rouge">install</code> 命令来生成<code class="highlighter-rouge">vendor/autoload.php</code> 文件。</p>
+
+<p>引用这个文件也将返回 autoloader 的实例，你可以将包含调用的返回值存储在变量中，并添加更多的命名空间。这对于在一个测试套件中自动加载类文件是非常有用的，例如。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>$loader = reuqire_once('vendor/autoload.php');
+$loader-&gt;add('Acme\\Test\\', __DIR__);
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">注意：</code> <code class="highlighter-rouge">Composer</code> 提供了自己的 <code class="highlighter-rouge">autoloader</code>。如果你不想使用它，你可以仅仅引入 <code class="highlighter-rouge">vendor/composer/autoload_*.php</code> 文件，它返回一个关联数组，你可以通过这个关联数组配置自己的 <code class="highlighter-rouge">autoloader</code>。</p>
+
+<h2 id="--库-资源包">④  库 (资源包)</h2>
+
+<h3 id="1-每一个项目都是一个包">1. 每一个项目都是一个包</h3>
+
+<p>只要你有一个 <code class="highlighter-rouge">composer.json</code> 文件在目录中，那么整个目录就是一个包。当你添加一个 <code class="highlighter-rouge">require</code> 到项目中，你就是在创建一个依赖于其它库的包。你的项目和库之间唯一的区别是，你的项目是一个没有名字的包。</p>
+
+<p>为了使它成为一个可安装的包，你需要给它一个名称。你可以通过 <code class="highlighter-rouge">composer.json</code> 中的 <code class="highlighter-rouge">name</code> 来定义：</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acme/hello-world"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"require"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"monolog/monolog"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.*"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>在这种情况下项目的名称为<code class="highlighter-rouge">acme/hello-world</code>,其中<code class="highlighter-rouge">acme</code> 是供应商的名称。报名不区分大小写，但是管理是使用小写字母，并用连接符作为单词的分割。</p>
+
+<h3 id="2-平台软件包">2. 平台软件包</h3>
+
+<p><code class="highlighter-rouge">Composer</code> 将那些已经安装在系统上，但并不是由<code class="highlighter-rouge">Composer</code> 安装的包视为一个虚拟的平台软件包。这包括<code class="highlighter-rouge">PHP</code>本身,<code class="highlighter-rouge">PHP</code>扩展和一些系统库。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">php</code> 表示用户的<code class="highlighter-rouge">PHP</code>版本要求，你可以对其作出限制。例如<code class="highlighter-rouge">&gt;=5.4.0</code>。如果需要64位版本的 PHP，你可以使用<code class="highlighter-rouge">php-64bit</code> 进行限制。</li>
+  <li><code class="highlighter-rouge">hhvm</code> 代表的是 HHVM（也就是 HipHop Virtual Machine） 运行唤醒的版本，并且允许你设置一个版本限制，eg. <code class="highlighter-rouge">&gt;=2.3.3</code></li>
+  <li><code class="highlighter-rouge">ext-&lt;name&gt;</code> 可以帮你指定需要的 PHP 扩展（包括核心扩展）。通常 PHP 拓展的版本可以是不一致的，将它们的版本约束为 <code class="highlighter-rouge">*</code> 是一个不错的主意。一个 PHP 扩展包的例子：包名可以写成 <code class="highlighter-rouge">ext-gd</code></li>
+  <li>
+    <p><code class="highlighter-rouge">lib-&lt;name&gt;</code> 允许对 PHP 库的版本进行限制。</p>
+
+    <p>以下是可供使用的名称：curl、iconv、icu、libxml、openssl、pcre、uuid、xsl</p>
+  </li>
+</ul>
+
+<p>你可以使用 <code class="highlighter-rouge">composer show --platform</code> 命令来获取可用的平台软件包的列表。</p>
+
+<h3 id="3-指明版本">3. 指明版本</h3>
+
+<p>你需要一些方法来指明自己开发的包的版本，当你在 <code class="highlighter-rouge">Packagist</code> 上发布自己的包，它能够从 <code class="highlighter-rouge">VCS (git, svn, hg)</code> 的信息推断出包的版本，因此你不必手动指明版本号，并且也不建议这样做。请查看<a href="http://docs.phpcomposer.com/02-libraries.html#Tags">标签</a> 和 <a href="http://docs.phpcomposer.com/02-libraries.html#Branches">分支</a> 来了解版本号是如何被提取的。</p>
+
+<p>如果你想要手动创建并且真的要明确指定它，你只需要添加一个 <code class="highlighter-rouge">version</code> 字段:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">注意：</span><span class="w"> </span><span class="err">应该尽量避免手动设置版本号，因为标签的值必须与标签名相匹配。</span><span class="w">
+</span></code></pre>
+</div>
+
+<h4 id="标签">标签</h4>
+
+<p>对于每一个看起来像版本号的标签，都会相应的创建一个包的版本。它应该符合 ‘X.Y.Z’ 或者 ‘vX.Y.Z’ 的形式，<code class="highlighter-rouge">-patch</code>、<code class="highlighter-rouge">-alpha</code>、<code class="highlighter-rouge">-beta</code> 或 <code class="highlighter-rouge">-RC</code> 这些后缀是可选的。在后缀之后也可以再跟上一个数字。</p>
+
+<p>下面是有效的标签名称的几个例子：</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="mf">1.0</span><span class="err">.</span><span class="mi">0</span><span class="w">
+</span><span class="err">v</span><span class="mf">1.0</span><span class="err">.</span><span class="mi">0</span><span class="w">
+</span><span class="err">v.</span><span class="mf">10.5</span><span class="err">-RC</span><span class="mi">1</span><span class="w">
+</span><span class="err">v</span><span class="mf">4.4</span><span class="err">.</span><span class="mi">4</span><span class="err">beta</span><span class="mi">2</span><span class="w">
+</span><span class="err">v</span><span class="mf">2.0</span><span class="err">.</span><span class="mi">0</span><span class="err">-alpha</span><span class="w">
+</span><span class="err">v</span><span class="mf">2.0</span><span class="err">.</span><span class="mi">4</span><span class="err">-p</span><span class="mi">1</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><code class="highlighter-rouge">注意：</code>即使你的标签带有前缀<code class="highlighter-rouge">V</code>，由于需要<code class="highlighter-rouge">require</code> 一个版本的约束时不需要前缀的，因此<code class="highlighter-rouge">V</code>将被忽略（eg. <code class="highlighter-rouge">V1.0.0</code>将创建<code class="highlighter-rouge">1.0.0</code>版本）。</p>
+
+<h4 id="分支">分支</h4>
+
+<p>对于每一个分支，都会相应的创建一个包的开发版本。如果分支名看起来像一个版本号，那么将创建一个如同<code class="highlighter-rouge"><span class="p">{</span><span class="err">分支名</span><span class="p">}</span><span class="err">-dev</span></code>。例如一个分支<code class="highlighter-rouge">2.0</code>将产生一个<code class="highlighter-rouge">2.0.x-dev</code> 包版本(加入了<code class="highlighter-rouge">.x</code>是出于技术的原因，以确保它被识别为一个分支，而<code class="highlighter-rouge">2.0.x</code> 的分支名称也是允许的，它同样会转换为<code class="highlighter-rouge">2.0.x-dev</code>)。如果分支名看起来不像一个版本号，它将会创建<code class="highlighter-rouge">dev-{分支名}</code>形式的版本号。例如<code class="highlighter-rouge">master</code> 将产生一个<code class="highlighter-rouge">dev-master</code> 的版本号。</p>
+
+<p>下面是版本分支名称的一些示例：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>1.x
+1.0(equals 1.0.x)
+1.1.x
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">注意：</code>当你安装一个新的版本时，将会自动从<code class="highlighter-rouge">source</code> 中拉取。</p>
+
+<h4 id="别名">别名</h4>
+
+<p>它表示一个包版本的别名。例如，你可以为 <code class="highlighter-rouge">dev-master</code> 设置别名 <code class="highlighter-rouge">1.0.x-dev</code>，这样就可以通过 <code class="highlighter-rouge">require 1.0.x-dev</code> 来得到 <code class="highlighter-rouge">dev-master</code> 版本的包。</p>
+
+<p>详细请查看<a href="http://docs.phpcomposer.com/articles/aliases.html">别名</a></p>
+
+<h3 id="4-锁文件">4. 锁文件</h3>
+
+<p>如果你愿意，可以在你的项目中提交 <code class="highlighter-rouge">composer.lock</code> 文件。他将帮助你的团队始终针对同一个依赖版本进行测试。任何时候，这个锁文件都只对于你的项目产生影响。</p>
+
+<p>如果你不想提交锁文件，并且你正在使用 Git，那么请将它添加到 .gitignore 文件中。</p>
+
+<h3 id="5-发布到-vcsgit">5. 发布到 VCS/Git</h3>
+
+<p>一旦你有一个包含<code class="highlighter-rouge">composer.json</code>文件的库存储在线上版本控制系统（例如:Git）你的库就可以被<code class="highlighter-rouge">Composer</code> 所安装。在这个例子中，我盟将<code class="highlighter-rouge">acme/hello-world</code> 库发布到 <code class="highlighter-rouge">GitHub</code> 上的<code class="highlighter-rouge">github.com/username/hello-world</code> 中。</p>
+
+<p>现在测试这个<code class="highlighter-rouge">acme/hello-world</code>包，我们在本地创建一个新的项目。命名为<code class="highlighter-rouge">acme/blog</code>。此博客依赖<code class="highlighter-rouge">acme/hello-world</code>，而后者又依赖<code class="highlighter-rouge">monolog/monolog</code>。我们可以在某处创建一个新的<code class="highlighter-rouge">blog</code> 文件夹完成，并且需要包含<code class="highlighter-rouge">composer.json</code> 文件:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acme/hello-world"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"acme/hello-world"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev-master"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>在这个例子中<code class="highlighter-rouge">name</code> 不是必须的，因为我们并不想将它发布为一个库。在这里为<code class="highlighter-rouge">composer.json</code> 文件添加描述。</p>
+
+<p>现在我们需要告诉我们的应用，在哪里可以找到<code class="highlighter-rouge">hello-world</code> 的依赖。为此我们需要在<code class="highlighter-rouge">composer.json</code> 中添加<code class="highlighter-rouge">repositories</code> 来源声明：</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"acme/hello-world"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"repositories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vcs"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://github.com/username/hello-world"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"acme/hello-world"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dev-master"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>这就是全部了。你现在可以使用<code class="highlighter-rouge">Composer</code> 的 <code class="highlighter-rouge">install</code> 命令来安装你的依赖包了！</p>
+
+<p><code class="highlighter-rouge">小结</code> 任何含有<code class="highlighter-rouge">composer.json</code>的<code class="highlighter-rouge">Git</code>、<code class="highlighter-rouge">SVN</code>、<code class="highlighter-rouge">HG</code> 存储库，都可以通过<code class="highlighter-rouge">require</code> 字段指定”包来源” 和”声明依赖”来添加到你的项目中。</p>
+
+<h3 id="6-发布到-packagist">6. 发布到 packagist</h3>
+
+<p>关于如何使用<code class="highlighter-rouge">Github</code>、<code class="highlighter-rouge">Composer</code>、<code class="highlighter-rouge">Packagist</code> 管理公开的<code class="highlighter-rouge">PHP</code> 包 <a href="https://rivsen.github.io/post/how-to-publish-package-to-packagist-using-github-and-composer-step-by-step">请参考</a></p>
+
+<p>具体步骤可以分为以下几步:</p>
+
+<ol>
+  <li>在<code class="highlighter-rouge">Github</code>创建一个<code class="highlighter-rouge">hello-wolrd</code>项目，<code class="highlighter-rouge">git@github.com:pemako/hello-world.git</code></li>
+  <li><code class="highlighter-rouge">git clone git@github.com:pemako/hello-world.git</code> 到本地</li>
+  <li>使用<code class="highlighter-rouge">composer init</code> 进行创建<code class="highlighter-rouge">composer.json</code> 文件，添加<code class="highlighter-rouge">readme.md</code> 文件</li>
+  <li><code class="highlighter-rouge">git add --all; git commit -m'init hello-world'； git push origin master</code></li>
+  <li>使用<code class="highlighter-rouge">GitHub</code>登陆<code class="highlighter-rouge">https://packagist.org</code> 点击最上面导航的<code class="highlighter-rouge">Submit</code>按钮</li>
+  <li>在<code class="highlighter-rouge">Repository URL (Git/Svn/Hg)</code> 下面的输入框中填写具体的<code class="highlighter-rouge">Git</code>地址，点击<code class="highlighter-rouge">check</code> 然后<code class="highlighter-rouge">submit</code> 即可完成发布</li>
+</ol>
+
+<h2 id="--命令行">⑤  命令行</h2>
+
+<p>要时常更新<code class="highlighter-rouge">composer</code> 命令，所有的命令具体使用可以通过<code class="highlighter-rouge">composer 命令 -h</code> 进行查看</p>
+
+<h2 id="--composerjson-架构">⑥  <code class="highlighter-rouge">composer.json</code> 架构</h2>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#php-ref" rel="tag">php</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/linux/2017/01/24/linux-autologin.html" title="Linux实现自动登陆远程机器">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+  <!--   <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "Composer使用总结"; //请用代码生成文章标题
+    var wumiiTags = "php"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["php"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Composer使用总结" data-url="https://pemako.cn/php/2017/01/25/composer-overview.html" data-thread-key="/php/2017/01/25/composer-overview"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

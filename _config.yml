@@ -13,15 +13,15 @@ paginate: 50
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title: justjavac(迷渡)
-tagline: 迷津欲有问，横舟渡归人。
+title: pemako
+tagline: 怕什么真理无穷，得一分有一分的欢喜。
 
 author:
-  name: justjavac
-  email: justjavac@gmail.com
-  github: justjavac
-  twitter: justjavac
-  feedburner: justjavac
+  name:  pemako
+  email: pemakoa@gmail.com
+  github: pemako
+  twitter: pemako
+  # feedburner: pemako
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -31,7 +31,7 @@ author:
 # Else if you are pushing to username.github.com, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url: http://justjavac.com
+production_url: https://pemako.cn
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -86,11 +86,11 @@ JB:
   comments:
     provider: disqus
     disqus:
-      short_name: justjavac
+      short_name: pemako
     livefyre:
-      site_id  justjavac
+      site_id  pemako
     intensedebate:
-      account: justjavac
+      account: pemako
     facebook:
       appid: 123
       num_posts: 5

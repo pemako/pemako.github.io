@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>NPM包管理器使用 - pemako</title>
+    <meta name="description" content="npm, nodejs">
+    
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/hexo/2017/01/22/hexo-command.html" title="初次使用Hexo" />
+    
+    
+    <link rel="next prerender" href="/golang/2017/01/23/golang-overview.html" title="Golang 概述" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>NPM包管理器使用 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <p>OSX use <code class="highlighter-rouge">brew install node</code> 目前安装的版本是 <code class="highlighter-rouge">v7.4.0</code>。安装完成 <code class="highlighter-rouge">nodejs</code> 后就可以使用 <code class="highlighter-rouge">npm</code> 进行相应的包管理。</p>
+
+<h3 id="updating-npm">Updating npm</h3>
+
+<p>如有需要把 <code class="highlighter-rouge">npm</code> 更新为最新的版本可以使用 <code class="highlighter-rouge">npm install npm@latest -g</code></p>
+
+<h3 id="installing-package">Installing package</h3>
+
+<p><code class="highlighter-rouge">npm install &lt;package_name&gt;</code>
+这个命令会在当前的目录下创建 <code class="highlighter-rouge">node_modules</code> 文件夹。如果需要全局安装包的话加上 <code class="highlighter-rouge">-g</code> 参数</p>
+
+<h3 id="using-a-packagejson">Using a package.json</h3>
+
+<p>通过 <code class="highlighter-rouge">package.json</code> 来管理本地安装的 npm packages 是一种最好的方式。</p>
+
+<h4 id="requirements">Requirements</h4>
+
+<p>最小版本的 <code class="highlighter-rouge">package.json</code> 必须包含 <code class="highlighter-rouge">name</code>和<code class="highlighter-rouge">version</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>- name
+    - 允许全部小写
+    - 单词中不能有空格
+    - 允许破折号和下滑下
+- version
+    - 版本的为 x.x.x
+    - 遵循语义版本，如一个新版创建的时候应为 1.0.0
+    
+For example:
+{
+    "name": "my-awesome-package",
+    "version": "1.0.0"
+}
+</code></pre>
+</div>
+
+<h4 id="creating-a-packagejson">Creating a package.json</h4>
+
+<p><code class="highlighter-rouge">npm init [--yes|-y]</code> 创建默认的 <code class="highlighter-rouge">package.json</code></p>
+
+<h3 id="uninstall-packages">Uninstall packages</h3>
+
+<p>删除 node_modules 中的模块可以直接是用 <code class="highlighter-rouge">npm uninstall &lt;package&gt;</code></p>
+
+<p>删除 package.json 中的依赖可以使用 <code class="highlighter-rouge">npm uninstall --save &lt;package&gt;</code></p>
+
+<p>注意：如果安装的包的是<code class="highlighter-rouge">devDependency</code>版本 <code class="highlighter-rouge">--save</code>不起作用的情况下可以使用 <code class="highlighter-rouge">--save-dev</code> unistall it.</p>
+
+<h3 id="publishing-npm-packages">Publishing npm packages</h3>
+
+<ol>
+  <li>必须在 <code class="highlighter-rouge">https://www.nmpjs.com/</code> 进行注册过</li>
+  <li><code class="highlighter-rouge">npm init</code> 创建一个 package.json</li>
+  <li>创建对应的 <code class="highlighter-rouge">index.js</code> 文件 内容如下</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">printMsg</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"This is a message from the demo package"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<ol>
+  <li><code class="highlighter-rouge">npm adduser</code></li>
+  <li><code class="highlighter-rouge">npm login</code></li>
+  <li><code class="highlighter-rouge">npm publish</code> 发布完成可以在<code class="highlighter-rouge">https://www.nmpjs.com</code> 中查看</li>
+  <li>使用刚发布的包 <code class="highlighter-rouge">npm install npm-demo-pkg424</code></li>
+  <li><code class="highlighter-rouge">echo "var demo = require("npm-demo-pkg424"); demo.printMsg();"&gt; test.js &amp;&amp; node test.js</code></li>
+</ol>
+
+<h3 id="注意事项">注意事项</h3>
+
+<h4 id="semver-for-publishers">Semver for publishers</h4>
+
+<p>如果你的版本将要发布供其他人使用的话，版本应该从 <code class="highlighter-rouge">1.0.0</code> 开始。
+当你的包有需要升级时，按照下面的原则修改版本号</p>
+
+<ol>
+  <li>Bug fixes and other minor changes: Patch release 修改最后一位版本号 eg. <code class="highlighter-rouge">1.0.1</code></li>
+  <li>New features which don’t break existing feature: Minor release, 修改中间版本号 eg.<code class="highlighter-rouge">1.1.0</code></li>
+  <li>Changes which break backwards compatibility: Major relese,修改第一位版本号 eg. <code class="highlighter-rouge">2.0.0</code></li>
+</ol>
+
+<h4 id="semver-for-consumers">Semver for consumers</h4>
+
+<p>作为使用者你必须指定需要更新的版本的。如果你想使用一个包的版本为 <code class="highlighter-rouge">1.0.4</code> 必须如下进行严格指定</p>
+
+<ol>
+  <li>Patch release: <code class="highlighter-rouge">1.0</code> or <code class="highlighter-rouge">1.0.x</code> or <code class="highlighter-rouge">~1.0.4</code></li>
+  <li>Minor release: <code class="highlighter-rouge">1</code> or <code class="highlighter-rouge">1.x</code> or <code class="highlighter-rouge">^1.0.4</code></li>
+  <li>Major release: <code class="highlighter-rouge">*</code> or <code class="highlighter-rouge">x</code></li>
+</ol>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+       
+      	<a href="/tags.html#nodejs-ref" rel="tag">nodejs</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/hexo/2017/01/22/hexo-command.html" title="初次使用Hexo">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/golang/2017/01/23/golang-overview.html" title="Golang 概述">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+  <!--   <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "NPM包管理器使用"; //请用代码生成文章标题
+    var wumiiTags = "javascript,nodejs"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["nodejs"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="NPM包管理器使用" data-url="https://pemako.cn/nodejs/2017/01/22/npm-package-manage.html" data-thread-key="/nodejs/2017/01/22/npm-package-manage"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

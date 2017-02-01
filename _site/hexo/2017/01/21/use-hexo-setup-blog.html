@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>使用hexo搭建博客过程 - pemako</title>
+    
+    
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    
+    <link rel="next prerender" href="/2017/01/21/python=gen-datalist.html" title="生成指定时间内的时间列表" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>使用hexo搭建博客过程 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <p>今天下午折腾了一下博客，终于可以正常的运作了，对整个搭建的过程做一个记录</p>
+
+<h2 id="环境说明">环境说明</h2>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>1. Mac OS 10.12.2
+2. 安装工具使用 brew
+3. 使用 hexo
+4. 代码部署到 github 及 coding 两个平台
+</code></pre>
+</div>
+
+<h2 id="搭建过程">搭建过程</h2>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>1. brew install node
+
+2. npm install hexo-cli -g
+
+3. npm install hexo -g --no-optional 在 mac 出现的问题
+
+4. hexo init you_project_name
+
+5. 配置 _config.yml 进行部署
+    delpoy:
+        <span class="nb">type</span>: git
+        repo:
+            github: git@github.com:&lt;youname&gt;/you_github_project_name
+            coding: git@git.coding.net:&lt;youname&gt;/you_coding_project_name
+        branch: master
+
+6. 进行 hexo g -d 进行生成静态文件部署
+
+7. 如出现权限等问题，可能是 public key 没有配置，可以进行生成公钥
+
+    - ssh-keygen -t rsa -b 4096 -C <span class="s2">"you_github_email@mail.com"</span>
+
+    - 在 ~/.ssh/ 目录下生成id_rsa.pub id_rsa 文件 复制 id_rsa.pub中的内容
+
+    - Github 填写在 https://github.com/settings/keys相应位置即可
+
+    - Coding 填写到 https://coding.net/u/you_name/p/you_project_name/setting/deploy_key 相应位置
+</code></pre>
+</div>
+
+<h2 id="关于主题">关于主题</h2>
+
+<p>本博客搭建使用的<a href="https://github.com/tufu9441/maupassant-hexo">maupassant 主题</a></p>
+
+<h2 id="关于订阅的设置">关于订阅的设置</h2>
+
+<p>需要安装<code class="highlighter-rouge">npm install hexo-generator-feed --save</code> 插件，然后配置 <code class="highlighter-rouge">_config.yml</code> 文件</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>feed:
+    <span class="nb">type</span>: atom
+    path: atom.xml
+    limit: 20
+    hub:
+    content:
+</code></pre>
+</div>
+
+<h2 id="绑定自己独立域名">绑定自己独立域名</h2>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>1. 在source文件夹中新建一个CNAME文件（无后缀名），然后用文本编辑器打开
+
+2. 在首行添加你的网站域名，如http://pemako.cn，注意前面没有http://，也没有www
+
+3. hexo g -d 上传部署。
+
+4. 在域名解析提供商，下面以阿里云为例。
+    - 先加一个CNAME，主机记录写@，后面记录值写上你的pemako.coding.me
+    - 再添加一个CNAME，主机记录写www，后面记录值也是 pemako.coding.me
+
+5. 尽量不要使用 A 记录，应为需要填写 coding 或 gitHub 的 ip 地址，如果 ip 地址变动会导致解析失败
+
+6. 本网站唯一域名为 <span class="o">[</span>https://pemako.cn]<span class="o">(</span>https://pemako.cn<span class="o">)</span> 访问请不要加 www
+</code></pre>
+</div>
+
+<h2 id="注意事项">注意事项</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>maupassant 主题中的 self_search 插件是基于 jQuery 的本地搜索引擎
+需要安装插件`npm install hexo-generator-search --save`支持
+</code></pre>
+</div>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#hexo-ref" rel="tag">hexo</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev disabled"><a>&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/2017/01/21/python=gen-datalist.html" title="生成指定时间内的时间列表">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+  <!--   <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "使用hexo搭建博客过程"; //请用代码生成文章标题
+    var wumiiTags = "hexo"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["hexo"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="使用hexo搭建博客过程" data-url="https://pemako.cn/hexo/2017/01/21/use-hexo-setup-blog.html" data-thread-key="/hexo/2017/01/21/use-hexo-setup-blog"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
