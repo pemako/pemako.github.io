@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>离开Java，寻找更佳语言的10大理由 - justjavac(迷渡)</title>
+    <meta name="description" content="离开Java，寻找更佳语言的10大理由">
+    <meta name="keywords" content="java">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/java/2012/04/18/26-methods-to-improve-java-performance.html" title="Java编程中“为了性能”尽量要做到的一些地方" />
+    
+    
+    <link rel="next prerender" href="/javascript/2012/04/19/javascript-is-joy.html" title="javascript 是一门令人愉悦的语言" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>离开Java，寻找更佳语言的10大理由 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文： <a href="http://www.theserverside.com/news/thread.tss?thread_id=55185">10 good reasons to look for something better than Java</a></p>
+
+<p>作者： Mario Fusco</p>
+
+<p>译文： <a href="http://www.iteye.com/news/8909">离开Java，寻找更佳语言的10大理由</a></p>
+
+<p>译者： <a href="http://liuu.iteye.com/">liuu</a></p>
+
+<hr />
+
+<p>别误解，其实在我的职业生涯中，我已经编写了无数的Java代码；而且，我仍然认为Java一门伟大的（程序）语言。
+相对于C++和Smalltack，Java已经有了很大的改进；但现在，即使是Java，也已经开始感觉到了其15年的积重。</p>
+
+<p>事实上，在我的经历中，我总是不得不面对Java的设计和规范上的一些错误、缺陷和不足，这些东西，让我的Java程序员生活少有乐趣可言。</p>
+
+<p>现在全世界的Java程序员有数百万之众，Java写就的代码更达数亿行，要是我说Java在不久的将来死去，这还有些远。不管怎样，随着一些兼容JVM的语言出现（我最钟意Scala）后，这些问题变得越发不能容忍了，我开始想，是时候慢慢离开Java了（但并不脱离JVM）。</p>
+
+<p>具体说来，我认为Java语言的10大问题是：</p>
+
+<h2 id="1缺少闭包closure">1、缺少闭包（closure）：</h2>
+
+<p>我想这个不需要解释了。函数式编程已经存在几十年了，但最近几年，它们获得了越来越多的关注，最主要的原因，是它可以自然地编写并行程序。</p>
+
+<p>我部分的同意Joshua Bloch强调在Java中引入闭包的问题需要再想一想（BGGA提议的方式真的很糟），至少闭包的缺失，使得在Java中做任何真正的函数式编程都是不可能的。</p>
+
+<h2 id="2缺少一等函数">2、缺少一等函数：</h2>
+
+<p>这个问题与前一个有些关联，但我认为它更糟糕。</p>
+
+<p>在Java里，要达到类似效果的唯一方式，是使用著名的、丑陋悲惨的单方法匿名内部类，但这看上去的确是一个拙劣的方法。甚至在C#中，也通过代理机制，提供了一个更好的实现。</p>
+
+<h2 id="3原生类型primitive-types">3、原生类型（Primitive types）：</h2>
+
+<p>如果在Java中一切皆对象，那是多么完美啊，但他们偏偏不这样设计。因而，这一点导致了一些问题，比如，不能把一个int放到集合（Collection）里，这个在Java5中通过自动装箱特性得到了解决（下面会提到）。</p>
+
+<p>它也造成了传值与传引用上的困扰，原生类型数据是通过值传给方法的（复制一份拷贝，然后传给函数），而真正的对象是通过传递（译注：其实是复制对象地址再传递，因此应该也是传值方式，只是由于函数内部可通过这个对象地址访问对象，因此效果上类似传引用）。</p>
+
+<h2 id="4自动装箱autoboxing和自动拆箱autounboxing">4、自动装箱（Autoboxing）和自动拆箱（autounboxing）：</h2>
+
+<p>这个特性是为了解决因原生类型的存在所导致的问题，在Java5引入的。它允许静默地转换原生类型到相应的对象，但这常常导致其它的问题。</p>
+
+<p>比如Integer可以为null，但int不能，因此这时JVM只能抛出一个难以调试的空指针异常（NullPointerException）。</p>
+
+<p>此外，它还可能导致其它奇怪的行为，就像下面的例子，我们就很难理解，变量test为什么是false：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Intger a = new Integer(1024);
+Intger b = new Integer(1024);
+boolean test = a &lt; b || a == b || a &gt; b;
+</code></pre>
+</div>
+
+<h2 id="5缺少范型具类化">5、缺少范型具类化：</h2>
+
+<p>范型是Java5引入的一个很酷的特征，但是为了保持与旧版本Java的兼容性，导致缺失某些重要的特性，尤其是不能在运行时反省范型的类型。</p>
+
+<p>例如，你有一个方法，接受List&lt;?&gt;参数，如果传进来一个List<String>，你却不能知道运行里该范型的确切类型。
+同理，你也不能创建范型数组。这意味着，尽管下面的代码看起来很自然，但却不编译不了：</String></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>List&lt;String&gt;[] listsOfStrings = new List&lt;String&gt;[3];
+</code></pre>
+</div>
+
+<h2 id="6不可避免的范型警告">6、不可避免的范型警告：</h2>
+
+<p>你有发现过自己陷入不可能去掉的关于范型的警告么？如果你像我一样大量使用范型，我打赌你碰到过。</p>
+
+<p>事实上，是这个问题的规模化症状，让他们认为需要引入一个特定的注解 (@SuppressWarnings(“unchecked”)) 来处理这种情况，我觉得，范型应该可能被设计的更好。</p>
+
+<h2 id="7不能传void给方法调用">7、不能传void给方法调用：</h2>
+
+<p>我得承认，这种给方法传递void的需求，乍一看有些怪异。</p>
+
+<p>我喜欢DSL，当我实现自己的DSL库（lambdaj）的一个特定特性时，我不得不需要一个方法声明成这样的签名：void doSomething(Object parameter)，这里为这个方法传进来的参数parameter，是另一个方法调用的结果，它唯一的目的，是注册调用（的对象）自身，以可以在以后执行它。</p>
+
+<p>让我吃惊的是，即使println方法返回void，看上去也并没有一个好理由，不允许我把代码写成这样，：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>doSomething(System.out.println("test"));
+</code></pre>
+</div>
+
+<h2 id="8没有原生的代理机制">8、没有原生的代理机制：</h2>
+
+<p>代理是一种非常有效和应用广泛的模式，但Java提供的代理机制，只针对接口，而不是具体类。</p>
+
+<p>这是为什么象cblib这样提供这种机制的库，被如此多的主流框架，如Spring和Hibernate，采用的原因。</p>
+
+<p>此外，由于cglib通过运行时创建被代理类的子类来实现的，因此这些种方式有一个众所周知的限制——不能代理final类，比如String。</p>
+
+<h2 id="9差劲的switchcase语句">9、差劲的Switch…case语句：</h2>
+
+<p>Java规定，switch…case只能选择int和enum（Java5开始）。这一点如果跟更现代的语言如Scala相比，看起来简直太弱了。</p>
+
+<h2 id="10受检查异常checked-exception">10、受检查异常（Checked exception）：</h2>
+
+<p>类似原生类型，受检查异常也已经成为Java的一个罪孽之源。</p>
+
+<p>它迫使程序员必须做下面两件极其糟糕讨厌的事情中的一个：让你的代码里充斥大量的、糟糕难读的、容易出错的try…catch语句，而这样做的最大意义，只是将捕获的异常，包装成运行时异常，然后再重新抛出；或者是让大量的抛出声明子句污染你的API，让接口缺少灵活性和可扩展性。</p>
+
+<p>真正的问题是，这里我提到的这几大主要问题，唯一的解决办法，是要做一个痛苦的决择，定义一套新的语言规范，放下当前版本的向后兼容性。</p>
+
+<p>我猜他们永远也不会这么做，虽然我相信，如果编写一个能够自动转换旧Java源码的程序，让它们与假设的新版本兼容，并不是很困难。最后，这就是我决定开始寻找一个更好的JVM兼容语言的原因。</p>
+
+<p><strong>注</strong>：原文见TSS <a href="http://www.theserverside.com/news/thread.tss?thread_id=55185">http://www.theserverside.com/news/thread.tss?thread_id=55185</a>，感觉作者说的还是有些道理的。</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#java-ref" rel="tag">java</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/java/2012/04/18/26-methods-to-improve-java-performance.html" title="Java编程中“为了性能”尽量要做到的一些地方">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2012/04/19/javascript-is-joy.html" title="javascript 是一门令人愉悦的语言">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "离开Java，寻找更佳语言的10大理由"; //请用代码生成文章标题
+    var wumiiTags = "java"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["java"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="离开Java，寻找更佳语言的10大理由" data-url="http://justjavac.com/java/2012/04/18/beyond-java-find-10-better-language.html" data-thread-key="/java/2012/04/18/beyond-java-find-10-better-language"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>javascript 不可用的问题探究 - justjavac(迷渡)</title>
+    <meta name="description" content="昨天在 Twitter 上的一些有趣的讨论中, 我发现人们对于 Web 应用和站点对 javascript 的依赖普遍存在一种疑惑. 这种疑惑一直都存在, 而对我而言, 这个问题随着浏览技术的飞跃发展而集中爆发了.">
+    <meta name="keywords" content="javascript">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/javascript/2012/05/24/can-you-explain-why-10.html" title="为什么 ++[[]][+[]]+[+[]] = 10？" />
+    
+    
+    <link rel="next prerender" href="/other/2012/05/24/5-questions-should-be-noted-in-blogs.html" title="博客排版要注意的五个问题" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>javascript 不可用的问题探究 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>昨天在 Twitter 上的一些有趣的讨论中，我发现人们对于 <a href="http://justjavac.com/web/2012/04/13/the-growth-of-the-web-engineers-capability" title="web 前端研发工程师编程能力成长之路">Web</a>应用和站点对 javascript 的依赖普遍存在一种疑惑。
+这种疑惑一直都存在，而对我而言，这个问题随着浏览技术的飞跃发展而集中爆发了。</p>
+
+<p>我第一次遇到这个问题还是在 DHTML 盛行的时代。
+我们对浏览器无所不用其极，加上各种动画菜单、3D 标签（我们现在已经学会不再使用这些了），但总有人告诉我们 javascript 不可用。</p>
+
+<h2 id="谁禁用了javascript">谁禁用了javascript</h2>
+
+<p>第一个要问的问题是这些 javascript 不可用的环境在哪里。下面是一些可能的答案：</p>
+
+<ul>
+  <li>安全系统比如 noscript 或者公司代理过滤掉了 javascript;</li>
+  <li>功能手机比如旧式黑莓（我还记得将旧式黑莓换到 Opera Mini 以获得总算还过得去的上网体验）;</li>
+  <li>在移动应用环境中, 图片和脚本有时候会被拆分处理;</li>
+  <li>在流量有限或者接入很慢的区域中;</li>
+  <li>人们因为个人原因禁用了 javascript;</li>
+  <li>讨厌广告弹出等强势广告的人.</li>
+</ul>
+
+<p>就像你所看到的那样, javascript 被禁用的原因多种多样, 有被动的, 也有主动的. 
+所以不能说只有乱用网络的人才会遭遇这样的问题.</p>
+
+<h2 id="为什么javascript会被禁用">为什么javascript会被禁用</h2>
+
+<p>像上面所列举的那样, javascript 被禁用的原因多种多样. 
+如果它是被有意禁用的, 那么我猜主要原因无非以下三点, 即安全考虑、广告疲劳以及慢速连接.</p>
+
+<p>安全考虑在情理之中. 
+几乎每一个在客户端的攻击都是使用的 javascript（大多数情形下都是利用了插件的漏洞）. 
+Java 当然是当前最大的安全漏洞, 但是通过 javascript 同样会对存在漏洞的网站或者不经保护或者过时的浏览器以及操作系统造成安全威胁.</p>
+
+<p>慢速连接是个很有意思的原因. 
+非常讽刺的是, 我们使用 javascript 是为了加速客户端体验. 
+最初使用 js 的一个例子就是在客户端对表单进行验证从而避免服务器端不必要的工作周期.</p>
+
+<p>如果你现在正处于一个很差的连接中（比如一个无线连接或者很差的3G连接）, 你想要使用 Google Reader 或者 Gmail, 
+你只能得到一个不完整的页面, 这时候只有使用低版本的才能更好工作.</p>
+
+<h2 id="为了两方都好">为了两方都好</h2>
+
+<p>基于环境以及连接给用户最好的体验是非常好的. 
+这也是渐进增强（progressive enhancement）所研究的问题. 
+这也并非是很高深的东西, 它很简单, 并且是处于完全的实用主义.</p>
+
+<p>使用事件授权这样的技术是非常简单的. 
+你可以通过点击父元素的 handlers 来写你自己的 HTML, 使用 innerHTML 或者其他一些更新更快的技术.</p>
+
+<h2 id="为什么是这样一个问题">为什么是这样一个问题</h2>
+
+<p>坦白说, 我也不太清楚. 
+或许是因为我太过时了, 或许是因为我已经一次有一次对<a href="http://justjavac.com/web/2012/04/13/how-do-browsers-render-text" title="浏览器如何渲染文本">浏览器</a>和网络连接失望了, 或许是因为我只想更安全一些. 
+我只是不明白为什么人们只想要 js 的解决方案呢, 而实际上, js 只是用来提供一些增强功能的.</p>
+
+<h2 id="费解的应用边缘案例">费解的应用边缘案例</h2>
+
+<p>人们时常怀有疑问的是”应用需要 javascript”. 
+如果我们足够坦诚, 我们就会发现, 这样的应用实际上是很少的. 如果一定要说出一些, 
+我只能想到的是浏览器中的 photoshop 或者其他的一些编辑器（比如视频、浏览器中的 IDE）才需要依赖于 javascript. 
+其他都可以通过重新加载和服务器端的一些部件解决.</p>
+
+<p>让我们直面这样一个事实——在 <a href="http://justjavac.com/nodejs/2012/04/03/node-beginner.html" title="Node入门">Node.js</a>的时代, 服务器端也可以用 javascript 来写. 
+Dav Glass of Yahoo 两年前显示如果一个工具库编写成余环境独立的, 那么你就可以同时在客户端和服务器端复用这些工具.</p>
+
+<p>“应用需要 javascript” 的真正原因似乎是其他原因, 而非技术上的.</p>
+
+<h2 id="应用需要javascript的真正原因">“应用需要javascript”的真正原因</h2>
+
+<p>正如禁用 javascript 可以有很多原因, 应用需要 javascript 也有很多原因.</p>
+
+<ul>
+  <li><strong>你只知道js并且认为人们就应该升级他们的浏览器</strong>. 这无可厚非, 但是这样的看法是很狭隘的, 并且很容易失败.</li>
+  <li><strong>和你一起构建应用的团队没有服务器端的技能, 你希望能以较低的代价完成这个应用</strong>. 这或许有效, 但是这样可能让开发时间和资金都加倍. 要提前为这样的开发做好规划.</li>
+  <li><strong>你想要尽快写出应用, 并且你知道以后你会重写这个应用的</strong>. 这是很常见的现象, 尤其是你可以因此而成功. 愿上天保佑你吧, 千万别让人知道你会待很久.</li>
+  <li><strong>你的应用会在一个纯 js 的环境中运行</strong>. 这当然意味着你没必要不使用 js 而完成你的应用. 一个很好的例子就是 Air applications. 但你要保证这个环境在将来不出问题.</li>
+  <li><strong>你的应用确实需要 js 来运行</strong>. 如果真是这样的情况, 就别将它提供给没有 js 的用户. 向人们解释为什么以及如何做（尽量避免告诉人们他们需需要开启js因为他们可能根本做不了而更加失望）, 并利用 js 重定向到你的应用.</li>
+</ul>
+
+<h2 id="总结">总结</h2>
+
+<p>总之, javascript 依赖性的问题不只是技术原因. 
+它对旧的技术实践提出了疑问, 并且对于可维护性有很大影响.</p>
+
+<p>可以说, 如果我们能问问 “我们为什么需要 js” 而不是问 “人们为什么没有 js”, 关于这个问题的讨论会更有成效. 
+如果我们的技术能很好适应不同需求的话, 去责备人们跟不上网络发展是毫无意义的.</p>
+
+<p>通过展现给用户看他们能通过开启或者关闭浏览器中部件来解决问题同样是没有意义的. 
+当一个普通用户卡在你的应用中了, 这并不是一个告诉用户发生了什么的做法.</p>
+
+<p>或许所有这些问题在 <a href="http://justjavac.com/nodejs/2012/04/06/just-what-is-nodejs-a-ready-to-code-server.html" title="什么是Node.js">node</a> 变得成熟以及普及以后都不会再是问题. 
+我将很乐意看到这点。</p>
+
+<p>原文链接：<a href="http://christianheilmann.com/2011/12/06/that-javascript-not-available-case/">That “javascript not available” case</a></p>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/javascript/2012/05/24/can-you-explain-why-10.html" title="为什么 ++[[]][+[]]+[+[]] = 10？">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/other/2012/05/24/5-questions-should-be-noted-in-blogs.html" title="博客排版要注意的五个问题">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "javascript 不可用的问题探究"; //请用代码生成文章标题
+    var wumiiTags = "javascript"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="javascript 不可用的问题探究" data-url="http://justjavac.com/javascript/2012/05/24/that-javascript-not-available-case.html" data-thread-key="/javascript/2012/05/24/that-javascript-not-available-case"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

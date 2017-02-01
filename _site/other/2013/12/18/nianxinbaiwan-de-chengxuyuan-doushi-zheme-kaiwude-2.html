@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>据说，年薪百万的程序员，都是这么开悟的（二） - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="程序员, 读书">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-1.html" title="据说，年薪百万的程序员，都是这么开悟的（一）" />
+    
+    
+    <link rel="next prerender" href="/javascript/2014/02/18/javascript-puzzlers-why-1-2-3-map-parseint-returns-1-NaN-NaN-in-javascript.html" title="JavaScript Puzzlers 解密（一）：为什么 ["1", "2", "3"].map(parseInt) 返回 [1, NaN, NaN]？" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>据说，年薪百万的程序员，都是这么开悟的（二） <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>点此查看<a href="http://justjavac.com/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-1.html">上一篇</a>。</p>
+
+<h2 id="0-分手篇">0 分手篇</h2>
+
+<p>程序员问禅师：“我和在一起 7 年的女友分手了，程序员是否诸多和爱情无缘？”</p>
+
+<p>禅师笑而不语，把程序员带到正在比赛的球场。</p>
+
+<p>程序员大悟：“大师的意思是否是说：爱情的意义就像一场比赛，只要过程努力过，结果如何并不重要？”</p>
+
+<p>大师闭上眼睛道：“你分手关我球事？”</p>
+
+<h2 id="1-相貌篇">1 相貌篇</h2>
+
+<p>程序员问禅师：“我天天对着电脑，熬夜到凌晨。大家都说我丑，我真的很丑吗？”</p>
+
+<p>禅师笑而不语，端起一杯水，浇到程序员脑袋上。</p>
+
+<p>程序员不解：“你的意思是，我每天都洗头就不那么丑了？”</p>
+
+<p>禅师回答说：“丑到端水水更流，举杯浇丑丑更丑。”（抽刀断水水更流，举杯浇愁愁更愁——李白）</p>
+
+<h2 id="2-财富篇">2 财富篇</h2>
+
+<p>程序员问禅师：“大师，我天天加班，独立完成了一个大项目，我现在很富有，但是我却一点也不快乐，您能指点我该怎么做吗？”</p>
+
+<p>禅师问道：“何谓富有？”</p>
+
+<p>程序员回道：“银行卡里 8 位数，五道口有 3 套房不算富有吗？”</p>
+
+<p>禅师没说话，只伸出右手，青年恍然大悟：“禅师是让我懂得感恩与回报？”</p>
+
+<p>“不，—— 土豪，我们可以做朋友吗？”</p>
+
+<h2 id="3-单身女程序员篇">3 单身女程序员篇</h2>
+
+<p>女程序员问禅师：“为什么我年轻漂亮，楚楚动人，可没有男人喜欢我？因为我是一名女程序员吗？”</p>
+
+<p>禅师问：“你知道男人为什么喜欢大海，而不喜欢湖吗？”</p>
+
+<p>女程序员想了想：“我知道了，因为大海挑战大，男人都喜欢挑战，所以喜欢大海，对吗？”</p>
+
+<p>禅师：“挑战个屁啊，因为大海波大！”</p>
+
+<h2 id="4-单身男程序员篇">4 单身男程序员篇</h2>
+
+<p>程序员问禅师：“我一直追不到我心仪的女孩，我该怎么办才好？因为我是一名程序员吗？”</p>
+
+<p>禅师笑而不语，指了指旁边树杆上正在艰难爬行的蜗牛。</p>
+
+<p>程序员顿悟道：“禅师，您是说只要像这蜗牛一样坚持不懈，总会成功是么？ ”</p>
+
+<p>禅师抡起木鱼狠砸：“傻X，你得像它一样先有套像样的房子!”</p>
+
+<h2 id="5-资金篇">5 资金篇</h2>
+
+<p>程序员问禅师：“我有很大的梦想，如果实现了，这个世界将再也没有纷争。因此我需要很多钱，大师您能帮我吗？”</p>
+
+<p>禅师拿出一个小孩的帽子和一双小孩的手套让青年穿上，然后问：”你有什么感觉？”</p>
+
+<p>“手，头有点紧。”</p>
+
+<p>“我也是。”</p>
+
+<h2 id="6-休息篇">6 休息篇</h2>
+
+<p>程序员半夜睡不着，于是问禅师：“大师我经常失眠，应该怎么办呢？”</p>
+
+<p>禅师笑而不语，手指指向禅房的墙壁。</p>
+
+<p>程序员循指望去，一面白墙映入眼帘，墙体空白一片别无它物。程序员沉思良久后恍然大悟：“大师是说要摒弃心中杂念，心无所想才能入睡？”</p>
+
+<p>禅师摇摇头，大怒：“我意思是TM给我滚！都凌晨一点了还让不让人睡啊！”</p>
+
+<h2 id="7-生活篇">7 生活篇</h2>
+
+<p>程序员问老禅师：“我是一名苦B程序员，活得没有一点安全感，该怎么办呢？”</p>
+
+<p>禅师笑而不语，用手指了指自己的胸口。</p>
+
+<p>程序员恍然大悟：“我明白了。只有像您这样心无所系，才能无忧无虑，对吗？”</p>
+
+<p>“不” 老禅师缓缓的从胸口掏出一个小本本，上面写着：“The Secretary of State of the United States of America hereby requests ……”</p>
+
+<h2 id="8-感情篇">8 感情篇</h2>
+
+<p>程序员问禅师：“大师，我收入不高，没有对象。因此心情烦躁，静不下来，我觉得心堵很痛苦。”</p>
+
+<p>禅师笑笑抬手向南方一指，悠悠说道：“去看看大海吧。”</p>
+
+<p>程序员若有所思的问：“这是要我陶冶情操，感受海的博大胸怀吗？”</p>
+
+<p>禅师摇摇头：“如果大海能够，带走你的矮丑。”</p>
+
+<h2 id="相关文章">相关文章</h2>
+
+<ul>
+  <li><a href="http://justjavac.com/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-1.html">据说，年薪百万的程序员，都是这么开悟的（一）</a></li>
+  <li><a href="http://justjavac.com/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-2.html">据说，年薪百万的程序员，都是这么开悟的（二）</a></li>
+</ul>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#程序员-ref" rel="tag">程序员</a>
+       
+      	<a href="/tags.html#读书-ref" rel="tag">读书</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-1.html" title="据说，年薪百万的程序员，都是这么开悟的（一）">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2014/02/18/javascript-puzzlers-why-1-2-3-map-parseint-returns-1-NaN-NaN-in-javascript.html" title="JavaScript Puzzlers 解密（一）：为什么 ["1", "2", "3"].map(parseInt) 返回 [1, NaN, NaN]？">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "据说，年薪百万的程序员，都是这么开悟的（二）"; //请用代码生成文章标题
+    var wumiiTags = "程序员,读书"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["other"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="据说，年薪百万的程序员，都是这么开悟的（二）" data-url="http://justjavac.com/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-2.html" data-thread-key="/other/2013/12/18/nianxinbaiwan-de-chengxuyuan-doushi-zheme-kaiwude-2"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

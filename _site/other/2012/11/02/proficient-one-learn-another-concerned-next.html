@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>精通one，学习another，关注next - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="学习,晋升">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" title="代码之谜（四）- 浮点数（从惊讶到思考）" />
+    
+    
+    <link rel="next prerender" href="/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" title="代码之谜（五）- 浮点数（谁偷了你的精度？）" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>精通one，学习another，关注next <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <h2 id="tip-1-要方法而不是记忆">Tip 1 要方法而不是记忆</h2>
+
+<p>我的一个程序员朋友常跟我说记住超过 200 个 C++ 函数是多么的有帮助。</p>
+
+<blockquote>
+  <p>我从来不必去查找函数的定义，因此我可以比其他程序员编程快上50%。</p>
+</blockquote>
+
+<p>他自豪的说。可结果是什么？</p>
+
+<p>难道他不知道编译器的代码自动完成功能可以节约大量查找函数及输入函数的时间吗，另外当C#发布出来后，他在记忆函数上面的努力就白费了。</p>
+
+<p>当然，编程中对函数的熟记是一件必需的事情，但是你应当花费更多的时间在学习做事的方法上，
+比如说创建一个数据库连接，
+如何产生RSS源等，然后是关注于代码是如何实现的。
+<strong>学习做事的正确方法远比死记硬背重要</strong>。
+正所谓 <a href="http://justjavac.com/other/2012/09/03/how-lazy-have-much-leisure.html">人有多大懒，才有多大闲</a>。</p>
+
+<h2 id="tip-2-建立属于你自己的资源库">Tip 2 建立属于你自己的资源库</h2>
+
+<p>我们都会有因为这样或者那样原因而不得不建立的代码集。
+我从来不记得连接数据库的准确代码语句，所以我每次都不得不在代码集中花10分钟去查询它。
+为了解决这个问题，我创建了一个用于记录代码片段的 Word 文档，以帮助我记忆和查找。</p>
+
+<p>我的一个同事建了个记录链接的书签，另外一个同事在他的邮件中存储了这些内容。
+<strong>无论你的方法是什么，都是一种可以使你方便查找到文件或内容的好习惯</strong>。
+当你建立你的知识库后，你会发现它将极大的帮助你去把代码写得更好和更快。</p>
+
+<h2 id="tip-3-知道做什么而不是怎样做">Tip 3 知道做什么而不是怎样做</h2>
+
+<p>很多初级程序员问我“我怎样做这个，或者我怎样做那个？”我总是会跟他们说“你想做什么呢？”
+听闻此言后，他们会死盯着我，就好像我跟他们的妈妈约会了一样。</p>
+
+<p>这就是我的下一个观点， <strong>绝不要在知道你想做什么之前去学习怎样做</strong>，比如一个程序员想要搜索一个文本文件中是否存在的某个特定的词汇。</p>
+
+<p>下面是用C#来实现该目的：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>string fileContent;  
+System.IO.FileStream myStream = new FileStream("c:\\aa.txt", FileMode.Open);  
+System.IO.StreamReader myStreamReader = new StreamReader(myStream);   
+fileContent = myStreamReader.ReadToEnd();  
+myStreamReader.Close();  
+int idx = fileContent.  
+IndexOf("string");   
+if (idx)  
+{  
+    return true  
+}  
+</code></pre>
+</div>
+
+<p>现在我给他这些代码去做这件事，但是更重要的是 <strong>理解自己正在试着做的是什么</strong>。
+在这个例子中我们想做的是：</p>
+
+<ol>
+  <li>打开一个文件</li>
+  <li>读其中的内容</li>
+  <li>关闭文件</li>
+  <li>搜索字串</li>
+  <li>如果找到了则输出结果</li>
+</ol>
+
+<p>用这个方法来解决事情产生了以下结果：</p>
+
+<ol>
+  <li>它使语言无关</li>
+  <li>使你的精力集中在需要做什么上</li>
+  <li>使你的代码更易读和有效知道要做什么将使你的代码更有目的性。</li>
+</ol>
+
+<p>现在在 C++、PHP、VB.NET、Ruby on Rails 中编写上述代码是很容易的事情了，因为你理解了 <strong>要做什么而不是怎样去做</strong>。</p>
+
+<h2 id="tip-4-创建适合你的注释风格">Tip 4 创建适合你的注释风格</h2>
+
+<p>每一个程序员都讨厌注释，但是 <strong>为了写出更有质量和易读的代码，我们需要注释</strong>。</p>
+
+<p>问题是大多数程序员常被告知如何注释，一些公司希望每一行代码都有注释，
+另外一些则想要在每个函数前面有一段注释，还有的规定在不同的代码块前注释。</p>
+
+<p>我并不同意这种强制性的规定，只要 <strong>代码是可用的、易读的和有效的</strong>，
+那么程序员应当可以用其个人喜好的格式来注释。
+对我来说在每一行都注释将破坏代码的节奏，我更喜欢在函数的前面注释，
+罗列我接下来一步步将要做什么，然后在函数中参考注释中所写的步骤进行编程。</p>
+
+<p>这是适合我的模式，这样可以在我编程前帮助我组织设计，也保持了我的节奏，使我 <strong>不会因为需要注释而在编程时中断，也有助于其他人阅读我的代码</strong>。</p>
+
+<p>下面是我怎样注释的例子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/* 1. Open File*  
+   2. Read file into string*  
+   3. Close file*  
+   4. Search for key word*  
+   5. If fond return true; 
+*/  
+string fileContent;  
+//1.  
+System.IO.FileStream myStream = new FileStream("c:\\aa.txt", FileMode.Open);  
+System.IO.StreamReader myStreamReader = new StreamReader(myStream);  
+//2.  
+fileContent = myStreamReader.ReadToEnd();  
+//3.  
+myStreamReader.Close();   
+//4.  
+int idx = fileContent.IndexOf("string");  
+if (idx)  
+{  
+    //5.  
+    return true;  
+}  
+</code></pre>
+</div>
+
+<p>这种注释风格使我和大多数程序员可以容易的阅读它。
+那么，找一个适合你的注释风格吧。</p>
+
+<h2 id="tip-5-精通one学习another关注next">Tip 5 精通one，学习another，关注next</h2>
+
+<p>有时有程序员发 email 问我他应该学习什么语言，什么是最好的编程语言等等。
+<strong>你至少应该精通一门编程语言，可以相当好的去编写代码，然后再去学习掌握另外一门，逐渐的成长</strong>。</p>
+
+<p>以我自己为例，我精通 C#，擅长 PHP，并且已经开始使用 Ruby on Rails 大概有一两个月了。
+为什么呢？ <strong>精通一门语言可以使你进步，在进步中写更好的代码，找到完成任务更好的方法等</strong>。</p>
+
+<p>进步也是我作为一个程序员年复一年的工作，却仍没有觉得枯燥的原因。</p>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#学习-ref" rel="tag">学习</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" title="代码之谜（四）- 浮点数（从惊讶到思考）">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "精通one，学习another，关注next"; //请用代码生成文章标题
+    var wumiiTags = "学习"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["other"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="精通one，学习another，关注next" data-url="http://justjavac.com/other/2012/11/02/proficient-one-learn-another-concerned-next.html" data-thread-key="/other/2012/11/02/proficient-one-learn-another-concerned-next"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

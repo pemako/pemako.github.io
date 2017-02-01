@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>web.py 0.3 新手指南 - 模板系统 - justjavac(迷渡)</title>
+    <meta name="description" content="web.py 的模板语言叫做Templetor，它能负责将 python 的强大功能传递给模板系统。在模板中没有重新设计语法，它是类 python 的。">
+    <meta name="keywords" content="python, web.py, 新手指南, 模板">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/python/2012/04/19/webpy-tutorial-install.html" title="web.py 0.3 新手指南 - 安装" />
+    
+    
+    <link rel="next prerender" href="/python/2012/04/19/webpy-tutorial.html" title="web.py 0.3 新手指南" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>web.py 0.3 新手指南 - 模板系统 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <h2 name="introduction">Introduction</h2>
+
+<style>
+pre {
+    background-color:#F0F0F0;
+    border:1px solid #CCCBBA;
+       padding: 10px 10px 10px 20px;
+}
+code {
+    background: inherit;
+    color: inherit;
+}
+.warning {
+    border: 1px solid #FFAAAA;
+    padding: 10px;
+    background-color: #FFF0F0;
+}
+</style>
+
+<p>web.py 的模板语言叫做 <code class="highlighter-rouge">Templetor</code>，它能负责将 python 的强大功能传递给模板系统。
+在模板中没有重新设计语法，它是类 python 的。 
+如果你会 python，你可以顺手拈来。</p>
+
+<p>这是一个模板示例:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$def with (name)
+Hello $name!
+</code></pre>
+</div>
+
+<p>第一行表示模板定义了一个变量 <code class="highlighter-rouge">name</code>。
+第二行中的 <code class="highlighter-rouge">$name</code> 将会用 <code class="highlighter-rouge">name</code> 的值来替换。</p>
+
+<div class="warning">
+如果是从 web.py 0.2 升级请看这里 <a href="#upgrading">升级 </a> 部分。
+</div>
+
+<p><a name="using"> </a></p>
+<h2 id="使用模板系统">使用模板系统</h2>
+
+<p>通用渲染模板的方法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>render = web.template.render('templates')
+return render.hello('world')
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">render</code> 方法从模板根目录查找模板文件，<code class="highlighter-rouge">render.hello(..)</code>表示渲染 hello.html 模板。实际上，系统会在根目录去查找叫 <code class="highlighter-rouge">hello</code>的所有文件，直到找到匹配的。(事实上他只支持 .html 和 .xml 两种)</p>
+
+<p>除了上面的使用方式，你也可以直接用文件的方式来处理模板 <code class="highlighter-rouge">frender</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hello = web.template.frender('templates/hello.html')
+render hello('world')
+</code></pre>
+</div>
+
+<p>直接使用字符串方式：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>template = "$def with (name)\nHello $name"
+hello = web.template.Template(template)
+return hello('world')
+</code></pre>
+</div>
+
+<p><a name="syntax"> </a></p>
+<h2 id="语法">语法</h2>
+
+<h3 id="表达式用法">表达式用法</h3>
+
+<p>特殊字符 <code class="highlighter-rouge">$</code> 被用于特殊的 python 表达式。表达式能够被用于一些确定的组合当中 <code class="highlighter-rouge">()</code> 和 <code class="highlighter-rouge"><span class="p">{}</span></code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Look, a $string. 
+Hark, an ${arbitrary + expression}. 
+Gawk, a $dictionary[key].function('argument'). 
+Cool, a $(limit)ing.
+</code></pre>
+</div>
+
+<h3 id="赋值">赋值</h3>
+
+<p>有时你可能需要定义一个新变量或给一些变量重新赋值，如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ bug = get_bug(id)
+&lt;h1&gt;$bug.title&lt;/h1&gt;
+&lt;div&gt;
+    $bug.description
+&lt;div&gt;
+</code></pre>
+</div>
+
+<p>注意 <code class="highlighter-rouge">$</code>在赋值变量名称之前要有一个空格，这有区别于常规的赋值用法。</p>
+
+<h3 id="过滤">过滤</h3>
+
+<p>模板默认会使用 <code class="highlighter-rouge">web.websafe</code> 过滤 html 内容(encodeing 处理)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; render.hello("1 &lt; 2")
+"Hello 1 &amp;lt; 2"
+</code></pre>
+</div>
+
+<p>不需要过滤可以在 <code class="highlighter-rouge">$</code> 之后 使用 <code class="highlighter-rouge">:</code>。示例：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>该 Html 内容不会被义
+$:form.render()
+</code></pre>
+</div>
+
+<h3 id="新起一行用法">新起一行用法</h3>
+
+<p>在行末添加 <code class="highlighter-rouge">\</code> 代表显示层该内容不会被真实处理成一行。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>If you put a backslash \ 
+at the end of a line \ 
+(like these) \ 
+then there will be no newline.
+</code></pre>
+</div>
+
+<h3 id="转义-">转义 <code class="highlighter-rouge">$</code></h3>
+
+<p>使用 <code class="highlighter-rouge">$$</code> 可以在输出的时候显示字符 <code class="highlighter-rouge">$</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Can you lend me $$50?
+</code></pre>
+</div>
+
+<h3 id="注释">注释</h3>
+
+<p><code class="highlighter-rouge">$#</code> 是注释指示符。任何以 <code class="highlighter-rouge">$#</code> 开始的某行内容都被当做注释。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$# this is a comment
+Hello $name.title()! $# display the name in title case
+</code></pre>
+</div>
+
+<h3 id="控制结构">控制结构</h3>
+
+<p>模板系统支持 <code class="highlighter-rouge">for</code>, <code class="highlighter-rouge">while</code>, <code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">elif</code> 和 <code class="highlighter-rouge">else</code>。像 python 一样，这里是需要缩进的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$for i in range(10): 
+    I like $i
+
+$for i in range(10): I like $i
+    
+$while a:
+    hello $a.pop()
+
+$if times &gt; max: 
+    Stop! In the name of love. 
+$else: 
+    Keep on, you can do it.
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">for</code> 循环内的成员变量只在循环内发生可用：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>loop.index: the iteration of the loop (1-indexed)
+loop.index0: the iteration of the loop (0-indexed)
+loop.first: True if first iteration
+loop.last: True if last iteration
+loop.odd: True if an odd iteration
+loop.even: True if an even iteration
+loop.parity: "odd" or "even" depending on which is true
+loop.parent: the loop above this in nested loops
+</code></pre>
+</div>
+
+<p>有时候，他们使用起来很方便：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;table&gt;
+$for c in ["a", "b", "c", "d"]:
+    &lt;tr class="$loop.parity"&gt;
+        &lt;td&gt;$loop.index&lt;/td&gt;
+        &lt;td&gt;$c&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+</div>
+
+<h3 id="其他">其他</h3>
+
+<h4 id="使用-def">使用 <code class="highlighter-rouge">def</code></h4>
+
+<p>可以使用 <code class="highlighter-rouge">$def</code> 定义一个新的模板函数，支持使用参数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$def say_hello(name='world'):
+    Hello $name!
+
+$say_hello('web.py')
+$say_hello()
+</code></pre>
+</div>
+
+<p>其他示例：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$def tr(values):
+    &lt;tr&gt;
+    $for v in values:
+        &lt;td&gt;$v&lt;/td&gt;
+    &lt;/tr&gt;
+
+$def table(rows):
+    &lt;table&gt;
+    $for row in rows:
+        $:row
+    &lt;/table&gt;
+
+$ data = [['a', 'b', 'c'], [1, 2, 3], [2, 4, 6], [3, 6, 9] ]
+$:table([tr(d) for d in data])
+</code></pre>
+</div>
+
+<h4 id="代码">代码</h4>
+
+<p>可以在 <code class="highlighter-rouge">code</code> 块书写任何 python 代码：
+    $code:
+        x = “you can write any python code here”
+        y = x.title()
+        z = len(x + y)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>    def limit(s, width=10):
+        """limits a string to the given width"""
+        if len(s) &gt;= width:
+            return s[:width] + "..."
+        else:
+            return s
+            
+And we are back to template.
+The variables defined in the code block can be used here.
+For example, $limit(x)
+</code></pre>
+</div>
+
+<h4 id="使用-var">使用 <code class="highlighter-rouge">var</code></h4>
+
+<p><code class="highlighter-rouge">var</code> 块可以用来定义模板结果的额外属性：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$def with (title, body)
+
+$var title: $title
+$var content_type: text/html
+
+&lt;div id="body"&gt;
+$body
+&lt;/div&gt;
+</code></pre>
+</div>
+
+<p>以上模板内容的输出结果如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; out = render.page('hello', 'hello world')
+&gt;&gt;&gt; out.title
+u'hello'
+&gt;&gt;&gt; out.content_type
+u'text/html'
+&gt;&gt;&gt; str(out)
+'\n\n&lt;div&gt;\nhello world\n&lt;/div&gt;\n'
+</code></pre>
+</div>
+
+<p><a name="builtins"> </a></p>
+<h2 id="内置-和-全局">内置 和 全局</h2>
+
+<p>像 python 的任何函数一样，模板系统同样可以使用内置以及局部参数。很多内置的公共方法像 <code class="highlighter-rouge">range</code>，<code class="highlighter-rouge">min</code>，<code class="highlighter-rouge">max</code>等，以及布尔值 <code class="highlighter-rouge">True</code> 和 <code class="highlighter-rouge">False</code>，在模板中都是可用的。部分内置和全局对象也可以使用在模板中。</p>
+
+<p>全局对象可以使用参数方式传给模板，使用 <code class="highlighter-rouge">web.template.render</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import web
+import markdown
+
+globals = {'markdown': markdown.markdown}
+render = web.template.render('templates', globals=globals)
+</code></pre>
+</div>
+
+<p>内置方法是否可以在模板中也是可以被控制的：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 禁用所有内置方法
+render = web.template.render('templates', builtins={})
+</code></pre>
+</div>
+
+<p><a name="security"> </a></p>
+<h2 id="安全">安全</h2>
+
+<p>模板的设计想法之一是允许非高级用户来写模板，如果要使模板更安全，可在模板中禁用以下方法：</p>
+
+<ul>
+  <li>不安全部分像 <code class="highlighter-rouge">import</code>，<code class="highlighter-rouge">exec</code> 等；</li>
+  <li>允许属性开始部分使用 <code class="highlighter-rouge">_</code>；</li>
+  <li>不安全的内置方法 <code class="highlighter-rouge">open</code>, <code class="highlighter-rouge">getattr</code>, <code class="highlighter-rouge">setattr</code> 等。</li>
+</ul>
+
+<p>如果模板中使用以上提及的会引发异常 <code class="highlighter-rouge">SecurityException</code>。</p>
+
+<p><a name="upgrading"> </a></p>
+<h2 id="从-webpy-02-升级">从 web.py 0.2 升级</h2>
+
+<p>新版本大部分兼容早期版本，但仍有部分使用方法会无法运行，看看以下原因：</p>
+
+<ul>
+  <li>Template output is always storage like <code class="highlighter-rouge">TemplateResult</code> object, however converting it to <code class="highlighter-rouge">unicode</code> or <code class="highlighter-rouge">str</code> gives the result as unicode/string.</li>
+  <li>
+    <p>重定义全局变量将无法正常运行，如果 x 是全局变量下面的写法是无法运行的。</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  $ x = x + 1
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p>以下写法仍被支持，但不被推荐。</p>
+
+<ul>
+  <li>如果你原来用 <code class="highlighter-rouge">\$</code> 反转美元字符串， 推荐用 <code class="highlighter-rouge">$$</code> 替换；</li>
+  <li>如果你有时会修改 <code class="highlighter-rouge">web.template.Template.globals</code>，建议通过向 <code class="highlighter-rouge">web.template.render</code> 传变量方式来替换。</li>
+</ul>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
+       
+      	<a href="/tags.html#web.py-ref" rel="tag">web.py</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/python/2012/04/19/webpy-tutorial-install.html" title="web.py 0.3 新手指南 - 安装">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/python/2012/04/19/webpy-tutorial.html" title="web.py 0.3 新手指南">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "web.py 0.3 新手指南 - 模板系统"; //请用代码生成文章标题
+    var wumiiTags = "python,web.py"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["python"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="web.py 0.3 新手指南 - 模板系统" data-url="http://justjavac.com/python/2012/04/19/webpy-tutorial-templetor.html" data-thread-key="/python/2012/04/19/webpy-tutorial-templetor"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

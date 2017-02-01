@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>基于 canvas 将图片转化成字符画 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="javascript, canvas">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2013/09/22/linux-scheduled-task-crontab.html" title="Linux 计划任务 — crontab" />
+    
+    
+    <link rel="next prerender" href="/nodejs/2013/10/07/node-js-and-the-new-web-front-end.html" title="Node.js 给前端带来了什么" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>基于 canvas 将图片转化成字符画 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p><img src="/assets/images/img2txt.jpg" alt="img2txt" title="img2txt" /></p>
+
+<p>字符画大家一定非常熟悉了，那么如何把一张现有的图片转成字符画呢？
+HTML5 让这个可能变成了现实，通过 canvas，可以很轻松实现这个功能。</p>
+
+<p>其实原理很简单：扫描图片相应位置的像素点，再计算出其灰度值，根据灰度值的大小，分别用字符 <code class="highlighter-rouge">#*+“</code> 和空格来填充。</p>
+
+<p>下面是源码：</p>
+
+<p>HTML：一个 <code class="highlighter-rouge">canvas</code> 元素 <code class="highlighter-rouge">#cv</code>，一个字符画容器 <code class="highlighter-rouge">#txt</code>。</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">"cv"</span><span class="nt">&gt;</span>fuck ie<span class="nt">&lt;/canvas&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"txt"</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<p>css：由于每一行用 <code class="highlighter-rouge">p</code> 来填充，所以 <code class="highlighter-rouge">p</code> 的 <code class="highlighter-rouge">height</code> 和 <code class="highlighter-rouge">font-size</code> 大小应该一致都是 <code class="highlighter-rouge">12px</code>，这样可以避免每行出现空隙。</p>
+
+<div class="language-css highlighter-rouge"><pre class="highlight"><code><span class="o">*</span> <span class="p">{</span><span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span><span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;}</span>
+<span class="nt">body</span> <span class="p">{</span><span class="nl">font-size</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span> <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span> <span class="nl">font-family</span><span class="p">:</span> <span class="n">simsun</span><span class="p">;</span> <span class="nl">background</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;}</span>
+<span class="nt">p</span> <span class="p">{</span> <span class="nl">height</span><span class="p">:</span> <span class="m">12px</span><span class="p">;}</span>
+<span class="nt">p</span><span class="nc">.ts</span> <span class="p">{</span> <span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span> <span class="nl">width</span><span class="p">:</span> <span class="m">500px</span><span class="p">;</span> <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;}</span>
+<span class="nt">span</span> <span class="p">{</span><span class="nl">width</span><span class="p">:</span> <span class="m">12px</span><span class="p">;}</span>
+<span class="nf">#cv</span><span class="o">,</span> <span class="nf">#txt</span> <span class="p">{</span><span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;}</span>
+<span class="nf">#cv</span> <span class="p">{</span> <span class="nl">margin-right</span><span class="p">:</span> <span class="m">5px</span><span class="p">;}</span>
+</code></pre>
+</div>
+
+<p>javascript：请看注释和下面的解释。</p>
+
+<p><code class="highlighter-rouge">html
+&lt;script src="https://gist.github.com/justjavac/6696499.js"&gt;&lt;/script&gt;
+</code>javascript</p>
+
+<p><strong>如何取到相应像素点的灰度？</strong></p>
+
+<p><code class="highlighter-rouge">getImageData</code> 方法返回一个对象，每个像素点的 <code class="highlighter-rouge">rgba</code> 值都保存在其 <code class="highlighter-rouge">data</code> 属性下面，这是一个一位数组，
+也就是说，<code class="highlighter-rouge">rgba</code> 分别对应一个值，然后接着就是一下像素点的 <code class="highlighter-rouge">rgba</code>，假设 <code class="highlighter-rouge">getImageData.data</code> 的值为 <code class="highlighter-rouge">[1,2,3,4,5,6,7,8]</code>，
+那么 <code class="highlighter-rouge">getImageData</code> 对象范围就包含了 2 个像素点，第一个像素点的 <code class="highlighter-rouge">rgba</code> 值分别是 <code class="highlighter-rouge">1,2,3,4</code>，第二个像素点的就是 <code class="highlighter-rouge">4,5,6,7,8</code>。
+因此，我们在取每个像素点的 <code class="highlighter-rouge">rgba</code> 值的时候其 <code class="highlighter-rouge">index</code> 应该在像素点的索引值上乘以 <code class="highlighter-rouge">4</code>，然后通过 <code class="highlighter-rouge">getGray()</code> 计算灰度。</p>
+
+<p><strong>如何对应到字符？</strong></p>
+
+<p>再考虑一下每个字符串的宽度是 <code class="highlighter-rouge">6px</code>，高度是 <code class="highlighter-rouge">12px</code>，所以我们不可能每个像素点都要对应一个字符，那样生成的图案将非常之大。
+我们只能根据图片宽高，来定义一个间隔，横向间隔 <code class="highlighter-rouge">6px</code>，纵向间隔 <code class="highlighter-rouge">12px</code> 取一次像素，这样可以保证生成的字符画大小和原图保持一致。</p>
+
+<p>最后请看 demo： <a href="http://justjavac.com/img2txt/">http://justjavac.com/img2txt/</a></p>
+
+<p>原文链接： <a href="http://www.cssha.com/img2txt-canvas">http://www.cssha.com/img2txt-canvas</a></p>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+       
+      	<a href="/tags.html#canvas-ref" rel="tag">canvas</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2013/09/22/linux-scheduled-task-crontab.html" title="Linux 计划任务 — crontab">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/nodejs/2013/10/07/node-js-and-the-new-web-front-end.html" title="Node.js 给前端带来了什么">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "基于 canvas 将图片转化成字符画"; //请用代码生成文章标题
+    var wumiiTags = "javascript,canvas"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="基于 canvas 将图片转化成字符画" data-url="http://justjavac.com/javascript/2013/09/25/ji-yu-canvas-jiang-tu-pian-zhuan-hua-cheng-zi-fu-hua.html" data-thread-key="/javascript/2013/09/25/ji-yu-canvas-jiang-tu-pian-zhuan-hua-cheng-zi-fu-hua"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

@@ -1,184 +1,30 @@
+---
+layout: nil
+title : Atom Feed
+---
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>pemako blog</title>
-  <subtitle>怕什么真理无穷，进一寸有一寸的欢喜</subtitle>
-  <link href="/atom.xml" rel="self"/>
-  
-  <link href="https://pemako.github.com/"/>
-  <updated>2017-02-01T14:41:52.000Z</updated>
-  <id>https://pemako.github.com/</id>
-  
-  <author>
-    <name>pemako</name>
-    
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Composer使用总结</title>
-    <link href="https://pemako.github.com/2017/01/25/php/composer-overview-md/"/>
-    <id>https://pemako.github.com/2017/01/25/php/composer-overview-md/</id>
-    <published>2017-01-25T09:22:48.000Z</published>
-    <updated>2017-02-01T14:41:52.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;Composer 是 PHP 的一个依赖管理工具。它允许你声明项目所依赖的代码库，他会在你的项目中为你安装指明的依赖。&lt;/p&gt;
-&lt;p&gt;Com
-    
-    </summary>
-    
-      <category term="php" scheme="https://pemako.github.com/categories/php/"/>
-    
-    
-      <category term="php" scheme="https://pemako.github.com/tags/php/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux实现自动登陆远程机器</title>
-    <link href="https://pemako.github.com/2017/01/24/linux/autologin/"/>
-    <id>https://pemako.github.com/2017/01/24/linux/autologin/</id>
-    <published>2017-01-24T02:58:56.000Z</published>
-    <updated>2017-02-01T14:41:09.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在 Linux 下进行远程登陆的时候，总是要进行 ssh 输入账号，密码等操作，比较繁琐。&lt;br&gt;而且在工作中总是会先登陆到公司的中间机器(跳板机)然后才能登陆线上的机器，每次操作更加繁琐。&lt;br&gt;写了一个通过配置可以免输密码，直接到达指定机器并执行相应的指令。理论上可以配
-    
-    </summary>
-    
-      <category term="linux" scheme="https://pemako.github.com/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="https://pemako.github.com/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>这对父子</title>
-    <link href="https://pemako.github.com/2017/01/23/life/%E8%BF%99%E5%AF%B9%E7%88%B6%E5%AD%90/"/>
-    <id>https://pemako.github.com/2017/01/23/life/这对父子/</id>
-    <published>2017-01-23T13:41:29.000Z</published>
-    <updated>2017-01-23T13:48:55.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这是关于自尊、自爱、自信、自强、自信、自律、信任、价值、爱国、礼貌、知识、内在美，最接地气的理解。&lt;br&gt;对话内容有相应的省略，原文请查看文章底部。&lt;/p&gt;
-&lt;h2 id=&quot;自尊&quot;&gt;&lt;a href=&quot;#自尊&quot; class=&quot;headerlink&quot; title=&quot;自尊&quot;&gt;&lt;/
-    
-    </summary>
-    
-      <category term="生活" scheme="https://pemako.github.com/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="生活" scheme="https://pemako.github.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Golang 概述</title>
-    <link href="https://pemako.github.com/2017/01/23/golang/golang-overvies/"/>
-    <id>https://pemako.github.com/2017/01/23/golang/golang-overvies/</id>
-    <published>2017-01-23T13:34:36.000Z</published>
-    <updated>2017-02-01T14:42:58.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Git: https://github.com/golang/go&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code
-    
-    </summary>
-    
-      <category term="golang" scheme="https://pemako.github.com/categories/golang/"/>
-    
-    
-      <category term="golang" scheme="https://pemako.github.com/tags/golang/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NPM包管理器使用</title>
-    <link href="https://pemako.github.com/2017/01/22/npm/npm-package-manage/"/>
-    <id>https://pemako.github.com/2017/01/22/npm/npm-package-manage/</id>
-    <published>2017-01-22T06:55:23.000Z</published>
-    <updated>2017-01-22T06:59:09.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;OSX use &lt;code&gt;brew install node&lt;/code&gt; 目前安装的版本是 &lt;code&gt;v7.4.0&lt;/code&gt;。安装完成 &lt;code&gt;nodejs&lt;/code&gt; 后就可以使用 &lt;code&gt;npm&lt;/code&gt; 进行相应的包管理。&lt;/p&gt;
-&lt;h3 id
-    
-    </summary>
-    
-      <category term="nodejs" scheme="https://pemako.github.com/categories/nodejs/"/>
-    
-    
-      <category term="nodejs" scheme="https://pemako.github.com/tags/nodejs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>生成指定时间内的时间列表</title>
-    <link href="https://pemako.github.com/2017/01/21/python/python-gen-datalist/"/>
-    <id>https://pemako.github.com/2017/01/21/python/python-gen-datalist/</id>
-    <published>2017-01-21T15:41:24.000Z</published>
-    <updated>2017-01-21T15:46:47.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;获取从指定开始时间到指定结束时间的列表&quot;&gt;&lt;a href=&quot;#获取从指定开始时间到指定结束时间的列表&quot; class=&quot;headerlink&quot; title=&quot;获取从指定开始时间到指定结束时间的列表&quot;&gt;&lt;/a&gt;获取从指定开始时间到指定结束时间的列表&lt;/h2&gt;&lt;figu
-    
-    </summary>
-    
-      <category term="python" scheme="https://pemako.github.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="https://pemako.github.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用hexo搭建博客过程</title>
-    <link href="https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/"/>
-    <id>https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/</id>
-    <published>2017-01-21T14:42:11.000Z</published>
-    <updated>2017-01-23T18:26:56.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天下午折腾了一下博客，终于可以正常的运作了，对整个搭建的过程做一个记录&lt;/p&gt;
-&lt;h2 id=&quot;环境说明&quot;&gt;&lt;a href=&quot;#环境说明&quot; class=&quot;headerlink&quot; title=&quot;环境说明&quot;&gt;&lt;/a&gt;环境说明&lt;/h2&gt;&lt;figure class=&quot;highli
-    
-    </summary>
-    
-      <category term="hexo" scheme="https://pemako.github.com/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="https://pemako.github.com/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初次使用Hexo</title>
-    <link href="https://pemako.github.com/2017/01/21/hexo/hexo-command/"/>
-    <id>https://pemako.github.com/2017/01/21/hexo/hexo-command/</id>
-    <published>2017-01-21T14:42:11.000Z</published>
-    <updated>2017-02-01T14:52:21.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://pemako.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pmekao blog&lt;/a&gt;! This is your very first post. Check &lt;a href
-    
-    </summary>
-    
-      <category term="hexo" scheme="https://pemako.github.com/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="https://pemako.github.com/tags/hexo/"/>
-    
-  </entry>
-  
+ 
+ <title>{{ site.title }}</title>
+ <link href="{{ site.production_url }}" rel="self"/>
+ <link href="{{ site.production_url }}"/>
+ <updated>{{ site.time | date_to_xmlschema }}</updated>
+ <id>{{ site.production_url }}</id>
+ <author>
+   <name>{{ site.author.name }}</name>
+   <email>{{ site.author.email }}</email>
+ </author>
+
+ {% for post in site.posts %}
+ <entry>
+   <title>{{ post.title }}</title>
+   <link href="{{ site.production_url }}{{ post.url }}"/>
+   <updated>{{ post.date | date_to_xmlschema }}</updated>
+   <id>{{ site.production_url }}{{ post.id }}</id>
+   <content type="html">
+   	{{ post.content | xml_escape }}
+   </content>
+ </entry>
+ {% endfor %}
+ 
 </feed>

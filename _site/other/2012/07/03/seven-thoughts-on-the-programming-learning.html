@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>关于编程学习的七点思索 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="编程学习,思索">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2012/07/03/RMB-symbol-correct-representation.html" title="人民币的符号的正确表示法？一杠？两杠？" />
+    
+    
+    <link rel="next prerender" href="/java/2012/07/19/good-code-is-cheap-code.html" title="好代码是廉价的代码" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>关于编程学习的七点思索 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>中国古代思想家孔子（Confucius）功劳中包括对许多事物发表的见解, 从 平凡的幸运饼消息（fortune cookie messages）到明显荒谬的笑话, 如“Man who stand on toilet is high on pot.（立于[茅]厕, 乐于[尿]壶)”。</p>
+
+<p>他曾说过一段对人们学习编程有帮助的话：</p>
+
+<ul>
+  <li>I hear and I forget.（耳听为虚）</li>
+  <li>I see and I remember.（眼见为实）</li>
+  <li>I do and I understand.（实践出真知）</li>
+</ul>
+
+<p>对大多数人来说, 坐在教室里听课远非学习编程的理想途径。
+辅以阅读介绍编程概念的书籍可能会有所助益, 但无法与通过有效阅读并思考其他人的源代码直至理解所获得的实践技巧相比。</p>
+
+<p>但是, 真的没有什么方法比喜欢自己动手写程序更能积累编程技巧。
+阅读一点只能学到一点, 而动手编程则能收获很多。
+找到你想简化的事情, 并编写一些程序代码来通过自动化使它们更容易处理。</p>
+
+<p>不幸的是, 搞清楚什么能做有时会是编程学习中最困难的地方。
+基于个人的经验, 答案似乎是你可以一躇而就, 而不是七上八下的事情, 并能通过顿悟来找到通过编写程序来解决问题的方法。</p>
+
+<p>在寻求这种顿悟时, 由于刚开始编程的人知识通常都非常有限, 绘制流程图有助 于以你喜欢的方式来事先准备。
+请这样来做, 至少在开始时, 包括搞清楚你每天使用电脑的流程, 把其中使用最多的部分简化绘制出来。
+一旦你整理出来, 就把在那 些情况下特别有用的编程技能作为早期学习的重点。
+这样的机会在一定程度上是稀缺的, 你可能要改变计算环境来提供这样的机会。</p>
+
+<p>需要做的最重要的事情是要找到一种方法来激励自己编写代码。</p>
+
+<p>下面是关于如何采取行动学习编程的建议。</p>
+
+<h2 id="1数据库管理系统dbmses">1、数据库管理系统（DBMSes）</h2>
+
+<p>诸如PostgreSQL、 Oracle、Microsoft SQL Server, 以及Informix这种专业、耐用的数据库管理系统通过存储过程或存储函数提供了脚本功能。
+最受广泛认可的语言选项也许是 Microsoft SQL Server和Sybase所使用的TransactSQL, 以及Oracle所使用的PL/SQL。 
+PostgreSQL提供了一个名为PL/pgSQL的类PL/SQL的程序扩展到SQL里, 
+但它也提供了包括PL/Perl、PL/Python、PL /Ruby和 PL/Tcl在内的其他语言的选择范围。</p>
+
+<p>这种编程机会虽然限定于一组特定的问题领域, 但如果你是一名DBA（数据库管理员）或你的工作涉及数据库开发报告, 
+将会亲身体验到这是非常有用的。</p>
+
+<h2 id="2插件">2、插件</h2>
+
+<p>许多新的电脑游戏提供了编写和加载插件的功能。
+例如, “魔兽世界 （World of Warcraft）”提供了一个使用Lua脚本语言的插件系统。
+随着Firefox声名鹊起和广泛使用, 现代网页浏览器往往也提供灵活的插件系统；
+在最简 单的情况下, Firefox的插件都是用JavaScript编写的。
+开放源码的浏览器在插件开发方面往往比封闭源代码的浏览器更具吸引力, 并且 Chromium浏览器的插件系统, 
+很可能成为插件开发者们的第二大目标, 这是因为谷歌Chrome浏览器高调的营销策略以及不设限的许可证 （permissive licensing）政策。</p>
+
+<p><strong>PurpleEndurer注</strong>：Lua程序设计语言 是一个简洁、轻量、可扩展的脚本语言。
+Lua读作/’lua/（噜啊）, 是葡萄牙语中”Luna”（月亮）的意思。
+详见：<a href="http://zh.wikipedia.org/zh-cn/Lua">http://zh.wikipedia.org/zh-cn/Lua</a></p>
+
+<p>其他许多应用程序具有插件和扩展系统, 可以提供充分的机会来培养这些迅速发展的编码技能, 
+甚至包括一些终端仿真器（terminal emulators）和基于控制台的文本编辑器, 如Vim。
+（透露一点好消息：我贡献了一点代码到urlpicker项目。）</p>
+
+<h2 id="3实践问题">3、实践问题</h2>
+
+<p>您可以尝试解决代码任务中的通用清单所提供的问题, 代码任务是特别为了给程 序员提供实习机会而专业设计的。
+欧拉（Project Euler）是一个比较流行的、不论编程语言的项目, 包括“一系列具有挑战性的数学/计算机编程问题”。
+欧拉项目收集了上百个问题, 这些问题一般从易到难, 足以让你忙碌很长一段时间。</p>
+
+<p><strong>PurpleEndurer注</strong>：关于欧拉项目, 可访问：<a href="http://projecteuler.net">http://projecteuler.net</a></p>
+
+<p>其他例子包括RubyQuiz, 它多年来一直在ruby-talk的邮件列表中广受欢迎。
+另外还有CodeKata, 它是Dave Thomas的一个规模较小、寿命较短的项目。
+Dave Thomas是《The Pragmatic Programmer（程序员修炼之道）》一书的合著者之一。</p>
+
+<p><strong>PurpleEndurer注</strong>：关于CodeKata可访问 <a href="http://codekata.pragprog.com/">http://codekata.pragprog.com/</a></p>
+
+<p>这些选项不适合用作自我激励型探索性学习的任务, 因为它们会让人挠破头皮, 
+但如果发现其中的乐趣, 它们可以和其它方法一样用于编程实践教育。</p>
+
+<h2 id="4智能手机smartphones">4、智能手机（Smartphones）</h2>
+
+<p>应用程序开发行业中最大的新热潮是智能手机的应用程序。
+这种装置通常需要开发人员使用一种可将装置的功能发挥到极至的特定语言作为应用平台, 至少要以官方认可的方式进行。</p>
+
+<p>智能手机开发体系的一个新兴产业正在崛起, 即允许开发人员用非智能手机平台原生的其它语言编写自己的代码, 然后转化为原生语言的应用程序。
+因为不需要学习任何特定的智能手机平台的官方应用程序开发语言, Web应用程序也沾了光, 成为智能手机应用程序开发的一种方法。
+选择语言甚于平台的另一个 方案是使用像诺基亚的N900这样的设备, 它运行Debian发行的Linux系统, 
+可以运行的软件范围很宽——包括很多不是为智能手机设计的软件。</p>
+
+<p>侧重于多种方法开发智能手机应用程序的书籍和在线教程纷纷出现, 特别是Android和iPhone的设备。
+一些第三方框架将可以从HTML + JavaScript 到 Ruby 或 Python编写的代码“编译”为多种平台的“本地”应用程序, 
+有时不仅包括智能电话平台, 而且包括桌面系统。
+对这种情况也许最令人兴奋的是, 这些框架和 相关的IDE不倾向于试图解决所有的编程问题, 这与同样出色的编程方式的主要框架, 
+如Visual Studio和.NET框架有所不同。这使得人们有可能通过缩小选项至一个易于管理的问题领域来显著地简化开发过程。
+其结果是软件开发风格令初学者感到非 常易于接受。</p>
+
+<p>不足之处是, 在学习如何编程时, 你可能很难每天都编写新的智能手机应用程序。
+但是, 如果您的智能手机的操作系统是类Unix系统（如N900的）, 同样的小工具开发项目在工作站和服务器中都非常有用。</p>
+
+<h2 id="5电子表格">5、电子表格</h2>
+
+<p>如果使用了附带强大宏系统的电子表格程序, 你将拥有一个快速的方法来阅读其 他人（或物）代码, 
+并编写自己的代码。
+首先, 将你执行次数多、通常需要采取数个繁琐步骤的任务记录成一个宏。
+接下来, 打开宏的源代码, 阅读并进行编辑, 使 之更适合于一般用途。
+这是一个非常有限的方法, 不会带来多大的长进, 但可能会帮助你上路, 自然地喜欢上简单的脚本代码。</p>
+
+<p>使用此类脚本的最常见的电子表格程序可能是微软Excel。
+Excel所使 用的VBA是一种贫乏的语言, 但是如果你在日常工作中大量使用Excel, 这可能是无论如何你都该掌握的一种技能。
+OpenOffice.org使用了类似的宏系统, 使用方法大致相同, LibreOffice也像微软Office一样, 提供了学习代码的机会。</p>
+
+<p>在任何情况下, 编写程序的门坎都比编写简单的命令行shell脚本代码稍高, 因为菜单选项和按钮需要点击才能启用。
+入门的成本类似于用市场上的一种主要IDE开始一个新项目, 但是一个大幅缩水的“项目”。
+这会是一个不错的主 意, 可以确保这不仅仅是在日常开发环境中编写脚本的机会, 甚至是加以利用就会很有帮助的。</p>
+
+<h2 id="6unix">6、Unix</h2>
+
+<p>如果你定期使用一些类UNIX系统, 在寻找锻炼初期编程技能的方式时就具有巨大的优势。
+UNIX在简单脚本自动化方面提供了比任何其他家庭通用操作系统的更多的使用机会, 这要感谢平台上管理脚本的极大灵活性。
+在最不复杂的情况 下, 一个管理脚本可能只不过是将一系列shell命令保存到一个文件中。
+在此基础上, 可以利用简单的循环和条件结构、输入输出处理、文件读写、计划任务来 进行扩展。</p>
+
+<p>通过编写简单shell脚本爽过一把后, 花一段时间来学习如何用Perl、 Python和Ruby编写管理脚本对任何一个Unix系统管理员都是值得的。
+在Unix环境使用这些语言的关键技能包括通过UNIX管道和重定向访问文本流, 处理命令行选项, 读写文件, 使用正则表达式搜索和操作文本。
+管理员也想知道编程的公共基础知识, 比如处理输出, 循环（或在某些情况下递归）, 
+以明确 界定的标准为基础, 通过使用条件判断结构编程来作出决策。</p>
+
+<p>编写Unix命令行工具是一块沃土, 有许多机会将脚本语言的巨大能力用于编程。
+由于管理脚本开发的灵活性和简约性要求, 编写工具的范围可以从一些有用工具的最简例子到强大的服务器进程, 
+甚至大规模并行任务自动化, 负载平衡, 启发 式过滤, 和一些其他有趣的问题解决作业, 
+这些问题激起了世界上最好的程序员的兴趣。</p>
+
+<p>虽然几乎所有通用操作系统都具有一些使用管理脚本的能力, 其中相当一部分用途比较窄, 另一些操作系统则比较均衡。
+Unix在管理脚本的适用条件方面高人一等, 因为诸如主要Linux发行版和BSD Unix系统等Unix类系统共享相同的基本运行环境设计, 
+他们都可以从管理脚本和脚本平台之间的可移植性中受益 - 只要你按可移植性要求来写这些脚本
+（如通过使用sh或Perl而不是bash, 选择系统标准sysctl值而不是数据源的proc文件系统）。</p>
+
+<p>这些工作也适用于除开非常高级, 动态, 解释型语言之外的其它语言。 
+C, C++, Haskell, Objective-C, Objective Caml, 以及大量其他选项正好合适各类简单Unix工具的编写任务。
+对于其中的许多语言, 即使要完成像小型管理工具的这样简单的工程项目, 也必须学会更 广泛的技能, 
+这一要求比Perl, Ruby和Bourne shell的这样的语言高。
+但这些任务与GUI应用程序开发、系统编程、其它经常使用（特别是在其他平台上的）的任务比起来, 其艰巨性对编程初学者来说要小得多。</p>
+
+<p>实际上, 鉴于Unix哲学多年来提供了大量常用工具, 这些工具严格分工（大部分）, 并工作良好, 
+类UNIX环境对编程新手的价值中有一部分是充分利用Unix命令行环境力量, 鼓励用户像程序员那样去思考, 而非观众。</p>
+
+<h2 id="7-web网页">7. Web网页</h2>
+
+<p>这是一个危险的建议, 通过玩JavaScript来学习编程。
+这不是因为 JavaScript是一种不好的语言, 而是因为追求动态用户体验的缘故, 
+网页已经被不加限制地滥用JavaSciprt弄得乱七八糟, 因而在网页上放纵 程序员新手可能会被认为是不负责任的。
+在网页中JavaScript也有一些积极用法, 而且可以让新手们对编写在浏览器中运行的桌面应用程序的想法愈来愈 感兴趣, 
+这给了我们在程序员职业生涯中尽早开始学习JavaScript的很多理由。</p>
+
+<p>事实上, JavaScript是一种最常见的、单独的客户端网页脚本, 这也意味着JavaScript可能是最简单的语言, 通过阅读别人的代码就能学习。
+找到具有客户端动态元素的任何网页, 然后右键单击并选择查看页面源代码的选项, 你就会发现它布满了JavaScript的散落片段。
+对于更复杂的动态页面, （X）HTML的网页甚至可能引用一个纯代码的单独.js文件。</p>
+
+<p>在把代码上传到公共访问的Web服务器前要细心检查；确保它是好的。
+如果你想让更多的有用脚本以本地方式来启动, 浏览器扩展性可以让你将任意脚本应用到你查看的网页上——而且只适用于你个人的浏览体验。
+Firefox的Greasemonkey是一个例子。</p>
+
+<h2 id="征求有关代码的反馈">征求有关代码的反馈</h2>
+
+<p>提高编程技能的另一个伟大方法是, 向自己身边的行家里手征求反馈, 并掌握他们分享给你的的知识。
+他们可能并不总是彼此认可, 但如果你认为他们是值得尊敬的优秀程序员, 他们所说的至少可以提示你思考新思想, 并以新的方式回顾旧观念。</p>
+
+<p>征求反馈的方式很多, 这儿列出几种：</p>
+
+<ul>
+  <li>
+    <p>在开始工作时, 选择具有强大有益社区的程序语言, 如Ruby编程语言有ruby-talk邮件列表, Perl编程语言有PerlMonks网站。
+加入这些社区中的一个（或类似其中之一的）, 并学习该语言的文化和最佳经验, 以及得到最有效帮助的方法。</p>
+  </li>
+  <li>
+    <p>与另一个程序员结对 。结对编程 （Pair programming）是一种时髦的做法, 已经通过敏捷开发方法的崛起而获得尊崇。
+两个人走到一起做一个项目, 但往往只有其中一个是在任何特定时间实际 编写代码。
+结组程序员轮流编写代码, 其中一人输入代码时, 另外一个则在后面阅读代码, 确保他们都得到大量的编码时间。
+就代码持续交谈可以帮助确保解决给定 问题的最好办法逐渐显现并最终采用。
+任何一个拥有顿悟的人在试图向另一个人解释一个问题时, 应该认识到结对编程的潜在价值。</p>
+  </li>
+  <li>
+    <p><strong>寻求导师</strong>. 
+找到导师的地方, 可以是编程语言社区、朋友或同事之中、开放源码(Open Source)软件开发项目、重量级技术主题会议。
+学校可能是另一个找到导师的好地方, 所谓导师, 就是对你、宿舍室友甚至研究小 组有好感, 
+具有不那么传统而更互敬互让的辅导制关系的指导老师。
+在学习编程过程的初期, 与导师一对一的关系有时是获得反馈的最有价值的方式。
+如果你幸运地 寻得一位好的导师, 你应该好好利用这一资源优势, 并且永远不要认为这是理所当然的。</p>
+  </li>
+  <li>
+    <p>在代码托管网站（如Bitbucket或GitHub）上创建一个项目。
+告诉你的程序员朋友, 把它张贴到自己的Weblog或Twitter中, 并激励他人阅读你的代码, 提供反馈意见。
+确保问题跟踪系统是打开的, 这样人们可以通过代码托管网站的交互功能提交bug或改进建议。</p>
+  </li>
+</ul>
+
+<p>在实践技能并获得达人提供的反馈中, 你应该能够以自己的方式从中学习编程的基础知识, 获得实际有益的经验。</p>
+
+<p>现在开动行动, 编写代码罢！</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#编程-ref" rel="tag">编程</a>
+       
+      	<a href="/tags.html#学习-ref" rel="tag">学习</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2012/07/03/RMB-symbol-correct-representation.html" title="人民币的符号的正确表示法？一杠？两杠？">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/java/2012/07/19/good-code-is-cheap-code.html" title="好代码是廉价的代码">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "关于编程学习的七点思索"; //请用代码生成文章标题
+    var wumiiTags = "编程,学习"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["other"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="关于编程学习的七点思索" data-url="http://justjavac.com/other/2012/07/03/seven-thoughts-on-the-programming-learning.html" data-thread-key="/other/2012/07/03/seven-thoughts-on-the-programming-learning"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

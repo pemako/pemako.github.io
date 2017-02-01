@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Flarum 的故事：我为什么开发 Flarum - justjavac(迷渡)</title>
+    <meta name="description" content="Flarum 的故事：我为什么开发 Flarum">
+    <meta name="keywords" content="php,Flarum,laravel">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/php/2015/03/17/fluxbb-joins-forces-with-flarum.html" title="强强联合：FluxBB 作者加盟 Flarum" />
+    
+    
+    <link rel="next prerender" href="/2015/12/09/inheritance-and-the-prototype-chain.html" title="JavaScript：继承和原型链（译）" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Flarum 的故事：我为什么开发 Flarum <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文：<a href="http://flarum.org/story/">Read The Flarum Story: Why I’m Building Flarum</a><br />
+译文：<a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html">Flarum 的故事：我为什么开发 Flarum</a><br />
+译者：<a href="http://discuss.flarum.org.cn">Flarum 中文开发者社区</a></p>
+
+<hr />
+
+<p>我叫 Toby Zerner，是一个 22 岁的澳大利亚人。去年我完成了第三年的医学院本科学业。</p>
+
+<p>今年，我有了学业以外的休息时间，来从事我的一个爱好：<strong>构建简洁的论坛软件</strong>。</p>
+
+<p>这个故事是关于我为什么要做这些，以及 Flarum 的未来。</p>
+
+<h2 id="论坛软件烂透了">论坛软件烂透了</h2>
+
+<p>在我的成长过程中，我的哥哥 Simon 教会了我编程（从某种意义上来说）。</p>
+
+<p>Simon 非常聪明开朗。即使不谈技术层面，虽然当时我们都知道 <a href="http://en.wikipedia.org/wiki/Spaghetti_code">PHP4 面条式代码</a>，然而 Simon 却能领悟到别人领悟不到的事：<strong>简洁 Simplicity</strong>。</p>
+
+<p>论坛软件在当时非常的不简洁。即便是使用“设计”这个词形容这些论坛，都是奢侈的。他们真的算是很粗心的迭代的产物：为了满足一些需求，就要添加一个功能，但却带来了额外的复杂性。然而这个过程会重复上百次，软件就会复杂上百倍。你无法做一个简洁的论坛用户——你必须是一个<strong>超能用户</strong>，花费你宝贵的时间去适应——这简直就是场<strong>战斗</strong>——和这些凌乱的功能战斗，和这些不违和的界面战斗。</p>
+
+<p>Simon 想退一步，以使论坛保持简洁。回归到最基本的对话。为什么我们就<strong>不能</strong>在网上与人简简单单的交谈吗？ 所以我们就构建了 <a href="http://esotalk.org">esoTalk</a>。</p>
+
+<p>我们研究了所有论坛中关于讨论列表的层次结构，并交换了各自的意见。我们摆脱了识别标志，而是实现了一个强大的 <strong>gambit</strong> 搜索系统(一个简化版的 <a href="https://help.github.com/articles/searching-issues/">GitHub’s search tokens</a>)。我们使用短轮询，因此在论坛中所以人可以几乎实时对话。esoTalk 是有别于其他论坛的，人们对此很感兴趣。</p>
+
+<p>esoTalk 视频：<a href="https://vimeo.com/2867330">esoTalk: a simple fast free web-forum</a></p>
+
+<iframe src="https://player.vimeo.com/video/2867330" width="100%" height="450" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+
+<p>不幸的是，Simon 在 2009 年去世。世界失去了一位杰出的人。</p>
+
+<p>这是一个悲伤的时刻，带着对他的回忆，我竭力地继续为完善 esoTalk 而工作。然而，我毕竟是一个年轻的开发人员，编写的代码不知不觉地<a href="http://esotalk.org/blog/future-of-esotalk.html">重新发明了轮子</a>。当我开始关注生活中的其他领域时，发现 esoTalk 已经逐渐变得陈旧。</p>
+
+<p>但我没有停止思考。</p>
+
+<h2 id="构建更好的东西">构建更好的东西</h2>
+
+<p>尽管 esoTalk 已经停滞，可人们仍然喜欢使用它。甚至有些人愿意<a href="http://esotalk.org/forum/478-esotalk-update-xojo-forum">赞助它，希望它进一步发展</a>。通过所有的错误、教训、迭代、和反馈……我开始坚信：人们期待好的论坛软件，也许我有能力设计出来。</p>
+
+<p>为了锻炼我的想象力，我开始嘲笑“esoTalk 2.0”。一些审美的想法最终随着 esoTalk 的新版本发布了。但这些设计也仅仅是头脑风暴的一部分——而这些想法，最终导致了 Flarum 的概念版。</p>
+
+<p>2013 年，在朋友 <a href="http://www.nephets.com">Stephen</a> 的帮助下，我带着 Flarum 的想法参加了我们学校的创业者竞赛。首先我们开始构建一个原型，并设想一个商业模式。其次，一些现金，还有很多鼓励性的问题：<strong>我们可以做这个吗？</strong></p>
+
+<p>也许不是。原来，在现实世界中新的论坛软件是很难的。我们在 Kickstarter 的竞选活动 <a href="https://www.kickstarter.com/projects/1221714515/flarum-forums-reimagined/posts/1023315">generated interest, but not traction</a>。投资或孵化也许已经成为了一种选择，但是我既不想放弃学医，也不想放弃这个社区型项目的想法。</p>
+
+<p>看来最好的办法是启动它。我还有一年的时间才能离开学校，并把它的构建过程开放。然后我可以市场化，构建一个小型的基于服务的业务。 开源第一，赚钱第二。</p>
+
+<p>事实证明，你需要达到一定阶段后开源协作才变得可行。这比我希望的时间要长一点。但 8 个月后我们做到了: Flarum beta 发布了。我相信它实现了一个很强的愿景，而这个愿景，是从 Simon 和我一起发布 esoTalk 第一版时就一直梦想的，如今它实现了。Flarum 的目标是:</p>
+
+<ul>
+  <li>
+    <p><strong>快速、简单</strong> 没有混乱，没有膨胀，没有复杂的依赖关系。Flarum 使用 PHP 构建，因此它很容易部署。界面使用 Mithril，它是一个高性能 JavaScript 框架。</p>
+  </li>
+  <li>
+    <p><strong>漂亮、响应式</strong> Flarum 由我们的设计师精心设计，它是跨平台的、开箱即用的。界面布局使用了 LESS，所以主题风格只是小事一桩。</p>
+  </li>
+  <li>
+    <p><strong>强大、可扩展</strong> 为了满足您的社区需求，您可以定制、扩展和集成 Flarum。Flarum 的架构非常灵活，它拥有非常全面的 API 和<a href="https://justjavac.gitbooks.io/flarum/content/">文档</a>。</p>
+  </li>
+  <li>
+    <p><strong>自由、开放</strong> Flarum 基于 <a href="https://github.com/flarum/flarum/blob/master/LICENSE">MIT license</a> 发布。</p>
+  </li>
+</ul>
+
+<h2 id="让-flarum-更稳定">让 Flarum 更稳定</h2>
+
+<p>没有任何庆功会，因为还有很多工作要做!</p>
+
+<p>我从 esoTalk 学到了一件事：如果一个软件没有建立良好的基于扩展的生态系统，那么这个软件必将失败。我不打算 Flarum 犯同样的错误。我的计划是<strong>扩展市场</strong>，任何人都可以购买和出售扩展——配有简单的安装和更新。然而，只有 Flarum 发布了稳定版，这一切才会有可能。</p>
+
+<p>与此同时，我真的不知道自己该做什么了，而 Flarum 无疑是这一事实的化身。我做了大量的开发，从 Franz Liedke 获得了一些帮助。<strong>getting it done</strong>的精神，导致我迄今为止都忽视了<a href="](https://github.com/flarum/core/issues/245)">编写测试</a>和<a href="https://github.com/flarum/core/issues/127">审计性能</a>。 没有团队的反馈，我创造了一些低质量的代码和 API，而这些都需要修订。</p>
+
+<p>如今我的重点变成了：<strong>Flarum 需要你们的帮助!</strong></p>
+
+<p>beta 版的目标是让开发人员可以从代码库中得到完整代码。现在，已经激发了很多潜在的贡献者，我们写了许多 GitHub issues 的详细描述。它们包含一些忠告，需要做什么和在哪里查看。<a href="https://github.com/flarum/core/issues">看看有哪些是你想要做的!</a></p>
+
+<p>特别是，我们想要一个关于扩展 API 的深入讨论。你可以阅读<a href="https://justjavac.gitbooks.io/flarum/content/extend/index.html">初版文档</a>来学习扩展是如何工作的。这里有一个在 <a href="https://github.com/flarum/core/issues/246">GitHub 的问题反馈</a>。</p>
+
+<p>如果你不是一名开发人员，可以考虑<a href="http://flarum.org/donate">捐赠</a>。所有捐款将用于支付服务器费用和支付专用的开发时间。(如果你有兴趣为开源项目做一些有偿工作：告诉我们你能做什么贡献！)</p>
+
+<p>在接下来的几个月里，让我们慢慢地工作，以便 Flarum 顺利走向<a href="https://github.com/justjavac/flarum/issues/3">稳定版</a>。</p>
+
+<h2 id="鸣谢">鸣谢</h2>
+
+<p>在此次叙述中我谈到了很多关于自己的事。但是到目前为止我们取得的所有成就，不可能没有别人的帮助。</p>
+
+<p><strong>Franz Liedke</strong> 是 <a href="http://fluxbb.org">FluxBB</a> 的开发者，在今年早些时候加入了我的团队。他分享我的激情，超过我的才华，并一直工作至今。谢谢你！</p>
+
+<p>感谢那些热情地跟随我一起开发的人，特别是 <strong>Berlo</strong>、<strong>Dominion</strong> 和 <strong>Stephen</strong>。你们让我有动力，通过你们的测试和反馈，Flarum 有了明显的改善。</p>
+
+<p><strong>Matthew McKinlay</strong> 是我在创业竞赛的导师，也已经成为了我的好朋友。他让我有了宝贵的建议并验证这些想法(<em>Just Do It™</em>)。 谢谢 Matt。</p>
+
+<p><strong>我的父母和兄弟姐妹</strong> 支持我追求我的梦想。为此我非常感激。我有一个相当 cool 的家庭。</p>
+
+<p>最后，我的哥哥，<strong>Simon</strong>，他把种子种了下去，直到他生命的最后一天。Flarum 是献给你的，我希望我已经让你感到骄傲。</p>
+
+<p>最后一段，我保留一下原文：</p>
+
+<blockquote>
+  <p>Finally, my brother, <strong>Simon</strong>, who planted the seed and watered it right up until his last day. Flarum is dedicated to you; I hope I have made you proud.</p>
+</blockquote>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#php-ref" rel="tag">php</a>
+       
+      	<a href="/tags.html#Flarum-ref" rel="tag">Flarum</a>
+       
+      	<a href="/tags.html#laravel-ref" rel="tag">laravel</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/php/2015/03/17/fluxbb-joins-forces-with-flarum.html" title="强强联合：FluxBB 作者加盟 Flarum">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/2015/12/09/inheritance-and-the-prototype-chain.html" title="JavaScript：继承和原型链（译）">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "Flarum 的故事：我为什么开发 Flarum"; //请用代码生成文章标题
+    var wumiiTags = "php,Flarum,laravel"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["php"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Flarum 的故事：我为什么开发 Flarum" data-url="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" data-thread-key="/php/2015/09/28/read-the-flarum-story-why-im-building-flarum"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

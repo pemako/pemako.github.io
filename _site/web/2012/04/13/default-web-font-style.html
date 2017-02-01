@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>默认Web字体样式 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="web, 字体, css">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/web/2012/04/13/can-you-do-the-login-function-on-the-web.html" title="你会做Web上的用户登录功能吗" />
+    
+    
+    <link rel="next prerender" href="/web/2012/04/13/how-do-browsers-render-text.html" title="浏览器如何渲染文本" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>默认Web字体样式 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>通常用户看到的页面的样式(css)会受到三层控制:</p>
+
+<ol>
+<li>第一层是浏览器的默认样式;</li>
+  <li>第二层是网页定义样式;</li>
+  <li>第三层是用户自定义样式.</li>
+</ol>
+
+<p>和CSS一样，后面的优先级高于前面的，也就是说网页定义样式可以覆盖浏览器的默认样式，
+而用户自定义样式优先级最高。</p>
+
+<p>实际情况是虽然浏览器都或多或少提供了用户自定义样式的功能，
+但是极少数会有用户去自定义，一般用也是高级用户。</p>
+
+<p>而浏览器默认的样式往往在不同的浏览器、不同的语言版本甚至不同的系统版本都有不同的设置，
+这就导致如果直接利用默认样式的页面在各个浏览器下显示非常不一致，
+于是就有了类似 <a href="http://developer.yahoo.com/yui/3/cssreset/">YUI的reset</a> 之类用来尽量重写浏览器的默认设置保证各个浏览器样式一致性的做法。</p>
+
+<p>拿字体来说，各个浏览器默认的字体种类、字体大小和字体行高都不一样，
+比如IE8的中文版在Windows XP下显示网页时默认字体是宋体，而英文版肯定不会如此。
+所以我们需要统一设置默认的字体样式，以便实现一致的显示效果来保证设计的一致性和提高开发效率。</p>
+
+<p>以后准备使用如下默认字体样式：</p>
+
+<div class="language-css highlighter-rouge"><pre class="highlight"><code><span class="nt">body</span><span class="p">{</span>
+  <span class="nl">font</span><span class="p">:</span> <span class="m">12px</span><span class="p">/</span><span class="m">1.5</span> <span class="n">arial</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3>字体：arial</h3>
+
+<p>我们页面的绝大部分内容字符都是中文，
+毫无疑问目前为止在网页上最常用也是最通用的显示中文的字体是宋体，
+但是宋体在显示英文、数字和英文符号时过于糟糕，比如?字符，
+所以我们一般期望通过CSS来实现用更好的字体样式来显示它们，然后用宋体来显示中文和中文符号。</p>
+
+<p>之所以选择arial是因为：</p>
+
+<ul>
+<li><p>Windows和Mac都预装了这款字体，应该是使用最广泛的网页字体了。
+它的潜在对手tahoma和helvetica就没有这么幸运了。</p></li>
+<li><p>视觉设计的专业人士可能会认为在Windows中使用tahoma、在Mac中使用helvetica更好，
+比如淘宝的默认字体样式是<code>font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;</code>
+这是一个很不错的选择，但是你也会发现Google、YAHOO、Youtube、Bing甚至MSN的新版都
+使用arial作为第一默认字体。
+所以从美观和可读性上来讲arial应该是完全可以接受的。</p></li>
+<li><p>一般情况下设置font-family都会在最后设置通用字体族以保证其安全性，
+比如Google的设置为 <code>font-family:arial,sans-serif;</code>
+但是至少在非中文版的Win7下当编码是GBK时，IE8会因sans-serif来渲染宋体，
+导致字体出现变形，这就是为什么淘宝需要在sans-serif前加上宋体而Google无需这样做的原因。</p></li>
+<li><p>因为中文字体的选择非常有限，所以目前所有的主流浏览器都设置使用宋体来显示中文。
+Baidu的首页和搜索结果页使用<code>font-family:arial;</code>可以从侧面说明这样做的安全性。
+可能有人注意到Firefox中国版默认显示的中文字体是微软雅黑，
+这是因为谋智网络擅自修改了用户自定义样式，不允许网页的样式覆盖浏览器设置的样式。
+也是由于类似的情况，我们要弹性设计网页非常重要。</p></li>
+</ul>
+<p>使用英文字体作为第一默认字体会导致的问题之一就是中英文以及符号混排时的对齐问题、
+通过设置行高和hasLayout能解决绝大部分情况，但是都不会很完美，
+如果把字体改成“宋体”能彻底的解决问题。</p>
+
+<p>很明显，这个问题只出现在IE上。
+所以，如果你的网站很少使用英文、数字和英文符号，
+那么直接设置 <code>{font-family:\5b8b\4f53;}</code> 也是很合理的选择。</p>
+
+<h3>大小：12px</h3>
+
+<ol>
+<li>12px是宋体能显示的极限，虽然微软雅黑能显示更小的字体，但目前的应用环境尚未成熟。
+由于宋体基本上是目前显示中文唯一的通用Web字体，所以12px成为最常用的字体大小。
+我们当然可以依据产品的需要来修改这个默认值。</li>
+<li>不用考虑基于字体大小（em）的设计。</li>
+<li>在Chrome3.0之后的中文版中，字体大小最小值是12px，比如你设置最小字体为10px，最后也变成12px。</li>
+</ol>
+<h3>行高：1.5倍</h3>
+
+<ul>
+<li> 这是一个经验值, 不同的产品对这个值要求可能不同, 但我们一般会设置最常用的为默认值. </li>
+</ul>
+<p>比如YUI的font中是<code>font:13px/1.231 arial,helvetica,clean,sans-serif;</code>
+   即字体大小默认值是13px，行高是13*1.231=16.003px，默认的行高是默认字体的1.231倍。
+   对于中文来说，常用的字体大小12px、14px、16px、18px等偶数大小，
+   在IE6和IE7设置其行高也为偶数能解决一些特殊情况下的字体对其问题。</p>
+
+<ul>
+<li><p>在IE6和IE7中，行高值必须大于字体的2px才能保证字体的完整显示或当其作为链接时能有效显示下划线。</p></li>
+<li><p>设置line-height时，注意不要使用单位（包括%在内），
+因为子节点会继承经过运算后的line-height值，
+所以当使用单位后浏览器会把line-height计算成第一次定义的绝对值，
+而不会随着字体大小的变化而变化，而无单位的数值表示是所在容器的font-size的倍数，
+所以设置为无单位的数值是最佳选择。</p></li>
+<li><p>深入CSS 行高非常有利于理解line-height，值得一读。</p></li>
+</ul>
+<h3>性能和效率</h3>
+
+<ol>
+<li>大部分平台都有arial，减少浏览器的查找时间。</li>
+<li>代码最少，书写方便。arial基本上是名字最短的字体了，可以节约CSS的大小。</li>
+<li>所有的字母都小写，目前Google就是这样做的，好处是既可以编写更快也能提升Gzip压缩的效率。</li>
+<li>中文最好用unicode表示，比如使用宋体是<code>{font-family:\5b8b\4f53;}</code>，
+使用微软雅黑是<code>{font-family:\5fae\8f6f\96c5\9ed1;}</code>，
+这样的好处是避免编码问题，同时能得到所有的主流浏览器的支持。</li>
+<li>使用正确的字体种类写法，避免使用引号，这样可以缩小CSS的大小。</li>
+</ol>
+<p>中文字体可以按上一条方式来编写。</p>
+
+<h3>未来</h3>
+
+<ol>
+<li><p>通过对中英文及符号混排的测试, 我发现微软雅黑其实表现相当不错, 
+包括英文数字和英文字符以及在IE6和IE7的显示效果上, 
+但唯一的遗憾是在XP下如果安装了微软雅黑字体的用户没有打开“使用屏幕字体的边缘平滑”选项的话，
+在Firefox、Safari和Opera、特别是IE6下会非常模糊难以辨认。
+针对这个问题目前并没有很好的解决方案，所以只有等到IE6使用比率非常小的时候才可能正式的使用它。
+或许需要到2014年，XP死掉的时候。</p></li>
+<li><p>虽然很早就有了@font-face，但是浏览器的支持、网速和商业问题，导致它很少被应用。
+最近关于字体的好消息是Firefox3.6将支持Web Open Font Forma。
+关于Web字体未来的相关信息可以看Web 字体的未来、关于 Web 字体：
+现状与未来和再谈 Web 字体的现状与未来。</p></li>
+</ol>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#web-ref" rel="tag">web</a>
+       
+      	<a href="/tags.html#字体-ref" rel="tag">字体</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/web/2012/04/13/can-you-do-the-login-function-on-the-web.html" title="你会做Web上的用户登录功能吗">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/web/2012/04/13/how-do-browsers-render-text.html" title="浏览器如何渲染文本">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "默认Web字体样式"; //请用代码生成文章标题
+    var wumiiTags = "web,字体"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["web"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="默认Web字体样式" data-url="http://justjavac.com/web/2012/04/13/default-web-font-style.html" data-thread-key="/web/2012/04/13/default-web-font-style"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

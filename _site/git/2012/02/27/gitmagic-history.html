@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Git魔法 - 关于历史 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="gitmagic, git, 历史">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/git/2012/02/25/gitmagic-secrets.html" title="Git魔法 - 揭开面纱" />
+    
+    
+    <link rel="next prerender" href="/jekyll/2012/03/04/static-search-article-on-jekyll.html" title="为 jekyll 博客添加静态搜索" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Git魔法 - 关于历史 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <h2 id="关于历史">关于历史</h2>
+
+<p>Git分布式本性使得历史可以轻易编辑。但你若篡改过去，需要小心：只重写你独自拥有
+的那部分。正如民族间会无休止的争论谁犯下了什么暴行一样，如果在另一个人的克隆
+里，历史版本与你的不同，当你们的树互操作时，你会遇到一致性方面的问题。</p>
+
+<p>一些开发人员强烈地感觉历史应该永远不变，不好的部分也不变所有都不变。另一些觉
+得代码树在向外发布之前，应该整得漂漂亮亮的。Git同时支持两者的观点。像克隆，分
+支和合并一样，重写历史只是Git给你的另一强大功能，至于如何明智地使用它，那是你
+的事了。</p>
+
+<h3 id="我认错">我认错</h3>
+
+<p>刚提交，但你期望你输入的是一条不同的信息？那么键入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git commit --amend
+</code></pre>
+</div>
+
+<p>来改变上一条信息。意识到你还忘记了加一个文件？运行git add来加，然后运行上面的
+命令。</p>
+
+<p>希望在上次提交里包括多一点的改动？那么就做这些改动并运行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git commit --amend -a
+</code></pre>
+</div>
+
+<h3 id="更复杂情况">更复杂情况</h3>
+
+<p>假设前面的问题还要糟糕十倍。在漫长的时间里我们提交了一堆。但你不太喜欢他们的
+组织方式，而且一些提交信息需要重写。那么键入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git rebase -i HEAD~10
+</code></pre>
+</div>
+
+<p>并且后10个提交会出现在你喜爱的$EDITOR。一个例子：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pick 5c6eb73 Added repo.or.cz link
+pick a311a64 Reordered analogies in "Work How You Want"
+pick 100834f Added push target to Makefile
+</code></pre>
+</div>
+
+<p>之后：</p>
+
+<ul>
+  <li>通过删除行来移去提交。</li>
+  <li>通过为行重新排序行来重新排序提交。</li>
+  <li>替换 <code class="highlighter-rouge">pick</code> 使用：
+    <ul>
+      <li><code class="highlighter-rouge">edit</code> 标记一个提交需要修订。</li>
+      <li><code class="highlighter-rouge">reword</code> 改变日志信息。</li>
+      <li><code class="highlighter-rouge">squash</code> 将一个提交与其和前一个合并。</li>
+      <li><code class="highlighter-rouge">fixup</code> 将一个提交与其和前一个合并，并丢弃日志信息。</li>
+    </ul>
+  </li>
+</ul>
+
+<p>保存退出。如果你把一个提交标记为可编辑，那么运行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git commit --amend
+</code></pre>
+</div>
+
+<p>否则，运行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git rebase --continue
+</code></pre>
+</div>
+
+<p>这样尽早提交，经常提交：你之后还可以用rebase来规整。</p>
+
+<h3 id="本地变更之后">本地变更之后</h3>
+
+<p>你正在一个活跃的项目上工作。随着时间推移，你做了几个本地提交，然后你使用合并
+与官方版本同步。在你准备好提交到中心分支之前，这个循环会重复几次。</p>
+
+<p>但现在你本地Git克隆掺杂了你的改动和官方改动。你更期望在变更列表里，你所有的变
+更能够连续。</p>
+
+<p>这就是上面提到的 <em>git rebase</em> 所做的工作。在很多情况下你可以使用 <em>–onto</em> 标
+记以避免交互。</p>
+
+<p>另外参见 <em>git help rebase</em> 以获取这个让人惊奇的命令更详细的例子。你可以拆分提
+交。你甚至可以重新组织一棵树的分支。</p>
+
+<h3 id="重写历史">重写历史</h3>
+
+<p>偶尔，你需要做一些代码控制，好比从正式的照片中去除一些人一样，需要从历史记录
+里面彻底的抹掉他们。例如，假设我们要发布一个项目，但由于一些原因，项目中的某
+个文件不能公开。或许我把我的信用卡号记录在了一个文本文件里，而我又意外的把它
+加入到了这个项目中。仅仅删除这个文件是不够的，因为从别的提交记录中还是可以访
+问到这个文件。因此我们必须从所有的提交记录中彻底删除这个文件。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git filter-branch --tree-filter 'rm top/secret/file' HEAD
+</code></pre>
+</div>
+
+<p>参见 <em>git help filter-branch</em> ，那里讨论了这个例子并给出一个更快的方法。一般
+地， <em>filter-branch</em> 允许你使用一个单一命令来大范围地更改历史。</p>
+
+<p>此后，+.git/refs/original+目录描述操作之前的状态。检查命令filter-branch的确做
+了你想要做的，然后删除此目录，如果你想运行多次filter-branch命令。</p>
+
+<p>最后，用你修订过的版本替换你的项目克隆，如果你想之后和它们交互的话。</p>
+
+<h3 id="制造历史">制造历史</h3>
+
+<p>[[makinghistory]]
+想把一个项目迁移到Git吗？如果这个项目是在用比较有名气的系统，那可以使用一些其
+他人已经写好的脚本，把整个项目历史记录导出来放到Git里。</p>
+
+<p>否则，查一下 <em>git fast-import</em> ，这个命令会从一个特定格式的文本读入，从头来创
+建Git历史记录。通常可以用这个命令很快写一个脚本运行一次，一次迁移整个项目。</p>
+
+<p>作为一个例子，粘贴以下所列到临时文件，比如/tmp/history：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>commit refs/heads/master
+committer Alice &lt;alice@example.com&gt; Thu, 01 Jan 1970 00:00:00 +0000
+data &lt;&lt;EOT
+Initial commit.
+EOT
+
+M 100644 inline hello.c
+data &lt;&lt;EOT
+#include &lt;stdio.h&gt;
+
+int main() {
+  printf("Hello, world!\n");
+  return 0;
+}
+EOT
+
+
+commit refs/heads/master
+committer Bob &lt;bob@example.com&gt; Tue, 14 Mar 2000 01:59:26 -0800
+data &lt;&lt;EOT
+Replace printf() with write().
+EOT
+
+M 100644 inline hello.c
+data &lt;&lt;EOT
+#include &lt;unistd.h&gt;
+
+int main() {
+  write(1, "Hello, world!\n", 14);
+  return 0;
+}
+EOT
+</code></pre>
+</div>
+
+<p>之后从这个临时文件创建一个Git仓库，键入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ mkdir project; cd project; git init
+$ git fast-import --date-format=rfc2822 &lt; /tmp/history
+</code></pre>
+</div>
+
+<p>你可以从这个项目checkout出最新的版本，使用：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git checkout master .
+</code></pre>
+</div>
+
+<p>命令<em>git fast-export</em> 转换任意仓库到 <em>git fast-import</em> 格式，你可以研究其输
+出来写导出程序， 也以可读格式传送仓库。的确，这些命令可以发送仓库文本文件
+通过只接受文本的渠道。</p>
+
+<h3 id="哪儿错了">哪儿错了？</h3>
+
+<p>你刚刚发现程序里有一个功能出错了，而你十分确定几个月以前它运行的很正常。天啊！
+这个臭虫是从哪里冒出来的？要是那时候能按照开发的内容进行过测试该多好啊。</p>
+
+<p>现在说这个已经太晚了。然而，即使你过去经常提交变更，Git还是可以精确的找出问题所在：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git bisect start
+$ git bisect bad HEAD
+$ git bisect good 1b6d
+</code></pre>
+</div>
+
+<p>Git从历史记录中检出一个中间的状态。在这个状态上测试功能，如果还是有问题：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git bisect bad
+</code></pre>
+</div>
+
+<p>如果可以工作了，则把”bad”替换成”good”。Git会再次帮你找到一个以确定的好版本和
+坏版本之间的状态，通过这种方式缩小范围。经过一系列的迭代，这种二分搜索会帮你
+找到导致这个错误的那次提交。一旦完成了问题定位的调查，你可以返回到原始状态，
+键入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git bisect reset
+</code></pre>
+</div>
+
+<p>不需要手工测试每一次改动，执行如下命令可以自动的完成上面的搜索：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git bisect run my_script
+</code></pre>
+</div>
+
+<p>Git使用指定命令（通常是一个一次性的脚本）的返回值来决定一次改动是否是正确的：
+命令退出时的代码0代表改动是正确的，125代表要跳过对这次改动的检查，1到127之间
+的其他数值代表改动是错误的。返回负数将会中断整个bisect的检查。</p>
+
+<p>你还能做更多的事情: 帮助文档解释了如何展示bisects, 检查或重放bisect的日志,并
+可以通过排除对已知正确改动的检查，得到更好的搜索速度。</p>
+
+<h3 id="谁让事情变糟了">谁让事情变糟了？</h3>
+
+<p>和其他许多版本控制系统一样，Git也有一个”blame”命令：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ git blame bug.c
+</code></pre>
+</div>
+
+<p>这个命令可以标注出一个指定的文件里每一行内容的最后修改者，和最后修改时间。但
+不像其他版本控制系统，Git的这个操作是在线下完成的，它只需要从本地磁盘读取信息。</p>
+
+<h3 id="个人经验">个人经验</h3>
+
+<p>在一个中心版本控制系统里，历史的更改是一个困难的操作，并且只有管理员才有权这
+么做。没有网络，克隆，分支和合并都没法做。像一些基本的操作如浏览历史，或提交
+变更也是如此。在一些系统里，用户使用网络连接仅仅是为了查看他们自己的变更，或
+打开文件进行编辑。</p>
+
+<p>中心系统排斥离线工作，也需要更昂贵的网络设施，特别是当开发人员增多的时候。最
+重要的是，所有操作都一定程度变慢，一般在用户避免使用那些能不用则不用的高级命
+令时。在极端的情况下，即使是最基本的命令也会变慢。当用户必须运行缓慢的命令的
+时候，由于工作流被打断，生产力降低。</p>
+
+<p>我有这些的一手经验。Git是我使用的第一个版本控制系统。我很快学会适应了它，用了
+它提供的许多功能。我简单地假设其他系统也是相似的：选择一个版本控制系统应该和
+选择一个编辑器或浏览器没啥两样。</p>
+
+<p>在我之后被迫使用中心系统的时候，我被震惊了。我那有些脆弱的网络没给Git带来大麻
+烦，但是当它需要像本地硬盘一样稳定的时候，它使开发困难重重。另外，我发现我自
+己有选择地避免特定的命令，以避免踏雷，这极大地影响了我，使我不能按照我喜欢的
+方式工作。</p>
+
+<p>当我不得不运行一个慢的命令的时候，这种等待极大地破坏了我思绪连续性。在等待服
+务器通讯完成的时候，我选择做其他的事情以度过这段时光，比如查看邮件或写其他的
+文档。当我返回我原先的工作场景的时候，这个命令早已结束，并且我还需要浪费时间
+试图记起我之前正在做什么。人类不擅长场景间的切换。</p>
+
+<p>还有一个有意思的大众悲剧效应：预料到网络拥挤，为了减少将来的等待时间，每个人
+将比以往消费更多的带宽在各种操作上。共同的努力加剧了拥挤，这等于是鼓励个人下
+次消费更多带宽以避免更长时间的等待。</p>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#Git魔法-ref" rel="tag">Git魔法</a>
+       
+      	<a href="/tags.html#git-ref" rel="tag">git</a>
+       
+      	<a href="/tags.html#gitmagic-ref" rel="tag">gitmagic</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/git/2012/02/25/gitmagic-secrets.html" title="Git魔法 - 揭开面纱">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/jekyll/2012/03/04/static-search-article-on-jekyll.html" title="为 jekyll 博客添加静态搜索">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "Git魔法 - 关于历史"; //请用代码生成文章标题
+    var wumiiTags = "Git魔法,git,gitmagic"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["git"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Git魔法 - 关于历史" data-url="http://justjavac.com/git/2012/02/27/gitmagic-history.html" data-thread-key="/git/2012/02/27/gitmagic-history"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

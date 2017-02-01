@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>JavaScript 的怪癖 1：隐式类型转换 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="javascript, quirks">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/javascript/2013/04/08/12-javascript-quirks.html" title="javascript 的 12 个怪癖（quirks）" />
+    
+    
+    <link rel="next prerender" href="/other/2013/04/10/why-any-sort-algorithm-based-on-the-comparison-of-the-five-elements-are-needed-7-times.html" title="为什么说任何基于比较的算法将5个元素排序都需要7次？" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>JavaScript 的怪癖 1：隐式类型转换 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文：<a href="http://www.2ality.com/2013/04/quirk-implicit-conversion.html">JavaScript quirk 1: implicit conversion of values</a></p>
+
+<p>译文：<a href="http://justjavac.com/javascript/2013/04/08/javascript-quirk-1-implicit-conversion-of-values.html">JavaScript 的怪癖 1：隐式类型转换</a></p>
+
+<p>译者：<a href="http://weibo.com/justjavac">justjavac</a></p>
+
+<hr />
+
+<h2 id="零提要">零：提要</h2>
+
+<p>[此贴子是 <a href="http://justjavac.com/javascript/2013/04/08/12-javascript-quirks.html">javascript 的 12 个怪癖（quirks）</a> 系列的第一篇。]</p>
+
+<p>本系列文章托管在 github：<a href="https://github.com/justjavac/12-javascript-quirks">https://github.com/justjavac/12-javascript-quirks</a>，您可以通过 pull reqeust 的方式参与翻译。</p>
+
+<p>JavaScript 是非常宽容的，「来者不拒」，不在乎什么<a href="http://justjavac.com/javascript/2012/12/23/what-is-javascripts-typeof-operator-used-for.html" title="JavaScript 的 typeof 的用途">类型</a>。
+例如，它如果想要接受数字，它并不拒绝其他类型的值，而是试图把它们转换成数字：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; '5' - '2'
+3
+&gt; '5' * '2'
+10
+</code></pre>
+</div>
+
+<p>自动转换为布尔值通常不会引起问题，而且往往很有用（译注：比如在C语言里，根本就没有布尔类型。by <a href="http://weibo.com/justjavac">@justjavac</a>）。
+即使如此，这些隐式转换也会引起怪癖（quirks）。
+但是当自动转换为字符串时，可能会引起问题。</p>
+
+<h2 id="一隐式转换为布尔truthy和falsy">一：隐式转换为布尔：“truthy”和“falsy”</h2>
+
+<p>当 JavaScript 需要一个布尔值时（例如：<code class="highlighter-rouge">if</code> 语句），任何值都可以被使用。
+最终这些值将被转换为 <code class="highlighter-rouge">true</code> 或 <code class="highlighter-rouge">false</code>。</p>
+
+<p>下面的值被转换为 <code class="highlighter-rouge">false</code>：</p>
+
+<ul>
+  <li>undefined, null</li>
+  <li>Boolean: false</li>
+  <li>Number: -0, +0, NaN</li>
+  <li>String: ‘’</li>
+</ul>
+
+<p>所有其他值都认为是 <code class="highlighter-rouge">true</code>。
+被转换成 ‘false’ 的值我们成之为 falsy，被转换成 ‘true’ 的值我们成之为 truthy。
+您可以使用 Boolean 来测试一个值到底被转换成了什么。</p>
+
+<p>Boolean 将其参数转换为布尔值（boolean）：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; Boolean(undefined)
+false
+&gt; Boolean(0)
+false
+&gt; Boolean(3)
+true
+</code></pre>
+</div>
+
+<h2 id="二字符串的隐式转换">二、字符串的隐式转换</h2>
+
+<p>在 Web 开发中，我们经常得到字符串值，实际上我们期望的却是数字或者布尔值。
+例如，用户输入的表单中的数据。
+如果你忘了对这些字符串进行显式的转换，那么 JavaScript 会令你感到惊讶，主要体现在两个方面：</p>
+
+<ol>
+  <li>首先，系统不会有任何警告。</li>
+  <li>其次，这些值将被自动转换，但确实错误的。</li>
+</ol>
+
+<p>例如，加运算符（+），就有这方面的问题，因为<strong>只要其中一个操作数是字符串，那么它就执行连接字符串的操作（而不是加法操作，即使它们是数字）</strong>。</p>
+
+<p>在下面的 JavaScript 代码中，我们本来预期是把 1 和 5 相加。
+但是，我们使用了字符串 ‘5’ 和 ‘1’ 。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; var x = '5';  // 错误的假设：x 是一个数字
+
+&gt; x + 1
+'51'
+</code></pre>
+</div>
+
+<p>此外，还有一些看似是 <code class="highlighter-rouge">false</code> 的值，如果转换成字符串，却成了 ‘true’。</p>
+
+<p>例如：<code class="highlighter-rouge">false</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; Boolean(false)
+false
+&gt; String(false)
+'false'
+&gt; Boolean('false')  // ！！
+true
+</code></pre>
+</div>
+
+<p>例如： <code class="highlighter-rouge">undefined</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; Boolean(undefined)
+false
+&gt; String(undefined)
+'undefined'
+&gt; Boolean('undefined')  // ！！
+true
+</code></pre>
+</div>
+
+<h2 id="三对象的隐式转换">三、对象的隐式转换</h2>
+
+<p>只有在 JavaScript 表达式或语句中需要用到数字或字符串时，对象才被隐式转换。
+当需要将对象转换成数字时，需要以下三个步骤：</p>
+
+<ol>
+  <li>调用 <code class="highlighter-rouge">valueOf()</code>。如果结果是原始值（不是一个对象），则将其转换为一个数字。</li>
+  <li>否则，调用 <code class="highlighter-rouge">toString()</code> 方法。如果结果是原始值，则将其转换为一个数字。</li>
+  <li>否则，抛出一个类型错误。</li>
+</ol>
+
+<p>第一步示例:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; 3 * { valueOf: function () { return 5 } }
+15
+</code></pre>
+</div>
+
+<p>第三步示例:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; function returnObject() { return {} }
+&gt; 3 * { valueOf: returnObject, toString: returnObject }
+TypeError: Cannot convert object to primitive value
+</code></pre>
+</div>
+
+<p>如果把对象转换成字符串时，则转换操作的第一步和第二步的顺序会调换：
+先尝试 <code class="highlighter-rouge">toString()</code> 进行转换，如果不是原始值，则再尝试使用 <code class="highlighter-rouge">valueOf()</code>。</p>
+
+<h2 id="四相关阅读">四、相关阅读</h2>
+
+<ol>
+  <li>
+    <p><a href="http://justjavac.com/javascript/2012/12/20/object-plus-object.html">JavaScript中,{}+{}等于多少?</a></p>
+  </li>
+  <li>
+    <p><a href="http://justjavac.com/javascript/2012/12/21/converting-any-value-to-an-object.html">JavaScript：将所有值都转换成对象</a></p>
+  </li>
+  <li>
+    <p><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+  </li>
+</ol>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+       
+      	<a href="/tags.html#quirks-ref" rel="tag">quirks</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/javascript/2013/04/08/12-javascript-quirks.html" title="javascript 的 12 个怪癖（quirks）">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/other/2013/04/10/why-any-sort-algorithm-based-on-the-comparison-of-the-five-elements-are-needed-7-times.html" title="为什么说任何基于比较的算法将5个元素排序都需要7次？">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "JavaScript 的怪癖 1：隐式类型转换"; //请用代码生成文章标题
+    var wumiiTags = "javascript,quirks"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="JavaScript 的怪癖 1：隐式类型转换" data-url="http://justjavac.com/javascript/2013/04/08/javascript-quirk-1-implicit-conversion-of-values.html" data-thread-key="/javascript/2013/04/08/javascript-quirk-1-implicit-conversion-of-values"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

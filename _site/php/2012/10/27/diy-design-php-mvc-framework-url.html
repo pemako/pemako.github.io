@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>自己动手设计 PHP MVC 框架（一）——URL - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="php, MVC, 自己动手">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2012/10/22/condor-heroes.html" title="『神雕瞎驴』金庸看完哭了" />
+    
+    
+    <link rel="next prerender" href="/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" title="代码之谜（二）- 语句与表达式" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>自己动手设计 PHP MVC 框架（一）——URL <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>在框架盛行的今天，MVC 也不再是神话。
+经常听到很多程序员讨论哪个框架好，哪个框架不好，
+其实 <strong>框架只是工具，没有好与不好，只有适合与不适合，适合自己的就是最好的。</strong></p>
+
+<p>每次我面试应届生时都会问他使用过什么框架，并谈谈对这些框架的理解。
+当面试有经验的程序员时，会让他自己写一个框架出来。
+其实也不是让他编码，只要有思路就 OK 了。
+我觉得，如果一个有一年经验的程序员连一个 Framework v0.0.1 都开发不出来的话，肯定是没有深入理解一个框架。</p>
+
+<p>前几天 @phoenixg 说要自己写个 MVC 框架。
+而且他也确实不仅仅是说说而已，短短一个周末，这个框架雏形就神奇的出现在了 <a href="https://github.com/phoenixg/phx">github</a> 上。</p>
+
+<p>这篇博文的名字是『自己动手<strong>设计</strong> PHP MVC框架』，
+所以本文不会涉及太多的编码，文中出现的任何代码片段都是我直接在 vim 里面敲的，
+没做任何测试，如果想使用文中代码需自行测试。</p>
+
+<p>跟随本教程，将从零开始设计一个属于自己的 MVC 框架。</p>
+
+<p>我使用过 ZendFramwork、CodeIgniter，每个框架都有自己的优点和不足。
+在写本文之前，我又看了 Symfony、cakephp、MooPHP、doitphp 等的核心源码，
+下面说说我将把我的框架设计成什么样子，这一章主要讨论 URL 的设计。</p>
+
+<h2 id="1-rest">1. REST</h2>
+
+<p>在这个 REST 横行的时代，如果一个框架不支持 REST，肯定被<strong>前卫程序员</strong>所瞧不起，所以本框架也要支持 REST。</p>
+
+<p>第一个设计准则： <strong>所有东西都是资源，资源有多种表现形式</strong>。</p>
+
+<p>不管实际上存在的，还是抽象上的，
+所有资源都会有一个不变的标识（ID），对资源的任何 API 操作都不应该改变资源的标识。</p>
+
+<p>事实上，上面的这些完完全全是按照互联网的特性提出来的。</p>
+
+<ul>
+  <li>互联网中，一个 URL 就是一个资源；</li>
+  <li>资源的内容就是 HTML 页面；</li>
+  <li>不管怎么改 HTML 内容，URL 都不会改变；</li>
+  <li>资源之间通过 HTML 里的连接联系起来；</li>
+  <li>每次获取的时候，获取到的都是完整的 HTML 内容。</li>
+</ul>
+
+<p>比如</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>GET http://justjavac.com/users         // 所有用户
+GET http://justjavac.com/users/phper   // 标识为phper的用户
+</code></pre>
+</div>
+
+<h2 id="2-扩展名">2. 扩展名</h2>
+
+<p>在此我不讨论扩展名和文件类型之间的关系，以及“扩展名只是约定，而文件类型记录在文件头”。</p>
+
+<p>我通常把扩展名理解为“约定”，而不是文件类型。
+当我们请求一个 news.html 时，我们并不能确信它就是一个存在于服务器上的news.html文件，
+它也可能是php文件，也可能是jsp文件，在nodejs流行的今天，它也可能是一个js文件。
+但不管页面是如何生成的，有一点是明确的——最终我们得到了一个html文档。</p>
+
+<p>虽然rest不要求使用扩展名，但有人告诉我，如果在一个女生名字后面加一个.rmvb 的扩展名，将变得非常……因此本框架将支持扩展名，但是扩展名并是资源的一部分。</p>
+
+<p>什么意思呢？</p>
+
+<p>还是前面的例子，所有用户这个资源该如何表示呢？
+用 url <code class="highlighter-rouge">http://justjavac.com/users</code> 就可以唯一标识，
+而 <strong>扩展名可以用来标识资源的不同表现形式</strong>。</p>
+
+<p>a、当我们请求 <code class="highlighter-rouge">http://justjavac.com/users</code> 时，框架将返回一个html文档，
+数据可能在表格中，也可能在 form 中，也可能在 div 中（如下图）。</p>
+
+<p><img src="/assets/images/diy-design-php-mvc-framework-url-users.png" alt="table of users" title="table of users" /></p>
+
+<p>b、当我们请求 <code class="highlighter-rouge">http://justjavac.com/user.json</code> 时，将返回 json 格式数据。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[
+    {
+        "firstName" : "just",
+        "lastName" : "javac",
+        "userName" : "@justjavac"
+    },
+    {
+        "firstName" : "Tom",
+        "lastName" : "Cat",
+        "userName" : "@tomcat"
+    },
+    ……
+]
+</code></pre>
+</div>
+
+<p>c、当我们请求 <code class="highlighter-rouge">http://justjavac.com/user.xml</code> 时，
+将返回 xml 格式的数据，xml 文档可由 DTD 或者 XSD 定义。</p>
+
+<p>d、如果我们想把所有用户的列表发给管理员，或者打印出来呢？</p>
+
+<p>可以直接访问 <code class="highlighter-rouge">http://justjavac.com/user.xls</code>，框架将会返回 Excel 电子表格。
+当我们高高兴兴把文件下载下来，却发现电脑没有安装 Excel，怎么办？
+没关系，我们还可以访问 <code class="highlighter-rouge">http://justjavac.com/user.jpg</code>，毕竟看图工具我们还是有的。</p>
+
+<p>用过 Google 短网址服务的同学都知道，
+比如我的网站 <code class="highlighter-rouge">http://justjavac.com</code> 的短网址是 <code class="highlighter-rouge">http://goo.gl/JMQJ8</code>，
+Google 还提供了二维码表示法，只需要在后面添加 .qr 例如 <code class="highlighter-rouge">http://goo.gl/JMQJ8.qr</code>。</p>
+
+<p>总之，<strong>不管用了什么扩展名，将返回同一个资源，只是表现形式不同罢了</strong>。
+这也就是经常所说的 <strong>数据 + 模板 = 输出</strong>。</p>
+
+<p>如果没有扩展名呢？返回 HTML 文档？</p>
+
+<p>别忘了 http 请求的 Accept。
+设置请求头的 <code class="highlighter-rouge">Accept: application/x-excel</code> 我们依然可以得到一个电子表格。</p>
+
+<p>甚至当我们访问某个用户时， <code class="highlighter-rouge">http://justjavac.com/user/justjavac</code>，我们可以使用 <code class="highlighter-rouge">Accept: text/x-vcard</code>，如果不知道嘛意思，自己Google去。</p>
+
+<p><img src="/assets/images/diy-design-php-mvc-framework-url-vcard.png" alt="justjavac.vcard" title="justjavac.vcard" /></p>
+
+<p>下面说说设计模式，在这个功能上，可以用一个适配器模式，<strong>根据不同的扩展名选择不同的适配器，执行不同的功能，最后提供相同的接口</strong>，具体实现就不多说了。</p>
+
+<h2 id="3-多语言支持">3. 多语言支持</h2>
+
+<p><strong>@TODO</strong> 多语言支持的 url 结构设计</p>
+
+<h2 id="4-充分利用-http">4. 充分利用 HTTP</h2>
+
+<p>和请求有关的错误和其他重要的状态信息怎么办呢？</p>
+
+<p>简单，使用 HTTP 的状态码！
+通过使用 HTTP 状态码，你不需要为你的接口想出 error/success 规则，它已经为你做好。</p>
+
+<p>比如：假如一个消费者提交数据（POST）到 <code class="highlighter-rouge">/api/users</code>，</p>
+
+<ul>
+  <li>你需要返回一个成功创建的消息，此时你可以简单的发送一个 201 状态码（201=Created)。</li>
+  <li>如果失败了，服务器端失败就发送一个 500（500=内部服务器错误），</li>
+  <li>如果请求中断就发送一个 400（400=错误请求）。</li>
+  <li>也许他们会尝试向一个不接受 POST 请求的接口提交数据，你就可以发送一个 501 错误（未执行）。</li>
+  <li>又或者你的 MySQL 服务器挂了，接口也会临时性的中断，发送一个503错误（服务不可用）。</li>
+</ul>
+
+<p>幸运的是，你已经知道了这些，假如你想要了解更多关于状态码的资料，可以在维基百科上查找。</p>
+
+<p>HTTP 支持客户端缓存，在HTTP响应里利用 Cache-Control，Expires，Last-Modified 三个头字段，
+我们可以让浏览器缓存资源一段时间。</p>
+
+<p>REST 也可以利用这些头，告诉客户端在一定时间内不需要再次请求资源。
+这对提高性能有很大好处。Expires、Last-Modified 以及 ETag 可以通过资源的属性提供，这个在有关 Model 层的设计中再详细介绍。</p>
+
+<h2 id="5-测试与调试">5. 测试与调试</h2>
+
+<p>PHP 的灵活使得自动化测试或者 TDD 变得困难，至少和 Java 比就差了好大一截。
+在框架中，将很自由的开启调试，比如我的设计是通过添加 url 参数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>http://justjavac.com/user/justjavac?DEBUG=2
+</code></pre>
+</div>
+
+<p>通过添加 DEBUG 参数告诉框架开启调试模式，后面的参数值是调试的级别 level。
+类似的，你也可以加入 LOG 参数来启动日志。</p>
+
+<p>这样设计还有一个好处就是，不需要修改配置文件，而且还可以 <strong>针对某一个页面来开启或者关闭</strong>。
+当我用 CI 时，每次我发现程序中的问题，都在配置文件中将 log 级别设置为 all，
+再重新打开页面，当我再看 log 文件时，居然已经几百行了，因为我访问的每个页面都被记录到了日志里面。</p>
+
+<p>测试和 url 好像没有多大关系，测试放在单独的章节讨论。
+我为测试约定的 url 是添加 test，比如为控制器 justjavac.controller.php 写的测试用例（Test Case）可以通过 <code class="highlighter-rouge">http://justjavac.com/test/user/justjavac</code> 访问。</p>
+
+<p>但我还是比较喜欢在命令行测试，毕竟当你手动点击浏览器，并手动输入 url，
+手动敲回车键时，已经违背了 <strong>自动化测试</strong>。</p>
+
+<h2 id="6-ajax">6. Ajax</h2>
+
+<p><strong>@TODO</strong> 应用于单页 Ajax 的 url 结构设计</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#php-ref" rel="tag">php</a>
+       
+      	<a href="/tags.html#MVC-ref" rel="tag">MVC</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2012/10/22/condor-heroes.html" title="『神雕瞎驴』金庸看完哭了">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" title="代码之谜（二）- 语句与表达式">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "自己动手设计 PHP MVC 框架（一）——URL"; //请用代码生成文章标题
+    var wumiiTags = "php,MVC"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["php"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="自己动手设计 PHP MVC 框架（一）——URL" data-url="http://justjavac.com/php/2012/10/27/diy-design-php-mvc-framework-url.html" data-thread-key="/php/2012/10/27/diy-design-php-mvc-framework-url"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

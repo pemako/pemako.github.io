@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>javascript 程序编码规范 - justjavac(迷渡)</title>
+    <meta name="description" content="JavaScript 编程语言作为最流行的客户端脚本语言，早已被众多 Web 开发人员所熟悉。随着 Web2.0 时代的到来和 Ajax 技术的广泛应用，JavaScript 也逐渐吸引着更多的视线。工作中要求越多的是对 JavaScript 语言的深入学习，灵活运用，和对编码质量的保证">
+    <meta name="keywords" content="javascript">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" title="如何避免产生赋值语句" />
+    
+    
+    <link rel="next prerender" href="/javascript/2012/04/05/javascript-continuous-assignment-operator.html" title="写了 10 年 Javascript 未必全了解的连续赋值运算" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>javascript 程序编码规范 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>这是一套适用于 javascript 程序的编码规范。
+它基于 Sun 的 Java 程序编码规范。
+但进行了大幅度的修改, 因为 javascript 不是 Java。</p>
+
+<p>软件的长期价值直接源于其编码质量。
+在它的整个生命周期里,一个程序可能会被许多人阅读或修改。
+如果一个程序可以清晰的展现出它的结构和特征,那就能减少在以后对其进行修改时出错的可能性。</p>
+
+<p>编程规范可以帮助程序员们增加程序的健壮性。</p>
+
+<p>所有的 javascript 代码都是暴露给公众的。
+所以我们更应该保证其质量。
+保持整洁很重要。</p>
+
+<h2 id="javascript文件">javascript文件</h2>
+
+<p>javascript 程序应独立保存在后缀名为 .js 的文件中。</p>
+
+<p>javascript 代码不应该被包含在 HTML 文件中,除非这是段特定只属于此部分的代码。
+在 HTML 中的 javascript 代码会明显增加文件大小,而且也不能对其进行缓存和压缩。</p>
+
+<p>filename.js 应尽量放到 body 的后面。
+这样可以减少因为载入 script 而造成其他页面内容载入也被延迟的问题。
+也没有必要使用 language 或者 type 属性。
+MIME 类型是由服务器而非 scripttag 来决定的。</p>
+
+<h2 id="缩进">缩进</h2>
+
+<p>缩进的单位为四个空格。
+避免使用 Tab 键来缩进(即使现在已经是 21 世纪了),也始终没有个统一的 Tab 长短标准。
+虽然使用空格会增加文件的大小,但在局域网中几乎可以忽略,且在最小化过程中也可被消除掉。</p>
+
+<h2 id="每行长度">每行长度</h2>
+
+<p>避免每行超过 80 个字符。</p>
+
+<p>当一条语句一行写不下时,请考虑折行。
+在运算符号,最好是逗号后换行。在运算符后换行可以减少因为复制粘贴产生的错误被分号掩盖的几率。
+下一行应该缩进 8 个空格。</p>
+
+<h2 id="注释">注释</h2>
+
+<p>不要吝啬注释。</p>
+
+<p>给以后需要理解你的代码的人们(或许就是你自己)留下信息是非常有用的。
+注释应该和它们所注释的代码一样是书写良好且清晰明了。
+偶尔的小幽默就更不错了。
+记得要避免冗长或者情绪化。</p>
+
+<p>及时地更新注释也很重要。
+错误的注释会让程序更加难以阅读和理解。</p>
+
+<p>让注释有意义。重点在解释那些不容易立即明白的逻辑上。</p>
+
+<p>不要把读者的时间浪费在阅读类似于:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 让i等于0</span>
+</code></pre>
+</div>
+
+<p>使用单行注释。
+块注释用于注释正式文档和无用代码。</p>
+
+<h2 id="变量声明">变量声明</h2>
+
+<p>所有的变量必须在使用前进行声明。</p>
+
+<p>javascript 并不强制必须这么做,但是这么做可以让程序易于阅读,
+且也容易发现那些没声明的变量(它们会被编译成全局变量)。</p>
+
+<p>将 var 语句放在函数的首部。</p>
+
+<p>最好把每个变量的声明语句单独放到一行,并加上注释说明。
+所有变量按照字母排序。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">currentEntry</span><span class="p">;</span> <span class="c1">// 当前选择项    </span>
+<span class="kd">var</span> <span class="nx">level</span><span class="p">;</span>        <span class="c1">// 缩进程度    </span>
+<span class="kd">var</span> <span class="nx">size</span><span class="p">;</span>         <span class="c1">// 表格大小</span>
+</code></pre>
+</div>
+
+<p>javascript 没有块范围,所以在块里面定义变量很容易引起 C/C++/Java 程序员们的误解。
+在函数的首部定义所有的变量。</p>
+
+<p>尽量减少全局变量的使用。不要让局部变量覆盖全局变量。</p>
+
+<h2 id="函数声明">函数声明</h2>
+
+<p>所有的函数在使用前进行声明。</p>
+
+<p>内函数的声明跟在 var 语句的后面。
+这样可以帮助判断哪些变量是在函数范围内的。</p>
+
+<p>函数名与<code class="highlighter-rouge">(</code>(左括号)之间不应该有空格。
+<code class="highlighter-rouge">)</code> (右括号)与 开始程序体的
+<code class="highlighter-rouge"><span class="p">{</span></code>(左大括号)之间应插入一个空格。
+函数程序体应缩进四个空格。 
+<code class="highlighter-rouge">}</code>(右大括号)与声明函数的那一行代码头部对齐。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">outer</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span> <span class="p">{</span>        
+	<span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nx">c</span> <span class="o">*</span> <span class="nx">d</span><span class="p">;</span>        
+	<span class="kd">function</span> <span class="nx">inner</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>            
+		<span class="k">return</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span> <span class="nx">a</span><span class="p">)</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>        
+	<span class="p">}</span>        
+	<span class="k">return</span> <span class="nx">inner</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>    
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>下面这种书写方式可以在 javascript 中正常使用,因为在 javascript 中,函数和对象的声明可以放到任何表达式允许的地方。
+且它让内联函数和混合结构具有最好的可读性。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getElementsByClassName</span><span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="p">{</span>        
+	<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="p">[];</span>  
+	
+	<span class="nx">walkTheDOM</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>            
+	<span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>                  <span class="c1">// 类名数组            </span>
+	<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">className</span><span class="p">;</span> <span class="c1">// 节点的类名            </span>
+	<span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>                  <span class="c1">// 循环计数器</span>
+	
+	<span class="c1">// If the node has a class name, then split it into a list of simple names.</span>
+	<span class="c1">// If any of them match the requested name, then append the node to the set of results.            </span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>                
+		<span class="nx">a</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">);</span>                
+			<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>                    
+				<span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">className</span><span class="p">)</span> <span class="p">{</span>                        
+					<span class="nx">results</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>                        
+					<span class="k">break</span><span class="p">;</span>                    
+				<span class="p">}</span>                
+			<span class="p">}</span>            
+		<span class="p">}</span>        
+	<span class="p">});</span>        
+	
+	<span class="k">return</span> <span class="nx">results</span><span class="p">;</span>    
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>如果函数是匿名函数,则在 <code class="highlighter-rouge">function</code> 和 <code class="highlighter-rouge">(</code> (左括号)之间应有一个空格。
+如果省略了空格,否则会让人感觉函数名叫作 <code class="highlighter-rouge">function</code>。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">div</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>        
+	<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>    
+<span class="p">};</span>   
+
+<span class="nx">that</span> <span class="o">=</span> <span class="p">{</span>        
+	<span class="na">method</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">datum</span><span class="p">;</span>        
+	<span class="p">},</span>        
+	<span class="na">datum</span><span class="p">:</span> <span class="mi">0</span>    
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>尽量不使用全局函数。</p>
+
+<h2 id="命名">命名</h2>
+
+<p>变量名应由 26 个大小写字母 (A..Z,a..z), 10 个数字 ( 0..9),和 _ (下划线)组成。
+避免使用国际化字符(如中文),因为它们不是在任何地方都可以被方便的阅读和理解。</p>
+
+<p>不要在命名中使用 $(美元符号)或者(反斜杠)。</p>
+
+<p>不要把_(下划线)作为变量名的第一个字符。
+它有时用来表示私有变量,但实际上 javascript 并没提供私有变量的功能。
+如果私有变量很重要, 那么使用私有成员的形式。
+应避免使用这种容易让人误解的命名习惯。</p>
+
+<p>大多数的变量名和方法命应以小写字母开头。</p>
+
+<p>必须与 <code class="highlighter-rouge">new</code> 共同使用的构造函数名应以大写字母开头。
+当 <code class="highlighter-rouge">new</code> 被省略时 javascript 不会有任何编译错误或运行错误抛出。
+忘记加 <code class="highlighter-rouge">new</code> 时会让不好的事情发生(比如被当成一般的函数),所以大写构造函数名是我们来尽量避免这种情况发生的唯一办法。</p>
+
+<p>全局变量应该全部大写。
+(javascript 没有宏或者常量, 所以不会因此造成误会)</p>
+
+<h2 id="语句">语句</h2>
+
+<p>简单语句每一行最多只包含一条语句。
+把 <code class="highlighter-rouge">;</code> (分号)放到每条简单语句的结尾处。
+注意一个函数赋值或对象赋值语句也是赋值语句,应该以分号结尾。</p>
+
+<p>javascript 可以把任何表达式当作一条语句。
+这很容易隐藏一些错误,特别是误加分号的错误。
+只有在赋值和调用时,表达式才应被当作一条单独的语句。</p>
+
+<h2 id="复合语句">复合语句</h2>
+
+<p>复合语句是被包含在{ }(大括号)的语句序列。</p>
+
+<ul>
+  <li>被括起的语句必须多缩进四个空格。</li>
+  <li>{(左大括号)应在复合语句其实行的结尾处。</li>
+  <li>}(右大括号)应与{(左大括号)的那一行的开头对齐</li>
+  <li>大括号应该在所有复合语句中使用,即使只有一条语句,当它们是控制结构的一部分时, 比如一个 if 或者 for 语句。这样做可以避免以后添加语句时造成的错误。</li>
+</ul>
+
+<h2 id="标示">标示</h2>
+
+<p>语句标示是可选的,只有以下语句必须被标示: while, do, for, switch。</p>
+
+<h2 id="return-语句">return 语句</h2>
+
+<p>一条有返回值的 return 语句不要使用( )(括号)来括住返回值。
+如果返回表达式,则表达式应与 return 关键字在同一行,以避免误加分号错误。</p>
+
+<h2 id="if-语句">if 语句</h2>
+
+<p>if语句应如以下格式:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">){</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="for-语句">for 语句</h2>
+
+<p>for 语句应如以下格式:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="nx">initialization</span><span class="p">;</span><span class="nx">condition</span> <span class="p">;</span> <span class="nx">update</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nx">variable</span> <span class="k">in</span> <span class="nx">object</span><span class="p">)</span><span class="k">if</span> <span class="p">(</span><span class="nx">filter</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>第一种形式的循环用于已经知道相关参数的数组循环。
+第二种形式应用于对象中。
+<code class="highlighter-rouge">object</code> 原型中的成员将会被包含在迭代器中。
+通过预先定义 <code class="highlighter-rouge">hasOwnProperty</code> 方法来区分真正的 <code class="highlighter-rouge">object</code> 成员是个不错方法:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="nx">variablein</span> <span class="nx">object</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nx">object</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">variable</span> <span class="p">)){</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="while-语句">while 语句</h2>
+
+<p>while 语句应如以下格式:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span><span class="nx">condition</span><span class="p">){</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="do-语句">do 语句</h2>
+
+<p>do 语句应如以下格式:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code>    <span class="k">do</span> <span class="p">{</span>
+        <span class="nx">statements</span><span class="p">;</span> 
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">condition</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>不像别的复合语句,do 语句总是以 ;(分号) 结尾。</p>
+
+<h2 id="switch-语句">switch 语句</h2>
+
+<p>switch 语句应如以下格式:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">switch</span> <span class="p">(</span><span class="nx">expression</span><span class="p">){</span>
+<span class="k">case</span> <span class="nx">expression</span><span class="err">:</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="nl">default</span><span class="p">:</span>
+	<span class="nx">statements</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>每个 case与switch对齐。
+这可避免过分缩进。</p>
+
+<p>每一组statements(除了default应以 break,return,或者throw结尾。
+不要让它顺次往下执行。</p>
+
+<h2 id="try-语句">try 语句</h2>
+
+<p>try语句应如以下格式:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">variable</span><span class="p">){</span>
+	<span class="nx">statements</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">variable</span><span class="p">){</span>
+	<span class="nx">statements</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+	<span class="nx">statements</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="continue-语句">continue 语句</h2>
+
+<p>避免使用continue语句。
+它很容易使得程序的逻辑过程晦涩难懂。</p>
+
+<h2 id="with-语句">with 语句</h2>
+
+<p>不要使用with语句。</p>
+
+<h2 id="空白">空白</h2>
+
+<p>用空行来将逻辑相关的代码块分割开可以提高程序的可读性。</p>
+
+<p>空格应在以下情况时使用:</p>
+
+<ul>
+  <li>
+    <p>跟在((左括号)后面的关键字应被一个空格隔开。</p>
+
+    <div class="language-javascript highlighter-rouge"><pre class="highlight"><code>  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>函数参数与((左括号)之间不应该有空格。这能帮助区分关键字和函数调用。</p>
+  </li>
+  <li>
+    <p>所有的二元操作符,除了.(点) 和((左括号)和 [(左方括号)应用空格将其与操作数隔开。</p>
+  </li>
+  <li>
+    <p>一元操作符与其操作数之间不应有空格,除非操作符是个单词,比如typeof。</p>
+  </li>
+  <li>
+    <p>每个在控制部分,比如for 语句中的; (分号)后须跟一个空格。</p>
+  </li>
+  <li>
+    <p>每个,(逗号)后应跟一个空格。</p>
+  </li>
+</ul>
+
+<h2 id="另外的建议">另外的建议</h2>
+
+<h2 id="-和-">{} 和 []</h2>
+
+<p>使用 <code class="highlighter-rouge"><span class="p">{}</span></code> 代替 <code class="highlighter-rouge">new Object()</code>。
+使用 <code class="highlighter-rouge">[]</code> 代替 <code class="highlighter-rouge">new Array()</code>。</p>
+
+<p>当成员名是一组有序的数字时使用数组来保存数据。
+当成员名是无规律的字符串或其他时使用对象来保存数据。</p>
+
+<h2 id="逗号操作符">,(逗号)操作符</h2>
+
+<p>避免使用逗号操作符,除非在特定的for 语句的控制部分。
+(这不包括那些被用在对象定义,数组定义,var语句,和参数列表中的逗号分隔符。)</p>
+
+<h2 id="作用域">作用域</h2>
+
+<p>在javascript中块没有域。
+只有函数有域。不要使用块,除非在复合语句中。</p>
+
+<h2 id="赋值表达式">赋值表达式</h2>
+
+<p>避免在if和while语句的条件部分进行赋值。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</code></pre>
+</div>
+
+<p>是一条正确语句?或者</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</code></pre>
+</div>
+
+<p>才是对的?避免这种不容易判断对错的结构。</p>
+
+<h3 id="和操作符">===和!==操作符。</h3>
+
+<p>使用===和!==操作符会相对好点。</p>
+
+<p>==和!=操作符会进行类型强制转换。 
+特别是, 不要将==用于与错值比较( false,null,undefined,“”, 0,NaN)。</p>
+
+<h2 id="令人迷惑的加号和减号">令人迷惑的加号和减号</h2>
+
+<p>小心在+后紧跟+或++。
+这种形式很容易仍人迷惑。应插入括号以便于理解。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">total</span> <span class="o">=</span> <span class="nx">subtotal</span> <span class="o">+</span> <span class="o">+</span><span class="nx">myInput</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>最好能写成</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">total</span> <span class="o">=</span> <span class="nx">subtotal</span> <span class="o">+</span> <span class="p">(</span><span class="o">+</span><span class="nx">myInput</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>这样+ +不会被误认为是++。</p>
+
+<h2 id="eval-是恶魔">eval 是恶魔</h2>
+
+<p><code class="highlighter-rouge">eval</code> 是javascript中最容易被滥用的方法。
+避免使用它。</p>
+
+<p><code class="highlighter-rouge">eval</code> 有别名。
+不要使用 <code class="highlighter-rouge">Function</code> 构造器。
+不要给 <code class="highlighter-rouge">setTimeout</code> 或者 <code class="highlighter-rouge">setInterval</code> 传递字符串参数。</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+       
+      	<a href="/tags.html#规范-ref" rel="tag">规范</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" title="如何避免产生赋值语句">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2012/04/05/javascript-continuous-assignment-operator.html" title="写了 10 年 Javascript 未必全了解的连续赋值运算">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "javascript 程序编码规范"; //请用代码生成文章标题
+    var wumiiTags = "javascript,规范"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="javascript 程序编码规范" data-url="http://justjavac.com/javascript/2012/04/05/javascript-code-spec.html" data-thread-key="/javascript/2012/04/05/javascript-code-spec"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>十三个代码注释的小技巧 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="代码, 注释, 技巧">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/java/2012/05/29/why-jdk-string-is-final.html" title="为什么 jdk 中把 String 类设计成 final" />
+    
+    
+    <link rel="next prerender" href="/other/2012/05/29/20-best-practice-for-database-design.html" title="20个数据库设计的最佳实践" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>十三个代码注释的小技巧 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <h2 id="1-对不同级别的代码进行注释">1. 对不同级别的代码进行注释</h2>
+
+<p>对于不同级别的代码块，要使用统一的方法来进行注释。例如：</p>
+
+<ul>
+  <li>对于每一个类, 需要包含一段简明扼要的描述, 作者和上一次修改的时间;</li>
+  <li>对于每一个方法, 需要包含这个方法的用途, 功能, 参数以及返回结果.</li>
+</ul>
+
+<p>当你在一个团队里面的时候，采用一套注释的标准是非常重要的。
+当然，使用一种大家都认可的注释约定和工具（例如C#的XML注释和Java的Javadoc）在一定程度上能推动这项任务。</p>
+
+<h2 id="2-使用段落注释">2. 使用段落注释</h2>
+
+<p>首先把代码块分解成多个“段落”，每一个段落都执行单一的任务；然后在每一个“段落”开始之前添加注释，告诉阅读代码的人接下来的这段代码是干什么用的</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 检查所有记录都是正确的
+foreach (Record record in records) 
+{
+    if (rec.checkStatus()==Status.OK)
+    { 
+        . . . 
+    } 
+} 
+// 现在开始进行处理
+Context ctx = new ApplicationContext(); 
+ctx.BeginTransaction();
+. . .
+</code></pre>
+</div>
+
+<h2 id="3-对齐注释行">3. 对齐注释行</h2>
+
+<p>对于那些在行末写有注释的代码，应该对齐注释行来使得方便阅读</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>const MAX_ITEMS = 10; // maximum number of packets 
+const MASK = 0x1F;    // mask bit TCP
+</code></pre>
+</div>
+
+<p>有些开发人员使用tab来对齐注释，而另外一些人会用空格来对齐。由于tab在不同的编辑器和集成开发环境中会有所不同，所以最佳的方法是使用空格来对齐注释行。</p>
+
+<h2 id="4-不要侮辱阅读者的智慧">4. 不要侮辱阅读者的智慧</h2>
+
+<p>要避免没用的注释，代码:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (a == 5)        //如果a等于5
+    counter = 0    //把counte设为0 
+</code></pre>
+</div>
+
+<p>这不单把时间浪费在写没用的注释上面，同时也在分散读者的注意力。</p>
+
+<h2 id="5-要有礼貌">5. 要有礼貌</h2>
+
+<p>应当避免没有礼貌的注释，例如“要注意一些愚蠢的用户会输入一个负数”，或者“修正由菜鸟工程师写的愚蠢得可怜的代码而导致的副作用”。
+这样的注释对于代码的写注释的人来说并没有任何好处，同时你永远都不会知道将来这些注释会被谁来阅读，
+你的老板，一个客户或者是刚才被你数落的愚蠢得可怜的工程师。</p>
+
+<h2 id="6-直截了当">6. 直截了当</h2>
+
+<p>不要在注释里面写过多的废话。
+避免在注释里面卖弄ASCII艺术，写笑话，作诗和过于冗长。
+简而言之就是保持注释的简单和直接。</p>
+
+<h2 id="7-使用统一的风格">7. 使用统一的风格</h2>
+
+<p>有些人觉得注释应该让非程序员也能看懂。
+另外一些人觉得注释需要面对的读者只是程序员。
+无论如何，正如Successful Strategies for Commenting Code中所说的，最重要的是注释的风格需要统一，并且总是面向相同的读者。
+就自己而论，我怀疑非程序员是否会去读代码，所以我觉得注释应该面向程序员来写。</p>
+
+<h2 id="8-在内部使用特殊的标签">8. 在内部使用特殊的标签</h2>
+
+<p>当你在一个团队里工作的时候，采用一组一致的标签能帮助不同的程序员沟通。
+例如，很多团队会采用“TODO”标签来表示一段尚未完成的代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>int Estimate(int x, int y) 
+{
+    // TODO: implement the calculations 
+    return 0;
+}
+</code></pre>
+</div>
+
+<p>标签注释并不会解释代码，它们寻求注意或者是传递信息。
+但是如果适当地使用这种技术，要记住跟进这段代码并且完成该标签传递的任务。</p>
+
+<h2 id="9-在写代码的同时添加注释">9. 在写代码的同时添加注释</h2>
+
+<p>当你在写代码而且记忆犹新的同时就添加注释。
+如果等到项目后期才添加注释，会让你事倍功半。
+“我没有时间写注释”，“我的时间很紧迫”和“项目已经延迟了”，这些都是不写注释的常见借口。
+有些工程师觉最佳的解决方法是“注释先行”。</p>
+
+<p>例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public void ProcessOrder() 
+{
+    // Make sure the products are available
+    // Check that the customer is valid 
+    // Send the order to the store 
+    // Generate bill 
+}
+</code></pre>
+</div>
+
+<h2 id="10-把自己想象为注释的读者事实上就是如此">10. 把自己想象为注释的读者（事实上就是如此）</h2>
+
+<p>当你正在给代码写注释的时候，不仅仅为日后维护你的代码的开发者考虑，同时也设想一下如果自己就是注释的读者。</p>
+
+<p>Phil Haack曾经说过：</p>
+
+<blockquote>
+  <p>“一旦一行代码被敲到文件中, 你就已经要开始维护那一行代码了。”</p>
+</blockquote>
+
+<p>所以，我们自己就是好（或者坏）注释的第一个受益者（或者受害者）。</p>
+
+<h2 id="11-更新代码的时候要更新注释">11. 更新代码的时候要更新注释</h2>
+
+<p>如果注释没有随着代码的修改而更新，那么这些注释将是毫无意义的。
+代码和注释需要同步，否则注释只会让维护代码的开发者更加痛苦。
+需要特别注意的是，一些重构的工具会自动更新代码，但是却没有自动更新注释，那么注释就自然而然地过期作废了。</p>
+
+<h2 id="12-良好可读性代码是注释的金科玉律">12. 良好可读性代码是注释的金科玉律</h2>
+
+<p>对于很多开发者来说，一个基本的原则就是：让代码自己描述自己。
+虽然有人怀疑这是由不喜欢写注释的程序员所倡导的一场运动，但是无需解释的代码有很大的好处，这些代码更加容易理解甚至让注释变得没有必要。</p>
+
+<p>例如，在我的文章Fluid Interfaces中就给大家展示了什么是清晰的无需解释的代码。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Calculator calc = new Calculator();
+calc.Set(0);
+calc.Add(10);
+calc.Multiply(2);
+calc.Subtract(4);
+Console.WriteLine( “Result: {0}”, calc.Get() );
+</code></pre>
+</div>
+
+<p>在这个例子里面，注释就像是违反了第4条技巧那样，变得毫无必要。
+要写出可读性好的代码，你需要使用适当的命名方式（在经典的Ottinger’s Rules中有阐述），保证恰当的缩进，并且采用编码风格指导。
+如果代码不遵守这条技巧，那么注释看起来就好像是为自己不好的代码的写道歉信一样。</p>
+
+<h2 id="13-跟你的同事分享这些技巧">13. 跟你的同事分享这些技巧</h2>
+
+<p>虽然从第10条技巧中我们已经知道了自己就是好注释的得益者，但是这些技巧对于所有的开发者来说都是很有帮助的，尤其是整个团队都有相同共识的情况下。
+因此，大方地跟你的同事去分享这些技巧，让我们写出更加容易理解和维护的代码。</p>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#代码-ref" rel="tag">代码</a>
+       
+      	<a href="/tags.html#注释-ref" rel="tag">注释</a>
+       
+      	<a href="/tags.html#技巧-ref" rel="tag">技巧</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/java/2012/05/29/why-jdk-string-is-final.html" title="为什么 jdk 中把 String 类设计成 final">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/other/2012/05/29/20-best-practice-for-database-design.html" title="20个数据库设计的最佳实践">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "十三个代码注释的小技巧"; //请用代码生成文章标题
+    var wumiiTags = "代码,注释,技巧"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["other"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="十三个代码注释的小技巧" data-url="http://justjavac.com/other/2012/05/29/13-tips-for-code-comment.html" data-thread-key="/other/2012/05/29/13-tips-for-code-comment"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

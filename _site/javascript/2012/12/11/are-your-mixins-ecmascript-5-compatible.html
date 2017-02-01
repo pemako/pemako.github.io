@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>你的 mixin 兼容 ECMAScript 5 吗？ - justjavac(迷渡)</title>
+    <meta name="description" content="我最近在与客户合作的项目中，可以充分利用的ECMAScript 5，在此我遇到一个非常有趣的问题。该问题源于一个非常常见的模式： mixin，也就是在 JavaScript 中把一个对象的属性（包括方法） mixin 到另一个。">
+    <meta name="keywords" content="ECMAScript 5, JavaScript, mixin">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2012/11/12/do-not-bool-as-function-parameters.html" title="千万不要把 bool 当成函数参数" />
+    
+    
+    <link rel="next prerender" href="/javascript/2012/12/14/model-view-controller-mvc-javascript.html" title="JavaScript 的 MVC 模式" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>你的 mixin 兼容 ECMAScript 5 吗？ <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文：<a href="http://www.nczonline.net/blog/2012/12/11/are-your-mixins-ecmascript-5-compatible/">Are your mixins ECMAScript 5 compatible?</a></p>
+
+<p>作者：Nicholas C. Zakas</p>
+
+<p>译文：<a href="http://justjavac.com/javascript/2012/12/11/are-your-mixins-ecmascript-5-compatible.html">你的 mixin 兼容 ECMAScript 5 吗？</a></p>
+
+<p>译者：<a href="http://weibo.com/justjavac">justjavac</a></p>
+
+<hr />
+
+<p>好久没更新博客了，今天在 nczonline 看到了这篇博客，于是第一时间把它翻译了过来。英语水平有限，大家忍者点看，以下是正文：</p>
+
+<p>我最近在与客户合作的项目中，需要充分利用的 ECMAScript 5，在此我遇到一个非常有趣的问题。
+该问题源于一个非常常见的模式： <strong>mixin</strong> （译注：很多文章翻译成「混入」，我觉得还是保留原文吧。如今 mixin 的流程程度不亚于 Closure，什么！你不知道？拜托，如果你是从火星来的，请自觉 Google 吧。<a href="http://justjavac.com">@justjavac</a>），
+也就是在 JavaScript 中把一个对象的属性或者方法 mixin 到另一个。</p>
+
+<p>大多数 mixin 的功能看起来像这样：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">mixin</span><span class="p">(</span><span class="nx">receiver</span><span class="p">,</span> <span class="nx">supplier</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">property</span> <span class="k">in</span> <span class="nx">supplier</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">supplier</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">property</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">receiver</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="nx">supplier</span><span class="p">[</span><span class="nx">property</span><span class="p">];</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在此 <code class="highlighter-rouge">mixin()</code> 函数中，一个 <code class="highlighter-rouge">for</code> 循环遍历属性提供者（supplier）并赋值给对象接收者（receiver）。
+几乎所有的 JavaScript 库有某种形式的类似功能，让您可以编写这样的代码：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">mixin</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="p">{</span>
+	<span class="na">name</span><span class="p">:</span> <span class="s2">"Nicholas"</span><span class="p">,</span>
+
+	<span class="na">sayName</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">object</span><span class="p">.</span><span class="nx">sayName</span><span class="p">();</span>       <span class="c1">// outputs "Nicholas"</span>
+</code></pre>
+</div>
+
+<p>在此示例中，<code class="highlighter-rouge">object</code> 对象接收了属性 <code class="highlighter-rouge">name</code> 和方法 <code class="highlighter-rouge">sayName()</code>。
+这在 ECMAScript 3 中运行良好，但在 ECMAScript 5 上却没那么乐观。</p>
+
+<p>这是我遇到的问题：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// to be filled in later</span>
+	<span class="kd">var</span> <span class="nx">name</span><span class="p">;</span>
+
+	<span class="nx">mixin</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="p">{</span>
+		<span class="nx">get</span> <span class="nx">name</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="nx">name</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">});</span>
+
+	<span class="c1">// let's just say this is later</span>
+	<span class="nx">name</span> <span class="o">=</span> <span class="s2">"Nicholas"</span><span class="p">;</span>
+<span class="p">}());</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">object</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>       <span class="c1">// undefined</span>
+</code></pre>
+</div>
+
+<p>这个例子看起来有点做作，但它准确的描述这个问题。
+进行 mixin 的属性使用了 ECMAScript 5 的新特性：一个 getter 属性存取器。
+<code class="highlighter-rouge">getter</code> 引用一个未初始化的局部变量 <code class="highlighter-rouge">name</code>，因此这个属性未定义 <code class="highlighter-rouge">undefined</code>。</p>
+
+<p>后来，<code class="highlighter-rouge">name</code> 被分配了一个值，以便使存取器 getter 可以返回一个有效的值。
+不幸的是，<code class="highlighter-rouge">object.name</code>（被 mixin 的属性）始终返回 <code class="highlighter-rouge">undefined</code>。</p>
+
+<p>这是怎么回事呢？</p>
+
+<p>我们仔细分析 <code class="highlighter-rouge">mixin()</code> 函数。
+事实上，在循环语句中，并没有把属性从一个对象重新赋值给到另一个对象。
+它实际上是创建一个同名的属性，并把 <code class="highlighter-rouge">supplier</code> 对象的存取器方法 getter 的返回值赋值给了它。
+（译注：目标对象得到的不是 getter 这个方法，而是得到了 getter 方法的返回值。<a href="http://justjavac.com">@justjavac</a>）</p>
+
+<p>在这个例子中，mixin() 的过程其实是这样的：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">receiver</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">supplier</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>属性 <code class="highlighter-rouge">receiver.name</code> 被创建，并且被赋值为 <code class="highlighter-rouge">supplier.name</code> 的值。
+当然，<code class="highlighter-rouge">supplier.name</code> 有一个 getter 方法用来返回本地变量 name 的值。
+此时，<code class="highlighter-rouge">name</code> 的值为 <code class="highlighter-rouge">undefined</code>，所以 <code class="highlighter-rouge">receiver.name</code> 存储的是 <strong>值</strong>。
+并没有为 <code class="highlighter-rouge">receiver.name</code> 创建一个 getter 方法，因此它的值永远不会改变。
+（译注：变量和值的区别我会在『<a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">代码之谜</a>』中讲解。）</p>
+
+<p>要解决这个问题，你需要使用属性描述符(译注：descriptor)将属性从一个对象 mixin 到另一个对象。
+一个纯粹的 ECMAScript 5 版本的 <code class="highlighter-rouge">mixin()</code> 应该这样写：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">mixin</span><span class="p">(</span><span class="nx">receiver</span><span class="p">,</span> <span class="nx">supplier</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">supplier</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">property</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">receiver</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">supplier</span><span class="p">,</span> <span class="nx">property</span><span class="p">));</span>
+	<span class="p">});</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在这个新版本函数中，<code class="highlighter-rouge">Object.keys()</code> 用来获取一个数组，包含了 <code class="highlighter-rouge">supplier</code> 对象的所有枚举属性。
+然后，<code class="highlighter-rouge">foreach()</code> 方法用来遍历这些属性。
+调用 <code class="highlighter-rouge">Object.getOwnPropertyDescriptor()</code> 方法获取 <code class="highlighter-rouge">supplier</code> 对象的每个属性描述符（descriptor）。</p>
+
+<p>由于描述符（descriptor）包含了所有的属性信息，包括 getter 和 setter 方法，
+该描述符（descriptor）可以直接传递给 <code class="highlighter-rouge">Object.defineProperty()</code> ，用来在 <code class="highlighter-rouge">receiver</code> 对象上创建相同的属性。
+使用这个新版本的 <code class="highlighter-rouge">mixin()</code> ，可以解决前面遇到的问题，从而得到你所期望的结果。
+getter 方法被正确地从 <code class="highlighter-rouge">supplier</code> 传递到了 <code class="highlighter-rouge">receiver</code>。</p>
+
+<p>当然，如果你仍然需要支持旧的浏览器，那么你就需要一个函数，回落的 ECMAScript 3：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">mixin</span><span class="p">(</span><span class="nx">receiver</span><span class="p">,</span> <span class="nx">supplier</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">supplier</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">property</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">receiver</span><span class="p">,</span> <span class="nx">property</span><span class="p">,</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">supplier</span><span class="p">,</span> <span class="nx">property</span><span class="p">));</span>
+		<span class="p">});</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">property</span> <span class="k">in</span> <span class="nx">supplier</span><span class="p">)</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="p">(</span><span class="nx">supplier</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">property</span><span class="p">))</span> <span class="p">{</span>
+				<span class="nx">receiver</span><span class="p">[</span><span class="nx">property</span><span class="p">]</span> <span class="o">=</span> <span class="nx">supplier</span><span class="p">[</span><span class="nx">property</span><span class="p">];</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>如果您需要使用一个 <code class="highlighter-rouge">mixin()</code> 函数，一定要仔细检查它在 ECMAScript 5 可以正常工作，特别是 getter 和 setter 方法。
+否则，你会发现自己陷入像我一样的错误。</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#ECMAScript 5-ref" rel="tag">ECMAScript 5</a>
+       
+      	<a href="/tags.html#JavaScript-ref" rel="tag">JavaScript</a>
+       
+      	<a href="/tags.html#mixin-ref" rel="tag">mixin</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2012/11/12/do-not-bool-as-function-parameters.html" title="千万不要把 bool 当成函数参数">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2012/12/14/model-view-controller-mvc-javascript.html" title="JavaScript 的 MVC 模式">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "你的 mixin 兼容 ECMAScript 5 吗？"; //请用代码生成文章标题
+    var wumiiTags = "ECMAScript 5,JavaScript,mixin"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="你的 mixin 兼容 ECMAScript 5 吗？" data-url="http://justjavac.com/javascript/2012/12/11/are-your-mixins-ecmascript-5-compatible.html" data-thread-key="/javascript/2012/12/11/are-your-mixins-ecmascript-5-compatible"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

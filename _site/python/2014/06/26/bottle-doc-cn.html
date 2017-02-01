@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Bottle 中文文档 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="python,文档">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/web/2014/06/23/qianduankaifa-congcainiao-daodaniu-de-qujingzhilu.html" title="前端开发，从菜鸟到大牛的取经之路" />
+    
+    
+    <link rel="next prerender" href="/other/2014/07/23/uc-programming-language.html" title="UC 开发语言的选择" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Bottle 中文文档 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>译者: smallfish (smallfish.xy@gmail.com)</p>
+
+<p>更新日期: 2009-09-25</p>
+
+<p>原文地址: <a href="http://bottle.paws.de/page/docs">http://bottle.paws.de/page/docs</a></p>
+
+<p>译文地址: <a href="http://pynotes.appspot.com/static/bottle/docs.htm">http://pynotes.appspot.com/static/bottle/docs.htm</a></p>
+
+<hr />
+
+<p>这份文档会不断更新。
+如果在文档里没有找到答案，请在版本跟踪中提出 <a href="http://github.com/defnull/bottle/issues">issue</a>。</p>
+
+<h2 id="基本映射">基本映射</h2>
+
+<p>映射使用在根据不同 URLs 请求来产生相对应的返回内容。
+Bottle 使用 <code class="highlighter-rouge">route()</code> 修饰器来实现映射。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import route, run
+@route('/hello')
+def hello():
+    return "Hello World!"
+run() # This starts the HTTP server
+</code></pre>
+</div>
+
+<p>运行这个程序，访问 <code class="highlighter-rouge">http://localhost:8080/hello</code> 将会在浏览器里看到 <code class="highlighter-rouge">"Hello World!"</code>。</p>
+
+<h3 id="get-post-head-">GET, POST, HEAD, …</h3>
+
+<p>这个映射装饰器有可选的关键字 <code class="highlighter-rouge">method</code> 默认是 <code class="highlighter-rouge">method='GET'</code>。
+还有可能是 POST，PUT，DELETE，HEAD 或者监听其他的 HTTP 请求方法。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import route, request
+@route('/form/submit', method='POST')
+def form_submit():
+    form_data = request.POST
+    do_something(form_data)
+    return "Done"
+</code></pre>
+</div>
+
+<h2 id="动态映射">动态映射</h2>
+
+<p>你可以提取 URL 的部分来建立动态变量名的映射。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@route('/hello/:name')
+def hello(name):
+    return "Hello %s!" % name
+</code></pre>
+</div>
+
+<p>默认情况下，一个 <code class="highlighter-rouge">:placeholder</code> 会一直匹配到下一个斜线。
+需要修改的话，可以把正则字符加入到 <code class="highlighter-rouge">#s</code> 之间：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@route('/get_object/:id#[0-9]+#')
+def get(id):
+    return "Object ID: %d" % int(id)
+</code></pre>
+</div>
+
+<p>或者使用完整的正则匹配组来实现：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@route('/get_object/(?P&lt;id&gt;[0-9]+)')
+def get(id):
+    return "Object ID: %d" % int(id)
+</code></pre>
+</div>
+
+<p>正如你看到的，URL 参数仍然是字符串，即使你正则里面是数字。
+你必须显式的进行类型强制转换。</p>
+
+<h3 id="validate-装饰器"><code class="highlighter-rouge">@validate()</code> 装饰器</h3>
+
+<p>Bottle 提供一个方便的装饰器 <code class="highlighter-rouge">validate()</code> 来校验多个参数。
+它可以通过关键字和过滤器来对每一个 URL 参数进行处理然后返回请求。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import route, validate
+# /test/validate/1/2.3/4,5,6,7
+@route('/test/validate/:i/:f/:csv')
+@validate(i=int, f=float, csv=lambda x: map(int, x.split(',')))
+def validate_test(i, f, csv):
+    return "Int: %d, Float:%f, List:%s" % (i, f, repr(csv))
+</code></pre>
+</div>
+
+<p>你可能需要在校验参数失败时抛出 <code class="highlighter-rouge">ValueError</code>。</p>
+
+<h2 id="返回文件流和-json">返回文件流和 JSON</h2>
+
+<p>WSGI 规范不能处理文件对象或字符串。
+Bottle 自动转换字符串类型为 <code class="highlighter-rouge">iter</code> 对象。
+下面的例子可以在 Bottle 下运行，但是不能运行在纯 WSGI 环境下。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@route('/get_string')
+def get_string():
+    return "This is not a list of strings, but a single string"
+@route('/file')
+def get_file():
+    return open('some/file.txt','r')
+</code></pre>
+</div>
+
+<p>字典类型也是允许的。
+会转换成 json 格式，自动返回 <code class="highlighter-rouge">Content-Type: application/json</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@route('/api/status')
+def api_status():
+    return {'status':'online', 'servertime':time.time()}
+</code></pre>
+</div>
+
+<p>你可以关闭这个特性 <code class="highlighter-rouge">:bottle.default_app().autojson = False</code></p>
+
+<h2 id="cookies">Cookies</h2>
+
+<p>Bottle 是把 cookie 存储在 <code class="highlighter-rouge">request.COOKIES</code> 变量中。
+新建 cookie 的方法是 <code class="highlighter-rouge">response.set_cookie(name, value[, **params])</code>。
+它可以接受额外的参数，属于 SimpleCookie 的有有效参数。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import response
+response.set_cookie('key','value', path='/', domain='example.com', secure=True, expires=+500, ...)
+</code></pre>
+</div>
+
+<p>设置 <code class="highlighter-rouge">max-age</code> 属性(它不是个有效的 Python 参数名) 你可以在实例中修改 <code class="highlighter-rouge">cookie.SimpleCookie in response.COOKIES</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import response
+response.COOKIES['key'] = 'value'
+response.COOKIES['key']['max-age'] = 500
+</code></pre>
+</div>
+
+<h2 id="模板">模板</h2>
+
+<p>Bottle 使用自带的小巧的模板。
+你可以使用调用 <code class="highlighter-rouge">template(template_name, **template_arguments)</code> 并返回结果。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@route('/hello/:name')
+def hello(name):
+    return template('hello_template', username=name)
+</code></pre>
+</div>
+
+<p>这样就会加载 hello_template.tpl，并提取 <code class="highlighter-rouge">URL:name</code> 到变量 <code class="highlighter-rouge">username</code>，返回请求。</p>
+
+<p>hello_template.tpl 大致这样:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h1&gt;Hello &lt;/h1&gt;
+&lt;p&gt;How are you?&lt;/p&gt;
+</code></pre>
+</div>
+
+<h3 id="模板搜索路径">模板搜索路径</h3>
+
+<p>模板是根据 <code class="highlighter-rouge">bottle.TEMPLATE_PATH</code> 列表变量去搜索。
+默认路径包含 <code class="highlighter-rouge">['./%s.tpl', './views/%s.tpl']</code>。</p>
+
+<h3 id="模板缓存">模板缓存</h3>
+
+<p>模板在编译后在内存中缓存。
+修改模板不会更新缓存，直到你清除缓存。
+调用 <code class="highlighter-rouge">bottle.TEMPLATES.clear()</code>。</p>
+
+<h2 id="模板语法">模板语法</h2>
+
+<p>模板语法是围绕 Python 很薄的一层。
+主要目的就是确保正确的缩进块。
+下面是一些模板语法的列子:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">%...Python</code> 代码开始。不必处理缩进问题。Bottle 会为你做这些。</li>
+  <li>%end 关闭一些语句 <code class="highlighter-rouge">%if</code> …，<code class="highlighter-rouge">%for</code> … 或者其他。关闭块是必须的。</li>
+  <li>`` 打印出 Python 语句的结果。</li>
+  <li><code class="highlighter-rouge">%include template_name optional_arguments</code> 包括其他模板。</li>
+  <li>每一行返回为文本。</li>
+</ul>
+
+<p>Example:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>%header = 'Test Template'
+%items = [1,2,3,'fly']
+%include http_header title=header, use_js=['jquery.js', 'default.js']
+&lt;h1&gt;&lt;/h1&gt;
+&lt;ul&gt;
+%for item in items:
+  &lt;li&gt;
+    %if isinstance(item, int):
+      Zahl: 
+    %else:
+      %try:
+        Other type: () 
+      %except:
+        Error: Item has no string representation.
+      %end try-block (yes, you may add comments here)
+    %end
+    &lt;/li&gt;
+  %end
+&lt;/ul&gt;
+%include http_footer
+</code></pre>
+</div>
+
+<h2 id="keyvalue数据库">Key/Value数据库</h2>
+
+<p>Bottle(&gt;0.4.6) 通过 <code class="highlighter-rouge">bottle.db</code> 模块变量提供一个 key/value 数据库。
+你可以使用 <code class="highlighter-rouge">key</code> 或者属性来来存取一个数据库对象。
+调用 <code class="highlighter-rouge">bottle.db.bucket_name.key_name</code> 和 <code class="highlighter-rouge">bottle.db[bucket_name][key_name]</code>。</p>
+
+<p>只要确保使用正确的名字就可以使用，而不管他们是否已经存在。</p>
+
+<p>存储的对象类似 dict 字典，keys 和 values 必须是字符串。
+不支持 <code class="highlighter-rouge">items()</code> 和 <code class="highlighter-rouge">values()</code> 这些方法。
+找不到将会抛出 <code class="highlighter-rouge">KeyError</code>。</p>
+
+<h3 id="持久化">持久化</h3>
+
+<p>对于请求，所有变化都是缓存在本地内存池中。
+在请求结束时，自动保存已修改部分，以便下一次请求返回更新的值。
+数据存储在 <code class="highlighter-rouge">bottle.DB_PATH</code> 文件里。要确保文件能访问此文件。</p>
+
+<h3 id="race-conditions">Race conditions</h3>
+
+<p>一般来说不需要考虑锁问题，但是在多线程或者交叉环境里仍是个问题。
+你可以调用 <code class="highlighter-rouge">bottle.db.save()</code> 或者 <code class="highlighter-rouge">botle.db.bucket_name.save()</code> 去刷新缓存，
+但是没有办法检测到其他环境对数据库的操作，直到调用 <code class="highlighter-rouge">bottle.db.save()</code> 或者离开当前请求。</p>
+
+<p>Example</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import route, db
+@route('/db/counter')
+def db_counter():
+    if 'hits' not in db.counter:
+        db.counter.hits = 0
+    db['counter']['hits'] += 1
+    return "Total hits: %d!" % db.counter.hits
+</code></pre>
+</div>
+
+<h2 id="使用-wsgi-和中间件">使用 WSGI 和中间件</h2>
+
+<p><code class="highlighter-rouge">bottle.default_app()</code> 返回一个 WSGI 应用。
+如果喜欢 WSGI 中间件模块的话，你只需要声明 <code class="highlighter-rouge">bottle.run()</code> 去包装应用，而不是使用默认的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import default_app, run
+app = default_app()
+newapp = YourMiddleware(app)
+run(app=newapp)
+</code></pre>
+</div>
+
+<h3 id="默认-default_app-工作">默认 default_app() 工作</h3>
+
+<p>Bottle 创建一个 <code class="highlighter-rouge">bottle.Bottle()</code> 对象和装饰器，调用 <code class="highlighter-rouge">bottle.run()</code> 运行。
+<code class="highlighter-rouge">bottle.default_app()</code> 是默认。当然你可以创建自己的 <code class="highlighter-rouge">bottle.Bottle()</code> 实例。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import Bottle, run
+mybottle = Bottle()
+@mybottle.route('/')
+def index():
+  return 'default_app'
+run(app=mybottle)
+</code></pre>
+</div>
+
+<h2 id="发布">发布</h2>
+
+<p>Bottle 默认使用 <code class="highlighter-rouge">wsgiref.SimpleServer</code> 发布。
+这个默认单线程服务器是用来早期开发和测试，但是后期可能会成为性能瓶颈。</p>
+
+<p>有三种方法可以去修改:</p>
+
+<ul>
+  <li>使用多线程的适配器</li>
+  <li>负载多个 Bottle 实例应用</li>
+  <li>或者两者</li>
+</ul>
+
+<h3 id="多线程服务器">多线程服务器</h3>
+
+<p>最简单的方法是安装一个多线程和 WSGI 规范的 HTTP 服务器比如 Paste, flup, cherrypy or fapws3 并使用相应的适配器。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>from bottle import PasteServer, FlupServer, FapwsServer, CherryPyServer
+bottle.run(server=PasteServer) # Example
+</code></pre>
+</div>
+
+<p>如果缺少你喜欢的服务器和适配器，你可以手动修改 HTTP 服务器并设置 <code class="highlighter-rouge">bottle.default_app()</code> 来访问你的 WSGI 应用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def run_custom_paste_server(self, host, port):
+    myapp = bottle.default_app()
+    from paste import httpserver
+    httpserver.serve(myapp, host=host, port=port)
+</code></pre>
+</div>
+
+<h3 id="多服务器进程">多服务器进程</h3>
+
+<p>一个 Python 程序只能使用一次一个 CPU，即使有更多的 CPU。
+关键是要利用 CPU 资源来负载平衡多个独立的 Python 程序。</p>
+
+<p>单实例 Bottle 应用，你可以通过不同的端口来启动(localhost:8080, 8081, 8082, …)。
+高性能负载作为反向代理和远期每一个随机瓶进程的新要求，平衡器的行为，传播所有可用的支持与服务器实例的负载。
+这样，您就可以使用所有的 CPU 核心，甚至分散在不同的物理服务器之间的负载。</p>
+
+<p>但也有点缺点:</p>
+
+<ul>
+  <li>多个 Python 进程里不能共享数据。</li>
+  <li>同一时间可能需要大量内存来运行 Python 和 Bottle 应用和副本。</li>
+  <li>最快的一个负载是 pound 当然其他一些 HTTP 服务器同样可以做的很好。</li>
+</ul>
+
+<p>不久我会加入 lighttpd 和 Apache 使用。</p>
+
+<h3 id="apache-mod_wsgi">Apache mod_wsgi</h3>
+
+<p>发布你的应用当然不是用 Bottle 自带的方法，你可以再 Apache server 使用 mod_wsgi 模板和 Bottles WSGI 接口。</p>
+
+<p>你需要建立 app.wsgi 文件并提供 application 对象。这个对象是用使用 mod_wsgi 启动你的程序并遵循 WSGI 规范可调用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># /var/www/yourapp/app.wsgi
+import bottle
+# ... add or import your bottle app code here ...
+# import myapp
+application = bottle.default_app()
+# Do NOT use bottle.run() with mod_wsgi
+</code></pre>
+</div>
+
+<p>Apache 配置可能如下:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;VirtualHost *&gt;
+    ServerName example.com
+
+    WSGIDaemonProcess yourapp user=www-data group=www-data processes=1 threads=5
+    WSGIScriptAlias / /var/www/yourapp/app.wsgi
+
+    &lt;Directory /var/www/yourapp&gt;
+        WSGIProcessGroup yourapp
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code></pre>
+</div>
+
+<h3 id="google-appengine">Google AppEngine</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import bottle
+from google.appengine.ext.webapp import util 
+# ... add or import your bottle app code here ...
+# import myapp
+# Do NOT use bottle.run() with AppEngine
+util.run_wsgi_app(bottle.default_app())
+</code></pre>
+</div>
+
+<h3 id="cgi模式">CGI模式</h3>
+
+<p>运行缓缓，但可以正常工作。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import bottle
+# ... add or import your bottle app code here ...
+bottle.run(server=bottle.CGIServer)
+</code></pre>
+</div>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
+       
+      	<a href="/tags.html#文档-ref" rel="tag">文档</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/web/2014/06/23/qianduankaifa-congcainiao-daodaniu-de-qujingzhilu.html" title="前端开发，从菜鸟到大牛的取经之路">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/other/2014/07/23/uc-programming-language.html" title="UC 开发语言的选择">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "Bottle 中文文档"; //请用代码生成文章标题
+    var wumiiTags = "python,文档"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["python"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Bottle 中文文档" data-url="http://justjavac.com/python/2014/06/26/bottle-doc-cn.html" data-thread-key="/python/2014/06/26/bottle-doc-cn"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

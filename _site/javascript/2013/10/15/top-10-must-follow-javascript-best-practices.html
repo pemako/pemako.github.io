@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>10 个你需要了解的最佳 javascript 开发实践 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="javascript">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/javascript/2013/10/15/9-hang-daima-huoqu-qq-qun-chengyuan.html" title="9 行 javascript 代码获取 QQ 群成员" />
+    
+    
+    <link rel="next prerender" href="/javascript/2013/10/16/function-of-the-inertia-load.html" title="利用函数的惰性载入提高 javascript 代码性能" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>10 个你需要了解的最佳 javascript 开发实践 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文：<a href="http://www.developerdrive.com/2011/08/top-10-must-follow-javascript-best-practices-2/">Top 10 “Must Follow” JavaScript Best Practices</a></p>
+
+<p>译文：<a href="http://www.gbin1.com/technology/javascript/20120108top10mustfollowjavascriptbestpractices/index.html">10 个你需要了解的最佳 javascript 开发实践</a></p>
+
+<hr />
+
+<p>Javascript 的很多扩展的特性是的它变得更加的犀利， 同时也给予程序员机会创建更漂亮并且更让用户喜欢的网站。</p>
+
+<p>尽管很多的开发人员都乐于颂扬 javascript，但是仍旧有人看到它的阴暗面。</p>
+
+<p>使用很多 javascript 代码的 web 页面会加载很慢，过多的使用 javascript 使得网页丑陋和拖沓。很快如何有效地使用 javascript 成为一个非常火热的话题。</p>
+
+<p>这里让我们列出 10 个最佳 javascript 实践，帮助你有效地使用 javascript。</p>
+
+<h2 id="1-尽可能的保持代码简洁">1. 尽可能的保持代码简洁</h2>
+
+<p>可能大家都听到过了N遍这个代码简洁问题了。作为一个开发人员你可能在你的代码开发过程中使用了很多次，但千万不要在 js 开发中忘记这点。</p>
+
+<ul>
+  <li>尽量在开发模式中添加注释和空格，这样保持代码的可读性</li>
+  <li>在发布到产品环境前请将空格和注释都删除，并且尽量缩写变量和方法名</li>
+  <li>使用第三方工具帮助你实现压缩 javascript。</li>
+</ul>
+
+<h2 id="2-思考后再修改-prototypes">2. 思考后再修改 prototypes</h2>
+
+<p>添加新的属性到对象 prototype 中是导致脚本出错的常见原因。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">yourObject</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">anotherFunction</span> <span class="o">=</span> <span class="s1">'Hello'</span><span class="p">;</span>
+<span class="nx">yourObject</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">anotherMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="err">…</span> <span class="p">};</span>
+</code></pre>
+</div>
+
+<p>在上面代码中，所有的变量都会被影响，因为他们都继承于 <code class="highlighter-rouge">yourObject</code>。这样的使用会导致意想不到的行为。所以建议在使用完后删除类似的修改。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">yourObject</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">anotherFunction</span> <span class="o">=</span> <span class="s1">'Hello'</span><span class="p">;</span>
+<span class="nx">yourObject</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">anotherMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="err">…</span> <span class="p">};</span>
+<span class="nx">test</span><span class="p">.</span><span class="nx">anotherMethod</span><span class="p">();</span>
+<span class="k">delete</span> <span class="nx">yourObject</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">anotherFunction</span> <span class="o">=</span> <span class="s1">'Hello'</span><span class="p">;</span>
+<span class="k">delete</span> <span class="nx">yourObject</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">anotherMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="err">…</span> <span class="p">};</span>
+</code></pre>
+</div>
+
+<h2 id="3-debug-javascript-代码">3. Debug Javascript 代码</h2>
+
+<p>即使最好的开发人员都会犯错。为了最大化的减少类似错误，请在你的 debugger 中运行你的代码，确认你没有遇到任何细微的错误</p>
+
+<h2 id="4-避免-eval">4. 避免 Eval</h2>
+
+<p>你的 JS 在没有 <code class="highlighter-rouge">eval</code> 方法的时候也可以很好的工作。<code class="highlighter-rouge">eval</code> 允许访问 javascript 编译器。如果一个字符串作为参数传递到 <code class="highlighter-rouge">eval</code>，那么它的结果可以被执行。</p>
+
+<p>这会很大的降低代码的性能。尽量避免在产品环境中使用 <code class="highlighter-rouge">eval</code>。</p>
+
+<h2 id="5-最小化-dom-访问">5. 最小化 DOM 访问</h2>
+
+<p>DOM 是最复杂的 API，会使得代码执行过程变慢。有时候 web 页面可能没有加载或者加载不完整。最好避免 DOM。</p>
+
+<h2 id="6-在使用-javascript-类库之前先学习-javascript">6. 在使用 javascript 类库之前先学习 javascript</h2>
+
+<p>互联网充斥着很多的 javascript 类库，很多程序员都往往使用 js 类库而不理解负面影响。强烈建议你在使用第三方类库之前学习基本的 JS 代码，否则，你就准备着倒霉吧。</p>
+
+<h2 id="7-不要用-settimeout-和-setinterval-方法来作为-eval-的备选">7. 不要用 “SetTimeOut” 和 “Setinterval” 方法来作为 “Eval” 的备选</h2>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">setTimeOut</span><span class="p">(</span> <span class="s2">"document.getID('value')"</span><span class="p">,</span> <span class="mi">3000</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>在以上代码中 <code class="highlighter-rouge">document.getID('value')</code> 在 <code class="highlighter-rouge">setTimeOut</code> 方法中被作为字符串来处理。
+这类似于 <code class="highlighter-rouge">eval</code> 方法，在每个代码执行中来执行一个字符串，因此会降低性能，因此，建议在这些方法中传递一个方法。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">setTimeOut</span><span class="p">(</span><span class="nx">yourFunction</span><span class="p">,</span> <span class="mi">3000</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h2 id="8--比-new-array-更好">8. [] 比 new Array(); 更好</h2>
+
+<p>一个常犯的错误在于使用当需要数组的时候使用一个对象或者该使用对象的时候使用一个数组。但是使用原则很简单：</p>
+
+<blockquote>
+  <p>“当属性名称是小的连续整数，你应该使用数组。否则，使用一个对象” - Douglas Crockford, JavaScript: Good Parts 的作者.</p>
+</blockquote>
+
+<p>建议：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'1A'</span><span class="p">,</span><span class="s1">'2B'</span><span class="p">];</span>
+</code></pre>
+</div>
+
+<p>避免：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+	<span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"1A"</span><span class="p">;</span>
+	<span class="nx">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"2B"</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h2 id="9-尽量不要多次使用-var">9. 尽量不要多次使用 var</h2>
+
+<p>在初始每一个变量的时候，程序员都习惯使用 <code class="highlighter-rouge">var</code> 关键字。相反，建议你使用逗号来避免多余的关键字，并且减少代码体积。 如下：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">variableOne</span> <span class="o">=</span> <span class="err">‘</span><span class="nx">string</span> <span class="mi">1</span><span class="err">’</span><span class="p">,</span> 
+<span class="nx">variableTwo</span> <span class="o">=</span> <span class="err">‘</span><span class="nx">string</span> <span class="mi">2</span><span class="err">’</span><span class="p">,</span> 
+<span class="nx">variableThree</span> <span class="o">=</span> <span class="err">‘</span><span class="nx">string</span> <span class="mi">3</span><span class="err">’</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h2 id="10-不要忽略分号-">10. 不要忽略分号 “;”</h2>
+
+<p>这往往是大家花费数个小时进行 debug 的原因之一。</p>
+
+<p>我很确信你肯定也在其它的文章中阅读过以上相关的内容，但是大家可能往往都忽略了很多基本的规则。
+你是不是也曾经忽略过分号。是不是也遇到过 <code class="highlighter-rouge">eval</code> 关键字问题导致性能问题？</p>
+
+<p>希望大家能够喜欢，谢谢！</p>
+
+<h2 id="相关阅读">相关阅读</h2>
+
+<ol>
+  <li>
+    <p><a href="http://justjavac.com/javascript/2012/12/20/object-plus-object.html">JavaScript中,{}+{}等于多少?</a></p>
+  </li>
+  <li>
+    <p><a href="http://justjavac.com/javascript/2012/12/21/converting-any-value-to-an-object.html">JavaScript：将所有值都转换成对象</a></p>
+  </li>
+  <li>
+    <p><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+  </li>
+</ol>
+
+<h2 id="相关书籍">相关书籍</h2>
+
+<ul>
+  <li>
+    <p><a href="http://www.amazon.cn/gp/product/B0097CON2S/ref=as_li_ss_tl?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B0097CON2S&amp;linkCode=as2&amp;tag=favbook-23" target="_blank">JavaScript语言精粹(修订版)</a><img src="http://ir-cn.amazon-adsystem.com/e/ir?t=favbook-23&amp;l=as2&amp;o=28&amp;a=B0097CON2S" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+  </li>
+  <li>
+    <p><a href="http://www.amazon.cn/gp/product/B004VJM5KE/ref=as_li_ss_tl?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B004VJM5KE&amp;linkCode=as2&amp;tag=favbook-23" target="_blank">JavaScript DOM编程艺术(第2版)</a><img src="http://ir-cn.amazon-adsystem.com/e/ir?t=favbook-23&amp;l=as2&amp;o=28&amp;a=B004VJM5KE" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+  </li>
+  <li>
+    <p><a href="http://www.amazon.cn/gp/product/B00BQ7RMW0/ref=as_li_ss_tl?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B00BQ7RMW0&amp;linkCode=as2&amp;tag=favbook-23" target="_blank">编写可维护的JavaScript</a><img src="http://ir-cn.amazon-adsystem.com/e/ir?t=favbook-23&amp;l=as2&amp;o=28&amp;a=B00BQ7RMW0" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+
+  </li>
+</ul>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/javascript/2013/10/15/9-hang-daima-huoqu-qq-qun-chengyuan.html" title="9 行 javascript 代码获取 QQ 群成员">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2013/10/16/function-of-the-inertia-load.html" title="利用函数的惰性载入提高 javascript 代码性能">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "10 个你需要了解的最佳 javascript 开发实践"; //请用代码生成文章标题
+    var wumiiTags = "javascript"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="10 个你需要了解的最佳 javascript 开发实践" data-url="http://justjavac.com/javascript/2013/10/15/top-10-must-follow-javascript-best-practices.html" data-thread-key="/javascript/2013/10/15/top-10-must-follow-javascript-best-practices"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

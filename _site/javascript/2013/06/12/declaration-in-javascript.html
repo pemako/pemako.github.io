@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>谈 javascript 变量声明 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="javascript">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/python/2013/06/11/a-guide-to-pythons-magic-methods.html" title="Python 的神奇方法指南" />
+    
+    
+    <link rel="next prerender" href="/javascript/2013/08/08/asynchronous-in-javascript-0.html" title="JavaScript 中的异步梳理（0）" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>谈 javascript 变量声明 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文：<a href="http://qingbob.com/blog/%E8%B0%88javascript%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E">谈 javascript 变量声明</a></p>
+
+<p>这篇文章还是对基础的复习，对面试经历的一个总结。</p>
+
+<p>之前的面试中遇到过一道面试题</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> 
+	<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="p">})()</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>短短 5 行代码 <code class="highlighter-rouge">console.log(a)</code> 的结果是什么？</li>
+  <li>如果把 <code class="highlighter-rouge">var a = 20;</code> 和 <code class="highlighter-rouge">console.log(a)</code> 语句顺序对调呢？</li>
+</ul>
+
+<p>这道题目的答案是 <code class="highlighter-rouge">undefined</code>。不是 10。</p>
+
+<p>关键在于 javascript 的变量声明有一个 hoisting 机制，变量声明永远都会被提升至作用域的最顶端（注意测试还只是声明，还没有赋值）。
+其实上面的语句相当于：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">a</span><span class="p">;</span> <span class="c1">// 在这里对变量hoisting，先声明</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> 
+	<span class="nx">a</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 再赋值</span>
+<span class="p">})()</span>
+</code></pre>
+</div>
+
+<p>再精简一点:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">bla</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="kd">var</span> <span class="nx">bla</span><span class="p">;</span>
+ 
+<span class="c1">// 这是分割线，上下代码的效果其实是一样的</span>
+ 
+<span class="kd">var</span> <span class="nx">bla</span><span class="p">;</span>
+<span class="nx">bla</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>也就是先使用，再声明（注意是声明，还没有赋值），这样一来，声明和赋值就被分开来了。
+所以最佳实践都推荐最好在函数的顶端把需要使用的变量首先声明一遍。</p>
+
+<p>同理，我们可以理解下面的代码也是会报错的</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">f</span><span class="p">()</span> <span class="c1">// 明显这里有错，因为 f 还没有被赋一个函数</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>但有一个问题，如果将上例 f 的函数声明修改一下，还会报错吗</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">f</span><span class="p">()</span> <span class="c1">// 可以运行吗？</span>
+<span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>这里我其实想强调的是两种函数声明的 <code class="highlighter-rouge">var f = function () {}</code> 和 <code class="highlighter-rouge">function f() {}</code> 差别。</p>
+
+<p>事实上，javascript 中所有的<strong>函数声明(function declarations)</strong>和<strong>变量声明(variable declarations)</strong>都会被提升(hoisted)至它们所在作用域的最顶端。
+需要注意的是函数声明只有一种，也就是 <code class="highlighter-rouge">function f() {}</code> 的形式。
+而 <code class="highlighter-rouge">var f = function () {}</code> 是什么？
+你可以理解为它是将一个匿名函数(当然也可以取函数名，下面会解释)赋值给了一个变量。</p>
+
+<p>就哪上面两个例子来说，同样是想实现先使用再定义的效果。
+只有第二种有用，虽然函数f在使用之后才定义，但是在 javascript 解释器中，它仍然是先于执行语句被定义的。</p>
+
+<p>而第一个例子，执行的效果是这样的</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">f</span><span class="p">;</span>
+<span class="nx">f</span><span class="p">()</span> <span class="c1">// 没有定义任何函数，当然无法执行</span>
+<span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>这么看来，虽然 javascript 是允许先执行再声明，但<strong>切勿这么做，请遵循先声明再使用的好习惯</strong>。</p>
+
+<p>再看看另一种情况，如果我把之前的函数定义</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{};</span>
+</code></pre>
+</div>
+
+<ol>
+  <li>给右侧的匿名函数增加函数名</li>
+  <li>以右侧函数名来执行函数</li>
+  <li>
+    <p>能成功吗？</p>
+
+    <div class="language-javascript highlighter-rouge"><pre class="highlight"><code> <span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">ab</span><span class="p">()</span> <span class="p">{};</span>
+ <span class="nx">ab</span><span class="p">();</span>
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<p>答案是否定的，因为上面的代码对f函数的定义是以<strong>命名函数表达式(Named Function Expressions)</strong>，而并非真正的函数声明，注意<strong>该函数名只在该函数的作用域内有用</strong>。
+下面这段代码充分说明了它的意义：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+	<span class="k">return</span> <span class="k">typeof</span> <span class="nx">foo</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="k">typeof</span> <span class="nx">foo</span><span class="p">;</span> <span class="c1">// "undefined"</span>
+<span class="nx">f</span><span class="p">();</span> <span class="c1">// "function"</span>
+</code></pre>
+</div>
+
+<p>那么如此声明还有什么意义呢？好吧，就我目前找到的资料而言，这样做的好处就是便于调试。</p>
+
+<p>接下来考虑一些意想不到的边缘，虽然我觉得一个程序员写出下面的代码有点自找苦吃，而且应该是在实战中避免的，但作为考试的题目来说是值得一说的。
+比如对比下面两段代码:</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">value</span><span class="p">(){</span>
+	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">value</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span><span class="p">);</span>    <span class="c1">//"function"</span>
+
+
+<span class="kd">function</span> <span class="nx">value</span><span class="p">(){</span>
+	<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">value</span><span class="p">);</span>    <span class="c1">//"number"</span>
+</code></pre>
+</div>
+
+<p>第一段代码想说明的是<strong>函数声明会覆盖变量声明</strong>，注意是声明，还没有赋值。
+如代码中，虽然同名变量在函数后再次声明，但是 <code class="highlighter-rouge">typeof</code> 的结果仍然是 <code class="highlighter-rouge">function</code></p>
+
+<p>第二段代码想说明的是<strong>函数声明不会覆盖变量赋值或者说初始化</strong>，如代码所示</p>
+
+<p><strong>Name Resolution Order</strong></p>
+
+<p>为什么会有上面的结果，为什么函数的声明会覆盖变量的声明。
+就是因为 name resolution order。
+我不知道怎么翻译这个名词，暂且就翻译为<strong>名称解析顺序</strong>吧。</p>
+
+<p>在 javascript 中，一个变量名(name)有四种方式进入作用域(scope)中</p>
+
+<ul>
+  <li><strong>语言内置</strong>，所有的作用域中都有 <code class="highlighter-rouge">this</code> 和 <code class="highlighter-rouge">arguments</code> 关键字</li>
+  <li><strong>形式参数</strong>，函数的参数在整个作用域中都是有效的</li>
+  <li><strong>函数声明</strong></li>
+  <li><strong>变量声明</strong></li>
+</ul>
+
+<p>上面列出的四种顺序也正是由高到底的优先级的顺序（<strong>关于这点我有所保留，我测试的结果是参数和函数的优先级都会比语言内置的优先级高，你可以把形式参数取名为 <code class="highlighter-rouge">arguments</code>，或者定义一个函数名为 <code class="highlighter-rouge">arguments</code>，结果内置的 <code class="highlighter-rouge">argument</code> 说被覆盖了</strong>），一旦一个变量名已经声明了，那么它就不可能被其他更低优先级的变量声明形式所覆盖。</p>
+
+<h2 id="参考文章">参考文章:</h2>
+
+<ol>
+  <li><a href="http://justjavac.com/named-function-expressions-demystified.html">命名函数表达式探秘</a></li>
+  <li><a href="http://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/">function-declarations-vs-function-expressions</a> （墙）</li>
+  <li><a href="http://justjavac.iteye.com/blog/1886140">Javascript 作用域和变量提升</a></li>
+  <li><a href="http://hikejun.com/blog/2010/01/27/zakas%E8%A7%A3%E7%AD%94baranovskiy%E7%9A%84javascript%E5%B0%8F%E6%B5%8B%E8%AF%95/">Zakas 解答 Baranovskiy 的 JavaScript 小测试</a></li>
+</ol>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#javascript-ref" rel="tag">javascript</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/python/2013/06/11/a-guide-to-pythons-magic-methods.html" title="Python 的神奇方法指南">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2013/08/08/asynchronous-in-javascript-0.html" title="JavaScript 中的异步梳理（0）">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "谈 javascript 变量声明"; //请用代码生成文章标题
+    var wumiiTags = "javascript"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["javascript"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="谈 javascript 变量声明" data-url="http://justjavac.com/javascript/2013/06/12/declaration-in-javascript.html" data-thread-key="/javascript/2013/06/12/declaration-in-javascript"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

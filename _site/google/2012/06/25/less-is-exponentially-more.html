@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>『译』少即是极多 - Go 语言设计理念 - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="go, google">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/nodejs/2012/05/30/why-we-moved-from-nodejs-to-ror.html" title="为什么我们要从 NodeJS 迁移到 Ruby on Rails" />
+    
+    
+    <link rel="next prerender" href="/javascript/2012/07/03/javascript-array-in-the-magical-effect-of-shift-and-pop.html" title="javascript Array 中 shift 和 pop 的妙用" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>『译』少即是极多 - Go 语言设计理念 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文： <a href="http://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html">Less is exponentially more</a></p>
+
+<p>译文： <a href="http://coolshell.cn/articles/7771.html">少即是极多</a></p>
+
+<p>译者： <a href="http://weibo.com/haoel">@左耳朵耗子</a></p>
+
+<hr />
+
+<p>这是一篇翻译练习。力图保留原意。若有不准确处，求速速指出。
+<a href="http://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html">猛击此处</a>（墙）看原文。</p>
+
+<p>作者为 Rob Pike，贝尔实验室来的大牛，现在就职于Google。
+他主导了 Go 语言的创建工作。</p>
+
+<p>下面是正文——</p>
+
+<p>这是我在2012年6月的 Go SF 上演讲的文本。</p>
+
+<p>这是一个个人演讲。 
+我承认，虽然面前的团队让 Go 诞生并延续，但是我的观点并不代表任何其他 Go 语言小组成员的意见。 
+我也想感谢 Go SF 的组织者提供这个和你们交流的机会。</p>
+
+<p>几星期前我被问起:“你在推出 Go 的过程中遇到的最大的惊奇是什么？”
+我立即意识到了答案：虽然我们希望 C++ 程序员意识到 Go 是个较好的选择，
+但是令人意外的是，大多数 Go 程序员来自 Python 和 Ruby 这样的动态语言，而很少有来自 C++ 的。</p>
+
+<p>我们——Ken，Robert和我——是 C++ 程序员(译者：Ken也用C++？)，当时在为解决我们所写的这类软件产生的问题设计一个新的语言。
+ 这似乎有点自相矛盾，因为别的 C++ 程序员根本不关心这些问题，更不会去设计一个语言。</p>
+
+<p>我今天想说的是关于那些激发我们创造 Go 的事情，和为什么它本不应令我们如此惊讶。 
+我保证这些内容更多与 Go 相关而不是 C++，所以即使你不很了解 C++ 你也能跟得上。</p>
+
+<p>回答可以这样归结：你认为“少即是多”呢，还是“少就是少”？</p>
+
+<p>这里有个比喻，将以真实故事的形式给出。 
+贝尔实验室中心原来发放3位数号码：物理研究是111，计算科学研究是127，如此这般。
+1980年代早期，一个便笺飞过来说”鉴于你们对研究的理解有所加深，
+将为你们的号码多加上一位，以便更好地体现你们的工作”。 
+所以我们中心的号码变成了1127。 
+Ron Hardin半当真地开玩笑说如果我们真的理解我们的世界更好一点的话，我们将丢掉一位数字，将127变成27。
+当然主管没听到这个笑话(这也不是我们希望的)，但是我想这里面有点值得思考的东西。 
+<strong>少即是多。你理解得越好，你将变得越简洁</strong>。</p>
+
+<p>先记住这句话。</p>
+
+<p>回到2007年9月，我在做一个庞大的Google C++项目的细微但核心的部分。
+开发必须交互进行，但是我这部分在我们的Google编译集群上要编译45分钟。 
+同时，有个消息传过来说一群在C++社区的Google员工将开一场讲座，介绍即将到来的C++0x(现在称为C++11)。</p>
+
+<p>在那场持续一小时的讲座中，我们听说了诸如计划中的35个新特性的说法——事实上还有更多，但是那场讲座只说有35个。 
+有些特性当然是细微的，但是讲座中谈到的至少是足够重要的。 
+提到的特性中，有些十分微妙并难以理解，比如右值引用(rvalue references); 
+有些特别符合C++范儿，比如可变参数模板(variadic templates); 
+还有些十分疯狂，比如用户定义的字面量(user-defined literals)。</p>
+
+<p>那时候我问了自己一个问题：C++ 社区真的觉得 C++ 错在没有足够多的特性么？ 
+显然，从 Ron Hardin 的笑话的角度看， <strong>简化语言将比添加新特性取得更好的效果</strong>。 
+当然，对 C++ 来说这很不靠谱，但是先记住这点。</p>
+
+<p>在这场讲座的几个月之前我做了一场讲座(你可以通过<a href="http://video.google.com/videoplay%EF%BC%9Fdocid=810232012617965344">YouTube</a>看到)，讲的是一个我 1980 年代做的一个玩具并发编程语言。 
+这个语言叫 <a href="ftp://cs.bell-labs.com/cm/cs/who/rsc/thread/newsqueak.pdf">Newsqueak</a>，
+而且显然地，它成为了 Go 的前身。</p>
+
+<p>在我在 Google 工作的过程中，我发现我丢掉了 Newsqueak 中的一些点子。 
+现在我将重新思考它们，所以我才做了那场讲座。 
+我相信它们会让服务器端编程变得更容易，而且 Google 能真正从中获益。</p>
+
+<p>我真的尝试将这些点子加入到 C++ 中，可惜失败了。 
+我实在难以将一组并发操作融入到 C++ 的控制流程中去——当真融进去的话，
+它们将变得十分丑陋，从而难以看到优越性。 
+另外，C++ 将它变得十分臃肿(虽然我从来没真正发现 C++ 苗条过)。 所以我放弃了这个想法。</p>
+
+<p>但是 C++0x 的讲座使我再次思考。 
+一件事十分困扰我——我相信也困扰着 Ken 和 Robert——C++ 的新内存模型居然新增了原子类型。 
+为这个不堪重负的类型系统加上这么个细致精巧到极致类型机制十分的不靠谱，不是么？ 
+将语言和今日的硬件绑在一起似乎有点目光短浅并且不明智，因为硬件过几年就有大变。</p>
+
+<p>那场 C++0x 讲座结束之后，我们回到办公室。 
+我开始了另一个编译(译者笑)，转过转过我的椅子，面对 Robert，然后开始问一些尖锐的问题。 
+在编译完成之前，我们拉拢了 Ken，并决定做些什么。 
+我们再也不想写 C++ 了，并且我们——尤其是我——在写 Google 代码时，想让并发拿来就用。 
+同时我们也想解决“大系统编程”的问题，容后细说。</p>
+
+<p>我们在白板上写下一组我们需要的东西——迫切需要的那种。 
+我们规划出大体的轮廓，忽略了语法细节和语义。</p>
+
+<p>我仍然有一条碉堡了的那周的邮件线索。 这是一些摘录:</p>
+
+<blockquote>
+  <p>Robert：起点：C，修补一些显而易见的瑕疵，去除繁杂的东西。 新增一些特性。</p>
+
+  <p>Rob：命名为‘go’。 你可以为这个名字编造各种理由，但是它确实拥有很多好的特性。 它短小，易于打出。 工具么：goc，gol，goa。 如果有个交互式调试器/解释器，可以直接叫‘go’。 代码后缀是。go。</p>
+
+  <p>Robert：空接口：interface {}。 将被所有接口实现(译者：原文如此)，并且可以取代void*。</p>
+</blockquote>
+
+<p>我们并没有立即全部设计出来。 
+比如我们花了一年多才设计出了数组(array)和切片(slice)。 
+不过相当一部分重要的设计在最初的几天中浮现。</p>
+
+<p>注意到 Robert 说 C 是起点，并非 C++。 
+对于这点我不是很确定，不过我相信他说的是 C，因为 Ken 在场(译者笑)。 
+但是最后我们并没有从 C 开始，这倒是真的。</p>
+
+<p>我们从最初的草稿开始，仅仅从其它语言中借鉴琐碎的东西，比如运算符，各种括号和一些常见的关键字。
+(当然我们也借鉴了我们所知道的语言中的思想。)
+不管怎么说，我们破而后立，从头做起，以此来响应 C++。 
+我们并非想做一个更好的 C++，甚至不是一个更好的 C。 
+它仅仅是一个对我们所关心的软件来说更好的语言。</p>
+
+<p>最后，我们得到了既不同于 C 也不同于 C++ 的东西，甚至比许多人意识到的还要不同。 
+我列了一个对于 C 和 C++ 的 Go 的重要的简化的列表:</p>
+
+<ul>
+<li>常规的语法(不需要一个符号表来辅助解析)</li>
+<li>GC机制(仅仅是GC)</li>
+<li>没有头文件</li>
+<li>显式依赖关系</li>
+<li>没有循环依赖</li>
+<li>数字常量仅仅是数字(译者：没有类型)</li>
+<li>int和int32不是同种类型</li>
+<li>任何类型都可以有方法(没有类)</li>
+<li>没有子类型继承(没有子类)</li>
+<li>包级别的初始化和良好定义的初始化顺序</li>
+<li>同一个包的文件一起编译</li>
+<li>包级别的全局定义可以以任意顺序进行</li>
+<li>没有算术类型转换(常量可以弥补)</li>
+<li>接口是隐式实现的(没有”implements”声明)</li>
+<li>嵌入的结构体(没有类型提升和子类)</li>
+<li>方法像函数一样定义(不必定义在特殊的地方)</li>
+<li>方法就是函数</li>
+<li>接口就是方法(没有数据)</li>
+<li>方法仅仅靠名字匹配(不是靠类型)</li>
+<li>没有构造函数和析构函数</li>
+<li>后置增量/减量运算符仅仅是语句，而不是表达式</li>
+<li>没有前置增量/减量运算符</li>
+<li>赋值号是语句，不是表达式</li>
+<li>表达式求值顺序在赋值和函数调用时确定(没有所谓的”sequence point”)</li>
+<li>没有指针算术</li>
+<li>内存总是初始化为0</li>
+<li>对本地变量取地址是合法的</li>
+<li>方法中没有叫this的指针</li>
+<li>分段式栈</li>
+<li>没有常量或其它类型的注记</li>
+<li>没有模板</li>
+<li>没有异常</li>
+<li>内建字符串，切片和映射(map)</li>
+<li>数组边界检查</li>
+</ul>
+
+<p>并且，我相信通过这一系列的简化， <strong>Go 将比 C 或 C++ 更具有表现力。少即是多</strong>。</p>
+
+<p>但是我们没法一下子把所有部分都做出来。 
+我们需要构建最基础的部分，比如说类型系统的表示，能良好应用于实际的语法，和一些无法形容的但能让库更容易相互操作的东西。</p>
+
+<p>我们同样增加了 C 或 C++ 中没有的东西，比如切片和映射，组合字面量(？)，
+文件顶层的表达式(这虽是件大事，但是几乎不为人知)，反射机制，GC 等等。 
+自然，还有并发。</p>
+
+<p>一个显眼的缺少的东西是类型的继承。 
+请允许我粗暴地对待它一分钟。</p>
+
+<p>早先构建 Go 的时候有人跟我说，他无法想象用一门没有泛型的语言工作。 
+正如我在别处说明的那样，我觉得这是个很诡异的言论。</p>
+
+<p>公平起见，他用自己的话说可能是他真的很喜欢 C++ 中 STL 的那些容器。 
+以辩论为目的的话，我们来正面看看他的言论。</p>
+
+<p>他说的意味着：他发现写一个容器，比如以 int 为元素类型的链表，或字符串映射是一种不能忍的重负。 
+我发现这是个很诡异的言论，因为我几乎没把时间花在那些个问题上，即使我在用没有泛型的语言。</p>
+
+<p>但是，更重要的是，他说的那些表示类型系统将会解除这种负担。 
+<strong>类型系统。不是多态函数，或语言级原语，或其它类型的辅助手段(helpers)，而仅仅是类型系统</strong>。</p>
+
+<p>这就是粘住我的那个细节。</p>
+
+<p>从 C++ 或 Java 来 Go 的程序员怀念和类型系统在一起的日子，特别是带继承和子类的那部分。 
+也许我在类型系统方面是粗暴了些，但是我绝不觉得那套玩意非常具有表现力。</p>
+
+<p>我已故的朋友 Alain Fournier 一次告诉我说他认为学术工作的最底层是分类学。 
+然后信不信由你，类型继承正是分类学。 
+你必须决定哪个萝卜扔哪个坑里，每个类型的父类型，A 是否继承 B 或者 B 是否继承 A。 
+一个可排序的数组是一个带有 sort 方法的数组呢，还是一个长得像数组的排序器呢？ 
+如果你觉得类型系统能解决所有设计上的问题，你必须做出这个无意义的选择。</p>
+
+<p>我相信对编程来说那是个荒诞的思路。 
+真正的重点不在于事物之间的继承关系，而在于它们能提供些什么。</p>
+
+<p>因此，接口这个概念进入了 Go。 但是它们都是主要部分——真正的 Go 之道——的一部分。</p>
+
+<p>如果 C++ 和 Java 注重类型继承和类型系统的分类学，那末 Go 就注重组合。</p>
+
+<p>Doug Mcilroy，Unix 管道的最终发明人，在 1964 年(!)写道:</p>
+
+<blockquote>
+  <p>我们应该有一些机制能将程序耦合(串)起来，像花园软管那样——当我们需要另一种方式传送数据时，拧紧另外一段即可。 I/O也可以这么做。</p>
+</blockquote>
+
+<p>这也是 Go 所提倡的道路。 Go 吸收这个观点，然后把它推进得十分远。 
+这是一门关于(功能上的)组合和(调用上的)耦合的语言。</p>
+
+<p>一个显然的例子是接口是组合各部分的途径。
+<strong>关键是，那些部分是什么并不重要，如果某类型实现了M方法我就可以把这个方法填到接口里去</strong>。</p>
+
+<p>另一个重要的例子是如何让并发性提供给我们不同的独立计算部分的组合。</p>
+
+<p>并且还有一种不同寻常(但十分简单)的类型组合形式：嵌入。</p>
+
+<p>————————————————————————</p>
+
+<p>我想提一个和之前不太相关的 Go 设计： Go 被设计为大型团队用来写大型程序的语言。
+这里有个概念是“大型编程”，并且不知何故 C++ 和 Java 主宰了这个领域。 我相信这只是因为其历史巧合，或者是工业上的巧合。 
+但是被广泛接纳的观点是他们和面向对象设计有关。
+我压根不相信这点。</p>
+
+<p>大型软件需要确定的方法，但是更重要的是它需要强依赖性管理，干净的接口抽象和优越的文档工具。 
+C++ 没一点做得好的(虽然 Java 明显要好很多)。
+我们还不知道 Go 语言能做到何种程度，因为现在还没有足够的软件是用 Go 写的。 
+但是我非常有信心于 Go 将会成为一个优越的大型编程语言。 
+时间会说明一切的。</p>
+
+<p>————————————————————————</p>
+
+<p>现在，回到我们演讲开始提的那个问题:</p>
+
+<p>为什么 Go，作为从头被设计为符合 C++ 使用者习惯的语言，没有吸引很多 C++ 程序员？</p>
+
+<p>严肃点说，我觉得是因为 Go 和 C++ 在哲学方面有着巨大的不同。</p>
+
+<p>C++ 是将所有东西提到你指尖上(译者：即多范式)。 我在 C++11 的 FAQ 上找到了这段引用:</p>
+
+<blockquote>
+  <p>C++ 能优雅地，灵活地，零损耗地(相比于手工操纵代码)表达抽象的能力大幅提升了。</p>
+</blockquote>
+
+<p>Go 并非这种“围绕式”的。 
+你并不需要所有的东西都内建好。 
+你不需要对每个执行细节进行精细的控制。 
+比如，你不需要 RAII，但你拥有一个垃圾回收器，也意味着你不需要执行释放内存的操作。</p>
+
+<p>你得到的是一组非常强有力但易于理解，易于用来构建积木的功能，这些积木可以用来组合出一个你需要的问题的解法。
+这并不意味着它能像别的一些语言创造的解法一样快速，复杂，或带来思想上的激励，
+但是它总能保证 <strong>易于书写，易于阅读，易于理解，易于维护，而且可能更安全</strong>。</p>
+
+<p>从另一个角度说，这当然算作过度简化:</p>
+
+<p>Python 和 Ruby 程序员转到 Go，因为他们不需要牺牲表达能力，却获得了性能的提升，并且能好好玩并发系统了。</p>
+
+<p>C++ 程序员并没有转到 Go 是因为他们好不容易获得了对程序的精细控制，并且不想牺牲它们的任何一部分。 
+对他们而言，写软件不仅包括把事情做完，而且包括用特定的方式完成。</p>
+
+<p>关键是， <strong>在将来，Go 的成功将会颠覆他们的世界观</strong>。</p>
+
+<p>并且从一开始我们就应该意识到这点。 
+对于 C++11 的新特性很兴奋的人们并不关心一个拥有如此少特性的语言。 
+即使最后他提供了如此多。</p>
+
+<p>谢谢。</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#go-ref" rel="tag">go</a>
+       
+      	<a href="/tags.html#google-ref" rel="tag">google</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/nodejs/2012/05/30/why-we-moved-from-nodejs-to-ror.html" title="为什么我们要从 NodeJS 迁移到 Ruby on Rails">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2012/07/03/javascript-array-in-the-magical-effect-of-shift-and-pop.html" title="javascript Array 中 shift 和 pop 的妙用">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "『译』少即是极多 - Go 语言设计理念"; //请用代码生成文章标题
+    var wumiiTags = "go,google"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["google"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="『译』少即是极多 - Go 语言设计理念" data-url="http://justjavac.com/google/2012/06/25/less-is-exponentially-more.html" data-thread-key="/google/2012/06/25/less-is-exponentially-more"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

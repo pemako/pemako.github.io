@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>优化 jekyll 站点的 SEO 技巧 - justjavac(迷渡)</title>
+    <meta name="description" content="在使用 jekyll 搭建个人博客的时候，将 SEO 优化的细节融入到博客主题中，有利于搜索引擎的对站点内容的抓取，为您的网站带来有价值的流量。本文将为你分享一些 jekyll SEO 技巧。">
+    <meta name="keywords" content="jekyll, SEO, title, blog, site, google, violet, GitHub, 搜索引擎, 标题, 关键字, 描述, description, keywords">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/github/2011/12/05/some-github-api.html" title="GitHub API v2 笔记" />
+    
+    
+    <link rel="next prerender" href="/git/2012/02/22/gitmagic-preface.html" title="Git魔法 - 前言" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>优化 jekyll 站点的 SEO 技巧 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>很多时候，我们搭建了一个博客，但很少有人来访问。一方面可能是因为我们没有做好推广，另外一方面可能是我们没做好 <strong>SEO</strong> 。在使用 <strong>jekyll</strong> 搭建这个博客的时候，我将 <strong>SEO</strong> 的一些优化点融入到 <strong>Violet</strong> 主题中来。经过一段时间的测试和观察，期望的效果已经达到。</p>
+
+<p>虽然我不是 SEO 高手，但喜欢折腾。通过对 SEO 的学习和实践，我希望能将好的文章让更多人知道，并通过 jekyll 实现。本文将为你分享一些 <strong>jekyll SEO</strong> 技巧。</p>
+
+<h2 id="优化博客标题及副标题">优化博客标题及副标题</h2>
+
+<p><strong>博客标题</strong>，即站点的名称。它能够使访问者在第一时间知道所在的是什么网站，是站点的重要标识。副标题，它与博客主题并不一样，它能为博客标题做一些描述，一些优化性。通常，我都会为站点的主标题设置 <code class="highlighter-rouge">h1</code> 标签，为副主题设置 <code class="highlighter-rouge">h2</code> 标签。</p>
+
+<h2 id="优化页面标题">优化页面标题</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>在之前一直使用这样的标题方式 “xxx</td>
+      <td>justjavac.com”, 本来还觉得挺好的，既有博客名称，又有页面标题。但后来查看搜索引擎的显示结果，基本上每个链接的标题里面，也就有了多余的 “</td>
+      <td>justjavac.com” 了。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>有人说这样好，也有人说这样不好。这次我决定砍掉后面的博客名称，让标题来的简洁些，让标题与内容的权重比更高一些。</p>
+
+<p>具体的实现方法如下：</p>
+
+<pre class="html" name="colorcode">
+&lt;title&gt;
+    if page.title
+         page.title  //显示页面标题
+    else
+         site.title  //显示博客标题
+    endif
+&lt;/title&gt;
+</pre>
+
+<h2 id="description-和-keywords">Description 和 Keywords</h2>
+
+<p><strong>Description</strong> 是为搜索引擎提供网页的描述信息，<strong>Keywords</strong> 为搜索引擎提供网页包含的核心内容。</p>
+
+<p>为 jekyll 站点创建这Description 和 Keywords 有很多种方法。一种可以通过全局定义，
+把预定好的内容写在配置文件 <code class="highlighter-rouge">_config.yml</code> 中，一种是在
+每个页面添加 <code class="highlighter-rouge">YAML</code> ， 还有一种是写个插件，自动配置。写在配置文件中的比较统一，可以作为全局使用。写在页面的比较灵活，但是每次编写文章的时候都要自己手动加上去。写个插件，难度较大。</p>
+
+<p>经过对 <strong>Wordpress</strong> 的 SEO 的一些借鉴方法，在这次改版过程中，我采用了手动配置的方法。基本为所有页面都添加了 Description 和 Keywords 。</p>
+
+<p>如果你查看我的页面源码，你就可以发现，在所有文档的头部都会多了 2 个标识。而在文章页面，我会在文章输出 Description , 同时将其作为文章的摘要在首页输出。</p>
+
+<h2 id="使用-hground-strong-标签">使用 hground, strong 标签</h2>
+
+<p>一篇好的文章，条例同顺，层次分明。同时，为文章加上语义化的标签，更有利于搜索引擎抓取。</p>
+
+<p><strong>hground</strong> 标签指的是 <code class="v-code">h1</code>, <code class="v-code">h2</code>, <code class="v-code">h3</code>, <code class="v-code">h4</code>, <code class="v-code">h5</code>, <code class="v-code">h6</code> 等标签, <code class="v-code">strong</code> 标签则是标识该文章的关键字。</p>
+
+<h2 id="处理链接的-rel-标签">处理链接的 rel 标签</h2>
+
+<p>页面的菜单，为 Home 设置 <code class="v-code">nofollow</code> ，为 Archives ，Plugins ，Works，Contact 页面添加 <code class="v-code">bookmark</code> 。在首页的文章 Read More 中，为其添加的也是 nofollow ，这样写的好处是同个链接在搜索爬虫抓取的时候，不会抓取两次，避免权重下降。</p>
+
+<h2 id="文章列表页显示文章摘要">文章列表页显示文章摘要</h2>
+
+<p>在 Archives 页面，我将 <strong>Description</strong> 输出到摘要信息里面。这里有个好处，就是在查看这个页面的时候，很方便地看到页面的基本内容，搜索爬虫也能抓取到页面的摘要。坏处就是所有的文章在这里都输出，表示页面会很长！</p>
+
+<h2 id="添加-atomxml-和-sitemapxml">添加 Atom.xml 和 Sitemap.xml</h2>
+
+<p>为网站添加订阅功能，主要将最新的 10 篇文章输出到 <strong>Atom.xml</strong> 中。网站地图 <strong>Sitemap.xml</strong> 则是将全站的文章，页面都输出。最后将其提交到 <strong>Google</strong> 。</p>
+
+<h2 id="简单总结">简单总结</h2>
+
+<p>以上内容是我在使用 <strong>jekyll</strong> 搭建自己的博客的过程中实践和总结过来的，如有不对，请尽快联系我。我们互相学习，共同交流。</p>
+
+<p>在使用 <strong>Wordpress</strong> 的时候，就注意到 <strong>SEO</strong> 的重要性了。此次<strong>Violet</strong> 的实践，应该算是一种学习和尝试，在使用 <strong>jekyll</strong> 搭建站点的过程中，具体应该注意的一些细节，下面列个表格作最后总结。</p>
+
+<table>
+    <tbody>
+        <tr>
+            <th style="width:15%">页面类型</th>
+            <th>标题</th>
+            <th>描述</th>
+            <th style="width:18%">关键词</th>
+            <th>其他</th>
+        </tr>
+        <tr>
+            <td>首页</td>
+            <td>默认显示博客标题</td>
+            <td>全局描述</td>
+            <td>全局关键词</td>
+            <td>为 <code class="v-code">Read More</code> 添加 <code class="v-code">nofollow</code></td>
+        </tr>
+        <tr>
+            <td>普通页面</td>
+            <td>页面标题</td>
+            <td>页面描述</td>
+            <td>页面关键字</td>
+            <td>为 <code class="v-code">Read More</code> 添加 <code class="v-code">nofollow</code></td>
+        </tr>
+        <tr>
+            <td>文章页面</td>
+            <td>文章标题</td>
+            <td>文章摘要</td>
+            <td>文章关键字</td>
+            <td>为文章格式化，hground, strong 等标签的使用</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="一个半月之后的成果">一个半月之后的成果</h2>
+
+<p>这篇文章是在 2012年1月16日 发布的，那个时候我查了一下，google 的 PR 值为 0 。现在是 2012月2月24日，我再查一下，如今的 PR 值为 3 。小小欣慰一下，但仍然还有很多问题。</p>
+
+<p>经过为博客添加 category之后的一些总结，一个网站的文章路径是非常关键了，于是固定链接成为重中之中，坚固固定链接，保证从搜索引擎过来的链接不会出现 404 结果，是提升 seo 的保障。</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#seo-ref" rel="tag">seo</a>
+       
+      	<a href="/tags.html#jekyll-ref" rel="tag">jekyll</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/github/2011/12/05/some-github-api.html" title="GitHub API v2 笔记">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/git/2012/02/22/gitmagic-preface.html" title="Git魔法 - 前言">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "优化 jekyll 站点的 SEO 技巧"; //请用代码生成文章标题
+    var wumiiTags = "seo,jekyll"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["jekyll"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="优化 jekyll 站点的 SEO 技巧" data-url="http://justjavac.com/jekyll/2012/01/16/the-seo-for-jekyll-blog.html" data-thread-key="/jekyll/2012/01/16/the-seo-for-jekyll-blog"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

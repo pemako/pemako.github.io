@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>代码之谜（零）- 开篇/前言/序 - justjavac(迷渡)</title>
+    <meta name="description" content="其实，你不懂代码">
+    <meta name="keywords" content="代码之谜">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2012/09/21/why-are-you-so-low-salary.html" title="你为什么薪水那么低" />
+    
+    
+    <link rel="next prerender" href="/other/2012/09/27/why-are-you-so-low-salary-2-productive.html" title="你为什么薪水那么低(二)之 生产力" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>代码之谜（零）- 开篇/前言/序 <small>其实，你不懂代码</small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p><strong>2012年9月28日 13时32分 新增</strong></p>
+
+<p>最近看本文评论，争议很多，我先说说这篇文章的前世今生吧。</p>
+
+<p>我原文标题是『代码之谜 - 开篇/前言/序』，副标题是『其实，你不懂代码』，本来打算用“其实，代码中的运算符不等价于数学符号”。原文我写于2010年底，当时写在 evernote 中，用了”群“、”域“、”集合“、”关系“的概念解释了计算机中用二进制表示的离散的数和现实中连续的数之间的关系和区别。</p>
+
+<p>前几天QQ群里有人问道，遂打算写一个系列，用比较「贫」的语言把他们讲述出来。</p>
+
+<p>原文首发在我的博客:  <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html</a>, 因为我也不能保证我的博客空间总是稳定的，所以，如果博客访问不了，
+可以到 <a href="http://justjavac.iteye.com/blog/1685559">iteye</a> 或 <a href="http://blog.csdn.net/justjavac/article/details/8019644">CSDN</a> 查看这篇文章，还可以顺便看看热心网友的评论。</p>
+
+<hr />
+
+<p><strong>正文分割线</strong></p>
+
+<hr />
+
+<p>答应了群里的兄弟们要更新博客，结果回家又是洗衣服做饭的，转眼已经10点多了。</p>
+
+<p>趁洗衣机正在转的功夫，打开 Evernote 找到了以前的几段 javascript 代码，本着人性本贱(咳，咳，该死的输入法，更正「人性本荐」)的精神，
+给大家共享一下，不定期更新，算是我「代码之谜」系列的开篇吧。</p>
+
+<p>我喜欢读一些让人震惊的书，比如『<a href="http://www.amazon.cn/gp/product/B0049MPCAS/ref=as_li_ss_tl?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B0049MPCAS&amp;linkCode=as2&amp;tag=justjavac-23">哥德尔、艾舍尔、巴赫书：集异璧之大成</a>』，比如『<a href="http://www.amazon.cn/gp/product/B0011C3NU0/ref=as_li_ss_tl?ie=UTF8&amp;camp=536&amp;creative=3132&amp;creativeASIN=B0011C3NU0&amp;linkCode=as2&amp;tag=justjavac-23">从一到无穷大</a>』，读完后张大嘴巴，「哇噻，太不可思议了，太令我震惊了」。
+本系列博客的目的之一就是让每个阅读过的人在思维方式上有所改变，变得更理性，更加会思考，会学习。</p>
+
+<p>本系列说来话长，从10年开始构思，当时写在 evernote 里面，名字叫『理性，像数学家一样思考』，废话少说，言归正传，贴代码吧</p>
+
+<p>第一段代码:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function foo1(a){
+    return a + '01';
+}
+
+foo1(01);
+</code></pre>
+</div>
+
+<p>第二段代码:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function foo2(a){
+    return a + '010';
+}
+
+foo2(010);
+</code></pre>
+</div>
+
+<p>第三段代码: (注: 这不是 javascript 的问题，而且所有语言的问题，归根结底是 IEEE 标准中二进制浮点运算的问题，关于浮点数的详细问题请阅读 <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">代码之谜 - 浮点数</a>，「<del>为什么没有链接呢，呵呵，因为我还没有写，正在整理中</del>」。)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>console.log(0.2 + 0.4);
+</code></pre>
+</div>
+
+<p>第四段代码就相对来说简单多了: 参考我一些发布的这篇<a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">为什么 ++[[]][+[]]+[+[]] = 10?</a>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[4,[3,2]][1][0];     // 3
+</code></pre>
+</div>
+
+<hr />
+
+<p><strong>分割线</strong></p>
+
+<hr />
+
+<p><strong>2012年9月25日 22时25分 更新</strong></p>
+
+<p>还是忍不住，睡前想唠叨几句。</p>
+
+<p>也许很多人第一次接触编程时，对 <code class="highlighter-rouge">i = i + 1</code> 都感到百撕不得骑姐(咳，我就说了嘛，必须得换一个输入法了，更正「百思不得其解」)。</p>
+
+<blockquote>
+  <p>“i加上1怎么可能和i相等呢？”</p>
+</blockquote>
+
+<p>后来慢慢知道了，不，确切的说，是慢慢地接受了，接受了=是赋值（前提是你学的不是pascal，我的入门语言就是它），因为<strong>你可能根本没有思考，只是被动接受</strong>。</p>
+
+<p>再后来，我们学了 if， 开始写分支代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (a &gt;3) { 
+    // do something        
+}
+
+if (a &lt; 5) {
+    // do  something
+}
+</code></pre>
+</div>
+
+<p>但是当我们写出 <code class="highlighter-rouge">if (3 &lt; a &lt; 5)</code> 时，居然报错了，又是百撕不… 后来被教导了，这么写是错的，应该 <code class="highlighter-rouge">if (a&gt;3 &amp;&amp; a&lt;5)</code>。
+于是我们又开始接受了，认为这么写是理所当然的，而且以后的代码都是这么写的。</p>
+
+<p>直到有一天，你看了 python 的入门手册，尼玛，居然逆天的出现了 ‘if 3 &lt; a &lt; 5:’，当时绝对又震惊了，“怎么可以这么写？”。
+难道你忘了，N年前你就是这么写的，而且当时你不也认为 <code class="highlighter-rouge">3 &lt; a &lt; 5</code> 是理所当然的吗（任何一个高中生都会同意这种写法），
+为什么你现在又开始觉得 <code class="highlighter-rouge">3 &lt; a &lt; 5</code> 是种逆天写法呢，因为你在这几年的编程生涯中，已经被动接受了太多太多的东西，而且使你根本就不曾思考过，
+这也是我写「代码之谜」系列的初衷。</p>
+
+<p>当你被告知了，在编程中=是赋值的意思(其实他们没有告诉你，只是大部分语言这样，还有很多语言不是这样，比如pascal中:=是赋值，比如basic/VB中=即是赋值也是判断)，
+但是=如果不是相等的话，那肯定有表示相等的，对，就是==，或者===。</p>
+
+<p>不管是==还是=，「相等」到底是什么意思呢？=或者==或者===，即使以后会出现====，到底和数学的「相等」有多少出入呢？</p>
+
+<p>知道我们遇到了传说中的NaN（很多人认为NaN既然表示Not A Number，那么他就是语言定义的一个东东，根本不存在，这是错误的，NaN是在IEEE浮点数规范中明确定义的，包括本系列后面
+后提到的+0和-0问题），它不等于任何值，而且，它居然不等于它自己。</p>
+
+<p>一个数居然不<strong>等于</strong>它自己，其实确切的说，是 NaN == NaN 居然返回 false， 甚至 NaN === NaN 也返回 false。是 NaN 的问题，还是==或者===的问题，抑或这根本就是<strong>相等</strong>这个概念的问题。</p>
+
+<p>在集合论中，相等的三要素，不管是==还是===，都无法满足，所以说，===根本就不是相等（如果你读过数学的「群伦」就更明白了）。</p>
+
+<p>相等（等价）的三要素</p>
+
+<ol>
+    <li>自反省: A等于A</li>
+    <li>对称性: 如果A等于B，那么B等于A</li>
+    <li>传递性: 如果A等于B，而且B等于C，那么A等于C</li>
+</ol>
+
+<p>当我们看到这几条定理时，我们从来没有怀疑过。
+脱离了数学，我们进入了编程领域，当我们遇到了NaN，
+我们知道了，在IEEE的数字表示规范里面，「自反省」是不被满足的，那么传递性和对称性呢？ 如果你找到了反例，可以留言。</p>
+
+<p>也许你说，相等/等于/全等/等价这些比较特殊，其它的应该都会满足吧。
+我只能告诉你（说通俗一点），以前的所有定理、公理都只适用于一个领域，当它进入另一个领域我们就不能把它当作理所当然的，也许它没有问题，比如 1+2=3，但也许这只是一个巧合，
+上面我就提到了 0.2+0.4 就不等于 0.6。</p>
+
+<p>计算机和现实最大的不同（也是问题的根源）就是，世界是连续的，而计算机是非连续的，是离散的。
+以前我们学校图书馆有很多「计算机数学」或者「离散数学」之类的书，我现在都不明白，里面写的那些数学，是设计计算机的工程师读呢，还是使用计算机的程序员读呢？里面的内容简直就是大杂烩嘛。
+什么是离散数学呢？我的理解，不连续的数学都是离散数学。比如量子论里面用到的数学，就是离散数学。</p>
+
+<p>其它算数定律或者定义有不满足的吗？</p>
+
+<p>再举一例，上小学刚学乘法运算的时候老师就告诉我们，3x4就是4个3相加，下面这个例子再次颠覆你的想法。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>console.log(0.1 * 10);
+console.log(0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1);
+</code></pre>
+</div>
+
+<p>写完睡觉，如果大家有什么更好的例子，欢迎补充。</p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#代码之谜-ref" rel="tag">代码之谜</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2012/09/21/why-are-you-so-low-salary.html" title="你为什么薪水那么低">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/other/2012/09/27/why-are-you-so-low-salary-2-productive.html" title="你为什么薪水那么低(二)之 生产力">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "代码之谜（零）- 开篇/前言/序"; //请用代码生成文章标题
+    var wumiiTags = "代码之谜"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["codepuzzle"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="代码之谜（零）- 开篇/前言/序" data-url="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" data-thread-key="/codepuzzle/2012/09/25/codepuzzle-introduction"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

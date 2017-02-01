@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Linux 计划任务 — crontab - justjavac(迷渡)</title>
+    
+    <meta name="keywords" content="linux, cron">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/other/2013/08/11/how-much-money-has-wang-lost.html" title="从「王师傅一共损失了多少钱」说开去" />
+    
+    
+    <link rel="next prerender" href="/javascript/2013/09/25/ji-yu-canvas-jiang-tu-pian-zhuan-hua-cheng-zi-fu-hua.html" title="基于 canvas 将图片转化成字符画" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Linux 计划任务 — crontab <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>原文：<a href="http://letcodefly.com/article/1">Linux 计划任务 — crontab</a></p>
+
+<p>作者：<a href="http://weibo.com/singleseeker">singleseeker</a></p>
+
+<h2 id="cron-简介">cron 简介</h2>
+
+<p><code class="highlighter-rouge">cron</code> 是 UNIX, SOLARIS，LINUX 下的一个十分有用的工具。通过 <code class="highlighter-rouge">cron</code> 脚本能使计划任务定期地在系统后台自动运行。</p>
+
+<h2 id="cron-命令">cron 命令</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">crontab -e</code> – 编辑该用户的 crontab，当指定 crontab 不存在时新建。</li>
+  <li><code class="highlighter-rouge">crontab -l</code> – 列出该用户的 crontab。</li>
+  <li><code class="highlighter-rouge">crontab -r</code> – 删除该用户的 crontab。</li>
+  <li><code class="highlighter-rouge">crontab -u&lt;用户名称&gt;</code> – 指定要设定 crontab 的用户名称。</li>
+</ul>
+
+<h2 id="linux-crontab-格式">Linux Crontab 格式</h2>
+
+<p>表格: Crontab 字段与允许的值 (Linux Crontab)</p>
+
+<table class="table table-bordered">
+<thead>
+<tr><th>字段</th><th>描述</th><th>允许的值</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>分钟</td>
+<td>一小时的第几分</td>
+<td>0-59</td>
+</tr>
+<tr>
+<td>小时</td>
+<td>一天的第几小时</td>
+<td>0-23</td>
+</tr>
+<tr>
+<td>日期</td>
+<td>一个月的的第几天</td>
+<td>1-31</td>
+</tr>
+<tr>
+<td>月份</td>
+<td>一年的第几个月</td>
+<td>1-12</td>
+</tr>
+<tr>
+<td>周几</td>
+<td>一周的第几天</td>
+<td>0-6</td>
+</tr>
+<tr>
+<td>命令</td>
+<td>命令</td>
+<td>可以被执行的任何命令</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="cron-实例">cron 实例</h2>
+
+<h3 id="1-特定时间执行">1. 特定时间执行</h3>
+
+<p>cron 的基本用法是在特定的时间执行一项任务，如下是 6 月 10 上午 8:30 执行 Full backup shell script。
+<strong>要注意的是时间字段采用的是 24 小时制，如果是下午 8 点，则改写为 20 点</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>30 08 10 06 * /home/ramesh/full-backup
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">30</code> – 第 30 分钟</li>
+  <li><code class="highlighter-rouge">08</code> – 早上 8 点</li>
+  <li><code class="highlighter-rouge">10</code> – 10 号</li>
+  <li><code class="highlighter-rouge">06</code> – 第 6 个月 (6 月)</li>
+  <li><code class="highlighter-rouge">*</code> – 一周的任何一天</li>
+</ul>
+
+<h3 id="2-安排多个实例比如一天执行两次">2. 安排多个实例（比如一天执行两次）</h3>
+
+<p>下面的增量备份脚本每天执行两次。</p>
+
+<p>每天于 11:00, 16:00 执行，逗号两侧的时间都会执行。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>00 11,16 * * * /home/ramesh/bin/incremental-backup
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">00</code> – 第 0 分钟 (每小时开时)</li>
+  <li><code class="highlighter-rouge">11,16</code> – 早上 11 点与下午 4 点</li>
+  <li><code class="highlighter-rouge">*</code> – 每天</li>
+  <li><code class="highlighter-rouge">*</code> – 每个月</li>
+  <li><code class="highlighter-rouge">*</code> – 一周的任何一天</li>
+</ul>
+
+<h3 id="3-让任务只在特定时间执行比如仅当工作日时执行">3. 让任务只在特定时间执行（比如仅当工作日时执行）</h3>
+
+<p>下面这个例子是每天 9:00-16:00 检查数据库状态（包括周六）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>00 09-18 * * * /home/ramesh/bin/check-db-status
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">00</code> – 第 0 分钟 (每小时开时)</li>
+  <li><code class="highlighter-rouge">09-18</code> – 9 点, 10 点, 11 点, 12 点, 下午 1 点, 下午 2 点, 下午 3 点, 下午 4 点, 下午 5 点, 下午 6 点</li>
+  <li><code class="highlighter-rouge">*</code> – 每天</li>
+  <li><code class="highlighter-rouge">*</code> – 每个月</li>
+  <li><code class="highlighter-rouge">*</code> – 一周的任何一天</li>
+</ul>
+
+<p>如果只想工作日执行此操作</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>00 09-18 * * 1-5 /home/ramesh/bin/check-db-status
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">00</code> – 第 0 分钟 (每小时开时)</li>
+  <li><code class="highlighter-rouge">09-18</code> – 9 点, 10 点, 11 点, 12 点, 下午 1 点, 下午 2 点, 下午 3 点, 下午 4 点, 下午 5 点, 下午 6 点</li>
+  <li><code class="highlighter-rouge">*</code> – 每天</li>
+  <li><code class="highlighter-rouge">*</code> – 每个月</li>
+  <li><code class="highlighter-rouge">1-5</code> – 周一, 周二, 周三, 周四和周五 (工作日)</li>
+</ul>
+
+<h3 id="4-如何查看-cron-定时任务">4. 如何查看 cron 定时任务</h3>
+
+<p>查看当前用户定时任务</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ramesh@dev-db$ crontab -l
+</code></pre>
+</div>
+
+<p>查看 ROOT 用户定时任务，用 root 登入 su-root，再执行 <code class="highlighter-rouge">crontab -l</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>root@dev-db# crontab -l
+no crontab for root
+</code></pre>
+</div>
+
+<p>查看其它用户定时任务</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>root@dev-db# crontab -u sathiya -l
+@monthly /home/sathiya/monthly-backup
+00 09-18 * * * /home/sathiya/check-db-status
+</code></pre>
+</div>
+
+<h3 id="5-如何编辑-cron-定时任务">5. 如何编辑 cron 定时任务</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ramesh@dev-db$ crontab -e
+</code></pre>
+</div>
+
+<h3 id="6-安排每分钟都执行定时任务">6. 安排每分钟都执行定时任务</h3>
+
+<p>理论情况下，没有每分钟都要执行的 shell，但下面这个例子，让我们更好的了解 crontab</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>* * * * * 命令
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">*</code> 代表着所有可能取到的值，除了直接用 <code class="highlighter-rouge">*</code> 外，下面的几个例子也较为常用</p>
+
+<ul>
+  <li>当指定 <code class="highlighter-rouge">*/5</code> 在分钟字段，代表每五分钟。</li>
+  <li>当指定 <code class="highlighter-rouge">0-10/2</code> 在分钟字段，代表在前十分钟的每两分钟</li>
+</ul>
+
+<p>上面的例子对于其它四个字段同样试用</p>
+
+<h3 id="7-安排后台每十分钟执行定时任务">7. 安排后台每十分钟执行定时任务</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>*/10 * * * * /home/ramesh/check-disk-space
+</code></pre>
+</div>
+
+<p>有一些特殊的例子，可以用关键字替代上述五个字段– <code class="highlighter-rouge">reboot</code>, <code class="highlighter-rouge">midnight</code>, <code class="highlighter-rouge">yearly</code>, <code class="highlighter-rouge">hourly</code></p>
+
+<p>Table: Cron special keywords and its meaning</p>
+
+<table class="table table-bordered">
+<thead>
+<tr><th>Keyword</th><th>Equivalent</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>@yearly</td>
+<td>0 0 1 1 *</td>
+</tr>
+<tr>
+<td>@daily</td>
+<td>0 0 * * *</td>
+</tr>
+<tr>
+<td>@hourly</td>
+<td>0 * * * *</td>
+</tr>
+<tr>
+<td>@reboot</td>
+<td>重启时运行</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="8-每一年的第一分钟执行定时任务yearly">8. 每一年的第一分钟执行定时任务（@yearly）</h3>
+
+<p>下面的例子将在每一年的 1 月 1 日 0:00 执行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@yearly /home/ramesh/red-hat/bin/annual-maintenance
+</code></pre>
+</div>
+
+<h3 id="9-每月执行定时任务mothly">9. 每月执行定时任务（@mothly）</h3>
+
+<p>下面的例子将在每月 1 日 0:00 执行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@monthly /home/ramesh/suse/bin/tape-backup
+</code></pre>
+</div>
+
+<h3 id="10-每天执行定时任务daily">10. 每天执行定时任务（@daily）</h3>
+
+<p>下面的例子将在每天 0:00 执行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@daily /home/ramesh/arch-linux/bin/cleanup-logs "day started"
+</code></pre>
+</div>
+
+<h3 id="11-每次重启时执行定时任务reboot">11. 每次重启时执行定时任务（@reboot）</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@reboot CMD
+</code></pre>
+</div>
+
+<h3 id="12-如何用-mail-关键字禁止重定向-cron-的邮件">12. 如何用 mail 关键字禁止/重定向 cron 的邮件</h3>
+
+<p>默认情况下，crontab 将向布置定时任务的管理员发送邮件，如果想重定向此用户，添加并更新 MAIL</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ramesh@dev-db$ crontab -l
+MAIL="ramesh"
+ 
+@yearly /home/ramesh/annual-maintenance
+*/10 * * * * /home/ramesh/check-disk-space
+</code></pre>
+</div>
+
+<p>如果不想任何人接收，则直接将 MAIL 置空</p>
+
+<h3 id="13-如何系秒每执行一个定时任务">13. 如何系秒每执行一个定时任务</h3>
+
+<p>无法安排每秒执行，因为最小处理单元是分钟，另一方面，没有什么理由让我们每秒都执行一任务</p>
+
+<h3 id="14-cron-中的-path-变量">14. cron 中的 PATH 变量</h3>
+
+<p>上面的例子都是用绝对的路径</p>
+
+<p>如果你想用相对的路径，设置环境变量可以在 crontab 增加</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ramesh@dev-db$ crontab -l
+ 
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/home/ramesh
+ 
+@yearly annual-maintenance
+*/10 * * * * check-disk-space
+</code></pre>
+</div>
+
+<h3 id="15-从-cron-文件中定义-cron-任务">15. 从 cron 文件中定义 cron 任务</h3>
+
+<p>除了直接编辑外，你也可以先在一个文件中编辑好任务，再导入</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ramesh@dev-db$ crontab -l
+no crontab for ramesh
+ 
+$ cat cron-file.txt
+@yearly /home/ramesh/annual-maintenance
+*/10 * * * * /home/ramesh/check-disk-space
+ 
+ramesh@dev-db$ crontab cron-file.txt
+ 
+ramesh@dev-db$ crontab -l
+@yearly /home/ramesh/annual-maintenance
+ 
+*/10 * * * * /home/ramesh/check-disk-space
+</code></pre>
+</div>
+
+<p><strong>应用时要注意，此操作会删除原有的cron任务</strong></p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#linux-ref" rel="tag">linux</a>
+       
+      	<a href="/tags.html#cron-ref" rel="tag">cron</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/other/2013/08/11/how-much-money-has-wang-lost.html" title="从「王师傅一共损失了多少钱」说开去">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/javascript/2013/09/25/ji-yu-canvas-jiang-tu-pian-zhuan-hua-cheng-zi-fu-hua.html" title="基于 canvas 将图片转化成字符画">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "Linux 计划任务 — crontab"; //请用代码生成文章标题
+    var wumiiTags = "linux,cron"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["other"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Linux 计划任务 — crontab" data-url="http://justjavac.com/other/2013/09/22/linux-scheduled-task-crontab.html" data-thread-key="/other/2013/09/22/linux-scheduled-task-crontab"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

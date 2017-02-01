@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="5f1f7ad2a57c201714656f516cf11b94"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>从Reddit学到的七条经验 - justjavac(迷渡)</title>
+    <meta name="description" content="从Reddit学到的七条经验">
+    <meta name="keywords" content="nosql,reddit">
+    <meta name="author" content="justjavac">
+    <link rel="alternate" title="justjavac(迷渡)" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="justjavac(迷渡)" href="/" />
+    
+    <link rel="prev prerender" href="/javascript/2012/04/13/javascript-architecture-of-large-scale-application.html" title="大型应用的 javascript 架构" />
+    
+    
+    <link rel="next prerender" href="/nosql/2012/04/13/redis-persistence-demystified.html" title="解密Redis持久化" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">justjavac(迷渡)</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <li><a href="/codepuzzle.html">代码之谜</a></li>
+            <li><a href="/categories.html">目录</a></li>
+            <li class="hidden-phone"><a href="/about.html">关于迷渡</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://weibo.com/justjavac" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="http://segmentfault.com/u/justjavac" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/justjavac" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>从Reddit学到的七条经验 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span8">  
+    <div id="article">
+    <p>Steve Huffman，Reddit的共同创始人，分享了将Reddit从一个小型Web应用程序发展为大型社交网站过程中学到的主要经验。</p>
+
+<p>Steve Huffman和Alexis Ohanian在2005年创建了Reddit，当时在一台机器上运行Web应用程序、应用服务器和数据库。
+发展至今，Reddit已经成长为每月750 万用户、2亿7千万PV的站点。</p>
+
+<p>Huffman在一次<a href="http://vimeo.com/10506751">演讲</a> 中谈到 Reddit发展过程中学到的经验，
+他们犯的很多错误，以及他们是如何修复这些错误的。</p>
+
+<h3 id="1宕机是家常便饭">1、宕机是家常便饭</h3>
+
+<p>起初他们经常宕机，Huffman常常睡在笔记本电脑旁边，每隔几个小时就醒一下，看看网站是否仍在运行。</p>
+
+<p>当时的解决方案是使用 Supervise，那是一个能重启崩溃应用程序的守护进程。
+这带来了一种很有趣的运行应用程序的方式：如果应用程序有内存泄露，或者消耗了太多的内存， 只需终止它随后重启即可。
+这只是一个临时方案，而非最佳方案，最终是基于日志内容修复了应用程序。</p>
+
+<h3 id="2服务分离">2、服务分离</h3>
+
+<p>Huffman建议将类似的进程集中在一台机器或一组机器上，这样可以避免频繁的上下文切换，减少资源消耗。
+他还提供了一个最佳实践——在一个数据 库中处理类似的数据，以此避免频繁的索引缓存切换，
+将其他类型的数据移到别的机器上去。</p>
+
+<p>Huffman强烈建议避免使用线程，在Python中这就是“死亡之吻，缓慢之道”。
+如果多个任务被分配到独立的进程而非线程上，那在请求量上 升、需要更多资源的时候，
+就可以方便地将它们移到不同的机器上。</p>
+
+<p>这种做法的唯一问题就是进程间通信，除此之外都比使用线程要好，因为这样的架构能更平滑地 进行扩展。</p>
+
+<h3 id="3开放schema">3、开放Schema</h3>
+
+<p>随着数据库的发展，每个要更新Schema的新特性都会带来更多的问题。
+向一个有1千万行数据的表中增加一个新字段需要很多时间，尤其是有备份 （backup）和复制（replication）时。
+他们当时虽然没有备份，但也花了好多天，因为他们构建了一个副本（replica）。</p>
+
+<p>解决方案是使用开放Schema或实体-属性值，Key-Value存储。现在每个数据类型有两张表：</p>
+
+<p>![image]</p>
+
+<p>Thing 可以是用户、链接、评论等，共享相同的Schema。
+Data 表由大量数据构成，但里面只有3个字 段：ID、 Key和Value。
+在新的Schema中添加新特性并不涉及Schema的变更，也不需要创建新表。
+此外，再也没有数据库的join操作，这也易于数据 库的拆分。</p>
+
+<h3 id="4保持无状态">4、保持无状态</h3>
+
+<p>所有Web应用程序都有一个共同的目标，它的每台应用服务器都能处理任意请求。
+这个目标在只有一台机器时很容易达成（这是显而易见的），但当使用多 台服务器并缓存应用状态时，情况就变得复杂了。
+每台服务器在访问缓存数据时的复杂性都增加了，而且还加入了更多的缓存冗余。</p>
+
+<p>此处的解决方案是切换到memcache并在所有应用服务器上不再使用状态。
+一个立竿见影的效果是一台应用程序服务器宕机时不会影响其他服务器。
+此外，可以简单地通过增加更多服务器来进行扩展。</p>
+
+<p>将缓存服务器与其他服务器隔离开是很重要的，这能避免资源争夺。</p>
+
+<h3 id="5memcache所有内容">5、Memcache所有内容</h3>
+
+<p>Reddit的所有内容都使用了memcache：数据库的数据、会话数据、渲染的页面、存储的内部函数、预先计算的页面、全局锁。
+它们还用 memcachedb进行数据持久化。</p>
+
+<h3 id="6存储冗余数据">6、存储冗余数据</h3>
+
+<p>“在你需要前，数据都保持正规化”会降低性能。</p>
+
+<p>当用户需要以特定格式来展现数据时，获取原始数据随即进行处理会延长响应时间，以至于用户放弃等待结果。
+解决方案是在内存和硬盘中保存数据的所有格式。这样做对磁盘和内存有些影响，但对用户请求的快速响应很有帮助。</p>
+
+<p>对Reddit而言，速度的关键是“预先计算所有内容并放入memcache。”</p>
+
+<h3 id="7脱机工作">7、脱机工作</h3>
+
+<p>当用户发起请求时，系统要执行用于返回适当响应的必要工作，其他事情都放到队列任务中脱机执行。</p>
+
+<p>例如，脱机执行的工作包括：预先计算列表、获取缩略 图、检测欺骗行为、删除垃圾信息、计算奖励以及更新搜索索引。
+当用户给某个链接投票时，他并不需要等待所有索引和列表更新完毕，这些任务可以在响应用户后 再去执行。</p>
+
+<p>查看英文原文： <a href="http://www.infoq.com/news/2010/05/7-Lessons-Reddit">7 Lessons Learned at Reddit</a></p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#nosql-ref" rel="tag">nosql</a>
+       
+      	<a href="/tags.html#reddit-ref" rel="tag">reddit</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/javascript/2012/04/13/javascript-architecture-of-large-scale-application.html" title="大型应用的 javascript 架构">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/nosql/2012/04/13/redis-persistence-demystified.html" title="解密Redis持久化">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/>
+   
+    <script type="text/javascript" id="wumiiRelatedItems"></script>
+    <script type="text/javascript">
+    var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+    var wumiiTitle = "从Reddit学到的七条经验"; //请用代码生成文章标题
+    var wumiiTags = "nosql,reddit"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+    var wumiiCategories = ["nosql"];
+    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+</script>
+<script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
+<a rel="nofollow" href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" />
+</a>    
+    <hr>
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="从Reddit学到的七条经验" data-url="http://justjavac.com/nosql/2012/04/13/7-lessons-reddit.html" data-thread-key="/nosql/2012/04/13/7-lessons-reddit"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"justjavac"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+  
+  <aside class="span4">
+
+  <section>
+    <h3>公众号</h3>
+    <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+   </section>
+    
+    <section>
+    <h3>推荐阅读</h3>
+    <ul id="recent_posts">
+      <li><a href="http://phpbestpractices.justjavac.com/" target="_blank" rel="noopener">PHP 最佳实践（译）</a></li>
+      <li><a href="http://justjavac.com/php/2015/09/28/read-the-flarum-story-why-im-building-flarum.html" target="_blank" rel="noopener">Flarum 的故事：我为什么开发 Flarum</a></li>
+      <li><a href="http://justjavac.com/named-function-expressions-demystified.html" target="_blank" rel="noopener">命名函数表达式探秘</a></li>
+      <li><a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" rel="noopener">代码之谜 - 开篇/前言/序</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" rel="noopener">一个合格的程序员应该读过哪些书</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" rel="noopener">为什么 ++[[]][+[]]+[+[]] = 10？</a></li>
+      <li><a href="http://justjavac.com/other/2012/05/15/whats-wrong-with-the-for-loop.html" target="_blank" rel="noopener">for 循环为何可恨？</a></li>
+      <li><a href="http://justjavac.com/javascript/2012/04/05/how-to-avoid-the-assignment-statement.html" target="_blank" rel="noopener">如何避免产生赋值语句</a></li>
+      <li><a href="http://justjavac.com/javascript/2015/12/15/introducing-lazy-evaluation.html" target="_blank" rel="noopener">如何百倍加速 Lo-Dash？引入惰性计算</a></li>
+    </ul>
+    </section>
+    
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html">
+    <link rel="prerender" href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html">
+    <link rel="prerender" href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html">
+    <link rel="prerender" href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html">
+    
+    <section data-spy="affix" data-offset-top="418" class="hot_articles affix-top">
+    <h3>热门文章</h3>
+    <ul class="hots gray">
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">1</span>
+                <a href="http://justjavac.com/codepuzzle/2012/09/25/codepuzzle-introduction.html" target="_blank" title="代码之谜（零）- 开篇/前言/序">
+    代码之谜（零）- 开篇/前言/序</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">2</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/02/codepuzzle-float-from-surprised-to-ponder.html" target="_blank" title="代码之谜（四）- 浮点数（从惊讶到思考）">
+    代码之谜（四）- 浮点数（从惊讶到思考）</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="hot">3</span>
+                <a href="http://justjavac.com/javascript/2012/05/24/can-you-explain-why-10.html" target="_blank" title="为什么 ++[[]][+[]]+[+[]] = 10？">
+    为什么 ++[[]][+[]]+[+[]] = 10？</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">4</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-operator.html" target="_blank" title="代码之谜（三）- 运算符">
+    代码之谜（三）- 运算符</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">5</span>
+                <a href="http://justjavac.com/other/2012/11/12/do-not-bool-as-function-parameters.html" target="_blank" title="千万不要把 bool 当成函数参数">
+    千万不要把 bool 当成函数参数</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">6</span>
+                <a href="http://justjavac.com/other/2012/05/15/qualified-programmer-should-read-what-books.html" target="_blank" title="一个合格的程序员应该读过哪些书">
+    一个合格的程序员应该读过哪些书</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">7</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/28/codepuzzle-expression-and-statement.html" target="_blank" title="代码之谜（二）- 语句与表达式">
+    代码之谜（二）- 语句与表达式</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">8</span>
+                <a href="http://justjavac.com/codepuzzle/2012/10/15/codepuzzle-finite-and-infinite.html" target="_blank" title="代码之谜（一）- 有限与无限">
+    代码之谜（一）- 有限与无限</a></p>
+            </li>
+    <li class="textItem">
+            <p class="itemTitle">
+                <span class="">10</span>
+                <a href="http://justjavac.com/codepuzzle/2012/11/11/codepuzzle-float-who-stole-your-accuracy.html" target="_blank" title="代码之谜（五）- 浮点数（谁偷了你的精度？）">
+    代码之谜（五）- 浮点数（谁偷了你的精度？）</a></p>
+            </li>
+    </ul>
+    </section>    
+
+  </aside>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/justjavac" rel="noopener" target="_blank">@justjavac</a> 2012 
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/justjavac/justjavac.github.com" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jqueryui/1.9.0/jquery-ui.min.js "></script>
+    <script src="http://libs.baidu.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5578a27c6c70bf44e7509eda26137f4c";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
