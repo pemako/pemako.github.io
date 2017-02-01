@@ -4,6 +4,14 @@
   
     
     <entry>
+      <title><![CDATA[demo]]></title>
+      <url>https://pemako.github.com/2017/02/01/demo/</url>
+      <content type="html"><![CDATA[<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> $name;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;name = <span class="string">'aaa'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">print</span> <span class="string">"aaaa"</span></div></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[composer-overview.md]]></title>
       <url>https://pemako.github.com/2017/01/25/composer-overview-md/</url>
       <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Composer 是 PHP 的一个依赖管理工具。它允许你声明项目所依赖的代码库，他会在你的项目中为你安装指明的依赖。</p>
