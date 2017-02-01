@@ -17,8 +17,8 @@
   
   <entry>
     <title>初次使用Hexo</title>
-    <link href="https://pemako.github.com/2017/02/01/hexo-command/"/>
-    <id>https://pemako.github.com/2017/02/01/hexo-command/</id>
+    <link href="https://pemako.github.com/2017/02/01/hexo/hexo-command/"/>
+    <id>https://pemako.github.com/2017/02/01/hexo/hexo-command/</id>
     <published>2017-02-01T14:42:21.000Z</published>
     <updated>2017-02-01T14:42:21.000Z</updated>
     
@@ -36,30 +36,9 @@
   </entry>
   
   <entry>
-    <title>Linux实现自动登陆远程机器</title>
-    <link href="https://pemako.github.com/2017/02/01/php/a/"/>
-    <id>https://pemako.github.com/2017/02/01/php/a/</id>
-    <published>2017-02-01T02:58:56.000Z</published>
-    <updated>2017-02-01T14:44:37.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;this is a demo&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="php" scheme="https://pemako.github.com/categories/php/"/>
-    
-    
-      <category term="php" scheme="https://pemako.github.com/tags/php/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Composer使用总结</title>
-    <link href="https://pemako.github.com/2017/01/25/composer-overview-md/"/>
-    <id>https://pemako.github.com/2017/01/25/composer-overview-md/</id>
+    <link href="https://pemako.github.com/2017/01/25/php/composer-overview-md/"/>
+    <id>https://pemako.github.com/2017/01/25/php/composer-overview-md/</id>
     <published>2017-01-25T09:22:48.000Z</published>
     <updated>2017-02-01T14:41:52.000Z</updated>
     
@@ -79,8 +58,8 @@
   
   <entry>
     <title>Linux实现自动登陆远程机器</title>
-    <link href="https://pemako.github.com/2017/01/24/autologin/"/>
-    <id>https://pemako.github.com/2017/01/24/autologin/</id>
+    <link href="https://pemako.github.com/2017/01/24/linux/autologin/"/>
+    <id>https://pemako.github.com/2017/01/24/linux/autologin/</id>
     <published>2017-01-24T02:58:56.000Z</published>
     <updated>2017-02-01T14:41:09.000Z</updated>
     
@@ -99,8 +78,8 @@
   
   <entry>
     <title>读书计划</title>
-    <link href="https://pemako.github.com/2017/01/23/plan/"/>
-    <id>https://pemako.github.com/2017/01/23/plan/</id>
+    <link href="https://pemako.github.com/2017/01/23/plan/plan/"/>
+    <id>https://pemako.github.com/2017/01/23/plan/plan/</id>
     <published>2017-01-23T14:25:55.000Z</published>
     <updated>2017-02-01T14:42:35.000Z</updated>
     
@@ -113,8 +92,8 @@
   
   <entry>
     <title>这对父子</title>
-    <link href="https://pemako.github.com/2017/01/23/%E8%BF%99%E5%AF%B9%E7%88%B6%E5%AD%90/"/>
-    <id>https://pemako.github.com/2017/01/23/这对父子/</id>
+    <link href="https://pemako.github.com/2017/01/23/life/%E8%BF%99%E5%AF%B9%E7%88%B6%E5%AD%90/"/>
+    <id>https://pemako.github.com/2017/01/23/life/这对父子/</id>
     <published>2017-01-23T13:41:29.000Z</published>
     <updated>2017-01-23T13:48:55.000Z</updated>
     
@@ -134,8 +113,8 @@
   
   <entry>
     <title>Golang 概述</title>
-    <link href="https://pemako.github.com/2017/01/23/golang-overvies/"/>
-    <id>https://pemako.github.com/2017/01/23/golang-overvies/</id>
+    <link href="https://pemako.github.com/2017/01/23/golang/golang-overvies/"/>
+    <id>https://pemako.github.com/2017/01/23/golang/golang-overvies/</id>
     <published>2017-01-23T13:34:36.000Z</published>
     <updated>2017-02-01T14:42:58.000Z</updated>
     
@@ -156,8 +135,8 @@
   
   <entry>
     <title>NPM包管理器使用</title>
-    <link href="https://pemako.github.com/2017/01/22/npm-package-manage/"/>
-    <id>https://pemako.github.com/2017/01/22/npm-package-manage/</id>
+    <link href="https://pemako.github.com/2017/01/22/npm/npm-package-manage/"/>
+    <id>https://pemako.github.com/2017/01/22/npm/npm-package-manage/</id>
     <published>2017-01-22T06:55:23.000Z</published>
     <updated>2017-01-22T06:59:09.000Z</updated>
     
@@ -177,8 +156,8 @@
   
   <entry>
     <title>生成指定时间内的时间列表</title>
-    <link href="https://pemako.github.com/2017/01/21/python-gen-datalist/"/>
-    <id>https://pemako.github.com/2017/01/21/python-gen-datalist/</id>
+    <link href="https://pemako.github.com/2017/01/21/python/python-gen-datalist/"/>
+    <id>https://pemako.github.com/2017/01/21/python/python-gen-datalist/</id>
     <published>2017-01-21T15:41:24.000Z</published>
     <updated>2017-01-21T15:46:47.000Z</updated>
     
@@ -197,8 +176,8 @@
   
   <entry>
     <title>使用hexo搭建博客过程</title>
-    <link href="https://pemako.github.com/2017/01/21/use-hexo-setup-blog/"/>
-    <id>https://pemako.github.com/2017/01/21/use-hexo-setup-blog/</id>
+    <link href="https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/"/>
+    <id>https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/</id>
     <published>2017-01-21T14:42:11.000Z</published>
     <updated>2017-01-23T18:26:56.000Z</updated>
     
