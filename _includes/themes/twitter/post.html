@@ -52,7 +52,7 @@
     var wumiiTitle = {{ page.title | jsonify }}; //请用代码生成文章标题
     var wumiiTags = {{ page.tags | join:"," | jsonify }}; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
     var wumiiCategories = {{ page.categories | jsonify }};
-    var wumiiSitePrefix = "http://justjavac.com/";
+    var wumiiSitePrefix = "https://pemako.cn/";
     var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
 </script>
 <script type="text/javascript" src="http://widget.wumii.com/ext/relatedItemsWidget"></script>
@@ -63,11 +63,11 @@
     <!-- Duoshuo Comment BEGIN -->
     <div id="comments" class="ds-thread" data-title="{{ page.title }}" data-url="{{ site.production_url }}{{ page.url }}" data-thread-key="{{ page.id }}"></div>
 <script type="text/javascript">
-var duoshuoQuery = {short_name:"justjavac"};
+var duoshuoQuery = {short_name:"pemako"};
     (function() {
         var ds = document.createElement('script');
         ds.type = 'text/javascript';ds.async = true;
-        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.src = '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         (document.getElementsByTagName('head')[0] 
         || document.getElementsByTagName('body')[0]).appendChild(ds);
