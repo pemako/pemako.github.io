@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://pemako.github.com/"/>
-  <updated>2017-02-01T14:30:41.000Z</updated>
+  <updated>2017-02-01T14:42:21.000Z</updated>
   <id>https://pemako.github.com/</id>
   
   <author>
@@ -16,18 +16,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>demo</title>
-    <link href="https://pemako.github.com/2017/02/01/demo/"/>
-    <id>https://pemako.github.com/2017/02/01/demo/</id>
-    <published>2017-02-01T13:50:42.000Z</published>
-    <updated>2017-02-01T14:30:41.000Z</updated>
+    <title>初次使用Hexo</title>
+    <link href="https://pemako.github.com/2017/02/01/hexo-command/"/>
+    <id>https://pemako.github.com/2017/02/01/hexo-command/</id>
+    <published>2017-02-01T14:42:21.000Z</published>
+    <updated>2017-02-01T14:42:21.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;本文为测试用例。&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div clas
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://pemako.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pmekao blog&lt;/a&gt;! This is your very first post. Check &lt;a href
     
     </summary>
+    
+      <category term="hexo" scheme="https://pemako.github.com/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="https://pemako.github.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux实现自动登陆远程机器</title>
+    <link href="https://pemako.github.com/2017/02/01/php/a/"/>
+    <id>https://pemako.github.com/2017/02/01/php/a/</id>
+    <published>2017-02-01T02:58:56.000Z</published>
+    <updated>2017-02-01T14:44:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;this is a demo&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="php" scheme="https://pemako.github.com/categories/php/"/>
     
     
       <category term="php" scheme="https://pemako.github.com/tags/php/"/>
@@ -35,11 +57,11 @@
   </entry>
   
   <entry>
-    <title>composer-overview.md</title>
+    <title>Composer使用总结</title>
     <link href="https://pemako.github.com/2017/01/25/composer-overview-md/"/>
     <id>https://pemako.github.com/2017/01/25/composer-overview-md/</id>
     <published>2017-01-25T09:22:48.000Z</published>
-    <updated>2017-01-31T16:07:18.000Z</updated>
+    <updated>2017-02-01T14:41:52.000Z</updated>
     
     <summary type="html">
     
@@ -56,11 +78,11 @@
   </entry>
   
   <entry>
-    <title>autologin</title>
+    <title>Linux实现自动登陆远程机器</title>
     <link href="https://pemako.github.com/2017/01/24/autologin/"/>
     <id>https://pemako.github.com/2017/01/24/autologin/</id>
     <published>2017-01-24T02:58:56.000Z</published>
-    <updated>2017-02-01T13:44:57.000Z</updated>
+    <updated>2017-02-01T14:41:09.000Z</updated>
     
     <summary type="html">
     
@@ -76,11 +98,11 @@
   </entry>
   
   <entry>
-    <title>plan</title>
+    <title>读书计划</title>
     <link href="https://pemako.github.com/2017/01/23/plan/"/>
     <id>https://pemako.github.com/2017/01/23/plan/</id>
     <published>2017-01-23T14:25:55.000Z</published>
-    <updated>2017-01-23T14:25:55.000Z</updated>
+    <updated>2017-02-01T14:42:35.000Z</updated>
     
     <summary type="html">
     
@@ -111,11 +133,11 @@
   </entry>
   
   <entry>
-    <title>golang-overvies</title>
+    <title>Golang 概述</title>
     <link href="https://pemako.github.com/2017/01/23/golang-overvies/"/>
     <id>https://pemako.github.com/2017/01/23/golang-overvies/</id>
     <published>2017-01-23T13:34:36.000Z</published>
-    <updated>2017-01-23T13:39:34.000Z</updated>
+    <updated>2017-02-01T14:42:58.000Z</updated>
     
     <summary type="html">
     
@@ -170,26 +192,6 @@
     
     
       <category term="python" scheme="https://pemako.github.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo Command</title>
-    <link href="https://pemako.github.com/2017/01/21/hexo-command/"/>
-    <id>https://pemako.github.com/2017/01/21/hexo-command/</id>
-    <published>2017-01-21T15:32:03.000Z</published>
-    <updated>2017-01-21T15:32:03.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://pemako.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pmekao blog&lt;/a&gt;! This is your very first post. Check &lt;a href
-    
-    </summary>
-    
-      <category term="hexo" scheme="https://pemako.github.com/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="https://pemako.github.com/tags/hexo/"/>
     
   </entry>
   
