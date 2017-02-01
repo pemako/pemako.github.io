@@ -193,7 +193,7 @@ div {
     margin: 15px 0 0;
     color: #6E7173;
     float: right;
-    display: inline;
+    display: none;
     text-indent: .15em; }
     .post .ds-thread-count:before {
       font-family: "FontAwesome";

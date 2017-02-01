@@ -57,20 +57,6 @@
   </entry>
   
   <entry>
-    <title>读书计划</title>
-    <link href="https://pemako.github.com/2017/01/23/plan/plan/"/>
-    <id>https://pemako.github.com/2017/01/23/plan/plan/</id>
-    <published>2017-01-23T14:25:55.000Z</published>
-    <updated>2017-02-01T14:42:35.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>这对父子</title>
     <link href="https://pemako.github.com/2017/01/23/life/%E8%BF%99%E5%AF%B9%E7%88%B6%E5%AD%90/"/>
     <id>https://pemako.github.com/2017/01/23/life/这对父子/</id>
@@ -155,15 +141,16 @@
   </entry>
   
   <entry>
-    <title>初次使用Hexo</title>
-    <link href="https://pemako.github.com/2017/01/21/hexo/hexo-command/"/>
-    <id>https://pemako.github.com/2017/01/21/hexo/hexo-command/</id>
+    <title>使用hexo搭建博客过程</title>
+    <link href="https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/"/>
+    <id>https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/</id>
     <published>2017-01-21T14:42:11.000Z</published>
-    <updated>2017-02-01T14:52:21.000Z</updated>
+    <updated>2017-01-23T18:26:56.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://pemako.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pmekao blog&lt;/a&gt;! This is your very first post. Check &lt;a href
+      &lt;p&gt;今天下午折腾了一下博客，终于可以正常的运作了，对整个搭建的过程做一个记录&lt;/p&gt;
+&lt;h2 id=&quot;环境说明&quot;&gt;&lt;a href=&quot;#环境说明&quot; class=&quot;headerlink&quot; title=&quot;环境说明&quot;&gt;&lt;/a&gt;环境说明&lt;/h2&gt;&lt;figure class=&quot;highli
     
     </summary>
     
@@ -175,16 +162,15 @@
   </entry>
   
   <entry>
-    <title>使用hexo搭建博客过程</title>
-    <link href="https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/"/>
-    <id>https://pemako.github.com/2017/01/21/hexo/use-hexo-setup-blog/</id>
+    <title>初次使用Hexo</title>
+    <link href="https://pemako.github.com/2017/01/21/hexo/hexo-command/"/>
+    <id>https://pemako.github.com/2017/01/21/hexo/hexo-command/</id>
     <published>2017-01-21T14:42:11.000Z</published>
-    <updated>2017-01-23T18:26:56.000Z</updated>
+    <updated>2017-02-01T14:52:21.000Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;今天下午折腾了一下博客，终于可以正常的运作了，对整个搭建的过程做一个记录&lt;/p&gt;
-&lt;h2 id=&quot;环境说明&quot;&gt;&lt;a href=&quot;#环境说明&quot; class=&quot;headerlink&quot; title=&quot;环境说明&quot;&gt;&lt;/a&gt;环境说明&lt;/h2&gt;&lt;figure class=&quot;highli
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://pemako.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pmekao blog&lt;/a&gt;! This is your very first post. Check &lt;a href
     
     </summary>
     
