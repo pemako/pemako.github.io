@@ -4,13 +4,51 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-02T14:54:37+08:00</updated>
+ <updated>2017-02-02T16:29:38+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>jekyll的使用</title>
+   <link href="https://pemako.cn/nodejs/2017/02/02/jekyll-document.html"/>
+   <updated>2017-02-02T00:00:00+08:00</updated>
+   <id>https://pemako.cn/nodejs/2017/02/02/jekyll-document</id>
+   <content type="html">
+   	&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; 依赖&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby&lt;/code&gt; 你的环境必须已安装&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby&lt;/code&gt;,使用&lt;code class=&quot;highlighter-rouge&quot;&gt;gem&lt;/code&gt; 管理各种包信息。&lt;/p&gt;
+
+&lt;h3 id=&quot;install&quot;&gt;Install&lt;/h3&gt;
+
+&lt;p&gt;安装&lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 事先要有相应的环境配置&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.ruby-lang.org/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://rubygems.org/&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RubyGems&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Linux, Unix, or Mac OSX&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果环境都已经齐全运行下面的命令即可创建一个 site。&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
+jekyll new myblog &lt;span class=&quot;c&quot;&gt;# 创建一个 site&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;myblog
+jekyll serve &lt;span class=&quot;c&quot;&gt;# 启动可以在浏览器中访问 http://localohost:4000查看效果&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;更多详细信息参考：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;https://jekyllrb.com/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://jekyllcn.com/&quot;&gt;http://jekyllcn.com/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://rubygems.org/&quot;&gt;https://rubygems.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>Composer使用总结</title>

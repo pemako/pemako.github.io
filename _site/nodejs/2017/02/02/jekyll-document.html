@@ -10,8 +10,8 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-    <title>标签 - pemako</title>
-    
+    <title>jekyll的使用 - pemako</title>
+    <meta name="description" content="jekyll">
     
     <meta name="author" content="pemako">
     <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
@@ -26,6 +26,8 @@
     <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
 
     <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/php/2017/01/25/composer-overview.html" title="Composer使用总结" />
     
     
     
@@ -68,237 +70,103 @@
      
 
 <div class="page-header">
-  <h1>标签 </h1>
+  <h1>jekyll的使用 <small></small></h1>
 </div>
-
 <div class="row-fluid">
-  <div class="span12">
-    
+  <div class="span12">  
+    <div id="article">
+    <p><code class="highlighter-rouge">jekyll</code> 依赖<code class="highlighter-rouge">ruby</code> 你的环境必须已安装<code class="highlighter-rouge">ruby</code>,使用<code class="highlighter-rouge">gem</code> 管理各种包信息。</p>
 
+<h3 id="install">Install</h3>
 
-<ul class="tag_box inline">
-    
-  
+<p>安装<code class="highlighter-rouge">Jekyll</code> 事先要有相应的环境配置</p>
 
-
-  
-     
-    	<li><a href="/tags.html#hexo-ref" rel="tag">hexo <span>2</span></a></li>
-     
-    	<li><a href="/tags.html#python-ref" rel="tag">python <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#javascript-ref" rel="tag">javascript <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#nodejs-ref" rel="tag">nodejs <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#golang-ref" rel="tag">golang <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#others-ref" rel="tag">others <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#linux-ref" rel="tag">linux <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#php-ref" rel="tag">php <span>1</span></a></li>
-     
-    	<li><a href="/tags.html#jekyll-ref" rel="tag">jekyll <span>1</span></a></li>
-    
-  
-
-
-
+<ul>
+  <li><a href="https://www.ruby-lang.org/"><code class="highlighter-rouge">Ruby</code></a></li>
+  <li><a href="https://rubygems.org/"><code class="highlighter-rouge">RubyGems</code></a></li>
+  <li><code class="highlighter-rouge">Linux, Unix, or Mac OSX</code></li>
 </ul>
 
+<p>如果环境都已经齐全运行下面的命令即可创建一个 site。</p>
 
- 
-  <h2 id="hexo-ref">hexo</h2>
-  <ul>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>gem install jekyll
+jekyll new myblog <span class="c"># 创建一个 site</span>
+<span class="nb">cd </span>myblog
+jekyll serve <span class="c"># 启动可以在浏览器中访问 http://localohost:4000查看效果</span>
+</code></pre>
+</div>
+
+<p>更多详细信息参考：</p>
+
+<ol>
+  <li><a href="https://jekyllrb.com/">https://jekyllrb.com/</a></li>
+  <li><a href="http://jekyllcn.com/">http://jekyllcn.com/</a></li>
+  <li><a href="https://rubygems.org/">https://rubygems.org/</a></li>
+</ol>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#jekyll-ref" rel="tag">jekyll</a>
       
     
-
-
-  
     
-      
-      	
-      	<li><a href="/hexo/2017/01/22/hexo-command.html">初次使用Hexo</a></li>
-      	
-      
     
-  
-    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
       
-      	
-      	<li><a href="/hexo/2017/01/21/use-hexo-setup-blog.html">使用hexo搭建博客过程</a></li>
-      	
+        <li class="prev"><a href="/php/2017/01/25/composer-overview.html" title="Composer使用总结">&larr; 上一篇</a></li>
       
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="python-ref">python</h2>
-  <ul>
+        <li><a href="/archive.html">归档</a></li>
       
-    
-
-
-  
-    
+        <li class="next disabled"><a>下一篇 &rarr;</a>
       
-      	
-      	<li><a href="/2017/01/21/python=gen-datalist.html">生成指定时间内的时间列表</a></li>
-      	
-      
+      </ul>
+    </div>
     
-  
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐 -->
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "jekyll的使用"; //请用代码生成文章标题
+        var wumiiTags = "jekyll"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["nodejs"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    <hr>
 
-
-
-  </ul>
- 
-  <h2 id="javascript-ref">javascript</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/nodejs/2017/01/22/npm-package-manage.html">NPM包管理器使用</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="nodejs-ref">nodejs</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/nodejs/2017/01/22/npm-package-manage.html">NPM包管理器使用</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="golang-ref">golang</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/golang/2017/01/23/golang-overview.html">Golang 概述</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="others-ref">others</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/others/2017/01/23/father-and-son.html">这对父子</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="linux-ref">linux</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/linux/2017/01/24/linux-autologin.html">Linux实现自动登陆远程机器</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="php-ref">php</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/php/2017/01/25/composer-overview.html">Composer使用总结</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
- 
-  <h2 id="jekyll-ref">jekyll</h2>
-  <ul>
-      
-    
-
-
-  
-    
-      
-      	
-      	<li><a href="/nodejs/2017/02/02/jekyll-document.html">jekyll的使用</a></li>
-      	
-      
-    
-  
-
-
-
-  </ul>
-
-
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="jekyll的使用" data-url="https://pemako.cn/nodejs/2017/02/02/jekyll-document.html" data-thread-key="/nodejs/2017/02/02/jekyll-document"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
   </div>
+ 
 </div>
 
 
