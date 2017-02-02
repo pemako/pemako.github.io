@@ -3,7 +3,7 @@ layout: post
 title: jekyll的使用
 description: jekyll
 tags: [jekyll]
-category: nodejs
+category: jekyll
 ---
 
 `jekyll` 依赖`ruby` 你的环境必须已安装`ruby`,使用`gem` 管理各种包信息。

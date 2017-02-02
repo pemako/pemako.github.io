@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-02T16:29:38+08:00</updated>
+ <updated>2017-02-02T17:12:37+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>jekyll的使用</title>
-   <link href="https://pemako.cn/nodejs/2017/02/02/jekyll-document.html"/>
+   <link href="https://pemako.cn/jekyll/2017/02/02/jekyll-document.html"/>
    <updated>2017-02-02T00:00:00+08:00</updated>
-   <id>https://pemako.cn/nodejs/2017/02/02/jekyll-document</id>
+   <id>https://pemako.cn/jekyll/2017/02/02/jekyll-document</id>
    <content type="html">
    	&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; 依赖&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby&lt;/code&gt; 你的环境必须已安装&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby&lt;/code&gt;,使用&lt;code class=&quot;highlighter-rouge&quot;&gt;gem&lt;/code&gt; 管理各种包信息。&lt;/p&gt;
 
