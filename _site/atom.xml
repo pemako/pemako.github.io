@@ -4,13 +4,463 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-02T17:54:17+08:00</updated>
+ <updated>2017-02-03T13:24:11+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>PHP手册使用的正确姿势</title>
+   <link href="https://pemako.cn/php/2017/02/03/how-to-use-php-documentation.html"/>
+   <updated>2017-02-03T00:00:00+08:00</updated>
+   <id>https://pemako.cn/php/2017/02/03/how-to-use-php-documentation</id>
+   <content type="html">
+   	&lt;h1 id=&quot;简介&quot;&gt;简介&lt;/h1&gt;
+
+&lt;p&gt;PHP官方手册主要包含了四大部分&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#langref&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;语言参考&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#function&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;函数参考&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#features&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;产品特点&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#appendices&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;补充信息&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;语言参考&quot;&gt;&lt;span id=&quot;langref&quot;&gt;语言参考&lt;/span&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;基本语法&quot;&gt;基本语法&lt;/h3&gt;
+
+&lt;h4 id=&quot;1-php-标记&quot;&gt;1. PHP 标记&lt;/h4&gt;
+
+&lt;p&gt;当解析一个文件时，PHP 会寻找起始和结束标记，也就是 &lt;?php 和 ?&gt;，这告诉 PHP 开始和停止解析二者之间的代码。此种解析方式使得 PHP 可以被嵌入到各种不同的文档中去，而任何起始和结束标记之外的部分都会被 PHP 解析器忽略。&lt;/p&gt;
+
+&lt;p&gt;PHP 也允许使用短标记 &lt;? 和 ?&gt;，但不鼓励使用。只有通过激活 php.ini 中的 &lt;code class=&quot;highlighter-rouge&quot;&gt;short_open_tag&lt;/code&gt; 配置指令或者在编译 PHP 时使用了配置选项 –enable-short-tags 时才能使用短标记。&lt;/p&gt;
+
+&lt;p&gt;如果文件内容是纯 PHP 代码，最好在文件末尾删除 PHP 结束标记。这可以避免在 PHP 结束标记之后万一意外加入了空格或者换行符，会导致 PHP 开始输出这些空白，而脚本中此时并无输出的意图。&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello world&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 脚本至此结束，并无PHP 结束标记
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;2-从html中分离&quot;&gt;2. 从HTML中分离&lt;/h4&gt;
+
+&lt;h4 id=&quot;3-指令分隔符&quot;&gt;3. 指令分隔符&lt;/h4&gt;
+
+&lt;h4 id=&quot;4-注释&quot;&gt;4. 注释&lt;/h4&gt;
+
+&lt;h3 id=&quot;类型&quot;&gt;类型&lt;/h3&gt;
+
+&lt;h4 id=&quot;0-简介&quot;&gt;0. 简介&lt;/h4&gt;
+
+&lt;h4 id=&quot;1-boolena-布尔类型&quot;&gt;1. Boolena 布尔类型&lt;/h4&gt;
+
+&lt;h4 id=&quot;2-integer-整型&quot;&gt;2. Integer 整型&lt;/h4&gt;
+
+&lt;h4 id=&quot;3-float-浮点型&quot;&gt;3. Float 浮点型&lt;/h4&gt;
+
+&lt;h4 id=&quot;4-string-字符串&quot;&gt;4 String 字符串&lt;/h4&gt;
+
+&lt;h4 id=&quot;5-array-数组&quot;&gt;5. Array 数组&lt;/h4&gt;
+
+&lt;h4 id=&quot;6-object-对象&quot;&gt;6. Object 对象&lt;/h4&gt;
+
+&lt;h4 id=&quot;7-resource-资源类型&quot;&gt;7. Resource 资源类型&lt;/h4&gt;
+
+&lt;h4 id=&quot;8-null&quot;&gt;8. NULL&lt;/h4&gt;
+
+&lt;h4 id=&quot;9-callback-回调类型&quot;&gt;9. Callback 回调类型&lt;/h4&gt;
+
+&lt;h4 id=&quot;10-伪类型与变量&quot;&gt;10. 伪类型与变量&lt;/h4&gt;
+
+&lt;h4 id=&quot;11-类型转换的判别&quot;&gt;11. 类型转换的判别&lt;/h4&gt;
+
+&lt;h3 id=&quot;变量&quot;&gt;变量&lt;/h3&gt;
+
+&lt;h4 id=&quot;0-基础&quot;&gt;0. 基础&lt;/h4&gt;
+
+&lt;h4 id=&quot;1-预定义变量&quot;&gt;1. 预定义变量&lt;/h4&gt;
+
+&lt;h4 id=&quot;2-变量的范围&quot;&gt;2. 变量的范围&lt;/h4&gt;
+
+&lt;h4 id=&quot;3-可变变量&quot;&gt;3. 可变变量&lt;/h4&gt;
+
+&lt;h4 id=&quot;4-来自php之外的变量&quot;&gt;4. 来自PHP之外的变量&lt;/h4&gt;
+
+&lt;h3 id=&quot;常量&quot;&gt;常量&lt;/h3&gt;
+
+&lt;h4 id=&quot;0-语法&quot;&gt;0. 语法&lt;/h4&gt;
+
+&lt;h4 id=&quot;1-魔术敞亮&quot;&gt;1. 魔术敞亮&lt;/h4&gt;
+
+&lt;h3 id=&quot;表达式&quot;&gt;表达式&lt;/h3&gt;
+
+&lt;h3 id=&quot;运算符&quot;&gt;运算符&lt;/h3&gt;
+
+&lt;h3 id=&quot;流程控制&quot;&gt;流程控制&lt;/h3&gt;
+
+&lt;h3 id=&quot;函数&quot;&gt;函数&lt;/h3&gt;
+
+&lt;h3 id=&quot;类与对象&quot;&gt;类与对象&lt;/h3&gt;
+
+&lt;h3 id=&quot;命名空间&quot;&gt;命名空间&lt;/h3&gt;
+
+&lt;h3 id=&quot;errors&quot;&gt;Errors&lt;/h3&gt;
+
+&lt;h3 id=&quot;异常扩展&quot;&gt;异常扩展&lt;/h3&gt;
+
+&lt;h3 id=&quot;生成器&quot;&gt;生成器&lt;/h3&gt;
+
+&lt;h3 id=&quot;引用的解释&quot;&gt;引用的解释&lt;/h3&gt;
+
+&lt;h3 id=&quot;预定义变量&quot;&gt;预定义变量&lt;/h3&gt;
+
+&lt;h3 id=&quot;预定义异常&quot;&gt;预定义异常&lt;/h3&gt;
+
+&lt;h3 id=&quot;预定义接口&quot;&gt;预定义接口&lt;/h3&gt;
+
+&lt;h3 id=&quot;上线文context-选项和参数&quot;&gt;上线文(Context) 选项和参数&lt;/h3&gt;
+
+&lt;h3 id=&quot;支持的协议和封装的协议&quot;&gt;支持的协议和封装的协议&lt;/h3&gt;
+
+&lt;h2 id=&quot;-函数参考&quot;&gt;&lt;span id=&quot;function&quot;&gt; 函数参考&lt;/span&gt;&lt;/h2&gt;
+
+&lt;h2 id=&quot;-核心扩展库&quot;&gt;① 核心扩展库&lt;/h2&gt;
+&lt;h3 id=&quot;字符串&quot;&gt;字符串&lt;/h3&gt;
+
+&lt;h3 id=&quot;数组&quot;&gt;数组&lt;/h3&gt;
+
+&lt;h3 id=&quot;类对象&quot;&gt;类/对象&lt;/h3&gt;
+
+&lt;h3 id=&quot;日期时间&quot;&gt;日期/时间&lt;/h3&gt;
+
+&lt;h3 id=&quot;目录&quot;&gt;目录&lt;/h3&gt;
+
+&lt;h3 id=&quot;错误处理&quot;&gt;错误处理&lt;/h3&gt;
+
+&lt;h3 id=&quot;程序执行&quot;&gt;程序执行&lt;/h3&gt;
+
+&lt;h3 id=&quot;filesystem&quot;&gt;Filesystem&lt;/h3&gt;
+
+&lt;h3 id=&quot;filter&quot;&gt;Filter&lt;/h3&gt;
+
+&lt;h3 id=&quot;function-handing&quot;&gt;Function Handing&lt;/h3&gt;
+
+&lt;h3 id=&quot;hash&quot;&gt;Hash&lt;/h3&gt;
+
+&lt;h3 id=&quot;php-选项信息&quot;&gt;PHP 选项/信息&lt;/h3&gt;
+
+&lt;h3 id=&quot;mail&quot;&gt;Mail&lt;/h3&gt;
+
+&lt;h3 id=&quot;math&quot;&gt;Math&lt;/h3&gt;
+
+&lt;h3 id=&quot;misc&quot;&gt;Misc&lt;/h3&gt;
+
+&lt;h3 id=&quot;网络&quot;&gt;网络&lt;/h3&gt;
+
+&lt;h3 id=&quot;输出控制&quot;&gt;输出控制&lt;/h3&gt;
+
+&lt;h3 id=&quot;password-hashing&quot;&gt;Password Hashing&lt;/h3&gt;
+
+&lt;h3 id=&quot;phar&quot;&gt;Phar&lt;/h3&gt;
+
+&lt;h3 id=&quot;反射&quot;&gt;反射&lt;/h3&gt;
+
+&lt;h3 id=&quot;posix-regex&quot;&gt;POSIX Regex&lt;/h3&gt;
+
+&lt;h3 id=&quot;spl&quot;&gt;SPL&lt;/h3&gt;
+
+&lt;h3 id=&quot;streams&quot;&gt;Streams&lt;/h3&gt;
+
+&lt;h3 id=&quot;tokenizer&quot;&gt;Tokenizer&lt;/h3&gt;
+
+&lt;h3 id=&quot;urls&quot;&gt;URLs&lt;/h3&gt;
+
+&lt;h3 id=&quot;variable-handing&quot;&gt;Variable Handing&lt;/h3&gt;
+
+&lt;h2 id=&quot;-绑定的扩展库&quot;&gt;② 绑定的扩展库&lt;/h2&gt;
+
+&lt;h3 id=&quot;apache&quot;&gt;Apache&lt;/h3&gt;
+
+&lt;h3 id=&quot;bc-math&quot;&gt;BC Math&lt;/h3&gt;
+
+&lt;h3 id=&quot;calendar&quot;&gt;Calendar&lt;/h3&gt;
+
+&lt;h3 id=&quot;com&quot;&gt;COM&lt;/h3&gt;
+
+&lt;h3 id=&quot;ctype&quot;&gt;Ctype&lt;/h3&gt;
+
+&lt;h3 id=&quot;dba&quot;&gt;DBA&lt;/h3&gt;
+
+&lt;h3 id=&quot;exif&quot;&gt;Exif&lt;/h3&gt;
+
+&lt;h3 id=&quot;fileinfo&quot;&gt;Fileinfo&lt;/h3&gt;
+
+&lt;h3 id=&quot;ftp&quot;&gt;FTP&lt;/h3&gt;
+
+&lt;h3 id=&quot;iconv&quot;&gt;iconv&lt;/h3&gt;
+
+&lt;h3 id=&quot;gd&quot;&gt;GD&lt;/h3&gt;
+
+&lt;h3 id=&quot;intl&quot;&gt;intl&lt;/h3&gt;
+
+&lt;h3 id=&quot;json&quot;&gt;JSON&lt;/h3&gt;
+
+&lt;h3 id=&quot;多字节字符串&quot;&gt;多字节字符串&lt;/h3&gt;
+
+&lt;h3 id=&quot;nsapi&quot;&gt;NSAPI&lt;/h3&gt;
+
+&lt;h3 id=&quot;pcntl&quot;&gt;PCNTL&lt;/h3&gt;
+
+&lt;h3 id=&quot;pcre&quot;&gt;PCRE&lt;/h3&gt;
+
+&lt;h3 id=&quot;pdo&quot;&gt;PDO&lt;/h3&gt;
+
+&lt;h3 id=&quot;posix&quot;&gt;POSIX&lt;/h3&gt;
+
+&lt;h3 id=&quot;semaphore&quot;&gt;Semaphore&lt;/h3&gt;
+
+&lt;h3 id=&quot;shared-memory&quot;&gt;Shared Memory&lt;/h3&gt;
+
+&lt;h3 id=&quot;sockets&quot;&gt;Sockets&lt;/h3&gt;
+
+&lt;h3 id=&quot;sqlite3&quot;&gt;SQLite3&lt;/h3&gt;
+
+&lt;h3 id=&quot;xml-rpc&quot;&gt;XML-RPC&lt;/h3&gt;
+
+&lt;h3 id=&quot;zlib&quot;&gt;Zlib&lt;/h3&gt;
+
+&lt;h2 id=&quot;-外部扩展库&quot;&gt;③ 外部扩展库&lt;/h2&gt;
+
+&lt;p&gt;下面这些扩展库已经绑定在 PHP 发行包中，但是要编译一下扩展库，需要外部的库文件。&lt;/p&gt;
+
+&lt;h3 id=&quot;bzip2&quot;&gt;Bzip2&lt;/h3&gt;
+
+&lt;h3 id=&quot;curl&quot;&gt;cURL&lt;/h3&gt;
+
+&lt;h3 id=&quot;dbase&quot;&gt;dBase&lt;/h3&gt;
+
+&lt;h3 id=&quot;dom&quot;&gt;DOM&lt;/h3&gt;
+
+&lt;h3 id=&quot;enchant&quot;&gt;Enchant&lt;/h3&gt;
+
+&lt;h3 id=&quot;frontbase&quot;&gt;FrontBase&lt;/h3&gt;
+
+&lt;h3 id=&quot;gettext&quot;&gt;Gettext&lt;/h3&gt;
+
+&lt;h3 id=&quot;gmp&quot;&gt;GMP&lt;/h3&gt;
+
+&lt;h3 id=&quot;firebirdinterbase&quot;&gt;Firebird/InterBase&lt;/h3&gt;
+
+&lt;h3 id=&quot;informix&quot;&gt;Informix&lt;/h3&gt;
+
+&lt;h3 id=&quot;imap&quot;&gt;IMAP&lt;/h3&gt;
+
+&lt;h3 id=&quot;ldap&quot;&gt;LDAP&lt;/h3&gt;
+
+&lt;h3 id=&quot;libxml&quot;&gt;libxml&lt;/h3&gt;
+
+&lt;h3 id=&quot;mcrypt&quot;&gt;Mcrypt&lt;/h3&gt;
+
+&lt;h3 id=&quot;mhash&quot;&gt;Mhash&lt;/h3&gt;
+
+&lt;h3 id=&quot;msql&quot;&gt;mSQL&lt;/h3&gt;
+
+&lt;h3 id=&quot;mssql&quot;&gt;Mssql&lt;/h3&gt;
+
+&lt;h3 id=&quot;mysql原始&quot;&gt;MySQL(原始)&lt;/h3&gt;
+
+&lt;h3 id=&quot;mysqli&quot;&gt;Mysqli&lt;/h3&gt;
+
+&lt;h3 id=&quot;mysqlnd&quot;&gt;Mysqlnd&lt;/h3&gt;
+
+&lt;h3 id=&quot;oci8&quot;&gt;OCI8&lt;/h3&gt;
+
+&lt;h3 id=&quot;openssl&quot;&gt;OpenSSL&lt;/h3&gt;
+
+&lt;h3 id=&quot;ms-sql-serverpdo&quot;&gt;MS SQL Server(PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;firebird-pdo&quot;&gt;Firebird (PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;mysql-pdo&quot;&gt;MySQL (PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;oracle-pdo&quot;&gt;Oracle (PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;odbc-and-db2-pdo&quot;&gt;ODBC and DB2 (PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;postgresql-pdo&quot;&gt;PostgreSQL (PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;sqlite-pdo&quot;&gt;SQLite (PDO)&lt;/h3&gt;
+
+&lt;h3 id=&quot;postgresql&quot;&gt;PostgreSQL&lt;/h3&gt;
+
+&lt;h3 id=&quot;pspell&quot;&gt;Pspell&lt;/h3&gt;
+
+&lt;h3 id=&quot;readline&quot;&gt;Readline&lt;/h3&gt;
+
+&lt;h3 id=&quot;recode&quot;&gt;Recode&lt;/h3&gt;
+
+&lt;h3 id=&quot;simplexml&quot;&gt;SimpleXML&lt;/h3&gt;
+
+&lt;h3 id=&quot;snmp&quot;&gt;SNMP&lt;/h3&gt;
+
+&lt;h3 id=&quot;soap&quot;&gt;SOAP&lt;/h3&gt;
+
+&lt;h3 id=&quot;sybase&quot;&gt;Sybase&lt;/h3&gt;
+
+&lt;h3 id=&quot;tidy&quot;&gt;Tidy&lt;/h3&gt;
+
+&lt;h3 id=&quot;odbc&quot;&gt;ODBC&lt;/h3&gt;
+
+&lt;h3 id=&quot;wddx&quot;&gt;WDDX&lt;/h3&gt;
+
+&lt;h3 id=&quot;xml-解析器&quot;&gt;XML 解析器&lt;/h3&gt;
+
+&lt;h3 id=&quot;xmlreader&quot;&gt;XMLReader&lt;/h3&gt;
+
+&lt;h3 id=&quot;xmlwriter&quot;&gt;XMLWriter&lt;/h3&gt;
+
+&lt;h3 id=&quot;xsl&quot;&gt;XSL&lt;/h3&gt;
+
+&lt;h3 id=&quot;zip&quot;&gt;Zip&lt;/h3&gt;
+
+&lt;h2 id=&quot;-pecl-扩展库&quot;&gt;④ PECL 扩展库&lt;/h2&gt;
+
+&lt;p&gt;以下扩展来自PECL，它们可能需要额外的库。还有更多的 PECL 扩展存在，但是在 PHP 手册中尚未有文档。&lt;/p&gt;
+
+&lt;h3 id=&quot;apc&quot;&gt;APC&lt;/h3&gt;
+&lt;h3 id=&quot;apd&quot;&gt;APD&lt;/h3&gt;
+&lt;h3 id=&quot;bbcode&quot;&gt;BBCode&lt;/h3&gt;
+&lt;h3 id=&quot;bcompiler&quot;&gt;bcompiler&lt;/h3&gt;
+&lt;h3 id=&quot;cairo&quot;&gt;Cairo&lt;/h3&gt;
+&lt;h3 id=&quot;chdb&quot;&gt;chdb&lt;/h3&gt;
+&lt;h3 id=&quot;classkit&quot;&gt;Classkit&lt;/h3&gt;
+&lt;h3 id=&quot;crack&quot;&gt;Crack&lt;/h3&gt;
+&lt;h3 id=&quot;cubrid&quot;&gt;CUBRID&lt;/h3&gt;
+&lt;h3 id=&quot;cyrus&quot;&gt;Cyrus&lt;/h3&gt;
+&lt;h3 id=&quot;db&quot;&gt;DB++&lt;/h3&gt;
+&lt;h3 id=&quot;dbx&quot;&gt;dbx&lt;/h3&gt;
+&lt;h3 id=&quot;direct-io&quot;&gt;Direct IO&lt;/h3&gt;
+&lt;h3 id=&quot;eio&quot;&gt;Eio&lt;/h3&gt;
+&lt;h3 id=&quot;ev&quot;&gt;Ev&lt;/h3&gt;
+&lt;h3 id=&quot;event&quot;&gt;Event&lt;/h3&gt;
+&lt;h3 id=&quot;expect&quot;&gt;Expect&lt;/h3&gt;
+&lt;h3 id=&quot;fam&quot;&gt;FAM&lt;/h3&gt;
+&lt;h3 id=&quot;fdf&quot;&gt;FDF&lt;/h3&gt;
+&lt;h3 id=&quot;filepro&quot;&gt;filePro&lt;/h3&gt;
+&lt;h3 id=&quot;fribidi&quot;&gt;FriBiDi&lt;/h3&gt;
+&lt;h3 id=&quot;gearman&quot;&gt;Gearman&lt;/h3&gt;
+&lt;h3 id=&quot;gender&quot;&gt;Gender&lt;/h3&gt;
+&lt;h3 id=&quot;geoip&quot;&gt;GeoIP&lt;/h3&gt;
+&lt;h3 id=&quot;gmagick&quot;&gt;Gmagick&lt;/h3&gt;
+&lt;h3 id=&quot;gnupg&quot;&gt;GnuPG&lt;/h3&gt;
+&lt;h3 id=&quot;gupnp&quot;&gt;Gupnp&lt;/h3&gt;
+&lt;h3 id=&quot;haru&quot;&gt;haru&lt;/h3&gt;
+&lt;h3 id=&quot;htscanner&quot;&gt;htscanner&lt;/h3&gt;
+&lt;h3 id=&quot;hyperwave-api&quot;&gt;Hyperwave API&lt;/h3&gt;
+&lt;h3 id=&quot;ibm-db2&quot;&gt;IBM DB2&lt;/h3&gt;
+&lt;h3 id=&quot;id3&quot;&gt;ID3&lt;/h3&gt;
+&lt;h3 id=&quot;iis&quot;&gt;IIS&lt;/h3&gt;
+&lt;h3 id=&quot;imagemagick&quot;&gt;ImageMagick&lt;/h3&gt;
+&lt;h3 id=&quot;inclued&quot;&gt;inclued&lt;/h3&gt;
+&lt;h3 id=&quot;ingres&quot;&gt;Ingres&lt;/h3&gt;
+&lt;h3 id=&quot;inotify&quot;&gt;Inotify&lt;/h3&gt;
+&lt;h3 id=&quot;judy&quot;&gt;Judy&lt;/h3&gt;
+&lt;h3 id=&quot;kadm5&quot;&gt;KADM5&lt;/h3&gt;
+&lt;h3 id=&quot;ktaglib&quot;&gt;KTaglib&lt;/h3&gt;
+&lt;h3 id=&quot;lapack&quot;&gt;Lapack&lt;/h3&gt;
+&lt;h3 id=&quot;libevent&quot;&gt;Libevent&lt;/h3&gt;
+&lt;h3 id=&quot;lua&quot;&gt;Lua&lt;/h3&gt;
+&lt;h3 id=&quot;lzf&quot;&gt;LZF&lt;/h3&gt;
+&lt;h3 id=&quot;mailparse&quot;&gt;Mailparse&lt;/h3&gt;
+&lt;h3 id=&quot;maxdb&quot;&gt;MaxDB&lt;/h3&gt;
+&lt;h3 id=&quot;mcve&quot;&gt;MCVE&lt;/h3&gt;
+&lt;h3 id=&quot;memcache&quot;&gt;Memcache&lt;/h3&gt;
+&lt;h3 id=&quot;memcached&quot;&gt;Memcached&lt;/h3&gt;
+&lt;h3 id=&quot;memtrack&quot;&gt;Memtrack&lt;/h3&gt;
+&lt;h3 id=&quot;mimetype&quot;&gt;Mimetype&lt;/h3&gt;
+&lt;h3 id=&quot;ming&quot;&gt;Ming&lt;/h3&gt;
+&lt;h3 id=&quot;mnogosearch&quot;&gt;mnoGoSearch&lt;/h3&gt;
+&lt;h3 id=&quot;mongo&quot;&gt;Mongo&lt;/h3&gt;
+&lt;h3 id=&quot;mqseries&quot;&gt;mqseries&lt;/h3&gt;
+&lt;h3 id=&quot;msession&quot;&gt;Msession&lt;/h3&gt;
+&lt;h3 id=&quot;mysqlnd_memcache&quot;&gt;mysqlnd_memcache&lt;/h3&gt;
+&lt;h3 id=&quot;mysqlnd_ms&quot;&gt;mysqlnd_ms&lt;/h3&gt;
+&lt;h3 id=&quot;mysqlnd_mux&quot;&gt;mysqlnd_mux&lt;/h3&gt;
+&lt;h3 id=&quot;mysqlnd_qc&quot;&gt;mysqlnd_qc&lt;/h3&gt;
+&lt;h3 id=&quot;mysqlnd_uh&quot;&gt;mysqlnd_uh&lt;/h3&gt;
+&lt;h3 id=&quot;ncurses&quot;&gt;Ncurses&lt;/h3&gt;
+&lt;h3 id=&quot;gopher&quot;&gt;Gopher&lt;/h3&gt;
+&lt;h3 id=&quot;newt&quot;&gt;Newt&lt;/h3&gt;
+&lt;h3 id=&quot;ypnis&quot;&gt;YP/NIS&lt;/h3&gt;
+&lt;h3 id=&quot;oauth&quot;&gt;OAuth&lt;/h3&gt;
+&lt;h3 id=&quot;oggvorbis&quot;&gt;oggvorbis&lt;/h3&gt;
+&lt;h3 id=&quot;openal&quot;&gt;OpenAL&lt;/h3&gt;
+&lt;h3 id=&quot;paradox&quot;&gt;Paradox&lt;/h3&gt;
+&lt;h3 id=&quot;parsekit&quot;&gt;Parsekit&lt;/h3&gt;
+&lt;h3 id=&quot;pdf&quot;&gt;PDF&lt;/h3&gt;
+&lt;h3 id=&quot;4d-pdo&quot;&gt;4D (PDO)&lt;/h3&gt;
+&lt;h3 id=&quot;cubrid-pdo&quot;&gt;CUBRID (PDO)&lt;/h3&gt;
+&lt;h3 id=&quot;ibm-pdo&quot;&gt;IBM (PDO)&lt;/h3&gt;
+&lt;h3 id=&quot;informix-pdo&quot;&gt;Informix (PDO)&lt;/h3&gt;
+&lt;h3 id=&quot;ms-sql-server-pdo&quot;&gt;MS SQL Server (PDO)&lt;/h3&gt;
+&lt;h3 id=&quot;proctitle&quot;&gt;Proctitle&lt;/h3&gt;
+&lt;h3 id=&quot;ps&quot;&gt;PS&lt;/h3&gt;
+&lt;h3 id=&quot;pthreads&quot;&gt;pthreads&lt;/h3&gt;
+&lt;h3 id=&quot;quickhash&quot;&gt;Quickhash&lt;/h3&gt;
+&lt;h3 id=&quot;radius&quot;&gt;Radius&lt;/h3&gt;
+&lt;h3 id=&quot;rar&quot;&gt;Rar&lt;/h3&gt;
+&lt;h3 id=&quot;rpm-reader&quot;&gt;RPM Reader&lt;/h3&gt;
+&lt;h3 id=&quot;rrd&quot;&gt;RRD&lt;/h3&gt;
+&lt;h3 id=&quot;runkit&quot;&gt;runkit&lt;/h3&gt;
+&lt;h3 id=&quot;sam&quot;&gt;SAM&lt;/h3&gt;
+&lt;h3 id=&quot;sca&quot;&gt;SCA&lt;/h3&gt;
+&lt;h3 id=&quot;scream&quot;&gt;scream&lt;/h3&gt;
+&lt;h3 id=&quot;sdo&quot;&gt;SDO&lt;/h3&gt;
+&lt;h3 id=&quot;sdo-das-xml&quot;&gt;SDO DAS XML&lt;/h3&gt;
+&lt;h3 id=&quot;sdo-das-relational&quot;&gt;SDO-DAS-Relational&lt;/h3&gt;
+&lt;h3 id=&quot;session-pgsql&quot;&gt;Session PgSQL&lt;/h3&gt;
+&lt;h3 id=&quot;solr&quot;&gt;Solr&lt;/h3&gt;
+&lt;h3 id=&quot;sphinx&quot;&gt;Sphinx&lt;/h3&gt;
+&lt;h3 id=&quot;spl-types&quot;&gt;SPL Types&lt;/h3&gt;
+&lt;h3 id=&quot;sqlite&quot;&gt;SQLite&lt;/h3&gt;
+&lt;h3 id=&quot;sqlsrv&quot;&gt;SQLSRV&lt;/h3&gt;
+&lt;h3 id=&quot;ssdeep&quot;&gt;ssdeep&lt;/h3&gt;
+&lt;h3 id=&quot;ssh2&quot;&gt;SSH2&lt;/h3&gt;
+&lt;h3 id=&quot;statistics&quot;&gt;Statistics&lt;/h3&gt;
+&lt;h3 id=&quot;stomp&quot;&gt;Stomp&lt;/h3&gt;
+&lt;h3 id=&quot;svm&quot;&gt;SVM&lt;/h3&gt;
+&lt;h3 id=&quot;svn&quot;&gt;SVN&lt;/h3&gt;
+&lt;h3 id=&quot;swish&quot;&gt;Swish&lt;/h3&gt;
+&lt;h3 id=&quot;taint&quot;&gt;Taint&lt;/h3&gt;
+&lt;h3 id=&quot;tcp&quot;&gt;TCP&lt;/h3&gt;
+&lt;h3 id=&quot;tokyo_tyrant&quot;&gt;tokyo_tyrant&lt;/h3&gt;
+&lt;h3 id=&quot;v8js&quot;&gt;V8js&lt;/h3&gt;
+&lt;h3 id=&quot;varnish&quot;&gt;Varnish&lt;/h3&gt;
+&lt;h3 id=&quot;vpopmail&quot;&gt;vpopmail&lt;/h3&gt;
+&lt;h3 id=&quot;weakref&quot;&gt;Weakref&lt;/h3&gt;
+&lt;h3 id=&quot;win32ps&quot;&gt;win32ps&lt;/h3&gt;
+&lt;h3 id=&quot;win32service&quot;&gt;win32service&lt;/h3&gt;
+&lt;h3 id=&quot;wincache&quot;&gt;WinCache&lt;/h3&gt;
+&lt;h3 id=&quot;xattr&quot;&gt;xattr&lt;/h3&gt;
+&lt;h3 id=&quot;xdiff&quot;&gt;xdiff&lt;/h3&gt;
+&lt;h3 id=&quot;xhprof&quot;&gt;Xhprof&lt;/h3&gt;
+&lt;h3 id=&quot;yaf&quot;&gt;Yaf&lt;/h3&gt;
+&lt;h3 id=&quot;yaml&quot;&gt;Yaml&lt;/h3&gt;
+&lt;h3 id=&quot;yaz&quot;&gt;YAZ&lt;/h3&gt;
+&lt;h3 id=&quot;zookeeper&quot;&gt;ZooKeeper&lt;/h3&gt;
+
+&lt;h2 id=&quot;产品特点&quot;&gt;&lt;span id=&quot;features&quot;&gt;产品特点&lt;/span&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;补充信息&quot;&gt;&lt;span id=&quot;appendices&quot;&gt;补充信息&lt;/span&gt;&lt;/h2&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>jekyll的使用</title>

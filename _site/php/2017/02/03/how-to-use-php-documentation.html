@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>PHP手册使用的正确姿势 - pemako</title>
+    <meta name="description" content="php,手册">
+    <meta name="keywords" content="php,手册">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/jekyll/2017/02/02/jekyll-document.html" title="jekyll的使用" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>PHP手册使用的正确姿势 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h1 id="简介">简介</h1>
+
+<p>PHP官方手册主要包含了四大部分</p>
+
+<ol>
+  <li><a href="#langref"><code class="highlighter-rouge">语言参考</code></a></li>
+  <li><a href="#function"><code class="highlighter-rouge">函数参考</code></a></li>
+  <li><a href="#features"><code class="highlighter-rouge">产品特点</code></a></li>
+  <li><a href="#appendices"><code class="highlighter-rouge">补充信息</code></a></li>
+</ol>
+
+<h2 id="语言参考"><span id="langref">语言参考</span></h2>
+
+<h3 id="基本语法">基本语法</h3>
+
+<h4 id="1-php-标记">1. PHP 标记</h4>
+
+<p>当解析一个文件时，PHP 会寻找起始和结束标记，也就是 <?php 和 ?>，这告诉 PHP 开始和停止解析二者之间的代码。此种解析方式使得 PHP 可以被嵌入到各种不同的文档中去，而任何起始和结束标记之外的部分都会被 PHP 解析器忽略。</p>
+
+<p>PHP 也允许使用短标记 <? 和 ?>，但不鼓励使用。只有通过激活 php.ini 中的 <code class="highlighter-rouge">short_open_tag</code> 配置指令或者在编译 PHP 时使用了配置选项 –enable-short-tags 时才能使用短标记。</p>
+
+<p>如果文件内容是纯 PHP 代码，最好在文件末尾删除 PHP 结束标记。这可以避免在 PHP 结束标记之后万一意外加入了空格或者换行符，会导致 PHP 开始输出这些空白，而脚本中此时并无输出的意图。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">echo</span> <span class="s2">"Hello world"</span><span class="p">;</span>
+
+<span class="c1">// 脚本至此结束，并无PHP 结束标记
+</span></code></pre>
+</div>
+
+<h4 id="2-从html中分离">2. 从HTML中分离</h4>
+
+<h4 id="3-指令分隔符">3. 指令分隔符</h4>
+
+<h4 id="4-注释">4. 注释</h4>
+
+<h3 id="类型">类型</h3>
+
+<h4 id="0-简介">0. 简介</h4>
+
+<h4 id="1-boolena-布尔类型">1. Boolena 布尔类型</h4>
+
+<h4 id="2-integer-整型">2. Integer 整型</h4>
+
+<h4 id="3-float-浮点型">3. Float 浮点型</h4>
+
+<h4 id="4-string-字符串">4 String 字符串</h4>
+
+<h4 id="5-array-数组">5. Array 数组</h4>
+
+<h4 id="6-object-对象">6. Object 对象</h4>
+
+<h4 id="7-resource-资源类型">7. Resource 资源类型</h4>
+
+<h4 id="8-null">8. NULL</h4>
+
+<h4 id="9-callback-回调类型">9. Callback 回调类型</h4>
+
+<h4 id="10-伪类型与变量">10. 伪类型与变量</h4>
+
+<h4 id="11-类型转换的判别">11. 类型转换的判别</h4>
+
+<h3 id="变量">变量</h3>
+
+<h4 id="0-基础">0. 基础</h4>
+
+<h4 id="1-预定义变量">1. 预定义变量</h4>
+
+<h4 id="2-变量的范围">2. 变量的范围</h4>
+
+<h4 id="3-可变变量">3. 可变变量</h4>
+
+<h4 id="4-来自php之外的变量">4. 来自PHP之外的变量</h4>
+
+<h3 id="常量">常量</h3>
+
+<h4 id="0-语法">0. 语法</h4>
+
+<h4 id="1-魔术敞亮">1. 魔术敞亮</h4>
+
+<h3 id="表达式">表达式</h3>
+
+<h3 id="运算符">运算符</h3>
+
+<h3 id="流程控制">流程控制</h3>
+
+<h3 id="函数">函数</h3>
+
+<h3 id="类与对象">类与对象</h3>
+
+<h3 id="命名空间">命名空间</h3>
+
+<h3 id="errors">Errors</h3>
+
+<h3 id="异常扩展">异常扩展</h3>
+
+<h3 id="生成器">生成器</h3>
+
+<h3 id="引用的解释">引用的解释</h3>
+
+<h3 id="预定义变量">预定义变量</h3>
+
+<h3 id="预定义异常">预定义异常</h3>
+
+<h3 id="预定义接口">预定义接口</h3>
+
+<h3 id="上线文context-选项和参数">上线文(Context) 选项和参数</h3>
+
+<h3 id="支持的协议和封装的协议">支持的协议和封装的协议</h3>
+
+<h2 id="-函数参考"><span id="function"> 函数参考</span></h2>
+
+<h2 id="-核心扩展库">① 核心扩展库</h2>
+<h3 id="字符串">字符串</h3>
+
+<h3 id="数组">数组</h3>
+
+<h3 id="类对象">类/对象</h3>
+
+<h3 id="日期时间">日期/时间</h3>
+
+<h3 id="目录">目录</h3>
+
+<h3 id="错误处理">错误处理</h3>
+
+<h3 id="程序执行">程序执行</h3>
+
+<h3 id="filesystem">Filesystem</h3>
+
+<h3 id="filter">Filter</h3>
+
+<h3 id="function-handing">Function Handing</h3>
+
+<h3 id="hash">Hash</h3>
+
+<h3 id="php-选项信息">PHP 选项/信息</h3>
+
+<h3 id="mail">Mail</h3>
+
+<h3 id="math">Math</h3>
+
+<h3 id="misc">Misc</h3>
+
+<h3 id="网络">网络</h3>
+
+<h3 id="输出控制">输出控制</h3>
+
+<h3 id="password-hashing">Password Hashing</h3>
+
+<h3 id="phar">Phar</h3>
+
+<h3 id="反射">反射</h3>
+
+<h3 id="posix-regex">POSIX Regex</h3>
+
+<h3 id="spl">SPL</h3>
+
+<h3 id="streams">Streams</h3>
+
+<h3 id="tokenizer">Tokenizer</h3>
+
+<h3 id="urls">URLs</h3>
+
+<h3 id="variable-handing">Variable Handing</h3>
+
+<h2 id="-绑定的扩展库">② 绑定的扩展库</h2>
+
+<h3 id="apache">Apache</h3>
+
+<h3 id="bc-math">BC Math</h3>
+
+<h3 id="calendar">Calendar</h3>
+
+<h3 id="com">COM</h3>
+
+<h3 id="ctype">Ctype</h3>
+
+<h3 id="dba">DBA</h3>
+
+<h3 id="exif">Exif</h3>
+
+<h3 id="fileinfo">Fileinfo</h3>
+
+<h3 id="ftp">FTP</h3>
+
+<h3 id="iconv">iconv</h3>
+
+<h3 id="gd">GD</h3>
+
+<h3 id="intl">intl</h3>
+
+<h3 id="json">JSON</h3>
+
+<h3 id="多字节字符串">多字节字符串</h3>
+
+<h3 id="nsapi">NSAPI</h3>
+
+<h3 id="pcntl">PCNTL</h3>
+
+<h3 id="pcre">PCRE</h3>
+
+<h3 id="pdo">PDO</h3>
+
+<h3 id="posix">POSIX</h3>
+
+<h3 id="semaphore">Semaphore</h3>
+
+<h3 id="shared-memory">Shared Memory</h3>
+
+<h3 id="sockets">Sockets</h3>
+
+<h3 id="sqlite3">SQLite3</h3>
+
+<h3 id="xml-rpc">XML-RPC</h3>
+
+<h3 id="zlib">Zlib</h3>
+
+<h2 id="-外部扩展库">③ 外部扩展库</h2>
+
+<p>下面这些扩展库已经绑定在 PHP 发行包中，但是要编译一下扩展库，需要外部的库文件。</p>
+
+<h3 id="bzip2">Bzip2</h3>
+
+<h3 id="curl">cURL</h3>
+
+<h3 id="dbase">dBase</h3>
+
+<h3 id="dom">DOM</h3>
+
+<h3 id="enchant">Enchant</h3>
+
+<h3 id="frontbase">FrontBase</h3>
+
+<h3 id="gettext">Gettext</h3>
+
+<h3 id="gmp">GMP</h3>
+
+<h3 id="firebirdinterbase">Firebird/InterBase</h3>
+
+<h3 id="informix">Informix</h3>
+
+<h3 id="imap">IMAP</h3>
+
+<h3 id="ldap">LDAP</h3>
+
+<h3 id="libxml">libxml</h3>
+
+<h3 id="mcrypt">Mcrypt</h3>
+
+<h3 id="mhash">Mhash</h3>
+
+<h3 id="msql">mSQL</h3>
+
+<h3 id="mssql">Mssql</h3>
+
+<h3 id="mysql原始">MySQL(原始)</h3>
+
+<h3 id="mysqli">Mysqli</h3>
+
+<h3 id="mysqlnd">Mysqlnd</h3>
+
+<h3 id="oci8">OCI8</h3>
+
+<h3 id="openssl">OpenSSL</h3>
+
+<h3 id="ms-sql-serverpdo">MS SQL Server(PDO)</h3>
+
+<h3 id="firebird-pdo">Firebird (PDO)</h3>
+
+<h3 id="mysql-pdo">MySQL (PDO)</h3>
+
+<h3 id="oracle-pdo">Oracle (PDO)</h3>
+
+<h3 id="odbc-and-db2-pdo">ODBC and DB2 (PDO)</h3>
+
+<h3 id="postgresql-pdo">PostgreSQL (PDO)</h3>
+
+<h3 id="sqlite-pdo">SQLite (PDO)</h3>
+
+<h3 id="postgresql">PostgreSQL</h3>
+
+<h3 id="pspell">Pspell</h3>
+
+<h3 id="readline">Readline</h3>
+
+<h3 id="recode">Recode</h3>
+
+<h3 id="simplexml">SimpleXML</h3>
+
+<h3 id="snmp">SNMP</h3>
+
+<h3 id="soap">SOAP</h3>
+
+<h3 id="sybase">Sybase</h3>
+
+<h3 id="tidy">Tidy</h3>
+
+<h3 id="odbc">ODBC</h3>
+
+<h3 id="wddx">WDDX</h3>
+
+<h3 id="xml-解析器">XML 解析器</h3>
+
+<h3 id="xmlreader">XMLReader</h3>
+
+<h3 id="xmlwriter">XMLWriter</h3>
+
+<h3 id="xsl">XSL</h3>
+
+<h3 id="zip">Zip</h3>
+
+<h2 id="-pecl-扩展库">④ PECL 扩展库</h2>
+
+<p>以下扩展来自PECL，它们可能需要额外的库。还有更多的 PECL 扩展存在，但是在 PHP 手册中尚未有文档。</p>
+
+<h3 id="apc">APC</h3>
+<h3 id="apd">APD</h3>
+<h3 id="bbcode">BBCode</h3>
+<h3 id="bcompiler">bcompiler</h3>
+<h3 id="cairo">Cairo</h3>
+<h3 id="chdb">chdb</h3>
+<h3 id="classkit">Classkit</h3>
+<h3 id="crack">Crack</h3>
+<h3 id="cubrid">CUBRID</h3>
+<h3 id="cyrus">Cyrus</h3>
+<h3 id="db">DB++</h3>
+<h3 id="dbx">dbx</h3>
+<h3 id="direct-io">Direct IO</h3>
+<h3 id="eio">Eio</h3>
+<h3 id="ev">Ev</h3>
+<h3 id="event">Event</h3>
+<h3 id="expect">Expect</h3>
+<h3 id="fam">FAM</h3>
+<h3 id="fdf">FDF</h3>
+<h3 id="filepro">filePro</h3>
+<h3 id="fribidi">FriBiDi</h3>
+<h3 id="gearman">Gearman</h3>
+<h3 id="gender">Gender</h3>
+<h3 id="geoip">GeoIP</h3>
+<h3 id="gmagick">Gmagick</h3>
+<h3 id="gnupg">GnuPG</h3>
+<h3 id="gupnp">Gupnp</h3>
+<h3 id="haru">haru</h3>
+<h3 id="htscanner">htscanner</h3>
+<h3 id="hyperwave-api">Hyperwave API</h3>
+<h3 id="ibm-db2">IBM DB2</h3>
+<h3 id="id3">ID3</h3>
+<h3 id="iis">IIS</h3>
+<h3 id="imagemagick">ImageMagick</h3>
+<h3 id="inclued">inclued</h3>
+<h3 id="ingres">Ingres</h3>
+<h3 id="inotify">Inotify</h3>
+<h3 id="judy">Judy</h3>
+<h3 id="kadm5">KADM5</h3>
+<h3 id="ktaglib">KTaglib</h3>
+<h3 id="lapack">Lapack</h3>
+<h3 id="libevent">Libevent</h3>
+<h3 id="lua">Lua</h3>
+<h3 id="lzf">LZF</h3>
+<h3 id="mailparse">Mailparse</h3>
+<h3 id="maxdb">MaxDB</h3>
+<h3 id="mcve">MCVE</h3>
+<h3 id="memcache">Memcache</h3>
+<h3 id="memcached">Memcached</h3>
+<h3 id="memtrack">Memtrack</h3>
+<h3 id="mimetype">Mimetype</h3>
+<h3 id="ming">Ming</h3>
+<h3 id="mnogosearch">mnoGoSearch</h3>
+<h3 id="mongo">Mongo</h3>
+<h3 id="mqseries">mqseries</h3>
+<h3 id="msession">Msession</h3>
+<h3 id="mysqlnd_memcache">mysqlnd_memcache</h3>
+<h3 id="mysqlnd_ms">mysqlnd_ms</h3>
+<h3 id="mysqlnd_mux">mysqlnd_mux</h3>
+<h3 id="mysqlnd_qc">mysqlnd_qc</h3>
+<h3 id="mysqlnd_uh">mysqlnd_uh</h3>
+<h3 id="ncurses">Ncurses</h3>
+<h3 id="gopher">Gopher</h3>
+<h3 id="newt">Newt</h3>
+<h3 id="ypnis">YP/NIS</h3>
+<h3 id="oauth">OAuth</h3>
+<h3 id="oggvorbis">oggvorbis</h3>
+<h3 id="openal">OpenAL</h3>
+<h3 id="paradox">Paradox</h3>
+<h3 id="parsekit">Parsekit</h3>
+<h3 id="pdf">PDF</h3>
+<h3 id="4d-pdo">4D (PDO)</h3>
+<h3 id="cubrid-pdo">CUBRID (PDO)</h3>
+<h3 id="ibm-pdo">IBM (PDO)</h3>
+<h3 id="informix-pdo">Informix (PDO)</h3>
+<h3 id="ms-sql-server-pdo">MS SQL Server (PDO)</h3>
+<h3 id="proctitle">Proctitle</h3>
+<h3 id="ps">PS</h3>
+<h3 id="pthreads">pthreads</h3>
+<h3 id="quickhash">Quickhash</h3>
+<h3 id="radius">Radius</h3>
+<h3 id="rar">Rar</h3>
+<h3 id="rpm-reader">RPM Reader</h3>
+<h3 id="rrd">RRD</h3>
+<h3 id="runkit">runkit</h3>
+<h3 id="sam">SAM</h3>
+<h3 id="sca">SCA</h3>
+<h3 id="scream">scream</h3>
+<h3 id="sdo">SDO</h3>
+<h3 id="sdo-das-xml">SDO DAS XML</h3>
+<h3 id="sdo-das-relational">SDO-DAS-Relational</h3>
+<h3 id="session-pgsql">Session PgSQL</h3>
+<h3 id="solr">Solr</h3>
+<h3 id="sphinx">Sphinx</h3>
+<h3 id="spl-types">SPL Types</h3>
+<h3 id="sqlite">SQLite</h3>
+<h3 id="sqlsrv">SQLSRV</h3>
+<h3 id="ssdeep">ssdeep</h3>
+<h3 id="ssh2">SSH2</h3>
+<h3 id="statistics">Statistics</h3>
+<h3 id="stomp">Stomp</h3>
+<h3 id="svm">SVM</h3>
+<h3 id="svn">SVN</h3>
+<h3 id="swish">Swish</h3>
+<h3 id="taint">Taint</h3>
+<h3 id="tcp">TCP</h3>
+<h3 id="tokyo_tyrant">tokyo_tyrant</h3>
+<h3 id="v8js">V8js</h3>
+<h3 id="varnish">Varnish</h3>
+<h3 id="vpopmail">vpopmail</h3>
+<h3 id="weakref">Weakref</h3>
+<h3 id="win32ps">win32ps</h3>
+<h3 id="win32service">win32service</h3>
+<h3 id="wincache">WinCache</h3>
+<h3 id="xattr">xattr</h3>
+<h3 id="xdiff">xdiff</h3>
+<h3 id="xhprof">Xhprof</h3>
+<h3 id="yaf">Yaf</h3>
+<h3 id="yaml">Yaml</h3>
+<h3 id="yaz">YAZ</h3>
+<h3 id="zookeeper">ZooKeeper</h3>
+
+<h2 id="产品特点"><span id="features">产品特点</span></h2>
+<h2 id="补充信息"><span id="appendices">补充信息</span></h2>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#php-ref" rel="tag">php</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/jekyll/2017/02/02/jekyll-document.html" title="jekyll的使用">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐 -->
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "PHP手册使用的正确姿势"; //请用代码生成文章标题
+        var wumiiTags = "php"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["php"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="PHP手册使用的正确姿势" data-url="https://pemako.cn/php/2017/02/03/how-to-use-php-documentation.html" data-thread-key="/php/2017/02/03/how-to-use-php-documentation"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
