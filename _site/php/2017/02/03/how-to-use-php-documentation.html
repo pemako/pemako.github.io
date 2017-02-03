@@ -376,9 +376,9 @@ function foo() {
 
 <h5 id="nowdoc-语法结构"><span id="nowdoc">nowdoc 语法结构</span></h5>
 
-<p>就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 &lt;![CDATA[ ]]&gt; 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。</p>
+<p>就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 CDATA 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。</p>
 
-<p>一个 nowdoc 结构也用和 heredocs 结构一样的标记 «&lt;， 但是跟在后面的标识符要用单引号括起来，即 «&lt;’EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。</p>
+<p>一个 nowdoc 结构也用和 heredocs 结构一样的标记 &lt;&lt;&lt;， 但是跟在后面的标识符要用单引号括起来，即 &lt;&lt;&lt;‘EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。</p>
 
 <div class="language-php highlighter-rouge"><pre class="highlight"><code>$str = <span class="err">&lt;&lt;&lt;</span>'EOD'
 Example of string useing nowdoc syntax.
@@ -498,7 +498,7 @@ $b = array_values($a);
   <li><a href="#obj-opp-changelog">OOP变更日志</a></li>
 </ul>
 
-<h5 id="简介sapn"><span id="obj-introduction">简介&lt;/sapn&gt;</span></h5>
+<h5 id="简介-1"><span id="obj-introduction">简介</span></h5>
 
 <p>自 PHP 5 起完全重写了对象模型以得到更佳性能和更多特性。这是自 PHP 4 以来的最大变化。PHP 5 具有完整的对象模型。</p>
 
@@ -506,7 +506,7 @@ $b = array_values($a);
 
 <p>PHP 对待对象的方式与引用和句柄相同，即每个变量都持有对象的引用，而不是整个对象的拷贝。参见<a href="#obj-and-reference">对象和引用</a>。</p>
 
-<h5 id="基本概念sapn"><span id="obj-basics">基本概念&lt;/sapn&gt;</span></h5>
+<h5 id="基本概念"><span id="obj-basics">基本概念</span></h5>
 
 <p>每个类的定义都以关键字 class 开头，后面跟着类名，后面跟着一对花括号，里面包含有类的属性与方法的定义。</p>
 

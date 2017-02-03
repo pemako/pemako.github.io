@@ -275,9 +275,9 @@ FOOBAR;
 
 ##### <span id="nowdoc">nowdoc 语法结构</span>
 
-就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 <![CDATA[ ]]> 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。
+就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 CDATA 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。
 
-一个 nowdoc 结构也用和 heredocs 结构一样的标记 <<<， 但是跟在后面的标识符要用单引号括起来，即 <<<'EOT'。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。
+一个 nowdoc 结构也用和 heredocs 结构一样的标记 \<\<\<， 但是跟在后面的标识符要用单引号括起来，即 \<\<\<'EOT'。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。
 
 ```php
 $str = <<<'EOD'
@@ -389,7 +389,7 @@ $b = array_values($a);
 - [对象序列化](#obj-serialization)
 - [OOP变更日志](#obj-opp-changelog)
 
-##### <span id="obj-introduction">简介</sapn>
+##### <span id="obj-introduction">简介</span>
 
 自 PHP 5 起完全重写了对象模型以得到更佳性能和更多特性。这是自 PHP 4 以来的最大变化。PHP 5 具有完整的对象模型。
 
@@ -398,7 +398,7 @@ PHP 5 中的新特性包括[访问控制](#obj-visibility)，[抽象类](#obj-ab
 PHP 对待对象的方式与引用和句柄相同，即每个变量都持有对象的引用，而不是整个对象的拷贝。参见[对象和引用](#obj-and-reference)。
 
 
-##### <span id="obj-basics">基本概念</sapn>
+##### <span id="obj-basics">基本概念</span>
 
 每个类的定义都以关键字 class 开头，后面跟着类名，后面跟着一对花括号，里面包含有类的属性与方法的定义。
 
