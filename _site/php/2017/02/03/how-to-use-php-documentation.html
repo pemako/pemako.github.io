@@ -609,37 +609,38 @@ $this is not defined.
   <li>如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。</li>
 </ul>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code>class foo {
-    function do_foo() {
-        echo "Doing foo.";
-    }
-}
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="nf">do_foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Doing foo."</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-$bar = new foo;
-$bar-&gt;do_foo();
+<span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">;</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">do_foo</span><span class="p">();</span>
 
-# 转换为对象
-$obj = (object)'ciao';
-echo $obj-&gt;scalar; // outputs 'ciao'
-
-// In PHP 7 there are a few ways to create an empty object:
-$obj1 = new \stdCalss; // Instantiate stdClass object
-$obj2 = new class{}; // Instantiate anonymous class
-$obj3 = (object)[];  // Cast empty array to object
-
-var_dump($obj1); // object(stdClass)#1 (0) {}
-var_dump($obj2); // object(class@anonymous)#2 (0) {}
-var_dump($obj2); // object(stdClass)#1 (0) {}
-
-// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
-
-echo json_encode([
-    new \stdClass,
-    new class{},
-    (object)[],
-]);
-// Output: [{},{},{}]
-</code></pre>
+<span class="c1"># 转换为对象
+</span><span class="nv">$obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="s1">'ciao'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">scalar</span><span class="p">;</span> <span class="c1">// outputs 'ciao'
+</span>
+<span class="c1">// In PHP 7 there are a few ways to create an empty object:
+</span><span class="nv">$obj1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\stdCalss</span><span class="p">;</span> <span class="c1">// Instantiate stdClass object
+</span><span class="nv">$obj2</span> <span class="o">=</span> <span class="k">new</span> <span class="k">class</span><span class="err">{};</span> <span class="err">//</span> <span class="nc">Instantiate</span> <span class="nx">anonymous</span> <span class="k">class</span>
+<span class="err">$</span><span class="nc">obj3</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)[];</span>  <span class="c1">// Cast empty array to object
+</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj1</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}
+</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(class@anonymous)#2 (0) {}
+</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}
+</span>
+<span class="c1">// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
+</span>
+<span class="k">echo</span> <span class="nb">json_encode</span><span class="p">([</span>
+    <span class="k">new</span> <span class="nx">\stdClass</span><span class="p">,</span>
+    <span class="k">new</span> <span class="k">class</span><span class="err">{},</span>
+    <span class="err">(</span><span class="nc">object</span><span class="p">)[],</span>
+<span class="p">]);</span>
+<span class="c1">// Output: [{},{},{}]
+</span></code></pre>
 </div>
 
 <h4 id="7-resource-资源类型"><span id="resource">7. Resource 资源类型</span></h4>
