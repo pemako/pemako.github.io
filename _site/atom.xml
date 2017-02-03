@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T19:11:18+08:00</updated>
+ <updated>2017-02-03T19:14:36+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -248,7 +248,7 @@
 
 &lt;h5 id=&quot;heredoc-语法结构&quot;&gt;&lt;span id=&quot;heredoc&quot;&gt;heredoc 语法结构&lt;/span&gt;&lt;/h5&gt;
 
-&lt;p&gt;第三种表达字符串的方法是用 heredoc 句法结构：«&amp;lt;。在该运算符之后要提供一个标识符，然后换行。接下来是字符串 string 本身，最后要用前面定义的标识符作为结束标志。&lt;/p&gt;
+&lt;p&gt;第三种表达字符串的方法是用 heredoc 句法结构：&amp;lt;&amp;lt;&amp;lt;。在该运算符之后要提供一个标识符，然后换行。接下来是字符串 string 本身，最后要用前面定义的标识符作为结束标志。&lt;/p&gt;
 
 &lt;p&gt;结束时所引用的标识符必须在该行的第一列，而且，标识符的命名也要像其它标签一样遵守 PHP 的规则：只能包含字母、数字和下划线，并且必须以字母和下划线作为开头。&lt;/p&gt;
 
