@@ -261,7 +261,7 @@
 
 <p>浮点数的精度有限。尽管取决于系统，PHP 通常使用 IEEE 754 双精度格式，则由于取整而导致的最大相对误差为 1.11e-16。非基本数学运算可能会给出更大误差，并且要考虑到进行复合运算时的误差传递。</p>
 
-<p>此外，以十进制能够精确表示的有理数如 0.1 或 0.7，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，floor((0.1+0.7)*10) 通常会返回 7 而不是预期中的 8，因为该结果内部的表示其实是类似 7.9999999999999991118…。</p>
+<p>此外，以十进制能够精确表示的有理数如 0.1 或 0.7，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，floor((0.1+0.7)x10) 通常会返回 7 而不是预期中的 8，因为该结果内部的表示其实是类似 7.9999999999999991118…。</p>
 
 <p>所以永远不要相信浮点数结果精确到了最后一位，也永远不要比较两个浮点数是否相等。如果确实需要更高的精度，应该使用任意精度数学函数或者 gmp 函数。</p>
 
@@ -405,13 +405,234 @@ Now, I am printing some {$foo-&gt;bar[1]}.
 This should print a capital 'A': \x41
 EOT;
 // 内用将原样输出不做解析
-
 </code></pre>
 </div>
 
 <h4 id="5-array-数组"><span id="array">5. Array 数组</span></h4>
 
+<p>PHP中的数组实际上是一个有序映射。映射是一种把 values 关联到 keys 的类型。定义数组使用 array(), 自5.4起可以使用短数组定义语法,用<code class="highlighter-rouge">[]</code>替代 array()。</p>
+
+<p>key 可以是 integer 或者 string。value 可以是任意类型。此外 key 会有以下强制转换规则</p>
+<ul>
+  <li>包含有合法整型值的字符串会被转换为整型。例如键名 “8” 实际会被储存为 8。但是 “08” 则不会强制转换，因为其不是一个合法的十进制数值。</li>
+  <li>浮点数也会被转换为整型，意味着其小数部分会被舍去。例如键名 8.7 实际会被储存为 8。</li>
+  <li>布尔值也会被转换成整型。即键名 true 实际会被储存为 1 而键名 false 会被储存为 0。</li>
+  <li>Null 会被转换为空字符串，即键名 null 实际会被储存为 ““。</li>
+  <li>数组和对象不能被用为键名。坚持这么做会导致警告：Illegal offset type。</li>
+</ul>
+
+<p>如果在数组定义中多个单元都使用了同一个键名，则只使用了最后一个，之前的都被覆盖了。</p>
+
+<p>Note:</p>
+<ul>
+  <li>自 PHP5.4起可以用数组间接引用函数或方法调用的结果。之前只能通过一个临时变量</li>
+  <li>自 PHP5.5起可以用数组间接引用一个数组原型</li>
+  <li>试图访问一个未定义的数组键名与访问任何未定义变量一样：会导致 E_NOTICE 级别错误信息，其结果为 NULL。</li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code># 数组间接引用
+function getArray() {
+    return array(1, 2, 3);
+}
+
+// on PHP 5.4
+$secondElement = getArray()[1];
+
+// previously
+$tmp = getArray();
+$secondElement = $tmp[1];
+
+// or
+list(, $secondElement) = getArray();
+</code></pre>
+</div>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>$arr = [5=&gt;1, 12=&gt;2];
+$arr[] = 56; // This is the same as $arr[13] = 56 at this point of the script
+$arr["x"] = 42; // This adds a new element to the array with key "x"
+unset($arr[5]); // This removes the element form the array
+unset($arr); // This deletes the whole array
+</code></pre>
+</div>
+
+<ul>
+  <li>如上所述，如果给出方括号但没有指定键名，则取当前最大整数索引值，新的键名将是该值加上 1（但是最小为 0）。如果当前还没有整数索引，则键名将为 0。</li>
+  <li>unset() 函数允许删除数组中的某个键。但要注意数组将不会重建索引。如果需要删除后重建索引，可以用 array_values() 函数。</li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>$a = [1=&gt;'one', 2=&gt;'two', 3=&gt;'three'];
+unset($a[2]);
+// 现在$a = [1 =&gt; 'one', 3=&gt;'three'] 
+$b = array_values($a);
+// Now $b is [0=&gt;'one', 1=&gt;'three']
+</code></pre>
+</div>
+
 <h4 id="6-object-对象"><span id="object">6. Object 对象</span></h4>
+
+<ul>
+  <li><a href="#obj-introduction">简介</a></li>
+  <li><a href="#obj-basics">基本概念</a></li>
+  <li><a href="#obj-property">属性</a></li>
+  <li><a href="#obj-class-constants">类常量</a></li>
+  <li><a href="#obj-autoloading">自动加载类</a></li>
+  <li><a href="#obj-construct-and-destruct">构造函数和析构函数</a></li>
+  <li><a href="#obj-visibility">访问控制可见性</a></li>
+  <li><a href="#obj-inheritance">对象继承</a></li>
+  <li><a href="#obj-scope">范围解析操作符::</a></li>
+  <li><a href="#obj-static">Static 关键字</a></li>
+  <li><a href="#obj-abstraction">抽象类</a></li>
+  <li><a href="#obj-interface">对象接口</a></li>
+  <li><a href="#obj-trait">Trait</a></li>
+  <li><a href="#obj-anonymous">匿名类</a></li>
+  <li><a href="#obj-overloading">重载</a></li>
+  <li><a href="#obj-iteration">遍历对象</a></li>
+  <li><a href="#obj-magic-method">魔术方法</a></li>
+  <li><a href="#obj-final">Final 关键字</a></li>
+  <li><a href="#obj-cloning">对象复制</a></li>
+  <li><a href="#obj-comparing">对象比较</a></li>
+  <li><a href="#obj-type-hinting">类型约束</a></li>
+  <li><a href="#obj-late-static-binding">后期静态绑定</a></li>
+  <li><a href="#obj-and-reference">对象和引用</a></li>
+  <li><a href="#obj-serialization">对象序列化</a></li>
+  <li><a href="#obj-opp-changelog">OOP变更日志</a></li>
+</ul>
+
+<h5 id="简介sapn"><span id="obj-introduction">简介&lt;/sapn&gt;</span></h5>
+
+<p>自 PHP 5 起完全重写了对象模型以得到更佳性能和更多特性。这是自 PHP 4 以来的最大变化。PHP 5 具有完整的对象模型。</p>
+
+<p>PHP 5 中的新特性包括<a href="#obj-visibility">访问控制</a>，<a href="#obj-abstraction">抽象类</a>和 <a href="#obj-final">final</a> 类与方法，附加的<a href="#obj-magic-method">魔术方法</a>，<a href="#obj-interface">接口</a>，<a href="#obj-cloning">对象复制</a>和<a href="#obj-type-hinting">类型约束</a>.</p>
+
+<p>PHP 对待对象的方式与引用和句柄相同，即每个变量都持有对象的引用，而不是整个对象的拷贝。参见<a href="#obj-and-reference">对象和引用</a>。</p>
+
+<h5 id="基本概念sapn"><span id="obj-basics">基本概念&lt;/sapn&gt;</span></h5>
+
+<p>每个类的定义都以关键字 class 开头，后面跟着类名，后面跟着一对花括号，里面包含有类的属性与方法的定义。</p>
+
+<p>类名可以是任何非 PHP 保留字的合法标签。一个合法类名以字母或下划线开头，后面跟着若干字母，数字或下划线。以正则表达式表示为：[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*</p>
+
+<p>一个类可以包含有属于自己的常量，变量（称为”属性”）以及函数（称为”方法”）。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>#1 简单的类定义
+class SimpleClass {
+    // property declaration
+    public $var = 'a default value';
+
+    // method declaration
+    public function displayVar() {
+        echo $this-&gt;var;
+    }
+}
+
+// 当一个方法在类定义内部被调用时，有一个可用的伪变量$this。$this 是一个到主叫对象的引用
+// (通常是该方法所从属的对象，但如果是从第二个对象静态调用时也可能是另一个对象)
+
+#2 $this 伪变量的示例
+
+class A {
+    function foo() {
+        if(isset($this)) {
+            echo '$this is defind ('. get_class($this). ")\n";
+        } else {
+            echo "\$this is not defined.\n";
+        }
+    }
+}
+
+class B {
+	function bar() {
+		A::foo(); // Note: the next line will issue a warning if E_STRICT is enabled.
+	}
+}
+
+$a = new A();
+$a-&gt;foo(); // $this is defined (A)
+
+A::foo();
+
+$b = new B();
+$b-&gt;bar();
+
+B::bar();
+
+/*
+# PHP5 output 
+$this is defined (A)
+$this is not defined.
+$this is defined (B)
+$this is not defined.
+
+# PHP7 output
+$this is defined (A)
+$this is not defined.
+$this is not defined.
+$this is not defined.
+*/
+</code></pre>
+</div>
+
+<h5 id="属性"><span id="obj-property">属性</span></h5>
+<h5 id="类常量"><span id="obj-class-constants">类常量</span></h5>
+<h5 id="自动加载类"><span id="obj-autoloading">自动加载类</span></h5>
+<h5 id="构造函数和析构函数"><span id="obj-construct-and-destruct">构造函数和析构函数</span></h5>
+<h5 id="访问控制可见性"><span id="obj-visibility">访问控制可见性</span></h5>
+<h5 id="对象继承"><span id="obj-inheritance">对象继承</span></h5>
+<h5 id="范围解析操作符"><span id="obj-scope">范围解析操作符::</span></h5>
+<h5 id="static-关键字"><span id="obj-static">Static 关键字</span></h5>
+<h5 id="抽象类"><span id="obj-abstraction">抽象类</span></h5>
+<h5 id="对象接口"><span id="obj-interface">对象接口</span></h5>
+<h5 id="trait"><span id="obj-trait">Trait</span></h5>
+<h5 id="匿名类"><span id="obj-anonymous">匿名类</span></h5>
+<h5 id="重载"><span id="obj-overloading">重载</span></h5>
+<h5 id="遍历对象"><span id="obj-iteration">遍历对象</span></h5>
+<h5 id="魔术方法"><span id="obj-magic-method">魔术方法</span></h5>
+<h5 id="final-关键字"><span id="obj-final">Final 关键字</span></h5>
+<h5 id="对象复制"><span id="obj-cloning">对象复制</span></h5>
+<h5 id="对象比较"><span id="obj-comparing">对象比较</span></h5>
+<h5 id="类型约束"><span id="obj-type-hinting">类型约束</span></h5>
+<h5 id="后期静态绑定"><span id="obj-late-static-binding">后期静态绑定</span></h5>
+<h5 id="对象和引用"><span id="obj-and-reference">对象和引用</span></h5>
+<h5 id="对象序列化"><span id="obj-serialization">对象序列化</span></h5>
+<h5 id="oop变更日志"><span id="obj-opp-changelog">OOP变更日志</span></h5>
+
+<ul>
+  <li>要创建一个新的对象 object，使用 new 语句实例化一个类</li>
+  <li>如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。</li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>class foo {
+    function do_foo() {
+        echo "Doing foo.";
+    }
+}
+
+$bar = new foo;
+$bar-&gt;do_foo();
+
+# 转换为对象
+$obj = (object)'ciao';
+echo $obj-&gt;scalar; // outputs 'ciao'
+
+// In PHP 7 there are a few ways to create an empty object:
+$obj1 = new \stdCalss; // Instantiate stdClass object
+$obj2 = new class{}; // Instantiate anonymous class
+$obj3 = (object)[];  // Cast empty array to object
+
+var_dump($obj1); // object(stdClass)#1 (0) {}
+var_dump($obj2); // object(class@anonymous)#2 (0) {}
+var_dump($obj2); // object(stdClass)#1 (0) {}
+
+// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
+
+echo json_encode([
+    new \stdClass,
+    new class{},
+    (object)[],
+]);
+// Output: [{},{},{}]
+</code></pre>
+</div>
 
 <h4 id="7-resource-资源类型"><span id="resource">7. Resource 资源类型</span></h4>
 

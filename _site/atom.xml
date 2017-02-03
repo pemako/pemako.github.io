@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T15:33:29+08:00</updated>
+ <updated>2017-02-03T19:05:58+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -204,7 +204,7 @@
 
 &lt;p&gt;浮点数的精度有限。尽管取决于系统，PHP 通常使用 IEEE 754 双精度格式，则由于取整而导致的最大相对误差为 1.11e-16。非基本数学运算可能会给出更大误差，并且要考虑到进行复合运算时的误差传递。&lt;/p&gt;
 
-&lt;p&gt;此外，以十进制能够精确表示的有理数如 0.1 或 0.7，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，floor((0.1+0.7)*10) 通常会返回 7 而不是预期中的 8，因为该结果内部的表示其实是类似 7.9999999999999991118…。&lt;/p&gt;
+&lt;p&gt;此外，以十进制能够精确表示的有理数如 0.1 或 0.7，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，floor((0.1+0.7)x10) 通常会返回 7 而不是预期中的 8，因为该结果内部的表示其实是类似 7.9999999999999991118…。&lt;/p&gt;
 
 &lt;p&gt;所以永远不要相信浮点数结果精确到了最后一位，也永远不要比较两个浮点数是否相等。如果确实需要更高的精度，应该使用任意精度数学函数或者 gmp 函数。&lt;/p&gt;
 
@@ -348,13 +348,234 @@ Now, I am printing some {$foo-&amp;gt;bar[1]}.
 This should print a capital 'A': \x41
 EOT;
 // 内用将原样输出不做解析
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;5-array-数组&quot;&gt;&lt;span id=&quot;array&quot;&gt;5. Array 数组&lt;/span&gt;&lt;/h4&gt;
 
+&lt;p&gt;PHP中的数组实际上是一个有序映射。映射是一种把 values 关联到 keys 的类型。定义数组使用 array(), 自5.4起可以使用短数组定义语法,用&lt;code class=&quot;highlighter-rouge&quot;&gt;[]&lt;/code&gt;替代 array()。&lt;/p&gt;
+
+&lt;p&gt;key 可以是 integer 或者 string。value 可以是任意类型。此外 key 会有以下强制转换规则&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;包含有合法整型值的字符串会被转换为整型。例如键名 “8” 实际会被储存为 8。但是 “08” 则不会强制转换，因为其不是一个合法的十进制数值。&lt;/li&gt;
+  &lt;li&gt;浮点数也会被转换为整型，意味着其小数部分会被舍去。例如键名 8.7 实际会被储存为 8。&lt;/li&gt;
+  &lt;li&gt;布尔值也会被转换成整型。即键名 true 实际会被储存为 1 而键名 false 会被储存为 0。&lt;/li&gt;
+  &lt;li&gt;Null 会被转换为空字符串，即键名 null 实际会被储存为 ““。&lt;/li&gt;
+  &lt;li&gt;数组和对象不能被用为键名。坚持这么做会导致警告：Illegal offset type。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;如果在数组定义中多个单元都使用了同一个键名，则只使用了最后一个，之前的都被覆盖了。&lt;/p&gt;
+
+&lt;p&gt;Note:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;自 PHP5.4起可以用数组间接引用函数或方法调用的结果。之前只能通过一个临时变量&lt;/li&gt;
+  &lt;li&gt;自 PHP5.5起可以用数组间接引用一个数组原型&lt;/li&gt;
+  &lt;li&gt;试图访问一个未定义的数组键名与访问任何未定义变量一样：会导致 E_NOTICE 级别错误信息，其结果为 NULL。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 数组间接引用
+function getArray() {
+    return array(1, 2, 3);
+}
+
+// on PHP 5.4
+$secondElement = getArray()[1];
+
+// previously
+$tmp = getArray();
+$secondElement = $tmp[1];
+
+// or
+list(, $secondElement) = getArray();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$arr = [5=&amp;gt;1, 12=&amp;gt;2];
+$arr[] = 56; // This is the same as $arr[13] = 56 at this point of the script
+$arr[&quot;x&quot;] = 42; // This adds a new element to the array with key &quot;x&quot;
+unset($arr[5]); // This removes the element form the array
+unset($arr); // This deletes the whole array
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如上所述，如果给出方括号但没有指定键名，则取当前最大整数索引值，新的键名将是该值加上 1（但是最小为 0）。如果当前还没有整数索引，则键名将为 0。&lt;/li&gt;
+  &lt;li&gt;unset() 函数允许删除数组中的某个键。但要注意数组将不会重建索引。如果需要删除后重建索引，可以用 array_values() 函数。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$a = [1=&amp;gt;'one', 2=&amp;gt;'two', 3=&amp;gt;'three'];
+unset($a[2]);
+// 现在$a = [1 =&amp;gt; 'one', 3=&amp;gt;'three'] 
+$b = array_values($a);
+// Now $b is [0=&amp;gt;'one', 1=&amp;gt;'three']
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;h4 id=&quot;6-object-对象&quot;&gt;&lt;span id=&quot;object&quot;&gt;6. Object 对象&lt;/span&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-introduction&quot;&gt;简介&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-basics&quot;&gt;基本概念&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-property&quot;&gt;属性&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-class-constants&quot;&gt;类常量&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-autoloading&quot;&gt;自动加载类&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-construct-and-destruct&quot;&gt;构造函数和析构函数&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-visibility&quot;&gt;访问控制可见性&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-inheritance&quot;&gt;对象继承&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-scope&quot;&gt;范围解析操作符::&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-static&quot;&gt;Static 关键字&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-abstraction&quot;&gt;抽象类&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-interface&quot;&gt;对象接口&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-trait&quot;&gt;Trait&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-anonymous&quot;&gt;匿名类&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-overloading&quot;&gt;重载&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-iteration&quot;&gt;遍历对象&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-magic-method&quot;&gt;魔术方法&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-final&quot;&gt;Final 关键字&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-cloning&quot;&gt;对象复制&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-comparing&quot;&gt;对象比较&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-type-hinting&quot;&gt;类型约束&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-late-static-binding&quot;&gt;后期静态绑定&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-and-reference&quot;&gt;对象和引用&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-serialization&quot;&gt;对象序列化&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#obj-opp-changelog&quot;&gt;OOP变更日志&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;简介sapn&quot;&gt;&lt;span id=&quot;obj-introduction&quot;&gt;简介&amp;lt;/sapn&amp;gt;&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;自 PHP 5 起完全重写了对象模型以得到更佳性能和更多特性。这是自 PHP 4 以来的最大变化。PHP 5 具有完整的对象模型。&lt;/p&gt;
+
+&lt;p&gt;PHP 5 中的新特性包括&lt;a href=&quot;#obj-visibility&quot;&gt;访问控制&lt;/a&gt;，&lt;a href=&quot;#obj-abstraction&quot;&gt;抽象类&lt;/a&gt;和 &lt;a href=&quot;#obj-final&quot;&gt;final&lt;/a&gt; 类与方法，附加的&lt;a href=&quot;#obj-magic-method&quot;&gt;魔术方法&lt;/a&gt;，&lt;a href=&quot;#obj-interface&quot;&gt;接口&lt;/a&gt;，&lt;a href=&quot;#obj-cloning&quot;&gt;对象复制&lt;/a&gt;和&lt;a href=&quot;#obj-type-hinting&quot;&gt;类型约束&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;PHP 对待对象的方式与引用和句柄相同，即每个变量都持有对象的引用，而不是整个对象的拷贝。参见&lt;a href=&quot;#obj-and-reference&quot;&gt;对象和引用&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h5 id=&quot;基本概念sapn&quot;&gt;&lt;span id=&quot;obj-basics&quot;&gt;基本概念&amp;lt;/sapn&amp;gt;&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;每个类的定义都以关键字 class 开头，后面跟着类名，后面跟着一对花括号，里面包含有类的属性与方法的定义。&lt;/p&gt;
+
+&lt;p&gt;类名可以是任何非 PHP 保留字的合法标签。一个合法类名以字母或下划线开头，后面跟着若干字母，数字或下划线。以正则表达式表示为：[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*&lt;/p&gt;
+
+&lt;p&gt;一个类可以包含有属于自己的常量，变量（称为”属性”）以及函数（称为”方法”）。&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#1 简单的类定义
+class SimpleClass {
+    // property declaration
+    public $var = 'a default value';
+
+    // method declaration
+    public function displayVar() {
+        echo $this-&amp;gt;var;
+    }
+}
+
+// 当一个方法在类定义内部被调用时，有一个可用的伪变量$this。$this 是一个到主叫对象的引用
+// (通常是该方法所从属的对象，但如果是从第二个对象静态调用时也可能是另一个对象)
+
+#2 $this 伪变量的示例
+
+class A {
+    function foo() {
+        if(isset($this)) {
+            echo '$this is defind ('. get_class($this). &quot;)\n&quot;;
+        } else {
+            echo &quot;\$this is not defined.\n&quot;;
+        }
+    }
+}
+
+class B {
+	function bar() {
+		A::foo(); // Note: the next line will issue a warning if E_STRICT is enabled.
+	}
+}
+
+$a = new A();
+$a-&amp;gt;foo(); // $this is defined (A)
+
+A::foo();
+
+$b = new B();
+$b-&amp;gt;bar();
+
+B::bar();
+
+/*
+# PHP5 output 
+$this is defined (A)
+$this is not defined.
+$this is defined (B)
+$this is not defined.
+
+# PHP7 output
+$this is defined (A)
+$this is not defined.
+$this is not defined.
+$this is not defined.
+*/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;属性&quot;&gt;&lt;span id=&quot;obj-property&quot;&gt;属性&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;类常量&quot;&gt;&lt;span id=&quot;obj-class-constants&quot;&gt;类常量&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;自动加载类&quot;&gt;&lt;span id=&quot;obj-autoloading&quot;&gt;自动加载类&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;构造函数和析构函数&quot;&gt;&lt;span id=&quot;obj-construct-and-destruct&quot;&gt;构造函数和析构函数&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;访问控制可见性&quot;&gt;&lt;span id=&quot;obj-visibility&quot;&gt;访问控制可见性&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;对象继承&quot;&gt;&lt;span id=&quot;obj-inheritance&quot;&gt;对象继承&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;范围解析操作符&quot;&gt;&lt;span id=&quot;obj-scope&quot;&gt;范围解析操作符::&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;static-关键字&quot;&gt;&lt;span id=&quot;obj-static&quot;&gt;Static 关键字&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;抽象类&quot;&gt;&lt;span id=&quot;obj-abstraction&quot;&gt;抽象类&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;对象接口&quot;&gt;&lt;span id=&quot;obj-interface&quot;&gt;对象接口&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;trait&quot;&gt;&lt;span id=&quot;obj-trait&quot;&gt;Trait&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;匿名类&quot;&gt;&lt;span id=&quot;obj-anonymous&quot;&gt;匿名类&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;重载&quot;&gt;&lt;span id=&quot;obj-overloading&quot;&gt;重载&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;遍历对象&quot;&gt;&lt;span id=&quot;obj-iteration&quot;&gt;遍历对象&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;魔术方法&quot;&gt;&lt;span id=&quot;obj-magic-method&quot;&gt;魔术方法&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;final-关键字&quot;&gt;&lt;span id=&quot;obj-final&quot;&gt;Final 关键字&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;对象复制&quot;&gt;&lt;span id=&quot;obj-cloning&quot;&gt;对象复制&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;对象比较&quot;&gt;&lt;span id=&quot;obj-comparing&quot;&gt;对象比较&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;类型约束&quot;&gt;&lt;span id=&quot;obj-type-hinting&quot;&gt;类型约束&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;后期静态绑定&quot;&gt;&lt;span id=&quot;obj-late-static-binding&quot;&gt;后期静态绑定&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;对象和引用&quot;&gt;&lt;span id=&quot;obj-and-reference&quot;&gt;对象和引用&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;对象序列化&quot;&gt;&lt;span id=&quot;obj-serialization&quot;&gt;对象序列化&lt;/span&gt;&lt;/h5&gt;
+&lt;h5 id=&quot;oop变更日志&quot;&gt;&lt;span id=&quot;obj-opp-changelog&quot;&gt;OOP变更日志&lt;/span&gt;&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;要创建一个新的对象 object，使用 new 语句实例化一个类&lt;/li&gt;
+  &lt;li&gt;如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;class foo {
+    function do_foo() {
+        echo &quot;Doing foo.&quot;;
+    }
+}
+
+$bar = new foo;
+$bar-&amp;gt;do_foo();
+
+# 转换为对象
+$obj = (object)'ciao';
+echo $obj-&amp;gt;scalar; // outputs 'ciao'
+
+// In PHP 7 there are a few ways to create an empty object:
+$obj1 = new \stdCalss; // Instantiate stdClass object
+$obj2 = new class{}; // Instantiate anonymous class
+$obj3 = (object)[];  // Cast empty array to object
+
+var_dump($obj1); // object(stdClass)#1 (0) {}
+var_dump($obj2); // object(class@anonymous)#2 (0) {}
+var_dump($obj2); // object(stdClass)#1 (0) {}
+
+// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
+
+echo json_encode([
+    new \stdClass,
+    new class{},
+    (object)[],
+]);
+// Output: [{},{},{}]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h4 id=&quot;7-resource-资源类型&quot;&gt;&lt;span id=&quot;resource&quot;&gt;7. Resource 资源类型&lt;/span&gt;&lt;/h4&gt;
 
