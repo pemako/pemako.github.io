@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T15:22:30+08:00</updated>
+ <updated>2017-02-03T15:33:29+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -216,7 +216,7 @@
 &lt;span class=&quot;nv&quot;&gt;$epsilon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.00001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$epsilon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -256,9 +256,9 @@
 
 &lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 1 非法的示例
 class foo {
-	public $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOT&lt;/span&gt;
+    public $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOT&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;
-	&lt;span class=&quot;na&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
 
@@ -271,14 +271,14 @@ $str = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span c
 &lt;span class=&quot;err&quot;&gt;/*含有变量的更复杂的示例*/&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-	
-	&lt;span class=&quot;na&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;()&lt;/span&gt;
-	&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;this-&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;foo = 'Foo';
-		$this-&amp;gt;bar = array('Bar1', 'Bar2', 'Bar3');
-	}
+    &lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;na&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;this-&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;foo = 'Foo';
+        $this-&amp;gt;bar = array('Bar1', 'Bar2', 'Bar3');
+    }
 }
 
 $foo = new foo();
@@ -299,18 +299,18 @@ This should print a capital 'A': A
 &lt;p&gt;在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。&lt;/p&gt;
 &lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 静态变量
 function foo() {
-	static $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;LABEL&lt;/span&gt;
+    static $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;LABEL&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;Nothing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;here&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;LABEL&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;类的常量，属性&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;na&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;BAR =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;FOOBAR&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;BAR =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;FOOBAR&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;Constant&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
 
-	&lt;span class=&quot;na&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;baz =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&quot;FOOBAR&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;baz =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&quot;FOOBAR&quot;&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
@@ -318,6 +318,39 @@ function foo() {
 &lt;/div&gt;
 
 &lt;h5 id=&quot;nowdoc-语法结构&quot;&gt;&lt;span id=&quot;nowdoc&quot;&gt;nowdoc 语法结构&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 &amp;lt;![CDATA[ ]]&amp;gt; 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。&lt;/p&gt;
+
+&lt;p&gt;一个 nowdoc 结构也用和 heredocs 结构一样的标记 «&amp;lt;， 但是跟在后面的标识符要用单引号括起来，即 «&amp;lt;’EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$str = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;'EOD'
+Example of string useing nowdoc syntax.
+EOD;
+
+class foo
+{
+    var $foo;
+    var $bar;
+    
+    function foo()
+    {
+        $this-&amp;gt;foo = 'Foo';
+        $this-&amp;gt;bar = array('Bar1', 'Bar2', 'Bar3');
+    }
+}
+
+$foo = new foo();
+$name = 'MyName';
+
+echo &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;'EOT'
+My name is &quot;$name&quot;. I am printing some $foo-&amp;gt;foo.
+Now, I am printing some {$foo-&amp;gt;bar[1]}.
+This should print a capital 'A': \x41
+EOT;
+// 内用将原样输出不做解析
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h4 id=&quot;5-array-数组&quot;&gt;&lt;span id=&quot;array&quot;&gt;5. Array 数组&lt;/span&gt;&lt;/h4&gt;
 

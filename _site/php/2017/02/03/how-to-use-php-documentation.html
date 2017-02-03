@@ -273,7 +273,7 @@
 <span class="nv">$epsilon</span> <span class="o">=</span> <span class="mf">0.00001</span><span class="p">;</span>
 
 <span class="k">if</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nv">$a</span><span class="o">-</span><span class="nv">$b</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nv">$epsilon</span><span class="p">)</span> <span class="p">{</span>
-	<span class="k">echo</span> <span class="s2">"true"</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">"true"</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
 </div>
@@ -313,9 +313,9 @@
 
 <div class="language-php highlighter-rouge"><pre class="highlight"><code># 1 非法的示例
 class foo {
-	public $bar = <span class="err">&lt;&lt;</span><span class="nt">&lt;EOT</span>
+    public $bar = <span class="err">&lt;&lt;</span><span class="nt">&lt;EOT</span>
 <span class="na">bar</span>
-	<span class="na">EOT</span><span class="err">;</span>
+    <span class="na">EOT</span><span class="err">;</span>
 <span class="err">}</span>
 <span class="err">?</span><span class="nt">&gt;</span>
 
@@ -328,14 +328,14 @@ $str = <span class="err">&lt;&lt;</span><span class="nt">&lt;EOD</span>
 <span class="err">/*含有变量的更复杂的示例*/</span>
 <span class="na">class</span> <span class="na">foo</span>
 <span class="err">{</span>
-	<span class="na">var</span> <span class="err">$</span><span class="na">foo</span><span class="err">;</span>
-	<span class="na">var</span> <span class="err">$</span><span class="na">bar</span><span class="err">;</span>
-	
-	<span class="na">function</span> <span class="na">foo</span><span class="err">()</span>
-	<span class="err">{</span>
-		<span class="err">$</span><span class="na">this-</span><span class="nt">&gt;</span>foo = 'Foo';
-		$this-&gt;bar = array('Bar1', 'Bar2', 'Bar3');
-	}
+    <span class="na">var</span> <span class="err">$</span><span class="na">foo</span><span class="err">;</span>
+    <span class="na">var</span> <span class="err">$</span><span class="na">bar</span><span class="err">;</span>
+    
+    <span class="na">function</span> <span class="na">foo</span><span class="err">()</span>
+    <span class="err">{</span>
+        <span class="err">$</span><span class="na">this-</span><span class="nt">&gt;</span>foo = 'Foo';
+        $this-&gt;bar = array('Bar1', 'Bar2', 'Bar3');
+    }
 }
 
 $foo = new foo();
@@ -356,18 +356,18 @@ This should print a capital 'A': A
 <p>在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。</p>
 <div class="language-php highlighter-rouge"><pre class="highlight"><code>// 静态变量
 function foo() {
-	static $bar = <span class="err">&lt;&lt;</span><span class="nt">&lt;LABEL</span>
+    static $bar = <span class="err">&lt;&lt;</span><span class="nt">&lt;LABEL</span>
 <span class="na">Nothing</span> <span class="na">in</span> <span class="na">here</span><span class="err">...</span>
 <span class="na">LABEL</span><span class="err">;</span>
 <span class="err">}</span>
 
 <span class="err">//</span> <span class="err">类的常量，属性</span>
 <span class="na">class</span> <span class="na">foo</span> <span class="err">{</span>
-	<span class="na">const</span> <span class="na">BAR =</span><span class="err"> </span><span class="s">&lt;&lt;&lt;FOOBAR</span>
+    <span class="na">const</span> <span class="na">BAR =</span><span class="err"> </span><span class="s">&lt;&lt;&lt;FOOBAR</span>
 <span class="na">Constant</span> <span class="na">example</span>
 <span class="na">FOOBAR</span><span class="err">;</span>
 
-	<span class="na">public</span> <span class="err">$</span><span class="na">baz =</span><span class="err"> </span><span class="s">&lt;&lt;&lt;"FOOBAR"</span>
+    <span class="na">public</span> <span class="err">$</span><span class="na">baz =</span><span class="err"> </span><span class="s">&lt;&lt;&lt;"FOOBAR"</span>
 <span class="na">property</span> <span class="na">example</span>
 <span class="na">FOOBAR</span><span class="err">;</span>
 <span class="err">}</span>
@@ -375,6 +375,39 @@ function foo() {
 </div>
 
 <h5 id="nowdoc-语法结构"><span id="nowdoc">nowdoc 语法结构</span></h5>
+
+<p>就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 &lt;![CDATA[ ]]&gt; 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。</p>
+
+<p>一个 nowdoc 结构也用和 heredocs 结构一样的标记 «&lt;， 但是跟在后面的标识符要用单引号括起来，即 «&lt;’EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code>$str = <span class="err">&lt;&lt;&lt;</span>'EOD'
+Example of string useing nowdoc syntax.
+EOD;
+
+class foo
+{
+    var $foo;
+    var $bar;
+    
+    function foo()
+    {
+        $this-&gt;foo = 'Foo';
+        $this-&gt;bar = array('Bar1', 'Bar2', 'Bar3');
+    }
+}
+
+$foo = new foo();
+$name = 'MyName';
+
+echo <span class="err">&lt;&lt;&lt;</span>'EOT'
+My name is "$name". I am printing some $foo-&gt;foo.
+Now, I am printing some {$foo-&gt;bar[1]}.
+This should print a capital 'A': \x41
+EOT;
+// 内用将原样输出不做解析
+
+</code></pre>
+</div>
 
 <h4 id="5-array-数组"><span id="array">5. Array 数组</span></h4>
 
