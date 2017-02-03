@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T13:24:11+08:00</updated>
+ <updated>2017-02-03T15:16:12+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -48,36 +48,272 @@
 &lt;span class=&quot;c1&quot;&gt;// 脚本至此结束，并无PHP 结束标记
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+&lt;p&gt;Version| Description
+——-|—-
+7.0.0  | The ASP tags &amp;lt;%, %&amp;gt;, &amp;lt;%=, and the script tag &amp;lt;script language=”php”&amp;gt; are removed from PHP
+5.4.0  | The tag &amp;lt;?= is always available regardless of the short_open_tag ini setting.&lt;/p&gt;
 
 &lt;h4 id=&quot;2-从html中分离&quot;&gt;2. 从HTML中分离&lt;/h4&gt;
 
+&lt;p&gt;凡是在一对开始和结束标记之外的内容都会被 PHP 解析器忽略，这使得 PHP 文件可以具备混合内容。 可以使 PHP 嵌入到 HTML 文档中去，如下例所示。&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;这里是 HTML 文件内容不会被解析&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'这里的内容会被解析'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;这里的内容也不会被解析&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;h4 id=&quot;3-指令分隔符&quot;&gt;3. 指令分隔符&lt;/h4&gt;
 
+&lt;p&gt;PHP需要在每个语句后面用分好结束指令。一段PHP 代码中的结束标记隐含表示了一个分好;在一个PHP 代码汇总的最后一行可以不用分号结束。如果后面还有新行，则代码段的结束标记包含了行结束。&lt;/p&gt;
+
+&lt;p&gt;Note: 文件末尾的 PHP 代码段结束标记可以不要，有些情况下当使用 include 或者 require 时省略掉会更好些，这样不期望的空白符就不会出现在文件末尾，之后仍然可以输出响应标头。在使用输出缓冲时也很便利，就不会看到由包含文件生成的不期望的空白符.&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;This is a test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;this is a test&quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;We omitted the last closing tag&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;One thing to remember is, if you decide to omit the closing PHP tag, then the last line of the file should be ended with semi colon. If you add the closing tag then last line doesn’t need to end with semi colon.&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;First line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Last line&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;The above code throws error as it neither has closing tag nor semicolon ending. So it should be replaced with either of the below two&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;First line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Last line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;First line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Last line&quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;h4 id=&quot;4-注释&quot;&gt;4. 注释&lt;/h4&gt;
+
+&lt;p&gt;PHP支持C, C++和 Unix Shell 风格的注释&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;This is a test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This is a one-line c++ style comment
+&lt;/span&gt;
+&lt;span class=&quot;sd&quot;&gt;/**
+ * This is a multi line comment
+ * yet another line of comment
+ */&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;This is yet another test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;One Final Test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# This is a one-line shell-style comment
+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h3 id=&quot;类型&quot;&gt;类型&lt;/h3&gt;
 
 &lt;h4 id=&quot;0-简介&quot;&gt;0. 简介&lt;/h4&gt;
 
-&lt;h4 id=&quot;1-boolena-布尔类型&quot;&gt;1. Boolena 布尔类型&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;四中变量类型
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#boolena&quot;&gt;boolena&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#integer&quot;&gt;integer&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#float&quot;&gt;float (dobule)&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#string&quot;&gt;string&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;两种复合类型
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#array&quot;&gt;array&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#object&quot;&gt;object&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;两种特殊类型
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;resource&quot;&gt;resource&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#null&quot;&gt;NULL&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;伪类型
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#mixed&quot;&gt;mixed&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#number&quot;&gt;number&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#callback&quot;&gt;callback&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h4 id=&quot;2-integer-整型&quot;&gt;2. Integer 整型&lt;/h4&gt;
+&lt;h4 id=&quot;1-boolena-布尔类型&quot;&gt;&lt;span id=&quot;boolena&quot;&gt;1. Boolena 布尔类型&lt;/span&gt;&lt;/h4&gt;
 
-&lt;h4 id=&quot;3-float-浮点型&quot;&gt;3. Float 浮点型&lt;/h4&gt;
+&lt;p&gt;当转换为 Boolena 值时，以下值被认为 FALSE：&lt;/p&gt;
 
-&lt;h4 id=&quot;4-string-字符串&quot;&gt;4 String 字符串&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;the boolena FALSE itself&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;the integer 0(zero)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;the float 0.0(zero)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;the empty string, and the string &quot;0&quot;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;the array with zero elements&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;the special type NULL (including unset variables)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SimpleXML objects created from empty tags&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h4 id=&quot;5-array-数组&quot;&gt;5. Array 数组&lt;/h4&gt;
+&lt;h4 id=&quot;2-integer-整型&quot;&gt;&lt;span id=&quot;integer&quot;&gt;2. Integer 整型&lt;/span&gt;&lt;/h4&gt;
 
-&lt;h4 id=&quot;6-object-对象&quot;&gt;6. Object 对象&lt;/h4&gt;
+&lt;p&gt;整型值可以使用十进制，十六进制，八进制或二进制表示，前面可以加上可选的符号（- 或者 +）。&lt;/p&gt;
 
-&lt;h4 id=&quot;7-resource-资源类型&quot;&gt;7. Resource 资源类型&lt;/h4&gt;
+&lt;p&gt;二进制表达的 integer 自 PHP 5.4.0 起可用。&lt;/p&gt;
 
-&lt;h4 id=&quot;8-null&quot;&gt;8. NULL&lt;/h4&gt;
+&lt;p&gt;要使用八进制表达，数字前必须加上 0（零）。要使用十六进制表达，数字前必须加上 0x。要使用二进制表达，数字前必须加上 0b。&lt;/p&gt;
 
-&lt;h4 id=&quot;9-callback-回调类型&quot;&gt;9. Callback 回调类型&lt;/h4&gt;
+&lt;p&gt;整型数的字长和平台有关，PHP 不支持无符号整数。Integer 值的字长可以用常量&lt;code class=&quot;highlighter-rouge&quot;&gt;PHP_INT_SIZE&lt;/code&gt;来表示，自PHP4.4.0和 PHP5.0.5后，最大值可以用常量&lt;code class=&quot;highlighter-rouge&quot;&gt;PHP_INT_MAX&lt;/code&gt; 来表示。&lt;/p&gt;
 
-&lt;h4 id=&quot;10-伪类型与变量&quot;&gt;10. 伪类型与变量&lt;/h4&gt;
+&lt;p&gt;Warning: 如果向八进制数传递了一个非法数字(即8或9),则后面其余的数字会被忽略&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 下面这一句在 PHP5.4.16运行正常
+// php 7.0.x PHP Parse error:  Invalid numeric literal
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;010&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;90&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 八进制010 = 十进制 8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;3-float-浮点型&quot;&gt;&lt;span id=&quot;float&quot;&gt;3. Float 浮点型&lt;/span&gt;&lt;/h4&gt;
+
+&lt;p&gt;浮点型（也叫浮点数 float，双精度数 double 或实数 real）.浮点数的字长和平台相关。&lt;/p&gt;
+
+&lt;p&gt;浮点数的精度有限。尽管取决于系统，PHP 通常使用 IEEE 754 双精度格式，则由于取整而导致的最大相对误差为 1.11e-16。非基本数学运算可能会给出更大误差，并且要考虑到进行复合运算时的误差传递。&lt;/p&gt;
+
+&lt;p&gt;此外，以十进制能够精确表示的有理数如 0.1 或 0.7，无论有多少尾数都不能被内部所使用的二进制精确表示，因此不能在不丢失一点点精度的情况下转换为二进制的格式。这就会造成混乱的结果：例如，floor((0.1+0.7)*10) 通常会返回 7 而不是预期中的 8，因为该结果内部的表示其实是类似 7.9999999999999991118…。&lt;/p&gt;
+
+&lt;p&gt;所以永远不要相信浮点数结果精确到了最后一位，也永远不要比较两个浮点数是否相等。如果确实需要更高的精度，应该使用任意精度数学函数或者 gmp 函数。&lt;/p&gt;
+
+&lt;p&gt;要测试浮点数是否相等，要使用一个仅比该数值大一丁点的最小误差值。该值也被称为机器极小值（epsilon）或最小单元取整数，是计算中所能接受的最小的差别值。&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// $a 和 $b 在小数点后五位精度内都是相等的
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.23456789&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.23456780&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$epsilon&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.00001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$epsilon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NaN&lt;/code&gt; 某些数学运算会产生一个由常量 NAN 所代表的结果。此结果代表着一个在浮点数运算中未定义或不可表述的值。任何拿此值与其它任何值进行的松散或严格比较的结果都是 FALSE.&lt;/p&gt;
+
+&lt;p&gt;由于 NAN 代表着任何不同值，不应拿 NAN 去和其它值进行比较，包括其自身，应该用 is_nan() 来检查。&lt;/p&gt;
+
+&lt;h4 id=&quot;4-string-字符串&quot;&gt;&lt;span id=&quot;string&quot;&gt;4 String 字符串&lt;/span&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;字符串的四中表示方法
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#single-quotes&quot;&gt;单引号&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#double-quotes&quot;&gt;双引号&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#heredoc&quot;&gt;heredoc 语法结构&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#nowdoc&quot;&gt;nowdoc 语法结构&lt;/a&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;php5.3.0起&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;单引号&quot;&gt;&lt;span id=&quot;single-quotes&quot;&gt;单引号&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;Note: 不像双引号和 heredoc 语法结构，在单引号字符串中的变量和特殊字符的转义序列将不会被替换。&lt;/p&gt;
+
+&lt;h5 id=&quot;双引号&quot;&gt;&lt;span id=&quot;double-quotes&quot;&gt;双引号&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;如果字符串是包围在双引号（”）中， PHP 将对一些特殊的字符和变量进行解析。&lt;/p&gt;
+
+&lt;h5 id=&quot;heredoc-语法结构&quot;&gt;&lt;span id=&quot;heredoc&quot;&gt;heredoc 语法结构&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;第三种表达字符串的方法是用 heredoc 句法结构：«&amp;lt;。在该运算符之后要提供一个标识符，然后换行。接下来是字符串 string 本身，最后要用前面定义的标识符作为结束标志。&lt;/p&gt;
+
+&lt;p&gt;结束时所引用的标识符必须在该行的第一列，而且，标识符的命名也要像其它标签一样遵守 PHP 的规则：只能包含字母、数字和下划线，并且必须以字母和下划线作为开头。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Warning&lt;/code&gt;要注意的是结束标识符这行除了可能有一个分号（;）外，绝对不能包含其它字符。这意味着标识符不能缩进，分号的前后也不能有任何空白或制表符。更重要的是结束标识符的前面必须是个被本地操作系统认可的换行，比如在 UNIX 和 Mac OS X 系统中是 \n，而结束定界符（可能其后有个分号）之后也必须紧跟一个换行。&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 1 非法的示例
+class foo {
+	public $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOT&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;
+	&lt;span class=&quot;na&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+# 2 正确的示例
+$str = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOD&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Example&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;spanning&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;multiple&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lines&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;useing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;heredoc&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;syntax&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;EOD&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;/*含有变量的更复杂的示例*/&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+	
+	&lt;span class=&quot;na&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;this-&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;foo = 'Foo';
+		$this-&amp;gt;bar = array('Bar1', 'Bar2', 'Bar3');
+	}
+}
+
+$foo = new foo();
+$name = 'MyName';
+
+echo &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOT&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;My&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&quot;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&quot;.&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;printing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;some&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo-&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;foo.
+Now, I am printing some {$foo-&amp;gt;bar[1]}.
+This should print a capital 'A': \x41
+EOT;
+// 输出结果如下
+My name is &quot;MyName&quot;. I am printing some Foo.
+Now, I am printing some Bar2.
+This should print a capital 'A': A
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 静态变量
+function foo() {
+	static $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;LABEL&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Nothing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;here&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;LABEL&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;类的常量，属性&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;na&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;BAR =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;FOOBAR&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Constant&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+
+	&lt;span class=&quot;na&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;baz =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&quot;FOOBAR&quot;&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;nowdoc-语法结构&quot;&gt;&lt;span id=&quot;nowdoc&quot;&gt;nowdoc 语法结构&lt;/span&gt;&lt;/h5&gt;
+
+&lt;h4 id=&quot;5-array-数组&quot;&gt;&lt;span id=&quot;array&quot;&gt;5. Array 数组&lt;/span&gt;&lt;/h4&gt;
+
+&lt;h4 id=&quot;6-object-对象&quot;&gt;&lt;span id=&quot;object&quot;&gt;6. Object 对象&lt;/span&gt;&lt;/h4&gt;
+
+&lt;h4 id=&quot;7-resource-资源类型&quot;&gt;&lt;span id=&quot;resource&quot;&gt;7. Resource 资源类型&lt;/span&gt;&lt;/h4&gt;
+
+&lt;h4 id=&quot;8-null&quot;&gt;&lt;span id=&quot;null&quot;&gt;8. NULL&lt;/span&gt;&lt;/h4&gt;
+
+&lt;h4 id=&quot;9-callback-回调类型&quot;&gt;&lt;span id=&quot;callback&quot;&gt;9. Callback 回调类型&lt;/span&gt;&lt;/h4&gt;
+
+&lt;h4 id=&quot;10-伪类型与变量&quot;&gt;&lt;span id=&quot;mixed&quot;&gt;10. 伪类型与变量&lt;/span&gt;&lt;/h4&gt;
 
 &lt;h4 id=&quot;11-类型转换的判别&quot;&gt;11. 类型转换的判别&lt;/h4&gt;
 
