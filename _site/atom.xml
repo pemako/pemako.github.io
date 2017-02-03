@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T19:14:36+08:00</updated>
+ <updated>2017-02-03T19:19:52+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -254,79 +254,22 @@
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Warning&lt;/code&gt;要注意的是结束标识符这行除了可能有一个分号（;）外，绝对不能包含其它字符。这意味着标识符不能缩进，分号的前后也不能有任何空白或制表符。更重要的是结束标识符的前面必须是个被本地操作系统认可的换行，比如在 UNIX 和 Mac OS X 系统中是 \n，而结束定界符（可能其后有个分号）之后也必须紧跟一个换行。&lt;/p&gt;
 
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 1 非法的示例
-class foo {
-    public $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOT&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;EOT&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# 1 非法的示例
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt;&amp;lt;EOT
+bar
+    EOT;
+}
+?&amp;gt;
 
 # 2 正确的示例
-$str = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOD&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;Example&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;spanning&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;multiple&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lines&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;useing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;heredoc&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;syntax&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;EOD&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;err&quot;&gt;/*含有变量的更复杂的示例*/&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-    
-    &lt;span class=&quot;na&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;this-&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;foo = 'Foo';
-        $this-&amp;gt;bar = array('Bar1', 'Bar2', 'Bar3');
-    }
-}
-
-$foo = new foo();
-$name = 'MyName';
-
-echo &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;EOT&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;My&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;&quot;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&quot;.&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;printing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;some&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo-&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;foo.
-Now, I am printing some {$foo-&amp;gt;bar[1]}.
-This should print a capital 'A': \x41
-EOT;
-// 输出结果如下
-My name is &quot;MyName&quot;. I am printing some Foo.
-Now, I am printing some Bar2.
-This should print a capital 'A': A
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。&lt;/p&gt;
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 静态变量
-function foo() {
-    static $bar = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;LABEL&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;Nothing&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;here&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;LABEL&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;类的常量，属性&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;BAR =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;FOOBAR&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;Constant&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;na&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;baz =&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&quot;FOOBAR&quot;&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;example&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h5 id=&quot;nowdoc-语法结构&quot;&gt;&lt;span id=&quot;nowdoc&quot;&gt;nowdoc 语法结构&lt;/span&gt;&lt;/h5&gt;
-
-&lt;p&gt;就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 CDATA 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。&lt;/p&gt;
-
-&lt;p&gt;一个 nowdoc 结构也用和 heredocs 结构一样的标记 &amp;lt;&amp;lt;&amp;lt;， 但是跟在后面的标识符要用单引号括起来，即 &amp;lt;&amp;lt;&amp;lt;‘EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。&lt;/p&gt;
-
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$str = &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;'EOD'
-Example of string useing nowdoc syntax.
+$str = &amp;lt;&amp;lt;&amp;lt;EOD
+Example of string spanning multiple lines
+useing heredoc syntax.
 EOD;
 
+/*含有变量的更复杂的示例*/
 class foo
 {
     var $foo;
@@ -342,13 +285,73 @@ class foo
 $foo = new foo();
 $name = 'MyName';
 
-echo &lt;span class=&quot;err&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;'EOT'
+echo &amp;lt;&amp;lt;&amp;lt;EOT
 My name is &quot;$name&quot;. I am printing some $foo-&amp;gt;foo.
 Now, I am printing some {$foo-&amp;gt;bar[1]}.
 This should print a capital 'A': \x41
 EOT;
-// 内用将原样输出不做解析
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 输出结果如下
+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;My&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;MyName&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;printing&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;some&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Foo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;am&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;printing&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;some&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Bar2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;should&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;capital&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'A'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 静态变量
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt;&amp;lt;LABEL
+Nothing in here...
+LABEL;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 类的常量，属性
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;BAR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt;&amp;lt;FOOBAR
+Constant example
+FOOBAR;
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$baz&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;FOOBAR&quot;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;example&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;FOOBAR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;nowdoc-语法结构&quot;&gt;&lt;span id=&quot;nowdoc&quot;&gt;nowdoc 语法结构&lt;/span&gt;&lt;/h5&gt;
+
+&lt;p&gt;就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 CDATA 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。&lt;/p&gt;
+
+&lt;p&gt;一个 nowdoc 结构也用和 heredocs 结构一样的标记 &amp;lt;&amp;lt;&amp;lt;， 但是跟在后面的标识符要用单引号括起来，即 &amp;lt;&amp;lt;&amp;lt;‘EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt;&amp;lt;'EOD'
+Example of string useing nowdoc syntax.
+EOD;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;foo&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Foo'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Bar1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Bar2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Bar3'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'MyName'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;sh&quot;&gt;&amp;lt;&amp;lt;&amp;lt;'EOT'
+My name is &quot;$name&quot;. I am printing some $foo-&amp;gt;foo.
+Now, I am printing some {$foo-&amp;gt;bar[1]}.
+This should print a capital 'A': \x41
+EOT;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// 内用将原样输出不做解析
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;5-array-数组&quot;&gt;&lt;span id=&quot;array&quot;&gt;5. Array 数组&lt;/span&gt;&lt;/h4&gt;
@@ -373,29 +376,32 @@ EOT;
   &lt;li&gt;试图访问一个未定义的数组键名与访问任何未定义变量一样：会导致 E_NOTICE 级别错误信息，其结果为 NULL。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 数组间接引用
-function getArray() {
-    return array(1, 2, 3);
-}
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 
-// on PHP 5.4
-$secondElement = getArray()[1];
+&lt;span class=&quot;c1&quot;&gt;# 数组间接引用
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-// previously
-$tmp = getArray();
-$secondElement = $tmp[1];
+&lt;span class=&quot;c1&quot;&gt;// on PHP 5.4
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$secondElement&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
 
-// or
-list(, $secondElement) = getArray();
+&lt;span class=&quot;c1&quot;&gt;// previously
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$tmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$secondElement&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// or
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$secondElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getArray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$arr = [5=&amp;gt;1, 12=&amp;gt;2];
-$arr[] = 56; // This is the same as $arr[13] = 56 at this point of the script
-$arr[&quot;x&quot;] = 42; // This adds a new element to the array with key &quot;x&quot;
-unset($arr[5]); // This removes the element form the array
-unset($arr); // This deletes the whole array
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;56&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This is the same as $arr[13] = 56 at this point of the script
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This adds a new element to the array with key &quot;x&quot;
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;unset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This removes the element form the array
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;unset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This deletes the whole array
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -403,12 +409,13 @@ unset($arr); // This deletes the whole array
   &lt;li&gt;unset() 函数允许删除数组中的某个键。但要注意数组将不会重建索引。如果需要删除后重建索引，可以用 array_values() 函数。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$a = [1=&amp;gt;'one', 2=&amp;gt;'two', 3=&amp;gt;'three'];
-unset($a[2]);
-// 现在$a = [1 =&amp;gt; 'one', 3=&amp;gt;'three'] 
-$b = array_values($a);
-// Now $b is [0=&amp;gt;'one', 1=&amp;gt;'three']
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'one'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'two'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'three'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;unset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// 现在$a = [1 =&amp;gt; 'one', 3=&amp;gt;'three'] 
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;array_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Now $b is [0=&amp;gt;'one', 1=&amp;gt;'three']
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h4 id=&quot;6-object-对象&quot;&gt;&lt;span id=&quot;object&quot;&gt;6. Object 对象&lt;/span&gt;&lt;/h4&gt;
@@ -457,49 +464,50 @@ $b = array_values($a);
 
 &lt;p&gt;一个类可以包含有属于自己的常量，变量（称为”属性”）以及函数（称为”方法”）。&lt;/p&gt;
 
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#1 简单的类定义
-class SimpleClass {
-    // property declaration
-    public $var = 'a default value';
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#1 简单的类定义
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SimpleClass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// property declaration
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'a default value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-    // method declaration
-    public function displayVar() {
-        echo $this-&amp;gt;var;
-    }
-}
+    &lt;span class=&quot;c1&quot;&gt;// method declaration
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;displayVar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-// 当一个方法在类定义内部被调用时，有一个可用的伪变量$this。$this 是一个到主叫对象的引用
+&lt;span class=&quot;c1&quot;&gt;// 当一个方法在类定义内部被调用时，有一个可用的伪变量$this。$this 是一个到主叫对象的引用
 // (通常是该方法所从属的对象，但如果是从第二个对象静态调用时也可能是另一个对象)
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#2 $this 伪变量的示例
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;isset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'$this is defind ('&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;get_class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\$&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;this is not defined.&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-#2 $this 伪变量的示例
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Note: the next line will issue a warning if E_STRICT is enabled.
+&lt;/span&gt;	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-class A {
-    function foo() {
-        if(isset($this)) {
-            echo '$this is defind ('. get_class($this). &quot;)\n&quot;;
-        } else {
-            echo &quot;\$this is not defined.\n&quot;;
-        }
-    }
-}
+&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// $this is defined (A)
+&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 
-class B {
-	function bar() {
-		A::foo(); // Note: the next line will issue a warning if E_STRICT is enabled.
-	}
-}
+&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 
-$a = new A();
-$a-&amp;gt;foo(); // $this is defined (A)
+&lt;span class=&quot;nx&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 
-A::foo();
-
-$b = new B();
-$b-&amp;gt;bar();
-
-B::bar();
-
-/*
+&lt;span class=&quot;cm&quot;&gt;/*
 # PHP5 output 
 $this is defined (A)
 $this is not defined.
@@ -511,7 +519,7 @@ $this is defined (A)
 $this is not defined.
 $this is not defined.
 $this is not defined.
-*/
+*/&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 

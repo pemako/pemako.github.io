@@ -311,79 +311,22 @@
 
 <p><code class="highlighter-rouge">Warning</code>要注意的是结束标识符这行除了可能有一个分号（;）外，绝对不能包含其它字符。这意味着标识符不能缩进，分号的前后也不能有任何空白或制表符。更重要的是结束标识符的前面必须是个被本地操作系统认可的换行，比如在 UNIX 和 Mac OS X 系统中是 \n，而结束定界符（可能其后有个分号）之后也必须紧跟一个换行。</p>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code># 1 非法的示例
-class foo {
-    public $bar = <span class="err">&lt;&lt;</span><span class="nt">&lt;EOT</span>
-<span class="na">bar</span>
-    <span class="na">EOT</span><span class="err">;</span>
-<span class="err">}</span>
-<span class="err">?</span><span class="nt">&gt;</span>
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1"># 1 非法的示例
+</span><span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;EOT
+bar
+    EOT;
+}
+?&gt;
 
 # 2 正确的示例
-$str = <span class="err">&lt;&lt;</span><span class="nt">&lt;EOD</span>
-<span class="na">Example</span> <span class="na">of</span> <span class="na">string</span> <span class="na">spanning</span> <span class="na">multiple</span> <span class="na">lines</span>
-<span class="na">useing</span> <span class="na">heredoc</span> <span class="na">syntax</span><span class="err">.</span>
-<span class="na">EOD</span><span class="err">;</span>
-
-<span class="err">/*含有变量的更复杂的示例*/</span>
-<span class="na">class</span> <span class="na">foo</span>
-<span class="err">{</span>
-    <span class="na">var</span> <span class="err">$</span><span class="na">foo</span><span class="err">;</span>
-    <span class="na">var</span> <span class="err">$</span><span class="na">bar</span><span class="err">;</span>
-    
-    <span class="na">function</span> <span class="na">foo</span><span class="err">()</span>
-    <span class="err">{</span>
-        <span class="err">$</span><span class="na">this-</span><span class="nt">&gt;</span>foo = 'Foo';
-        $this-&gt;bar = array('Bar1', 'Bar2', 'Bar3');
-    }
-}
-
-$foo = new foo();
-$name = 'MyName';
-
-echo <span class="err">&lt;&lt;</span><span class="nt">&lt;EOT</span>
-<span class="na">My</span> <span class="na">name</span> <span class="na">is</span> <span class="err">"$</span><span class="na">name</span><span class="err">".</span> <span class="na">I</span> <span class="na">am</span> <span class="na">printing</span> <span class="na">some</span> <span class="err">$</span><span class="na">foo-</span><span class="nt">&gt;</span>foo.
-Now, I am printing some {$foo-&gt;bar[1]}.
-This should print a capital 'A': \x41
-EOT;
-// 输出结果如下
-My name is "MyName". I am printing some Foo.
-Now, I am printing some Bar2.
-This should print a capital 'A': A
-</code></pre>
-</div>
-
-<p>在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。</p>
-<div class="language-php highlighter-rouge"><pre class="highlight"><code>// 静态变量
-function foo() {
-    static $bar = <span class="err">&lt;&lt;</span><span class="nt">&lt;LABEL</span>
-<span class="na">Nothing</span> <span class="na">in</span> <span class="na">here</span><span class="err">...</span>
-<span class="na">LABEL</span><span class="err">;</span>
-<span class="err">}</span>
-
-<span class="err">//</span> <span class="err">类的常量，属性</span>
-<span class="na">class</span> <span class="na">foo</span> <span class="err">{</span>
-    <span class="na">const</span> <span class="na">BAR =</span><span class="err"> </span><span class="s">&lt;&lt;&lt;FOOBAR</span>
-<span class="na">Constant</span> <span class="na">example</span>
-<span class="na">FOOBAR</span><span class="err">;</span>
-
-    <span class="na">public</span> <span class="err">$</span><span class="na">baz =</span><span class="err"> </span><span class="s">&lt;&lt;&lt;"FOOBAR"</span>
-<span class="na">property</span> <span class="na">example</span>
-<span class="na">FOOBAR</span><span class="err">;</span>
-<span class="err">}</span>
-</code></pre>
-</div>
-
-<h5 id="nowdoc-语法结构"><span id="nowdoc">nowdoc 语法结构</span></h5>
-
-<p>就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 CDATA 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。</p>
-
-<p>一个 nowdoc 结构也用和 heredocs 结构一样的标记 &lt;&lt;&lt;， 但是跟在后面的标识符要用单引号括起来，即 &lt;&lt;&lt;‘EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。</p>
-
-<div class="language-php highlighter-rouge"><pre class="highlight"><code>$str = <span class="err">&lt;&lt;&lt;</span>'EOD'
-Example of string useing nowdoc syntax.
+$str = &lt;&lt;&lt;EOD
+Example of string spanning multiple lines
+useing heredoc syntax.
 EOD;
 
+/*含有变量的更复杂的示例*/
 class foo
 {
     var $foo;
@@ -399,13 +342,73 @@ class foo
 $foo = new foo();
 $name = 'MyName';
 
-echo <span class="err">&lt;&lt;&lt;</span>'EOT'
+echo &lt;&lt;&lt;EOT
 My name is "$name". I am printing some $foo-&gt;foo.
 Now, I am printing some {$foo-&gt;bar[1]}.
 This should print a capital 'A': \x41
 EOT;
-// 内用将原样输出不做解析
+</span><span class="c1">// 输出结果如下
+</span><span class="nx">My</span> <span class="nx">name</span> <span class="nx">is</span> <span class="s2">"MyName"</span><span class="o">.</span> <span class="nx">I</span> <span class="nx">am</span> <span class="nx">printing</span> <span class="nx">some</span> <span class="nx">Foo</span><span class="o">.</span>
+<span class="nx">Now</span><span class="p">,</span> <span class="nx">I</span> <span class="nx">am</span> <span class="nx">printing</span> <span class="nx">some</span> <span class="nx">Bar2</span><span class="o">.</span>
+<span class="nx">This</span> <span class="nx">should</span> <span class="k">print</span> <span class="nx">a</span> <span class="nx">capital</span> <span class="s1">'A'</span><span class="o">:</span> <span class="nx">A</span>
 </code></pre>
+</div>
+
+<p>在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。</p>
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">// 静态变量
+</span><span class="k">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;LABEL
+Nothing in here...
+LABEL;
+</span><span class="p">}</span>
+
+<span class="c1">// 类的常量，属性
+</span><span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="no">BAR</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;FOOBAR
+Constant example
+FOOBAR;
+</span>
+    <span class="k">public</span> <span class="nv">$baz</span> <span class="o">=</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">"FOOBAR"</span>
+<span class="nx">property</span> <span class="nx">example</span>
+<span class="nx">FOOBAR</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h5 id="nowdoc-语法结构"><span id="nowdoc">nowdoc 语法结构</span></h5>
+
+<p>就象 heredoc 结构类似于双引号字符串，Nowdoc 结构是类似于单引号字符串的。Nowdoc 结构很象 heredoc 结构，但是 nowdoc 中不进行解析操作。这种结构很适合用于嵌入 PHP 代码或其它大段文本而无需对其中的特殊字符进行转义。与 SGML 的 CDATA 结构是用来声明大段的不用解析的文本类似，nowdoc 结构也有相同的特征。</p>
+
+<p>一个 nowdoc 结构也用和 heredocs 结构一样的标记 &lt;&lt;&lt;， 但是跟在后面的标识符要用单引号括起来，即 &lt;&lt;&lt;‘EOT’。Heredoc 结构的所有规则也同样适用于 nowdoc 结构，尤其是结束标识符的规则。</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$str</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;'EOD'
+Example of string useing nowdoc syntax.
+EOD;
+</span>
+<span class="k">class</span> <span class="nc">foo</span>
+<span class="p">{</span>
+    <span class="k">var</span> <span class="nv">$foo</span><span class="p">;</span>
+    <span class="k">var</span> <span class="nv">$bar</span><span class="p">;</span>
+    
+    <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">foo</span> <span class="o">=</span> <span class="s1">'Foo'</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">bar</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Bar1'</span><span class="p">,</span> <span class="s1">'Bar2'</span><span class="p">,</span> <span class="s1">'Bar3'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">();</span>
+<span class="nv">$name</span> <span class="o">=</span> <span class="s1">'MyName'</span><span class="p">;</span>
+
+<span class="k">echo</span> <span class="sh">&lt;&lt;&lt;'EOT'
+My name is "$name". I am printing some $foo-&gt;foo.
+Now, I am printing some {$foo-&gt;bar[1]}.
+This should print a capital 'A': \x41
+EOT;
+</span><span class="c1">// 内用将原样输出不做解析
+</span></code></pre>
 </div>
 
 <h4 id="5-array-数组"><span id="array">5. Array 数组</span></h4>
@@ -430,29 +433,32 @@ EOT;
   <li>试图访问一个未定义的数组键名与访问任何未定义变量一样：会导致 E_NOTICE 级别错误信息，其结果为 NULL。</li>
 </ul>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code># 数组间接引用
-function getArray() {
-    return array(1, 2, 3);
-}
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 
-// on PHP 5.4
-$secondElement = getArray()[1];
+<span class="c1"># 数组间接引用
+</span><span class="k">function</span> <span class="nf">getArray</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
 
-// previously
-$tmp = getArray();
-$secondElement = $tmp[1];
+<span class="c1">// on PHP 5.4
+</span><span class="nv">$secondElement</span> <span class="o">=</span> <span class="nx">getArray</span><span class="p">()[</span><span class="mi">1</span><span class="p">];</span>
 
-// or
-list(, $secondElement) = getArray();
+<span class="c1">// previously
+</span><span class="nv">$tmp</span> <span class="o">=</span> <span class="nx">getArray</span><span class="p">();</span>
+<span class="nv">$secondElement</span> <span class="o">=</span> <span class="nv">$tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="c1">// or
+</span><span class="k">list</span><span class="p">(,</span> <span class="nv">$secondElement</span><span class="p">)</span> <span class="o">=</span> <span class="nx">getArray</span><span class="p">();</span>
 </code></pre>
 </div>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code>$arr = [5=&gt;1, 12=&gt;2];
-$arr[] = 56; // This is the same as $arr[13] = 56 at this point of the script
-$arr["x"] = 42; // This adds a new element to the array with key "x"
-unset($arr[5]); // This removes the element form the array
-unset($arr); // This deletes the whole array
-</code></pre>
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="o">=&gt;</span><span class="mi">2</span><span class="p">];</span>
+<span class="nv">$arr</span><span class="p">[]</span> <span class="o">=</span> <span class="mi">56</span><span class="p">;</span> <span class="c1">// This is the same as $arr[13] = 56 at this point of the script
+</span><span class="nv">$arr</span><span class="p">[</span><span class="s2">"x"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// This adds a new element to the array with key "x"
+</span><span class="nb">unset</span><span class="p">(</span><span class="nv">$arr</span><span class="p">[</span><span class="mi">5</span><span class="p">]);</span> <span class="c1">// This removes the element form the array
+</span><span class="nb">unset</span><span class="p">(</span><span class="nv">$arr</span><span class="p">);</span> <span class="c1">// This deletes the whole array
+</span></code></pre>
 </div>
 
 <ul>
@@ -460,12 +466,13 @@ unset($arr); // This deletes the whole array
   <li>unset() 函数允许删除数组中的某个键。但要注意数组将不会重建索引。如果需要删除后重建索引，可以用 array_values() 函数。</li>
 </ul>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code>$a = [1=&gt;'one', 2=&gt;'two', 3=&gt;'three'];
-unset($a[2]);
-// 现在$a = [1 =&gt; 'one', 3=&gt;'three'] 
-$b = array_values($a);
-// Now $b is [0=&gt;'one', 1=&gt;'three']
-</code></pre>
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">=&gt;</span><span class="s1">'one'</span><span class="p">,</span> <span class="mi">2</span><span class="o">=&gt;</span><span class="s1">'two'</span><span class="p">,</span> <span class="mi">3</span><span class="o">=&gt;</span><span class="s1">'three'</span><span class="p">];</span>
+<span class="nb">unset</span><span class="p">(</span><span class="nv">$a</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<span class="c1">// 现在$a = [1 =&gt; 'one', 3=&gt;'three'] 
+</span><span class="nv">$b</span> <span class="o">=</span> <span class="nb">array_values</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+<span class="c1">// Now $b is [0=&gt;'one', 1=&gt;'three']
+</span></code></pre>
 </div>
 
 <h4 id="6-object-对象"><span id="object">6. Object 对象</span></h4>
@@ -514,49 +521,50 @@ $b = array_values($a);
 
 <p>一个类可以包含有属于自己的常量，变量（称为”属性”）以及函数（称为”方法”）。</p>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code>#1 简单的类定义
-class SimpleClass {
-    // property declaration
-    public $var = 'a default value';
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">#1 简单的类定义
+</span><span class="k">class</span> <span class="nc">SimpleClass</span> <span class="p">{</span>
+    <span class="c1">// property declaration
+</span>    <span class="k">public</span> <span class="nv">$var</span> <span class="o">=</span> <span class="s1">'a default value'</span><span class="p">;</span>
 
-    // method declaration
-    public function displayVar() {
-        echo $this-&gt;var;
-    }
-}
+    <span class="c1">// method declaration
+</span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">displayVar</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">var</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// 当一个方法在类定义内部被调用时，有一个可用的伪变量$this。$this 是一个到主叫对象的引用
+<span class="c1">// 当一个方法在类定义内部被调用时，有一个可用的伪变量$this。$this 是一个到主叫对象的引用
 // (通常是该方法所从属的对象，但如果是从第二个对象静态调用时也可能是另一个对象)
+</span>
+<span class="c1">#2 $this 伪变量的示例
+</span>
+<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="s1">'$this is defind ('</span><span class="o">.</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$this</span><span class="p">)</span><span class="o">.</span> <span class="s2">")</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="s2">"</span><span class="se">\$</span><span class="s2">this is not defined.</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-#2 $this 伪变量的示例
+<span class="k">class</span> <span class="nc">B</span> <span class="p">{</span>
+	<span class="k">function</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">A</span><span class="o">::</span><span class="na">foo</span><span class="p">();</span> <span class="c1">// Note: the next line will issue a warning if E_STRICT is enabled.
+</span>	<span class="p">}</span>
+<span class="p">}</span>
 
-class A {
-    function foo() {
-        if(isset($this)) {
-            echo '$this is defind ('. get_class($this). ")\n";
-        } else {
-            echo "\$this is not defined.\n";
-        }
-    }
-}
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
+<span class="nv">$a</span><span class="o">-&gt;</span><span class="na">foo</span><span class="p">();</span> <span class="c1">// $this is defined (A)
+</span>
+<span class="nx">A</span><span class="o">::</span><span class="na">foo</span><span class="p">();</span>
 
-class B {
-	function bar() {
-		A::foo(); // Note: the next line will issue a warning if E_STRICT is enabled.
-	}
-}
+<span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">B</span><span class="p">();</span>
+<span class="nv">$b</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">();</span>
 
-$a = new A();
-$a-&gt;foo(); // $this is defined (A)
+<span class="nx">B</span><span class="o">::</span><span class="na">bar</span><span class="p">();</span>
 
-A::foo();
-
-$b = new B();
-$b-&gt;bar();
-
-B::bar();
-
-/*
+<span class="cm">/*
 # PHP5 output 
 $this is defined (A)
 $this is not defined.
@@ -568,7 +576,7 @@ $this is defined (A)
 $this is not defined.
 $this is not defined.
 $this is not defined.
-*/
+*/</span>
 </code></pre>
 </div>
 
