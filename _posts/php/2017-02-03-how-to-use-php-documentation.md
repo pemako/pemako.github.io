@@ -35,10 +35,11 @@ echo "Hello world";
 
 // 脚本至此结束，并无PHP 结束标记
 ```
-Version| Description
--------|----
-7.0.0  | The ASP tags <%, %>, <%=, and the script tag \<script language="php"> are removed from PHP
-5.4.0  | The tag <?= is always available regardless of the short_open_tag ini setting.
+
+|Version| Description|
+|-------|---------------|
+|7.0.0  | The ASP tags <%, %>, <%=, and the script tag \<script language="php"> are removed from PHP|
+|5.4.0  | The tag <?= is always available regardless of the short_open_tag ini setting.|
 
 #### 2. 从HTML中分离
 
@@ -270,7 +271,10 @@ property example
 FOOBAR;
 }
 ```
+
 ##### <span id="nowdoc">nowdoc 语法结构</span>
+
+
 
 #### <span id="array">5. Array 数组</span>
 

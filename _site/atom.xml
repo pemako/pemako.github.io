@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T15:16:12+08:00</updated>
+ <updated>2017-02-03T15:22:30+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -48,10 +48,25 @@
 &lt;span class=&quot;c1&quot;&gt;// 脚本至此结束，并无PHP 结束标记
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Version| Description
-——-|—-
-7.0.0  | The ASP tags &amp;lt;%, %&amp;gt;, &amp;lt;%=, and the script tag &amp;lt;script language=”php”&amp;gt; are removed from PHP
-5.4.0  | The tag &amp;lt;?= is always available regardless of the short_open_tag ini setting.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Version&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7.0.0&lt;/td&gt;
+      &lt;td&gt;The ASP tags &amp;lt;%, %&amp;gt;, &amp;lt;%=, and the script tag &amp;lt;script language=”php”&amp;gt; are removed from PHP&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5.4.0&lt;/td&gt;
+      &lt;td&gt;The tag &amp;lt;?= is always available regardless of the short_open_tag ini setting.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;h4 id=&quot;2-从html中分离&quot;&gt;2. 从HTML中分离&lt;/h4&gt;
 
@@ -301,6 +316,7 @@ function foo() {
 &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
 &lt;h5 id=&quot;nowdoc-语法结构&quot;&gt;&lt;span id=&quot;nowdoc&quot;&gt;nowdoc 语法结构&lt;/span&gt;&lt;/h5&gt;
 
 &lt;h4 id=&quot;5-array-数组&quot;&gt;&lt;span id=&quot;array&quot;&gt;5. Array 数组&lt;/span&gt;&lt;/h4&gt;
