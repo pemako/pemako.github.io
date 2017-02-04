@@ -80,10 +80,10 @@
 <p>PHP官方手册主要包含了四大部分</p>
 
 <ol>
-  <li><a href="#langref"><code class="highlighter-rouge">语言参考</code></a></li>
-  <li><a href="#function"><code class="highlighter-rouge">函数参考</code></a></li>
-  <li><a href="#features"><code class="highlighter-rouge">产品特点</code></a></li>
-  <li><a href="#appendices"><code class="highlighter-rouge">补充信息</code></a></li>
+  <li><a href="#langref">语言参考</a></li>
+  <li><a href="#function">函数参考</a></li>
+  <li><a href="#features">产品特点</a></li>
+  <li><a href="#appendices">补充信息</a></li>
 </ol>
 
 <h2 id="语言参考"><span id="langref">语言参考</span></h2>
@@ -165,6 +165,7 @@
 </code></pre>
 </div>
 <p>or</p>
+
 <div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 <span class="k">echo</span> <span class="s2">"First line"</span><span class="p">;</span>
 <span class="k">echo</span> <span class="s2">"Last line"</span> <span class="cp">?&gt;</span>
@@ -174,6 +175,7 @@
 <h4 id="4-注释">4. 注释</h4>
 
 <p>PHP支持C, C++和 Unix Shell 风格的注释</p>
+
 <div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 
 <span class="k">echo</span> <span class="s2">"This is a test"</span><span class="p">;</span> <span class="c1">// This is a one-line c++ style comment
@@ -185,8 +187,7 @@
 
 <span class="k">echo</span> <span class="s2">"This is yet another test"</span><span class="p">;</span>
 <span class="k">echo</span> <span class="s2">"One Final Test"</span><span class="p">;</span> <span class="c1"># This is a one-line shell-style comment
-</span>
-</code></pre>
+</span></code></pre>
 </div>
 
 <h3 id="类型">类型</h3>
@@ -478,6 +479,218 @@ EOT;
 <h4 id="6-object-对象"><span id="object">6. Object 对象</span></h4>
 
 <ul>
+  <li>要创建一个新的对象 object，使用 new 语句实例化一个类</li>
+  <li>如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。</li>
+  <li>详细讨论请参考下面<a href="#class-and-obj">类与对象</a></li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="nf">do_foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Doing foo."</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">;</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">do_foo</span><span class="p">();</span>
+
+<span class="c1"># 转换为对象
+</span><span class="nv">$obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="s1">'ciao'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">scalar</span><span class="p">;</span> <span class="c1">// outputs 'ciao'
+</span>
+<span class="c1">// In PHP 7 there are a few ways to create an empty object:
+</span><span class="nv">$obj1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\stdCalss</span><span class="p">;</span> <span class="c1">// Instantiate stdClass object
+</span><span class="nv">$obj2</span> <span class="o">=</span> <span class="k">new</span> <span class="k">class</span><span class="err">{};</span> <span class="err">//</span> <span class="nc">Instantiate</span> <span class="nx">anonymous</span> <span class="k">class</span>
+<span class="err">$</span><span class="nc">obj3</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)[];</span>  <span class="c1">// Cast empty array to object
+</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj1</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}
+</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(class@anonymous)#2 (0) {}
+</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}
+</span>
+<span class="c1">// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
+</span>
+<span class="k">echo</span> <span class="nb">json_encode</span><span class="p">([</span>
+    <span class="k">new</span> <span class="nx">\stdClass</span><span class="p">,</span>
+    <span class="k">new</span> <span class="k">class</span><span class="err">{},</span>
+    <span class="err">(</span><span class="nc">object</span><span class="p">)[],</span>
+<span class="p">]);</span>
+<span class="c1">// Output: [{},{},{}]
+</span></code></pre>
+</div>
+
+<h4 id="7-resource-资源类型"><span id="resource">7. Resource 资源类型</span></h4>
+
+<ul>
+  <li>资源 resource 是一种特殊变量，保存了到外部资源的一个引用。资源是通过专门的函数来建立和使用的。所有的这些函数及其相应资源类型见<a href="http://nl3.php.net/manual/zh/resource.php">附录</a></li>
+  <li>资源类型可以通过<code class="highlighter-rouge">get_resource_type</code> 函数获取</li>
+  <li>PHP Zend 引擎会自动检查一个资源不在被引用，资源使用的所有外部资源都会被垃圾回收系统释放。很少需要手工释放内存</li>
+  <li>Note: 持久化链接比较特殊，它们不会被垃圾回收系统销毁。参见<a href="http://nl3.php.net/manual/zh/features.persistent-connections.php">数据库永久链接</a>一章</li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$c</span> <span class="o">=</span> <span class="nb">mysql_connect</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nb">get_resource_type</span><span class="p">(</span><span class="nv">$c</span><span class="p">);</span> <span class="c1">// mysql link
+</span>
+<span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nb">get_resource_type</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span> <span class="c1">// file
+</span></code></pre>
+</div>
+
+<h4 id="8-null"><span id="null">8. NULL</span></h4>
+
+<ul>
+  <li>特殊的 NULL 值表示一个变量没有值。NULL 类型唯一可能的值就是 NULL。</li>
+  <li>NULL 类型只有一个值，就是不区分大小写的常量 NULL。</li>
+  <li>NULL 类型只有一个值，就是不区分大小写的常量 NULL。
+    <ul>
+      <li>被赋值为 NULL</li>
+      <li>尚未被赋值</li>
+      <li>被 unset()</li>
+    </ul>
+  </li>
+  <li>使用 is_null() 函数监测一个值是否为 null</li>
+</ul>
+
+<h4 id="9-callback-回调类型"><span id="callback">9. Callback 回调类型</span></h4>
+
+<ul>
+  <li>自 PHP 5.4 起可用 callable 类型指定回调类型 callback</li>
+  <li>回调函数的参数可以是下面几种情况
+    <ul>
+      <li>一个 PHP 的函数以 string 类型传递其名称。可以使用任何内置或用户自定义函数，但除了语言结构例如：array()，echo，empty()，eval()，exit()，isset()，list()，print 或 unset()。</li>
+      <li>一个已实例化的对象的方法被作为数组传递，下标 0 包含该对象，下标 1 包含方法名。</li>
+      <li>静态类方法也可不经实例化该类的对象而传递，只要在下标 0 中包含类名而不是对象。自 PHP 5.2.3 起，也可以传递 ‘ClassName::methodName’。</li>
+      <li>除了普通的用户自定义函数外，create_function() 可以用来创建一个匿名回调函数。自 PHP 5.3.0 起也可传递 closure 给回调参数。</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="k">function</span> <span class="nf">my_callback_function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"hello world"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// An example callback method
+</span><span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="k">function</span> <span class="nf">myCallbackMethod</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Hello World!"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Type1 : Simple callback
+</span><span class="nb">call_user_func</span><span class="p">(</span><span class="s1">'my_callback_function'</span><span class="p">);</span>
+
+<span class="c1">// Type2 : Static class method call
+</span><span class="nb">call_user_func</span><span class="p">([</span><span class="s1">'MyClass'</span><span class="p">,</span> <span class="s1">'myCallbackMethod'</span><span class="p">]);</span>
+
+<span class="c1">// Type3 : Object method call
+</span><span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+<span class="nb">call_user_func</span><span class="p">([</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">'myCallbackMethod'</span><span class="p">]);</span>
+
+<span class="c1">// Type4 : Static calss method call (As of PHP 5.2.3)
+</span><span class="nb">call_user_func</span><span class="p">(</span><span class="s1">'MyClass::myCallbackMethod'</span><span class="p">);</span>
+
+<span class="c1">// Type5 : Relative static calss method call(As of PHP 5.3.0)
+</span><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">who</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"A</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">B</span> <span class="k">extends</span> <span class="nx">A</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">who</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"B</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nb">call_user_func</span><span class="p">([</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'parent::who'</span><span class="p">]);</span> <span class="c1">// A
+</span>
+<span class="c1">// Type6 : Objects implementing __invoke can be used as callables (since PHP 5.3)
+</span><span class="k">class</span> <span class="nc">C</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__invoke</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Hello "</span><span class="p">,</span> <span class="nv">$name</span><span class="p">,</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$c</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">();</span>
+<span class="nb">call_user_func</span><span class="p">(</span><span class="nv">$c</span><span class="p">,</span> <span class="s1">'PHP!'</span><span class="p">);</span> <span class="c1">// Hello PHP!
+</span></code></pre>
+</div>
+
+<p>Closure 的示例</p>
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$double</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="nv">$a</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$a</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nv">$numbers</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+
+<span class="nv">$new_numbers</span> <span class="o">=</span> <span class="nb">array_map</span><span class="p">(</span><span class="nv">$double</span><span class="p">,</span> <span class="nv">$numbers</span><span class="p">);</span>
+<span class="k">print</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="nv">$new_numbers</span><span class="p">);</span> <span class="c1">// 2 4 6 8 10
+</span></code></pre>
+</div>
+
+<h4 id="10-伪类型与变量"><span id="mixed">10. 伪类型与变量</span></h4>
+
+<ul>
+  <li>mixed 说明一个参数可以接受多种不同的（但不一定是所有的）类型
+    <ul>
+      <li>例如 gettype() 可以接受所有的 PHP 类型，str_replace() 可以接受字符串和数组</li>
+    </ul>
+  </li>
+  <li>number 说明一个参数可以是 integer 或者 float</li>
+  <li>本文档中在 PHP 5.4 引入 callable 类型之前使用 了 callback 伪类型。二者含义完全相同。</li>
+  <li>void 作为返回类型意味着函数的返回值是无用的。void 作为参数列表意味着函数不接受任何参数。</li>
+</ul>
+
+<h4 id="11-类型转换的判别">11. 类型转换的判别</h4>
+
+<ul>
+  <li>允许的潜质转换有
+    <ul>
+      <li>(int), (integer) - 转换为整形 integer</li>
+      <li>(bool), (boolean) - 转换为布尔类型 boolean</li>
+      <li>(float), (double), (real) - 转换为浮点型 float</li>
+      <li>(string) - 转换为字符串 string</li>
+      <li>(array) - 转换为数组 array</li>
+      <li>(object) - 转换为对象 object</li>
+      <li>(unset) - 转换为 NULL (PHP 5)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="变量">变量</h3>
+
+<h4 id="0-基础">0. 基础</h4>
+
+<h4 id="1-预定义变量">1. 预定义变量</h4>
+
+<h4 id="2-变量的范围">2. 变量的范围</h4>
+
+<h4 id="3-可变变量">3. 可变变量</h4>
+
+<h4 id="4-来自php之外的变量">4. 来自PHP之外的变量</h4>
+
+<h3 id="常量">常量</h3>
+
+<h4 id="0-语法">0. 语法</h4>
+
+<h4 id="1-魔术敞亮">1. 魔术敞亮</h4>
+
+<h3 id="表达式">表达式</h3>
+
+<h3 id="运算符">运算符</h3>
+
+<h3 id="流程控制">流程控制</h3>
+
+<h3 id="函数">函数</h3>
+
+<h3 id="类与对象"><span id="class-and-obj">类与对象</span></h3>
+
+<ul>
   <li><a href="#obj-introduction">简介</a></li>
   <li><a href="#obj-basics">基本概念</a></li>
   <li><a href="#obj-property">属性</a></li>
@@ -580,6 +793,35 @@ $this is not defined.
 </code></pre>
 </div>
 
+<ul>
+  <li>New 关键字
+    <ul>
+      <li>要创建一个类的实例，必须使用 new 关键字。当创建新对象时该对象总是被赋值，除非该对象定义了<a href="#obj-construct-and-destruct">构造函数</a>并且在出错时抛出了一个异常。类应在被实例化之前定义（某些情况下则必须这样）。</li>
+      <li>如果在 new 之后跟着的是一个包含有类名的字符串，则该类的一个实例被创建。如果该类属于一个名字空间，则必须使用其完整名称。</li>
+      <li>在类定义内部，可是用<em>new self</em> 和 <em>new parent</em> 创建新对象</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+
+<span class="c1"># 创建一个实例
+</span><span class="nv">$instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SimpleClass</span><span class="p">();</span>
+
+<span class="c1">// 也可以如下面这样
+</span><span class="nv">$className</span> <span class="o">=</span> <span class="s1">'SimpleClass'</span><span class="p">;</span>
+<span class="nv">$instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nv">$className</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>::class
+    <ul>
+      <li>自 PHP 5.5 起，关键词 class 也可用于类名的解析。使用 ClassName::class 你可以获取一个字符串，包含了类 ClassName 的完全限定名称。这对使用了[命名空间(#)的类尤其有用</li>
+    </ul>
+  </li>
+</ul>
+
 <h5 id="属性"><span id="obj-property">属性</span></h5>
 <h5 id="类常量"><span id="obj-class-constants">类常量</span></h5>
 <h5 id="自动加载类"><span id="obj-autoloading">自动加载类</span></h5>
@@ -603,83 +845,6 @@ $this is not defined.
 <h5 id="对象和引用"><span id="obj-and-reference">对象和引用</span></h5>
 <h5 id="对象序列化"><span id="obj-serialization">对象序列化</span></h5>
 <h5 id="oop变更日志"><span id="obj-opp-changelog">OOP变更日志</span></h5>
-
-<ul>
-  <li>要创建一个新的对象 object，使用 new 语句实例化一个类</li>
-  <li>如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。</li>
-</ul>
-
-<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-<span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
-    <span class="k">function</span> <span class="nf">do_foo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">echo</span> <span class="s2">"Doing foo."</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">;</span>
-<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">do_foo</span><span class="p">();</span>
-
-<span class="c1"># 转换为对象
-</span><span class="nv">$obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="s1">'ciao'</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">scalar</span><span class="p">;</span> <span class="c1">// outputs 'ciao'
-</span>
-<span class="c1">// In PHP 7 there are a few ways to create an empty object:
-</span><span class="nv">$obj1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\stdCalss</span><span class="p">;</span> <span class="c1">// Instantiate stdClass object
-</span><span class="nv">$obj2</span> <span class="o">=</span> <span class="k">new</span> <span class="k">class</span><span class="err">{};</span> <span class="err">//</span> <span class="nc">Instantiate</span> <span class="nx">anonymous</span> <span class="k">class</span>
-<span class="err">$</span><span class="nc">obj3</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)[];</span>  <span class="c1">// Cast empty array to object
-</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj1</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}
-</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(class@anonymous)#2 (0) {}
-</span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}
-</span>
-<span class="c1">// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
-</span>
-<span class="k">echo</span> <span class="nb">json_encode</span><span class="p">([</span>
-    <span class="k">new</span> <span class="nx">\stdClass</span><span class="p">,</span>
-    <span class="k">new</span> <span class="k">class</span><span class="err">{},</span>
-    <span class="err">(</span><span class="nc">object</span><span class="p">)[],</span>
-<span class="p">]);</span>
-<span class="c1">// Output: [{},{},{}]
-</span></code></pre>
-</div>
-
-<h4 id="7-resource-资源类型"><span id="resource">7. Resource 资源类型</span></h4>
-
-<h4 id="8-null"><span id="null">8. NULL</span></h4>
-
-<h4 id="9-callback-回调类型"><span id="callback">9. Callback 回调类型</span></h4>
-
-<h4 id="10-伪类型与变量"><span id="mixed">10. 伪类型与变量</span></h4>
-
-<h4 id="11-类型转换的判别">11. 类型转换的判别</h4>
-
-<h3 id="变量">变量</h3>
-
-<h4 id="0-基础">0. 基础</h4>
-
-<h4 id="1-预定义变量">1. 预定义变量</h4>
-
-<h4 id="2-变量的范围">2. 变量的范围</h4>
-
-<h4 id="3-可变变量">3. 可变变量</h4>
-
-<h4 id="4-来自php之外的变量">4. 来自PHP之外的变量</h4>
-
-<h3 id="常量">常量</h3>
-
-<h4 id="0-语法">0. 语法</h4>
-
-<h4 id="1-魔术敞亮">1. 魔术敞亮</h4>
-
-<h3 id="表达式">表达式</h3>
-
-<h3 id="运算符">运算符</h3>
-
-<h3 id="流程控制">流程控制</h3>
-
-<h3 id="函数">函数</h3>
-
-<h3 id="类与对象">类与对象</h3>
 
 <h3 id="命名空间">命名空间</h3>
 

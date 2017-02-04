@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-02-03T19:22:29+08:00</updated>
+ <updated>2017-02-04T16:20:56+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -23,10 +23,10 @@
 &lt;p&gt;PHP官方手册主要包含了四大部分&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;#langref&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;语言参考&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#function&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;函数参考&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#features&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;产品特点&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#appendices&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;补充信息&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#langref&quot;&gt;语言参考&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#function&quot;&gt;函数参考&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#features&quot;&gt;产品特点&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#appendices&quot;&gt;补充信息&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;语言参考&quot;&gt;&lt;span id=&quot;langref&quot;&gt;语言参考&lt;/span&gt;&lt;/h2&gt;
@@ -108,6 +108,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;or&lt;/p&gt;
+
 &lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;First line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Last line&quot;&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
@@ -117,6 +118,7 @@
 &lt;h4 id=&quot;4-注释&quot;&gt;4. 注释&lt;/h4&gt;
 
 &lt;p&gt;PHP支持C, C++和 Unix Shell 风格的注释&lt;/p&gt;
+
 &lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;This is a test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This is a one-line c++ style comment
@@ -128,8 +130,7 @@
 
 &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;This is yet another test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;One Final Test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# This is a one-line shell-style comment
-&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h3 id=&quot;类型&quot;&gt;类型&lt;/h3&gt;
@@ -421,6 +422,218 @@ EOT;
 &lt;h4 id=&quot;6-object-对象&quot;&gt;&lt;span id=&quot;object&quot;&gt;6. Object 对象&lt;/span&gt;&lt;/h4&gt;
 
 &lt;ul&gt;
+  &lt;li&gt;要创建一个新的对象 object，使用 new 语句实例化一个类&lt;/li&gt;
+  &lt;li&gt;如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。&lt;/li&gt;
+  &lt;li&gt;详细讨论请参考下面&lt;a href=&quot;#class-and-obj&quot;&gt;类与对象&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;do_foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Doing foo.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;do_foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 转换为对象
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'ciao'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;scalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// outputs 'ciao'
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// In PHP 7 there are a few ways to create an empty object:
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;\stdCalss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Instantiate stdClass object
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{};&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Instantiate&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;anonymous&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;obj3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[];&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// Cast empty array to object
+&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// object(stdClass)#1 (0) {}
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// object(class@anonymous)#2 (0) {}
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// object(stdClass)#1 (0) {}
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;json_encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;\stdClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{},&lt;/span&gt;
+    &lt;span class=&quot;err&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[],&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Output: [{},{},{}]
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;7-resource-资源类型&quot;&gt;&lt;span id=&quot;resource&quot;&gt;7. Resource 资源类型&lt;/span&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;资源 resource 是一种特殊变量，保存了到外部资源的一个引用。资源是通过专门的函数来建立和使用的。所有的这些函数及其相应资源类型见&lt;a href=&quot;http://nl3.php.net/manual/zh/resource.php&quot;&gt;附录&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;资源类型可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;get_resource_type&lt;/code&gt; 函数获取&lt;/li&gt;
+  &lt;li&gt;PHP Zend 引擎会自动检查一个资源不在被引用，资源使用的所有外部资源都会被垃圾回收系统释放。很少需要手工释放内存&lt;/li&gt;
+  &lt;li&gt;Note: 持久化链接比较特殊，它们不会被垃圾回收系统销毁。参见&lt;a href=&quot;http://nl3.php.net/manual/zh/features.persistent-connections.php&quot;&gt;数据库永久链接&lt;/a&gt;一章&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mysql_connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;get_resource_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// mysql link
+&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$fp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;fopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;foo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;w&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;get_resource_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// file
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;8-null&quot;&gt;&lt;span id=&quot;null&quot;&gt;8. NULL&lt;/span&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;特殊的 NULL 值表示一个变量没有值。NULL 类型唯一可能的值就是 NULL。&lt;/li&gt;
+  &lt;li&gt;NULL 类型只有一个值，就是不区分大小写的常量 NULL。&lt;/li&gt;
+  &lt;li&gt;NULL 类型只有一个值，就是不区分大小写的常量 NULL。
+    &lt;ul&gt;
+      &lt;li&gt;被赋值为 NULL&lt;/li&gt;
+      &lt;li&gt;尚未被赋值&lt;/li&gt;
+      &lt;li&gt;被 unset()&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;使用 is_null() 函数监测一个值是否为 null&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;9-callback-回调类型&quot;&gt;&lt;span id=&quot;callback&quot;&gt;9. Callback 回调类型&lt;/span&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;自 PHP 5.4 起可用 callable 类型指定回调类型 callback&lt;/li&gt;
+  &lt;li&gt;回调函数的参数可以是下面几种情况
+    &lt;ul&gt;
+      &lt;li&gt;一个 PHP 的函数以 string 类型传递其名称。可以使用任何内置或用户自定义函数，但除了语言结构例如：array()，echo，empty()，eval()，exit()，isset()，list()，print 或 unset()。&lt;/li&gt;
+      &lt;li&gt;一个已实例化的对象的方法被作为数组传递，下标 0 包含该对象，下标 1 包含方法名。&lt;/li&gt;
+      &lt;li&gt;静态类方法也可不经实例化该类的对象而传递，只要在下标 0 中包含类名而不是对象。自 PHP 5.2.3 起，也可以传递 ‘ClassName::methodName’。&lt;/li&gt;
+      &lt;li&gt;除了普通的用户自定义函数外，create_function() 可以用来创建一个匿名回调函数。自 PHP 5.3.0 起也可传递 closure 给回调参数。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;my_callback_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;hello world&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// An example callback method
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyClass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myCallbackMethod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello World!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Type1 : Simple callback
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;call_user_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'my_callback_function'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Type2 : Static class method call
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;call_user_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'MyClass'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'myCallbackMethod'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Type3 : Object method call
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MyClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;call_user_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'myCallbackMethod'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Type4 : Static calss method call (As of PHP 5.2.3)
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;call_user_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'MyClass::myCallbackMethod'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Type5 : Relative static calss method call(As of PHP 5.3.0)
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;who&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;A&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;who&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;B&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;call_user_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'B'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'parent::who'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// A
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Type6 : Objects implementing __invoke can be used as callables (since PHP 5.3)
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;C&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__invoke&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hello &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;call_user_func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'PHP!'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Hello PHP!
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Closure 的示例&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$double&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$numbers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$new_numbers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;array_map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;implode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$new_numbers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 2 4 6 8 10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;10-伪类型与变量&quot;&gt;&lt;span id=&quot;mixed&quot;&gt;10. 伪类型与变量&lt;/span&gt;&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;mixed 说明一个参数可以接受多种不同的（但不一定是所有的）类型
+    &lt;ul&gt;
+      &lt;li&gt;例如 gettype() 可以接受所有的 PHP 类型，str_replace() 可以接受字符串和数组&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;number 说明一个参数可以是 integer 或者 float&lt;/li&gt;
+  &lt;li&gt;本文档中在 PHP 5.4 引入 callable 类型之前使用 了 callback 伪类型。二者含义完全相同。&lt;/li&gt;
+  &lt;li&gt;void 作为返回类型意味着函数的返回值是无用的。void 作为参数列表意味着函数不接受任何参数。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;11-类型转换的判别&quot;&gt;11. 类型转换的判别&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;允许的潜质转换有
+    &lt;ul&gt;
+      &lt;li&gt;(int), (integer) - 转换为整形 integer&lt;/li&gt;
+      &lt;li&gt;(bool), (boolean) - 转换为布尔类型 boolean&lt;/li&gt;
+      &lt;li&gt;(float), (double), (real) - 转换为浮点型 float&lt;/li&gt;
+      &lt;li&gt;(string) - 转换为字符串 string&lt;/li&gt;
+      &lt;li&gt;(array) - 转换为数组 array&lt;/li&gt;
+      &lt;li&gt;(object) - 转换为对象 object&lt;/li&gt;
+      &lt;li&gt;(unset) - 转换为 NULL (PHP 5)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;变量&quot;&gt;变量&lt;/h3&gt;
+
+&lt;h4 id=&quot;0-基础&quot;&gt;0. 基础&lt;/h4&gt;
+
+&lt;h4 id=&quot;1-预定义变量&quot;&gt;1. 预定义变量&lt;/h4&gt;
+
+&lt;h4 id=&quot;2-变量的范围&quot;&gt;2. 变量的范围&lt;/h4&gt;
+
+&lt;h4 id=&quot;3-可变变量&quot;&gt;3. 可变变量&lt;/h4&gt;
+
+&lt;h4 id=&quot;4-来自php之外的变量&quot;&gt;4. 来自PHP之外的变量&lt;/h4&gt;
+
+&lt;h3 id=&quot;常量&quot;&gt;常量&lt;/h3&gt;
+
+&lt;h4 id=&quot;0-语法&quot;&gt;0. 语法&lt;/h4&gt;
+
+&lt;h4 id=&quot;1-魔术敞亮&quot;&gt;1. 魔术敞亮&lt;/h4&gt;
+
+&lt;h3 id=&quot;表达式&quot;&gt;表达式&lt;/h3&gt;
+
+&lt;h3 id=&quot;运算符&quot;&gt;运算符&lt;/h3&gt;
+
+&lt;h3 id=&quot;流程控制&quot;&gt;流程控制&lt;/h3&gt;
+
+&lt;h3 id=&quot;函数&quot;&gt;函数&lt;/h3&gt;
+
+&lt;h3 id=&quot;类与对象&quot;&gt;&lt;span id=&quot;class-and-obj&quot;&gt;类与对象&lt;/span&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;#obj-introduction&quot;&gt;简介&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#obj-basics&quot;&gt;基本概念&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;#obj-property&quot;&gt;属性&lt;/a&gt;&lt;/li&gt;
@@ -523,6 +736,35 @@ $this is not defined.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;New 关键字
+    &lt;ul&gt;
+      &lt;li&gt;要创建一个类的实例，必须使用 new 关键字。当创建新对象时该对象总是被赋值，除非该对象定义了&lt;a href=&quot;#obj-construct-and-destruct&quot;&gt;构造函数&lt;/a&gt;并且在出错时抛出了一个异常。类应在被实例化之前定义（某些情况下则必须这样）。&lt;/li&gt;
+      &lt;li&gt;如果在 new 之后跟着的是一个包含有类名的字符串，则该类的一个实例被创建。如果该类属于一个名字空间，则必须使用其完整名称。&lt;/li&gt;
+      &lt;li&gt;在类定义内部，可是用&lt;em&gt;new self&lt;/em&gt; 和 &lt;em&gt;new parent&lt;/em&gt; 创建新对象&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 创建一个实例
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SimpleClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 也可以如下面这样
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$className&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'SimpleClass'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$instance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$className&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;::class
+    &lt;ul&gt;
+      &lt;li&gt;自 PHP 5.5 起，关键词 class 也可用于类名的解析。使用 ClassName::class 你可以获取一个字符串，包含了类 ClassName 的完全限定名称。这对使用了[命名空间(#)的类尤其有用&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h5 id=&quot;属性&quot;&gt;&lt;span id=&quot;obj-property&quot;&gt;属性&lt;/span&gt;&lt;/h5&gt;
 &lt;h5 id=&quot;类常量&quot;&gt;&lt;span id=&quot;obj-class-constants&quot;&gt;类常量&lt;/span&gt;&lt;/h5&gt;
 &lt;h5 id=&quot;自动加载类&quot;&gt;&lt;span id=&quot;obj-autoloading&quot;&gt;自动加载类&lt;/span&gt;&lt;/h5&gt;
@@ -546,83 +788,6 @@ $this is not defined.
 &lt;h5 id=&quot;对象和引用&quot;&gt;&lt;span id=&quot;obj-and-reference&quot;&gt;对象和引用&lt;/span&gt;&lt;/h5&gt;
 &lt;h5 id=&quot;对象序列化&quot;&gt;&lt;span id=&quot;obj-serialization&quot;&gt;对象序列化&lt;/span&gt;&lt;/h5&gt;
 &lt;h5 id=&quot;oop变更日志&quot;&gt;&lt;span id=&quot;obj-opp-changelog&quot;&gt;OOP变更日志&lt;/span&gt;&lt;/h5&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;要创建一个新的对象 object，使用 new 语句实例化一个类&lt;/li&gt;
-  &lt;li&gt;如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;do_foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Doing foo.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$bar&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;do_foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# 转换为对象
-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'ciao'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$obj&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;scalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// outputs 'ciao'
-&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// In PHP 7 there are a few ways to create an empty object:
-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;\stdCalss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Instantiate stdClass object
-&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{};&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Instantiate&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;anonymous&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;
-&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;obj3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[];&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// Cast empty array to object
-&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// object(stdClass)#1 (0) {}
-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// object(class@anonymous)#2 (0) {}
-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;var_dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$obj2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// object(stdClass)#1 (0) {}
-&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;json_encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;\stdClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{},&lt;/span&gt;
-    &lt;span class=&quot;err&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[],&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// Output: [{},{},{}]
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;7-resource-资源类型&quot;&gt;&lt;span id=&quot;resource&quot;&gt;7. Resource 资源类型&lt;/span&gt;&lt;/h4&gt;
-
-&lt;h4 id=&quot;8-null&quot;&gt;&lt;span id=&quot;null&quot;&gt;8. NULL&lt;/span&gt;&lt;/h4&gt;
-
-&lt;h4 id=&quot;9-callback-回调类型&quot;&gt;&lt;span id=&quot;callback&quot;&gt;9. Callback 回调类型&lt;/span&gt;&lt;/h4&gt;
-
-&lt;h4 id=&quot;10-伪类型与变量&quot;&gt;&lt;span id=&quot;mixed&quot;&gt;10. 伪类型与变量&lt;/span&gt;&lt;/h4&gt;
-
-&lt;h4 id=&quot;11-类型转换的判别&quot;&gt;11. 类型转换的判别&lt;/h4&gt;
-
-&lt;h3 id=&quot;变量&quot;&gt;变量&lt;/h3&gt;
-
-&lt;h4 id=&quot;0-基础&quot;&gt;0. 基础&lt;/h4&gt;
-
-&lt;h4 id=&quot;1-预定义变量&quot;&gt;1. 预定义变量&lt;/h4&gt;
-
-&lt;h4 id=&quot;2-变量的范围&quot;&gt;2. 变量的范围&lt;/h4&gt;
-
-&lt;h4 id=&quot;3-可变变量&quot;&gt;3. 可变变量&lt;/h4&gt;
-
-&lt;h4 id=&quot;4-来自php之外的变量&quot;&gt;4. 来自PHP之外的变量&lt;/h4&gt;
-
-&lt;h3 id=&quot;常量&quot;&gt;常量&lt;/h3&gt;
-
-&lt;h4 id=&quot;0-语法&quot;&gt;0. 语法&lt;/h4&gt;
-
-&lt;h4 id=&quot;1-魔术敞亮&quot;&gt;1. 魔术敞亮&lt;/h4&gt;
-
-&lt;h3 id=&quot;表达式&quot;&gt;表达式&lt;/h3&gt;
-
-&lt;h3 id=&quot;运算符&quot;&gt;运算符&lt;/h3&gt;
-
-&lt;h3 id=&quot;流程控制&quot;&gt;流程控制&lt;/h3&gt;
-
-&lt;h3 id=&quot;函数&quot;&gt;函数&lt;/h3&gt;
-
-&lt;h3 id=&quot;类与对象&quot;&gt;类与对象&lt;/h3&gt;
 
 &lt;h3 id=&quot;命名空间&quot;&gt;命名空间&lt;/h3&gt;
 

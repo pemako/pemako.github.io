@@ -11,10 +11,10 @@ tags: [php]
 
 PHP官方手册主要包含了四大部分
 
-1. [`语言参考`](#langref)
-2. [`函数参考`](#function)
-3. [`产品特点`](#features)
-4. [`补充信息`](#appendices)
+1. [语言参考](#langref)
+2. [函数参考](#function)
+3. [产品特点](#features)
+4. [补充信息](#appendices)
 
 ## <span id="langref">语言参考</span>
 
@@ -82,6 +82,7 @@ echo "First line";
 echo "Last line";
 ```
 or
+
 ```php
 <?php
 echo "First line";
@@ -91,6 +92,7 @@ echo "Last line" ?>
 #### 4. 注释
 
 PHP支持C, C++和 Unix Shell 风格的注释
+
 ```php
 <?php
 
@@ -103,7 +105,6 @@ echo "This is a test"; // This is a one-line c++ style comment
 
 echo "This is yet another test";
 echo "One Final Test"; # This is a one-line shell-style comment
-
 ```
 
 ### 类型
@@ -370,6 +371,195 @@ $b = array_values($a);
 
 #### <span id="object">6. Object 对象</span>
 
+- 要创建一个新的对象 object，使用 new 语句实例化一个类
+- 如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。
+- 详细讨论请参考下面[类与对象](#class-and-obj)
+
+```php
+<?php
+class foo {
+    function do_foo() {
+        echo "Doing foo.";
+    }
+}
+
+$bar = new foo;
+$bar->do_foo();
+
+# 转换为对象
+$obj = (object)'ciao';
+echo $obj->scalar; // outputs 'ciao'
+
+// In PHP 7 there are a few ways to create an empty object:
+$obj1 = new \stdCalss; // Instantiate stdClass object
+$obj2 = new class{}; // Instantiate anonymous class
+$obj3 = (object)[];  // Cast empty array to object
+
+var_dump($obj1); // object(stdClass)#1 (0) {}
+var_dump($obj2); // object(class@anonymous)#2 (0) {}
+var_dump($obj2); // object(stdClass)#1 (0) {}
+
+// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
+
+echo json_encode([
+    new \stdClass,
+    new class{},
+    (object)[],
+]);
+// Output: [{},{},{}]
+```
+
+#### <span id="resource">7. Resource 资源类型</span>
+
+- 资源 resource 是一种特殊变量，保存了到外部资源的一个引用。资源是通过专门的函数来建立和使用的。所有的这些函数及其相应资源类型见[附录](http://nl3.php.net/manual/zh/resource.php)
+- 资源类型可以通过`get_resource_type` 函数获取
+- PHP Zend 引擎会自动检查一个资源不在被引用，资源使用的所有外部资源都会被垃圾回收系统释放。很少需要手工释放内存
+- Note: 持久化链接比较特殊，它们不会被垃圾回收系统销毁。参见[数据库永久链接](http://nl3.php.net/manual/zh/features.persistent-connections.php)一章
+
+```php
+<?php
+
+$c = mysql_connect();
+echo get_resource_type($c); // mysql link
+
+$fp = fopen("foo", "w");
+echo get_resource_type($fp); // file
+```
+
+#### <span id="null">8. NULL</span>
+
+- 特殊的 NULL 值表示一个变量没有值。NULL 类型唯一可能的值就是 NULL。
+- NULL 类型只有一个值，就是不区分大小写的常量 NULL。
+- NULL 类型只有一个值，就是不区分大小写的常量 NULL。
+    - 被赋值为 NULL
+    - 尚未被赋值
+    - 被 unset()
+- 使用 is_null() 函数监测一个值是否为 null
+
+
+#### <span id="callback">9. Callback 回调类型
+
+- 自 PHP 5.4 起可用 callable 类型指定回调类型 callback
+- 回调函数的参数可以是下面几种情况
+    - 一个 PHP 的函数以 string 类型传递其名称。可以使用任何内置或用户自定义函数，但除了语言结构例如：array()，echo，empty()，eval()，exit()，isset()，list()，print 或 unset()。
+    - 一个已实例化的对象的方法被作为数组传递，下标 0 包含该对象，下标 1 包含方法名。
+    - 静态类方法也可不经实例化该类的对象而传递，只要在下标 0 中包含类名而不是对象。自 PHP 5.2.3 起，也可以传递 'ClassName::methodName'。
+    - 除了普通的用户自定义函数外，create_function() 可以用来创建一个匿名回调函数。自 PHP 5.3.0 起也可传递 closure 给回调参数。
+
+```php
+<?php
+
+function my_callback_function() {
+    echo "hello world";
+}
+
+// An example callback method
+class MyClass {
+    static function myCallbackMethod() {
+        echo "Hello World!";
+    }
+}
+
+// Type1 : Simple callback
+call_user_func('my_callback_function');
+
+// Type2 : Static class method call
+call_user_func(['MyClass', 'myCallbackMethod']);
+
+// Type3 : Object method call
+$obj = new MyClass();
+call_user_func([$obj, 'myCallbackMethod']);
+
+// Type4 : Static calss method call (As of PHP 5.2.3)
+call_user_func('MyClass::myCallbackMethod');
+
+// Type5 : Relative static calss method call(As of PHP 5.3.0)
+class A {
+    public static function who() {
+        echo "A\n";
+    }
+}
+
+class B extends A {
+    public static function who() {
+        echo "B\n";
+    }
+}
+
+call_user_func(['B', 'parent::who']); // A
+
+// Type6 : Objects implementing __invoke can be used as callables (since PHP 5.3)
+class C {
+    public function __invoke($name) {
+        echo "Hello ", $name, "\n";
+    }
+}
+
+$c = new C();
+call_user_func($c, 'PHP!'); // Hello PHP!
+```
+
+Closure 的示例
+```php
+<?php
+
+$double = function($a) {
+    return $a * 2;
+};
+
+$numbers = range(1, 5);
+
+$new_numbers = array_map($double, $numbers);
+print implode(' ', $new_numbers); // 2 4 6 8 10
+```
+
+#### <span id="mixed">10. 伪类型与变量</span>
+
+- mixed 说明一个参数可以接受多种不同的（但不一定是所有的）类型
+    - 例如 gettype() 可以接受所有的 PHP 类型，str_replace() 可以接受字符串和数组
+- number 说明一个参数可以是 integer 或者 float
+- 本文档中在 PHP 5.4 引入 callable 类型之前使用 了 callback 伪类型。二者含义完全相同。
+- void 作为返回类型意味着函数的返回值是无用的。void 作为参数列表意味着函数不接受任何参数。
+
+#### 11. 类型转换的判别
+
+- 允许的潜质转换有
+    - (int), (integer) - 转换为整形 integer
+    - (bool), (boolean) - 转换为布尔类型 boolean
+    - (float), (double), (real) - 转换为浮点型 float
+    - (string) - 转换为字符串 string
+    - (array) - 转换为数组 array
+    - (object) - 转换为对象 object
+    - (unset) - 转换为 NULL (PHP 5)
+
+### 变量
+
+#### 0. 基础
+
+#### 1. 预定义变量
+
+#### 2. 变量的范围
+
+#### 3. 可变变量
+
+#### 4. 来自PHP之外的变量
+
+### 常量
+
+#### 0. 语法
+
+#### 1. 魔术敞亮
+
+### 表达式
+
+### 运算符
+
+### 流程控制
+
+### 函数
+
+### <span id="class-and-obj">类与对象</span>
+
 - [简介](#obj-introduction)
 - [基本概念](#obj-basics)
 - [属性](#obj-property)
@@ -472,6 +662,25 @@ $this is not defined.
 */
 ```
 
+- New 关键字
+	- 要创建一个类的实例，必须使用 new 关键字。当创建新对象时该对象总是被赋值，除非该对象定义了[构造函数](#obj-construct-and-destruct)并且在出错时抛出了一个异常。类应在被实例化之前定义（某些情况下则必须这样）。
+	- 如果在 new 之后跟着的是一个包含有类名的字符串，则该类的一个实例被创建。如果该类属于一个名字空间，则必须使用其完整名称。
+	- 在类定义内部，可是用*new self* 和 *new parent* 创建新对象
+
+```php
+<?php
+
+# 创建一个实例
+$instance = new SimpleClass();
+
+// 也可以如下面这样
+$className = 'SimpleClass';
+$instance = new $className();
+```
+
+- ::class
+	- 自 PHP 5.5 起，关键词 class 也可用于类名的解析。使用 ClassName::class 你可以获取一个字符串，包含了类 ClassName 的完全限定名称。这对使用了[命名空间(#)的类尤其有用
+
 ##### <span id="obj-property">属性</span>
 ##### <span id="obj-class-constants">类常量</span>
 ##### <span id="obj-autoloading">自动加载类</span>
@@ -496,80 +705,6 @@ $this is not defined.
 ##### <span id="obj-serialization">对象序列化</span>
 ##### <span id="obj-opp-changelog">OOP变更日志</span>
 
-- 要创建一个新的对象 object，使用 new 语句实例化一个类
-- 如果将一个对象转换成对象，它将不会有任何变化。如果其它任何类型的值被转换成对象，将会创建一个内置类 stdClass 的实例。如果该值为 NULL，则新的实例为空。数组转换成对象将使键名成为属性名并具有相对应的值。对于任何其它的值，名为 scalar 的成员变量将包含该值。
-
-```php
-<?php
-class foo {
-    function do_foo() {
-        echo "Doing foo.";
-    }
-}
-
-$bar = new foo;
-$bar->do_foo();
-
-# 转换为对象
-$obj = (object)'ciao';
-echo $obj->scalar; // outputs 'ciao'
-
-// In PHP 7 there are a few ways to create an empty object:
-$obj1 = new \stdCalss; // Instantiate stdClass object
-$obj2 = new class{}; // Instantiate anonymous class
-$obj3 = (object)[];  // Cast empty array to object
-
-var_dump($obj1); // object(stdClass)#1 (0) {}
-var_dump($obj2); // object(class@anonymous)#2 (0) {}
-var_dump($obj2); // object(stdClass)#1 (0) {}
-
-// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:
-
-echo json_encode([
-    new \stdClass,
-    new class{},
-    (object)[],
-]);
-// Output: [{},{},{}]
-```
-
-#### <span id="resource">7. Resource 资源类型</span>
-
-#### <span id="null">8. NULL</span>
-
-#### <span id="callback">9. Callback 回调类型
-
-#### <span id="mixed">10. 伪类型与变量</span>
-
-#### 11. 类型转换的判别
-
-### 变量
-
-#### 0. 基础
-
-#### 1. 预定义变量
-
-#### 2. 变量的范围
-
-#### 3. 可变变量
-
-#### 4. 来自PHP之外的变量
-
-### 常量
-
-#### 0. 语法
-
-#### 1. 魔术敞亮
-
-### 表达式
-
-### 运算符
-
-### 流程控制
-
-### 函数
-
-### 类与对象
 
 ### 命名空间
 
