@@ -1,0 +1,1027 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>PHP函数参考-核心扩展库 - pemako</title>
+    <meta name="description" content="php,手册">
+    <meta name="keywords" content="php,手册,语法">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/linux/2017/02/12/use-vim-multiple-lines-into-one-line.html" title="使用vim进行多行折叠" />
+    
+    
+    <link rel="next prerender" href="/php/2017/02/14/php-function-bundled-extensions.html" title="PHP函数参考-绑定的扩展库" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>PHP函数参考-核心扩展库 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h1 id="简介">简介</h1>
+
+<p>PHP官方手册主要包含了四大部分为了便于查阅进行整理总结，本篇主要是第二部分函数参考。</p>
+
+<h2 id="核心扩展库">核心扩展库</h2>
+<h3 id="1-字符串">1. 字符串</h3>
+
+<ul>
+  <li><a href="">addcslashes</a> Quote string with slashes in a C style</li>
+  <li><a href="">addslashes</a> Quote string with slashes</li>
+  <li><a href="">bin2hex</a> Convert binary data into hexadecimal representation</li>
+  <li><a href="">chop</a> Alias of rtrim</li>
+  <li><a href="">chr</a> Return a specific character</li>
+  <li><a href="">chunk_split</a> Split a string into smaller chunks</li>
+  <li><a href="">convert_cyr_string</a> Convert from one Cyrillic character set to another</li>
+  <li><a href="">convert_uudecode</a> Decode a uuencoded string</li>
+  <li><a href="">convert_uuencode</a> Uuencode a string</li>
+  <li><a href="">count_chars</a> Return information about characters used in a string</li>
+  <li><a href="">crc32</a> Calculates the crc32 polynomial of a string</li>
+  <li><a href="">crypt</a> One-way string hashing</li>
+  <li><a href="">echo</a> Output one or more strings</li>
+  <li><a href="">explode</a> Split a string by string</li>
+  <li><a href="">fprintf</a> Write a formatted string to a stream</li>
+  <li><a href="">get_html_translation_table</a> Returns the translation table used by htmlspecialchars and htmlentities</li>
+  <li><a href="">hebrev</a> Convert logical Hebrew text to visual text</li>
+  <li><a href="">hebrevc</a> Convert logical Hebrew text to visual text with newline conversion</li>
+  <li><a href="">hex2bin</a> Decodes a hexadecimally encoded binary string</li>
+  <li><a href="">html_entity_decode</a> Convert all HTML entities to their applicable characters</li>
+  <li><a href="">htmlentities</a> Convert all applicable characters to HTML entities</li>
+  <li><a href="">htmlspecialchars_decode</a> Convert special HTML entities back to characters</li>
+  <li><a href="">htmlspecialchars</a> Convert special characters to HTML entities</li>
+  <li><a href="">implode</a> Join array elements with a string</li>
+  <li><a href="">join</a> Alias of implode</li>
+  <li><a href="">lcfirst</a> Make a string’s first character lowercase</li>
+  <li><a href="">levenshtein</a> Calculate Levenshtein distance between two strings</li>
+  <li><a href="">localeconv</a> Get numeric formatting information</li>
+  <li><a href="">ltrim</a> Strip whitespace (or other characters) from the beginning of a string</li>
+  <li><a href="">md5_file</a> Calculates the md5 hash of a given file</li>
+  <li><a href="">md5</a> Calculate the md5 hash of a string</li>
+  <li><a href="">metaphone</a> Calculate the metaphone key of a string</li>
+  <li><a href="">money_format</a> Formats a number as a currency string</li>
+  <li><a href="">nl_langinfo</a> Query language and locale information</li>
+  <li><a href="">nl2br</a> Inserts HTML line breaks before all newlines in a string</li>
+  <li><a href="">number_format</a> Format a number with grouped thousands</li>
+  <li><a href="">ord</a> Return ASCII value of character</li>
+  <li><a href="">parse_str</a> Parses the string into variables</li>
+  <li><a href="">print</a> Output a string</li>
+  <li><a href="">printf</a> Output a formatted string</li>
+  <li><a href="">quoted_printable_decode</a> Convert a quoted-printable string to an 8 bit string</li>
+  <li><a href="">quoted_printable_encode</a> Convert a 8 bit string to a quoted-printable string</li>
+  <li><a href="">quotemeta</a> Quote meta characters</li>
+  <li><a href="">rtrim</a> Strip whitespace (or other characters) from the end of a string</li>
+  <li><a href="">setlocale</a> Set locale information</li>
+  <li><a href="">sha1_file</a> Calculate the sha1 hash of a file</li>
+  <li><a href="">sha1</a> Calculate the sha1 hash of a string</li>
+  <li><a href="">similar_text</a> Calculate the similarity between two strings</li>
+  <li><a href="">soundex</a> Calculate the soundex key of a string</li>
+  <li><a href="">sprintf</a> Return a formatted string</li>
+  <li><a href="">sscanf</a> Parses input from a string according to a format</li>
+  <li><a href="">str_getcsv</a> Parse a CSV string into an array</li>
+  <li><a href="">str_ireplace</a> Case-insensitive version of str_replace.</li>
+  <li><a href="">str_pad</a> Pad a string to a certain length with another string</li>
+  <li><a href="">str_repeat</a> Repeat a string</li>
+  <li><a href="">str_replace</a> Replace all occurrences of the search string with the replacement string</li>
+  <li><a href="">str_rot13</a> Perform the rot13 transform on a string</li>
+  <li><a href="">str_shuffle</a> Randomly shuffles a string</li>
+  <li><a href="">str_split</a> Convert a string to an array</li>
+  <li><a href="">str_word_count</a> Return information about words used in a string</li>
+  <li><a href="">strcasecmp</a> Binary safe case-insensitive string comparison</li>
+  <li><a href="">strchr</a> Alias of strstr</li>
+  <li><a href="">strcmp</a> Binary safe string comparison</li>
+  <li><a href="">strcoll</a> Locale based string comparison</li>
+  <li><a href="">strcspn</a> Find length of initial segment not matching mask</li>
+  <li><a href="">strip_tags</a> Strip HTML and PHP tags from a string</li>
+  <li><a href="">stripcslashes</a> Un-quote string quoted with addcslashes</li>
+  <li><a href="">stripos</a> Find the position of the first occurrence of a case-insensitive substring in a string</li>
+  <li><a href="">stripslashes</a> Un-quotes a quoted string</li>
+  <li><a href="">stristr</a> Case-insensitive strstr</li>
+  <li><a href="">strlen</a> Get string length</li>
+  <li><a href="">strnatcasecmp</a> Case insensitive string comparisons using a “natural order” algorithm</li>
+  <li><a href="">strnatcmp</a> String comparisons using a “natural order” algorithm</li>
+  <li><a href="">strncasecmp</a> Binary safe case-insensitive string comparison of the first n characters</li>
+  <li><a href="">strncmp</a> Binary safe string comparison of the first n characters</li>
+  <li><a href="">strpbrk</a> Search a string for any of a set of characters</li>
+  <li><a href="">strpos</a> Find the position of the first occurrence of a substring in a string</li>
+  <li><a href="">strrchr</a> Find the last occurrence of a character in a string</li>
+  <li><a href="">strrev</a> Reverse a string</li>
+  <li><a href="">strripos</a> Find the position of the last occurrence of a case-insensitive substring in a string</li>
+  <li><a href="">strrpos</a> Find the position of the last occurrence of a substring in a string</li>
+  <li><a href="">strspn</a> Finds the length of the initial segment of a string consisting entirely of characters contained within a given mask.</li>
+  <li><a href="">strstr</a> Find the first occurrence of a string</li>
+  <li><a href="">strtok</a> Tokenize string</li>
+  <li><a href="">strtolower</a> Make a string lowercase</li>
+  <li><a href="">strtoupper</a> Make a string uppercase</li>
+  <li><a href="">strtr</a> Translate characters or replace substrings</li>
+  <li><a href="">substr_compare</a> Binary safe comparison of two strings from an offset, up to length characters</li>
+  <li><a href="">substr_count</a> Count the number of substring occurrences</li>
+  <li><a href="">substr_replace</a> Replace text within a portion of a string</li>
+  <li><a href="">substr</a> Return part of a string</li>
+  <li><a href="">trim</a> Strip whitespace (or other characters) from the beginning and end of a string</li>
+  <li><a href="">ucfirst</a> Make a string’s first character uppercase</li>
+  <li><a href="">ucwords</a> Uppercase the first character of each word in a string</li>
+  <li><a href="">vfprintf</a> Write a formatted string to a stream</li>
+  <li><a href="">vprintf</a> Output a formatted string</li>
+  <li><a href="">vsprintf</a> Return a formatted string</li>
+  <li><a href="">wordwrap</a> Wraps a string to a given number of characters</li>
+</ul>
+
+<h3 id="2-数组">2. 数组</h3>
+
+<ul>
+  <li><a href="">array_change_key_case</a> Changes the case of all keys in an array</li>
+  <li><a href="">array_chunk</a> Split an array into chunks</li>
+  <li><a href="">array_column</a> Return the values from a single column in the input array</li>
+  <li><a href="">array_combine</a> Creates an array by using one array for keys and another for its values</li>
+  <li><a href="">array_count_values</a> Counts all the values of an array</li>
+  <li><a href="">array_diff_assoc</a> Computes the difference of arrays with additional index check</li>
+  <li><a href="">array_diff_key</a> Computes the difference of arrays using keys for comparison</li>
+  <li><a href="">array_diff_uassoc</a> Computes the difference of arrays with additional index check which is performed by a user supplied callback function</li>
+  <li><a href="">array_diff_ukey</a> Computes the difference of arrays using a callback function on the keys for comparison</li>
+  <li><a href="">array_diff</a> Computes the difference of arrays</li>
+  <li><a href="">array_fill_keys</a> Fill an array with values, specifying keys</li>
+  <li><a href="">array_fill</a> Fill an array with values</li>
+  <li><a href="">array_filter</a> Filters elements of an array using a callback function</li>
+  <li><a href="">array_flip</a> Exchanges all keys with their associated values in an array</li>
+  <li><a href="">array_intersect_assoc</a> Computes the intersection of arrays with additional index check</li>
+  <li><a href="">array_intersect_key</a> Computes the intersection of arrays using keys for comparison</li>
+  <li><a href="">array_intersect_uassoc</a> Computes the intersection of arrays with additional index check, compares indexes by a callback function</li>
+  <li><a href="">array_intersect_ukey</a> Computes the intersection of arrays using a callback function on the keys for comparison</li>
+  <li><a href="">array_intersect</a> Computes the intersection of arrays</li>
+  <li><a href="">array_key_exists</a> Checks if the given key or index exists in the array</li>
+  <li><a href="">array_keys</a> Return all the keys or a subset of the keys of an array</li>
+  <li><a href="">array_map</a> Applies the callback to the elements of the given arrays</li>
+  <li><a href="">array_merge_recursive</a> Merge two or more arrays recursively</li>
+  <li><a href="">array_merge</a> Merge one or more arrays</li>
+  <li><a href="">array_multisort</a> Sort multiple or multi-dimensional arrays</li>
+  <li><a href="">array_pad</a> Pad array to the specified length with a value</li>
+  <li><a href="">array_pop</a> Pop the element off the end of array</li>
+  <li><a href="">array_product</a> Calculate the product of values in an array</li>
+  <li><a href="">array_push</a> Push one or more elements onto the end of array</li>
+  <li><a href="">array_rand</a> Pick one or more random entries out of an array</li>
+  <li><a href="">array_reduce</a> Iteratively reduce the array to a single value using a callback function</li>
+  <li><a href="">array_replace_recursive</a> Replaces elements from passed arrays into the first array recursively</li>
+  <li><a href="">array_replace</a> Replaces elements from passed arrays into the first array</li>
+  <li><a href="">array_reverse</a> Return an array with elements in reverse order</li>
+  <li><a href="">array_search</a> Searches the array for a given value and returns the first corresponding key if successful</li>
+  <li><a href="">array_shift</a> Shift an element off the beginning of array</li>
+  <li><a href="">array_slice</a> Extract a slice of the array</li>
+  <li><a href="">array_splice</a> Remove a portion of the array and replace it with something else</li>
+  <li><a href="">array_sum</a> Calculate the sum of values in an array</li>
+  <li><a href="">array_udiff_assoc</a> Computes the difference of arrays with additional index check, compares data by a callback function</li>
+  <li><a href="">array_udiff_uassoc</a> Computes the difference of arrays with additional index check, compares data and indexes by a callback function</li>
+  <li><a href="">array_udiff</a> Computes the difference of arrays by using a callback function for data comparison</li>
+  <li><a href="">array_uintersect_assoc</a> Computes the intersection of arrays with additional index check, compares data by a callback function</li>
+  <li><a href="">array_uintersect_uassoc</a> Computes the intersection of arrays with additional index check, compares data and indexes by separate callback functions</li>
+  <li><a href="">array_uintersect</a> Computes the intersection of arrays, compares data by a callback function</li>
+  <li><a href="">array_unique</a> Removes duplicate values from an array</li>
+  <li><a href="">array_unshift</a> Prepend one or more elements to the beginning of an array</li>
+  <li><a href="">array_values</a> Return all the values of an array</li>
+  <li><a href="">array_walk_recursive</a> Apply a user function recursively to every member of an array</li>
+  <li><a href="">array_walk</a> Apply a user supplied function to every member of an array</li>
+  <li><a href="">array</a> Create an array</li>
+  <li><a href="">arsort</a> Sort an array in reverse order and maintain index association</li>
+  <li><a href="">asort</a> Sort an array and maintain index association</li>
+  <li><a href="">compact</a> Create array containing variables and their values</li>
+  <li><a href="">count</a> Count all elements in an array, or something in an object</li>
+  <li><a href="">current</a> Return the current element in an array</li>
+  <li><a href="">each</a> Return the current key and value pair from an array and advance the array cursor</li>
+  <li><a href="">end</a> Set the internal pointer of an array to its last element</li>
+  <li><a href="">extract</a> Import variables into the current symbol table from an array</li>
+  <li><a href="">in_array</a> Checks if a value exists in an array</li>
+  <li><a href="">key_exists</a> Alias of array_key_exists</li>
+  <li><a href="">key</a> Fetch a key from an array</li>
+  <li><a href="">krsort</a> Sort an array by key in reverse order</li>
+  <li><a href="">ksort</a> Sort an array by key</li>
+  <li><a href="">list</a> Assign variables as if they were an array</li>
+  <li><a href="">natcasesort</a> Sort an array using a case insensitive “natural order” algorithm</li>
+  <li><a href="">natsort</a> Sort an array using a “natural order” algorithm</li>
+  <li><a href="">next</a> Advance the internal array pointer of an array</li>
+  <li><a href="">pos</a> Alias of current</li>
+  <li><a href="">prev</a> Rewind the internal array pointer</li>
+  <li><a href="">range</a> Create an array containing a range of elements</li>
+  <li><a href="">reset</a> Set the internal pointer of an array to its first element</li>
+  <li><a href="">rsort</a> Sort an array in reverse order</li>
+  <li><a href="">shuffle</a> Shuffle an array</li>
+  <li><a href="">sizeof</a> Alias of count</li>
+  <li><a href="">sort</a> Sort an array</li>
+  <li><a href="">uasort</a> Sort an array with a user-defined comparison function and maintain index association</li>
+  <li><a href="">uksort</a> Sort an array by keys using a user-defined comparison function</li>
+  <li><a href="">usort</a> Sort an array by values using a user-defined comparison function</li>
+</ul>
+
+<h3 id="3-类对象">3. 类/对象</h3>
+
+<ul>
+  <li><a href="">__autoload</a> Attempt to load undefined class</li>
+  <li><a href="">call_user_method_array</a> Call a user method given with an array of parameters</li>
+  <li><a href="">call_user_method</a> Call a user method on an specific object</li>
+  <li><a href="">class_alias</a> Creates an alias for a class</li>
+  <li><a href="">class_exists</a> Checks if the class has been defined</li>
+  <li><a href="">get_called_class</a> the “Late Static Binding” class name</li>
+  <li><a href="">get_class_methods</a> Gets the class methods’ names</li>
+  <li><a href="">get_class_vars</a> Get the default properties of the class</li>
+  <li><a href="">get_class</a> Returns the name of the class of an object</li>
+  <li><a href="">get_declared_classes</a> Returns an array with the name of the defined classes</li>
+  <li><a href="">get_declared_interfaces</a> Returns an array of all declared interfaces</li>
+  <li><a href="">get_declared_traits</a> Returns an array of all declared traits</li>
+  <li><a href="">get_object_vars</a> Gets the properties of the given object</li>
+  <li><a href="">get_parent_class</a> Retrieves the parent class name for object or class</li>
+  <li><a href="">interface_exists</a> Checks if the interface has been defined</li>
+  <li><a href="">is_a</a> Checks if the object is of this class or has this class as one of its parents</li>
+  <li><a href="">is_subclass_of</a> Checks if the object has this class as one of its parents or implements it.</li>
+  <li><a href="">method_exists</a> Checks if the class method exists</li>
+  <li><a href="">property_exists</a> Checks if the object or class has a property</li>
+  <li><a href="">trait_exists</a> Checks if the trait exists</li>
+</ul>
+
+<h3 id="4-日期时间">4. 日期/时间</h3>
+
+<ul>
+  <li><a href="">checkdate</a> Validate a Gregorian date</li>
+  <li><a href="">date_add</a> Alias of DateTime::add</li>
+  <li><a href="">date_create_from_format</a> Alias of DateTime::createFromFormat</li>
+  <li><a href="">date_create_immutable_from_format</a> Alias of DateTimeImmutable::createFromFormat</li>
+  <li><a href="">date_create_immutable</a> Alias of DateTimeImmutable::__construct</li>
+  <li><a href="">date_create</a> Alias of DateTime::__construct</li>
+  <li><a href="">date_date_set</a> Alias of DateTime::setDate</li>
+  <li><a href="">date_default_timezone_get</a> Gets the default timezone used by all date/time functions in a script</li>
+  <li><a href="">date_default_timezone_set</a> Sets the default timezone used by all date/time functions in a script</li>
+  <li><a href="">date_diff</a> Alias of DateTime::diff</li>
+  <li><a href="">date_format</a> Alias of DateTime::format</li>
+  <li><a href="">date_get_last_errors</a> Alias of DateTime::getLastErrors</li>
+  <li><a href="">date_interval_create_from_date_string</a> Alias of DateInterval::createFromDateString</li>
+  <li><a href="">date_interval_format</a> Alias of DateInterval::format</li>
+  <li><a href="">date_isodate_set</a> Alias of DateTime::setISODate</li>
+  <li><a href="">date_modify</a> Alias of DateTime::modify</li>
+  <li><a href="">date_offset_get</a> Alias of DateTime::getOffset</li>
+  <li><a href="">date_parse_from_format</a> Get info about given date formatted according to the specified format</li>
+  <li><a href="">date_parse</a> Returns associative array with detailed info about given date</li>
+  <li><a href="">date_sub</a> Alias of DateTime::sub</li>
+  <li><a href="">date_sun_info</a> Returns an array with information about sunset/sunrise and twilight begin/end</li>
+  <li><a href="">date_sunrise</a> Returns time of sunrise for a given day and location</li>
+  <li><a href="">date_sunset</a> Returns time of sunset for a given day and location</li>
+  <li><a href="">date_time_set</a> Alias of DateTime::setTime</li>
+  <li><a href="">date_timestamp_get</a> Alias of DateTime::getTimestamp</li>
+  <li><a href="">date_timestamp_set</a> Alias of DateTime::setTimestamp</li>
+  <li><a href="">date_timezone_get</a> Alias of DateTime::getTimezone</li>
+  <li><a href="">date_timezone_set</a> Alias of DateTime::setTimezone</li>
+  <li><a href="">date</a> Format a local time/date</li>
+  <li><a href="">getdate</a> Get date/time information</li>
+  <li><a href="">gettimeofday</a> Get current time</li>
+  <li><a href="">gmdate</a> Format a GMT/UTC date/time</li>
+  <li><a href="">gmmktime</a> Get Unix timestamp for a GMT date</li>
+  <li><a href="">gmstrftime</a> Format a GMT/UTC time/date according to locale settings</li>
+  <li><a href="">idate</a> Format a local time/date as integer</li>
+  <li><a href="">localtime</a> Get the local time</li>
+  <li><a href="">microtime</a> Return current Unix timestamp with microseconds</li>
+  <li><a href="">mktime</a> Get Unix timestamp for a date</li>
+  <li><a href="">strftime</a> Format a local time/date according to locale settings</li>
+  <li><a href="">strptime</a> Parse a time/date generated with strftime</li>
+  <li><a href="">strtotime</a> Parse about any English textual datetime description into a Unix timestamp</li>
+  <li><a href="">time</a> Return current Unix timestamp</li>
+  <li><a href="">timezone_abbreviations_list</a> Alias of DateTimeZone::listAbbreviations</li>
+  <li><a href="">timezone_identifiers_list</a> Alias of DateTimeZone::listIdentifiers</li>
+  <li><a href="">timezone_location_get</a> Alias of DateTimeZone::getLocation</li>
+  <li><a href="">timezone_name_from_abbr</a> Returns the timezone name from abbreviation</li>
+  <li><a href="">timezone_name_get</a> Alias of DateTimeZone::getName</li>
+  <li><a href="">timezone_offset_get</a> Alias of DateTimeZone::getOffset</li>
+  <li><a href="">timezone_open</a> Alias of DateTimeZone::__construct</li>
+  <li><a href="">timezone_transitions_get</a> Alias of DateTimeZone::getTransitions</li>
+  <li><a href="">timezone_version_get</a> Gets the version of the timezonedb</li>
+</ul>
+
+<h3 id="5-目录">5. 目录</h3>
+
+<ul>
+  <li><a href="">chdir</a> Change directory</li>
+  <li><a href="">chroot</a> Change the root directory</li>
+  <li><a href="">closedir</a> Close directory handle</li>
+  <li><a href="">dir</a> Return an instance of the Directory class</li>
+  <li><a href="">getcwd</a> Gets the current working directory</li>
+  <li><a href="">opendir</a> Open directory handle</li>
+  <li><a href="">readdir</a> Read entry from directory handle</li>
+  <li><a href="">rewinddir</a> Rewind directory handle</li>
+  <li><a href="">scandir</a> List files and directories inside the specified path</li>
+</ul>
+
+<h3 id="6-错误处理">6. 错误处理</h3>
+
+<ul>
+  <li><a href="">debug_backtrace</a> Generates a backtrace</li>
+  <li><a href="">debug_print_backtrace</a> Prints a backtrace</li>
+  <li><a href="">error_clear_last</a> Clear the most recent error</li>
+  <li><a href="">error_get_last</a> Get the last occurred error</li>
+  <li><a href="">error_log</a> Send an error message to the defined error handling routines</li>
+  <li><a href="">error_reporting</a> Sets which PHP errors are reported</li>
+  <li><a href="">restore_error_handler</a> Restores the previous error handler function</li>
+  <li><a href="">restore_exception_handler</a> Restores the previously defined exception handler function</li>
+  <li><a href="">set_error_handler</a> Sets a user-defined error handler function</li>
+  <li><a href="">set_exception_handler</a> Sets a user-defined exception handler function</li>
+  <li><a href="">trigger_error</a> Generates a user-level error/warning/notice message</li>
+  <li><a href="">user_error</a> Alias of trigger_error</li>
+</ul>
+
+<h3 id="7-程序执行">7. 程序执行</h3>
+
+<ul>
+  <li><a href="">escapeshellarg</a> Escape a string to be used as a shell argument</li>
+  <li><a href="">escapeshellcmd</a> Escape shell metacharacters</li>
+  <li><a href="">exec</a> Execute an external program</li>
+  <li><a href="">passthru</a> Execute an external program and display raw output</li>
+  <li><a href="">proc_close</a> Close a process opened by proc_open and return the exit code of that process</li>
+  <li><a href="">proc_get_status</a> Get information about a process opened by proc_open</li>
+  <li><a href="">proc_nice</a> Change the priority of the current process</li>
+  <li><a href="">proc_open</a> Execute a command and open file pointers for input/output</li>
+  <li><a href="">proc_terminate</a> Kills a process opened by proc_open</li>
+  <li><a href="">shell_exec</a> Execute command via shell and return the complete output as a string</li>
+  <li><a href="">system</a> Execute an external program and display the output</li>
+</ul>
+
+<h3 id="8-filesystem">8. Filesystem</h3>
+
+<ul>
+  <li><a href="">basename</a> Returns trailing name component of path</li>
+  <li><a href="">chgrp</a> Changes file group</li>
+  <li><a href="">chmod</a> Changes file mode</li>
+  <li><a href="">chown</a> Changes file owner</li>
+  <li><a href="">clearstatcache</a> Clears file status cache</li>
+  <li><a href="">copy</a> Copies file</li>
+  <li><a href="">delete</a> See unlink or unset</li>
+  <li><a href="">dirname</a> Returns a parent directory’s path</li>
+  <li><a href="">disk_free_space</a> Returns available space on filesystem or disk partition</li>
+  <li><a href="">disk_total_space</a> Returns the total size of a filesystem or disk partition</li>
+  <li><a href="">diskfreespace</a> Alias of disk_free_space</li>
+  <li><a href="">fclose</a> Closes an open file pointer</li>
+  <li><a href="">feof</a> Tests for end-of-file on a file pointer</li>
+  <li><a href="">fflush</a> Flushes the output to a file</li>
+  <li><a href="">fgetc</a> Gets character from file pointer</li>
+  <li><a href="">fgetcsv</a> Gets line from file pointer and parse for CSV fields</li>
+  <li><a href="">fgets</a> Gets line from file pointer</li>
+  <li><a href="">fgetss</a> Gets line from file pointer and strip HTML tags</li>
+  <li><a href="">file_exists</a> Checks whether a file or directory exists</li>
+  <li><a href="">file_get_contents</a> Reads entire file into a string</li>
+  <li><a href="">file_put_contents</a> Write a string to a file</li>
+  <li><a href="">file</a> Reads entire file into an array</li>
+  <li><a href="">fileatime</a> Gets last access time of file</li>
+  <li><a href="">filectime</a> Gets inode change time of file</li>
+  <li><a href="">filegroup</a> Gets file group</li>
+  <li><a href="">fileinode</a> Gets file inode</li>
+  <li><a href="">filemtime</a> Gets file modification time</li>
+  <li><a href="">fileowner</a> Gets file owner</li>
+  <li><a href="">fileperms</a> Gets file permissions</li>
+  <li><a href="">filesize</a> Gets file size</li>
+  <li><a href="">filetype</a> Gets file type</li>
+  <li><a href="">flock</a> Portable advisory file locking</li>
+  <li><a href="">fnmatch</a> Match filename against a pattern</li>
+  <li><a href="">fopen</a> Opens file or URL</li>
+  <li><a href="">fpassthru</a> Output all remaining data on a file pointer</li>
+  <li><a href="">fputcsv</a> Format line as CSV and write to file pointer</li>
+  <li><a href="">fputs</a> Alias of fwrite</li>
+  <li><a href="">fread</a> Binary-safe file read</li>
+  <li><a href="">fscanf</a> Parses input from a file according to a format</li>
+  <li><a href="">fseek</a> Seeks on a file pointer</li>
+  <li><a href="">fstat</a> Gets information about a file using an open file pointer</li>
+  <li><a href="">ftell</a> Returns the current position of the file read/write pointer</li>
+  <li><a href="">ftruncate</a> Truncates a file to a given length</li>
+  <li><a href="">fwrite</a> Binary-safe file write</li>
+  <li><a href="">glob</a> Find pathnames matching a pattern</li>
+  <li><a href="">is_dir</a> Tells whether the filename is a directory</li>
+  <li><a href="">is_executable</a> Tells whether the filename is executable</li>
+  <li><a href="">is_file</a> Tells whether the filename is a regular file</li>
+  <li><a href="">is_link</a> Tells whether the filename is a symbolic link</li>
+  <li><a href="">is_readable</a> Tells whether a file exists and is readable</li>
+  <li><a href="">is_uploaded_file</a> Tells whether the file was uploaded via HTTP POST</li>
+  <li><a href="">is_writable</a> Tells whether the filename is writable</li>
+  <li><a href="">is_writeable</a> Alias of is_writable</li>
+  <li><a href="">lchgrp</a> Changes group ownership of symlink</li>
+  <li><a href="">lchown</a> Changes user ownership of symlink</li>
+  <li><a href="">link</a> Create a hard link</li>
+  <li><a href="">linkinfo</a> Gets information about a link</li>
+  <li><a href="">lstat</a> Gives information about a file or symbolic link</li>
+  <li><a href="">mkdir</a> Makes directory</li>
+  <li><a href="">move_uploaded_file</a> Moves an uploaded file to a new location</li>
+  <li><a href="">parse_ini_file</a> Parse a configuration file</li>
+  <li><a href="">parse_ini_string</a> Parse a configuration string</li>
+  <li><a href="">pathinfo</a> Returns information about a file path</li>
+  <li><a href="">pclose</a> Closes process file pointer</li>
+  <li><a href="">popen</a> Opens process file pointer</li>
+  <li><a href="">readfile</a> Outputs a file</li>
+  <li><a href="">readlink</a> Returns the target of a symbolic link</li>
+  <li><a href="">realpath_cache_get</a> Get realpath cache entries</li>
+  <li><a href="">realpath_cache_size</a> Get realpath cache size</li>
+  <li><a href="">realpath</a> Returns canonicalized absolute pathname</li>
+  <li><a href="">rename</a> Renames a file or directory</li>
+  <li><a href="">rewind</a> Rewind the position of a file pointer</li>
+  <li><a href="">rmdir</a> Removes directory</li>
+  <li><a href="">set_file_buffer</a> Alias of stream_set_write_buffer</li>
+  <li><a href="">stat</a> Gives information about a file</li>
+  <li><a href="">symlink</a> Creates a symbolic link</li>
+  <li><a href="">tempnam</a> Create file with unique file name</li>
+  <li><a href="">tmpfile</a> Creates a temporary file</li>
+  <li><a href="">touch</a> Sets access and modification time of file</li>
+  <li><a href="">umask</a> Changes the current umask</li>
+  <li><a href="">unlink</a> Deletes a file</li>
+</ul>
+
+<h3 id="9-filter">9. Filter</h3>
+
+<ul>
+  <li><a href="">filter_has_var</a> Checks if variable of specified type exists</li>
+  <li><a href="">filter_id</a> Returns the filter ID belonging to a named filter</li>
+  <li><a href="">filter_input_array</a> Gets external variables and optionally filters them</li>
+  <li><a href="">filter_input</a> Gets a specific external variable by name and optionally filters it</li>
+  <li><a href="">filter_list</a> Returns a list of all supported filters</li>
+  <li><a href="">filter_var_array</a> Gets multiple variables and optionally filters them</li>
+  <li><a href="">filter_var</a> Filters a variable with a specified filter</li>
+</ul>
+
+<h3 id="10-function-handing">10. Function Handing</h3>
+
+<ul>
+  <li><a href="">call_user_func_array</a> Call a callback with an array of parameters</li>
+  <li><a href="">call_user_func</a> Call the callback given by the first parameter</li>
+  <li><a href="">create_function</a> Create an anonymous (lambda-style) function</li>
+  <li><a href="">forward_static_call_array</a> Call a static method and pass the arguments as array</li>
+  <li><a href="">forward_static_call</a> Call a static method</li>
+  <li><a href="">func_get_arg</a> Return an item from the argument list</li>
+  <li><a href="">func_get_args</a> Returns an array comprising a function’s argument list</li>
+  <li><a href="">func_num_args</a> Returns the number of arguments passed to the function</li>
+  <li><a href="">function_exists</a> Return TRUE if the given function has been defined</li>
+  <li><a href="">get_defined_functions</a> Returns an array of all defined functions</li>
+  <li><a href="">register_shutdown_function</a> Register a function for execution on shutdown</li>
+  <li><a href="">register_tick_function</a> Register a function for execution on each tick</li>
+  <li><a href="">unregister_tick_function</a> De-register a function for execution on each tick</li>
+</ul>
+
+<h3 id="11-hash">11. Hash</h3>
+
+<ul>
+  <li><a href="">hash_algos</a> Return a list of registered hashing algorithms</li>
+  <li><a href="">hash_copy</a> Copy hashing context</li>
+  <li><a href="">hash_equals</a> Timing attack safe string comparison</li>
+  <li><a href="">hash_file</a> Generate a hash value using the contents of a given file</li>
+  <li><a href="">hash_final</a> Finalize an incremental hash and return resulting digest</li>
+  <li><a href="">hash_hmac_file</a> Generate a keyed hash value using the HMAC method and the contents of a given file</li>
+  <li><a href="">hash_hmac</a> Generate a keyed hash value using the HMAC method</li>
+  <li><a href="">hash_init</a> Initialize an incremental hashing context</li>
+  <li><a href="">hash_pbkdf2</a> Generate a PBKDF2 key derivation of a supplied password</li>
+  <li><a href="">hash_update_file</a> Pump data into an active hashing context from a file</li>
+  <li><a href="">hash_update_stream</a> Pump data into an active hashing context from an open stream</li>
+  <li><a href="">hash_update</a> Pump data into an active hashing context</li>
+  <li><a href="">hash</a> Generate a hash value (message digest)</li>
+</ul>
+
+<h3 id="12-php-选项信息">12. PHP 选项/信息</h3>
+
+<ul>
+  <li><a href="">assert_options</a> Set/get the various assert flags</li>
+  <li><a href="">assert</a> Checks if assertion is FALSE</li>
+  <li><a href="">cli_get_process_title</a> Returns the current process title</li>
+  <li><a href="">cli_set_process_title</a> Sets the process title</li>
+  <li><a href="">dl</a> Loads a PHP extension at runtime</li>
+  <li><a href="">extension_loaded</a> Find out whether an extension is loaded</li>
+  <li><a href="">gc_collect_cycles</a> Forces collection of any existing garbage cycles</li>
+  <li><a href="">gc_disable</a> Deactivates the circular reference collector</li>
+  <li><a href="">gc_enable</a> Activates the circular reference collector</li>
+  <li><a href="">gc_enabled</a> Returns status of the circular reference collector</li>
+  <li><a href="">gc_mem_caches</a> Reclaims memory used by the Zend Engine memory manager</li>
+  <li><a href="">get_cfg_var</a> Gets the value of a PHP configuration option</li>
+  <li><a href="">get_current_user</a> Gets the name of the owner of the current PHP script</li>
+  <li><a href="">get_defined_constants</a> Returns an associative array with the names of all the constants and their values</li>
+  <li><a href="">get_extension_funcs</a> Returns an array with the names of the functions of a module</li>
+  <li><a href="">get_include_path</a> Gets the current include_path configuration option</li>
+  <li><a href="">get_included_files</a> Returns an array with the names of included or required files</li>
+  <li><a href="">get_loaded_extensions</a> Returns an array with the names of all modules compiled and loaded</li>
+  <li><a href="">get_magic_quotes_gpc</a> Gets the current configuration setting of magic_quotes_gpc</li>
+  <li><a href="">get_magic_quotes_runtime</a> Gets the current active configuration setting of magic_quotes_runtime</li>
+  <li><a href="">get_required_files</a> Alias of get_included_files</li>
+  <li><a href="">get_resources</a> Returns active resources</li>
+  <li><a href="">getenv</a> Gets the value of an environment variable</li>
+  <li><a href="">getlastmod</a> Gets time of last page modification</li>
+  <li><a href="">getmygid</a> Get PHP script owner’s GID</li>
+  <li><a href="">getmyinode</a> Gets the inode of the current script</li>
+  <li><a href="">getmypid</a> Gets PHP’s process ID</li>
+  <li><a href="">getmyuid</a> Gets PHP script owner’s UID</li>
+  <li><a href="">getopt</a> Gets options from the command line argument list</li>
+  <li><a href="">getrusage</a> Gets the current resource usages</li>
+  <li><a href="">ini_alter</a> Alias of ini_set</li>
+  <li><a href="">ini_get_all</a> Gets all configuration options</li>
+  <li><a href="">ini_get</a> Gets the value of a configuration option</li>
+  <li><a href="">ini_restore</a> Restores the value of a configuration option</li>
+  <li><a href="">ini_set</a> Sets the value of a configuration option</li>
+  <li><a href="">magic_quotes_runtime</a> Alias of set_magic_quotes_runtime</li>
+  <li><a href="">main</a> Dummy for main</li>
+  <li><a href="">memory_get_peak_usage</a> Returns the peak of memory allocated by PHP</li>
+  <li><a href="">memory_get_usage</a> Returns the amount of memory allocated to PHP</li>
+  <li><a href="">php_ini_loaded_file</a> Retrieve a path to the loaded php.ini file</li>
+  <li><a href="">php_ini_scanned_files</a> Return a list of .ini files parsed from the additional ini dir</li>
+  <li><a href="">php_logo_guid</a> Gets the logo guid</li>
+  <li><a href="">php_sapi_name</a> Returns the type of interface between web server and PHP</li>
+  <li><a href="">php_uname</a> Returns information about the operating system PHP is running on</li>
+  <li><a href="">phpcredits</a> Prints out the credits for PHP</li>
+  <li><a href="">phpinfo</a> Outputs information about PHP’s configuration</li>
+  <li><a href="">phpversion</a> Gets the current PHP version</li>
+  <li><a href="">putenv</a> Sets the value of an environment variable</li>
+  <li><a href="">restore_include_path</a> Restores the value of the include_path configuration option</li>
+  <li><a href="">set_include_path</a> Sets the include_path configuration option</li>
+  <li><a href="">set_magic_quotes_runtime</a> Sets the current active configuration setting of magic_quotes_runtime</li>
+  <li><a href="">set_time_limit</a> Limits the maximum execution time</li>
+  <li><a href="">sys_get_temp_dir</a> Returns directory path used for temporary files</li>
+  <li><a href="">version_compare</a> Compares two “PHP-standardized” version number strings</li>
+  <li><a href="">zend_logo_guid</a> Gets the Zend guid</li>
+  <li><a href="">zend_thread_id</a> Returns a unique identifier for the current thread</li>
+  <li><a href="">zend_version</a> Gets the version of the current Zend engine</li>
+</ul>
+
+<h3 id="13-mail">13. Mail</h3>
+
+<h3 id="14-math">14. Math</h3>
+
+<ul>
+  <li><a href="">abs</a> Absolute value</li>
+  <li><a href="">acos</a> Arc cosine</li>
+  <li><a href="">acosh</a> Inverse hyperbolic cosine</li>
+  <li><a href="">asin</a> Arc sine</li>
+  <li><a href="">asinh</a> Inverse hyperbolic sine</li>
+  <li><a href="">atan2</a> Arc tangent of two variables</li>
+  <li><a href="">atan</a> Arc tangent</li>
+  <li><a href="">atanh</a> Inverse hyperbolic tangent</li>
+  <li><a href="">base_convert</a> Convert a number between arbitrary bases</li>
+  <li><a href="">bindec</a> Binary to decimal</li>
+  <li><a href="">ceil</a> Round fractions up</li>
+  <li><a href="">cos</a> Cosine</li>
+  <li><a href="">cosh</a> Hyperbolic cosine</li>
+  <li><a href="">decbin</a> Decimal to binary</li>
+  <li><a href="">dechex</a> Decimal to hexadecimal</li>
+  <li><a href="">decoct</a> Decimal to octal</li>
+  <li><a href="">deg2rad</a> Converts the number in degrees to the radian equivalent</li>
+  <li><a href="">exp</a> Calculates the exponent of e</li>
+  <li><a href="">expm1</a> Returns exp(number) - 1, computed in a way that is accurate even when the value of number is close to zero</li>
+  <li><a href="">floor</a> Round fractions down</li>
+  <li><a href="">fmod</a> Returns the floating point remainder (modulo) of the division of the arguments</li>
+  <li><a href="">getrandmax</a> Show largest possible random value</li>
+  <li><a href="">hexdec</a> Hexadecimal to decimal</li>
+  <li><a href="">hypot</a> Calculate the length of the hypotenuse of a right-angle triangle</li>
+  <li><a href="">intdiv</a> Integer division</li>
+  <li><a href="">is_finite</a> Finds whether a value is a legal finite number</li>
+  <li><a href="">is_infinite</a> Finds whether a value is infinite</li>
+  <li><a href="">is_nan</a> Finds whether a value is not a number</li>
+  <li><a href="">lcg_value</a> Combined linear congruential generator</li>
+  <li><a href="">log10</a> Base-10 logarithm</li>
+  <li><a href="">log1p</a> Returns log(1 + number), computed in a way that is accurate even when the value of number is close to zero</li>
+  <li><a href="">log</a> Natural logarithm</li>
+  <li><a href="">max</a> Find highest value</li>
+  <li><a href="">min</a> Find lowest value</li>
+  <li><a href="">mt_getrandmax</a> Show largest possible random value</li>
+  <li><a href="">mt_rand</a> Generate a better random value</li>
+  <li><a href="">mt_srand</a> Seed the better random number generator</li>
+  <li><a href="">octdec</a> Octal to decimal</li>
+  <li><a href="">pi</a> Get value of pi</li>
+  <li><a href="">pow</a> Exponential expression</li>
+  <li><a href="">rad2deg</a> Converts the radian number to the equivalent number in degrees</li>
+  <li><a href="">rand</a> Generate a random integer</li>
+  <li><a href="">round</a> Rounds a float</li>
+  <li><a href="">sin</a> Sine</li>
+  <li><a href="">sinh</a> Hyperbolic sine</li>
+  <li><a href="">sqrt</a> Square root</li>
+  <li><a href="">srand</a> Seed the random number generator</li>
+  <li><a href="">tan</a> Tangent</li>
+  <li><a href="">tanh</a> Hyperbolic tangent</li>
+</ul>
+
+<h3 id="15-misc">15. Misc</h3>
+
+<ul>
+  <li><a href="">connection_aborted</a> Check whether client disconnected</li>
+  <li><a href="">connection_status</a> Returns connection status bitfield</li>
+  <li><a href="">constant</a> Returns the value of a constant</li>
+  <li><a href="">define</a> Defines a named constant</li>
+  <li><a href="">defined</a> Checks whether a given named constant exists</li>
+  <li><a href="">die</a> Equivalent to exit</li>
+  <li><a href="">eval</a> Evaluate a string as PHP code</li>
+  <li><a href="">exit</a> Output a message and terminate the current script</li>
+  <li><a href="">get_browser</a> Tells what the user’s browser is capable of</li>
+  <li><a href="">__halt_compiler</a> Halts the compiler execution</li>
+  <li><a href="">highlight_file</a> Syntax highlighting of a file</li>
+  <li><a href="">highlight_string</a> Syntax highlighting of a string</li>
+  <li><a href="">ignore_user_abort</a> Set whether a client disconnect should abort script execution</li>
+  <li><a href="">pack</a> Pack data into binary string</li>
+  <li><a href="">php_check_syntax</a> Check the PHP syntax of (and execute) the specified file</li>
+  <li><a href="">php_strip_whitespace</a> Return source with stripped comments and whitespace</li>
+  <li><a href="">show_source</a> Alias of highlight_file</li>
+  <li><a href="">sleep</a> Delay execution</li>
+  <li><a href="">sys_getloadavg</a> Gets system load average</li>
+  <li><a href="">time_nanosleep</a> Delay for a number of seconds and nanoseconds</li>
+  <li><a href="">time_sleep_until</a> Make the script sleep until the specified time</li>
+  <li><a href="">uniqid</a> Generate a unique ID</li>
+  <li><a href="">unpack</a> Unpack data from binary string</li>
+  <li><a href="">usleep</a> Delay execution in microseconds</li>
+</ul>
+
+<h3 id="16-网络">16. 网络</h3>
+
+<ul>
+  <li><a href="">checkdnsrr</a> Check DNS records corresponding to a given Internet host name or IP address</li>
+  <li><a href="">closelog</a> Close connection to system logger</li>
+  <li><a href="">define_syslog_variables</a> Initializes all syslog related variables</li>
+  <li><a href="">dns_check_record</a> Alias of checkdnsrr</li>
+  <li><a href="">dns_get_mx</a> Alias of getmxrr</li>
+  <li><a href="">dns_get_record</a> Fetch DNS Resource Records associated with a hostname</li>
+  <li><a href="">fsockopen</a> Open Internet or Unix domain socket connection</li>
+  <li><a href="">gethostbyaddr</a> Get the Internet host name corresponding to a given IP address</li>
+  <li><a href="">gethostbyname</a> Get the IPv4 address corresponding to a given Internet host name</li>
+  <li><a href="">gethostbynamel</a> Get a list of IPv4 addresses corresponding to a given Internet host name</li>
+  <li><a href="">gethostname</a> Gets the host name</li>
+  <li><a href="">getmxrr</a> Get MX records corresponding to a given Internet host name</li>
+  <li><a href="">getprotobyname</a> Get protocol number associated with protocol name</li>
+  <li><a href="">getprotobynumber</a> Get protocol name associated with protocol number</li>
+  <li><a href="">getservbyname</a> Get port number associated with an Internet service and protocol</li>
+  <li><a href="">getservbyport</a> Get Internet service which corresponds to port and protocol</li>
+  <li><a href="">header_register_callback</a> Call a header function</li>
+  <li><a href="">header_remove</a> Remove previously set headers</li>
+  <li><a href="">header</a> Send a raw HTTP header</li>
+  <li><a href="">headers_list</a> Returns a list of response headers sent (or ready to send)</li>
+  <li><a href="">headers_sent</a> Checks if or where headers have been sent</li>
+  <li><a href="">http_response_code</a> Get or Set the HTTP response code</li>
+  <li><a href="">inet_ntop</a> Converts a packed internet address to a human readable representation</li>
+  <li><a href="">inet_pton</a> Converts a human readable IP address to its packed in_addr representation</li>
+  <li><a href="">ip2long</a> Converts a string containing an (IPv4) Internet Protocol dotted address into a long integer</li>
+  <li><a href="">long2ip</a> Converts an long integer address into a string in (IPv4) Internet standard dotted format</li>
+  <li><a href="">openlog</a> Open connection to system logger</li>
+  <li><a href="">pfsockopen</a> Open persistent Internet or Unix domain socket connection</li>
+  <li><a href="">setcookie</a> Send a cookie</li>
+  <li><a href="">setrawcookie</a> Send a cookie without urlencoding the cookie value</li>
+  <li><a href="">socket_get_status</a> Alias of stream_get_meta_data</li>
+  <li><a href="">socket_set_blocking</a> Alias of stream_set_blocking</li>
+  <li><a href="">socket_set_timeout</a> Alias of stream_set_timeout</li>
+  <li><a href="">syslog</a> Generate a system log message</li>
+</ul>
+
+<h3 id="17-输出控制">17. 输出控制</h3>
+
+<ul>
+  <li><a href="">flush</a> Flush system output buffer</li>
+  <li><a href="">ob_clean</a> Clean (erase) the output buffer</li>
+  <li><a href="">ob_end_clean</a> Clean (erase) the output buffer and turn off output buffering</li>
+  <li><a href="">ob_end_flush</a> Flush (send) the output buffer and turn off output buffering</li>
+  <li><a href="">ob_flush</a> Flush (send) the output buffer</li>
+  <li><a href="">ob_get_clean</a> Get current buffer contents and delete current output buffer</li>
+  <li><a href="">ob_get_contents</a> Return the contents of the output buffer</li>
+  <li><a href="">ob_get_flush</a> Flush the output buffer, return it as a string and turn off output buffering</li>
+  <li><a href="">ob_get_length</a> Return the length of the output buffer</li>
+  <li><a href="">ob_get_level</a> Return the nesting level of the output buffering mechanism</li>
+  <li><a href="">ob_get_status</a> Get status of output buffers</li>
+  <li><a href="">ob_gzhandler</a> ob_start callback function to gzip output buffer</li>
+  <li><a href="">ob_implicit_flush</a> Turn implicit flush on/off</li>
+  <li><a href="">ob_list_handlers</a> List all output handlers in use</li>
+  <li><a href="">ob_start</a> Turn on output buffering</li>
+  <li><a href="">output_add_rewrite_var</a> Add URL rewriter values</li>
+  <li><a href="">output_reset_rewrite_vars</a> Reset URL rewriter values</li>
+</ul>
+
+<h3 id="18-password-hashing">18. Password Hashing</h3>
+
+<ul>
+  <li><a href="">password_get_info</a> Returns information about the given hash</li>
+  <li><a href="">password_hash</a> Creates a password hash</li>
+  <li><a href="">password_needs_rehash</a> Checks if the given hash matches the given options</li>
+  <li><a href="">password_verify</a> Verifies that a password matches a hash</li>
+</ul>
+
+<h3 id="19-session">19. Session</h3>
+
+<ul>
+  <li><a href="">session_abort</a> Discard session array changes and finish session</li>
+  <li><a href="">session_cache_expire</a> Return current cache expire</li>
+  <li><a href="">session_cache_limiter</a> Get and/or set the current cache limiter</li>
+  <li><a href="">session_commit</a> Alias of session_write_close</li>
+  <li><a href="">session_create_id</a> Create new session id</li>
+  <li><a href="">session_decode</a> Decodes session data from a session encoded string</li>
+  <li><a href="">session_destroy</a> Destroys all data registered to a session</li>
+  <li><a href="">session_encode</a> Encodes the current session data as a session encoded string</li>
+  <li><a href="">session_gc</a> Perform session data garbage collection</li>
+  <li><a href="">session_get_cookie_params</a> Get the session cookie parameters</li>
+  <li><a href="">session_id</a> Get and/or set the current session id</li>
+  <li><a href="">session_is_registered</a> Find out whether a global variable is registered in a session</li>
+  <li><a href="">session_module_name</a> Get and/or set the current session module</li>
+  <li><a href="">session_name</a> Get and/or set the current session name</li>
+  <li><a href="">session_regenerate_id</a> Update the current session id with a newly generated one</li>
+  <li><a href="">session_register_shutdown</a> Session shutdown function</li>
+  <li><a href="">session_register</a> Register one or more global variables with the current session</li>
+  <li><a href="">session_reset</a> Re-initialize session array with original values</li>
+  <li><a href="">session_save_path</a> Get and/or set the current session save path</li>
+  <li><a href="">session_set_cookie_params</a> Set the session cookie parameters</li>
+  <li><a href="">session_set_save_handler</a> Sets user-level session storage functions</li>
+  <li><a href="">session_start</a> Start new or resume existing session</li>
+  <li><a href="">session_status</a> Returns the current session status</li>
+  <li><a href="">session_unregister</a> Unregister a global variable from the current session</li>
+  <li><a href="">session_unset</a> Free all session variables</li>
+  <li><a href="">session_write_close</a> Write session data and end session</li>
+</ul>
+
+<h3 id="20-反射">20. 反射</h3>
+
+<h3 id="21-posix-regex">21. POSIX Regex</h3>
+
+<ul>
+  <li><a href="">ereg_replace</a> Replace regular expression</li>
+  <li><a href="">ereg</a> Regular expression match</li>
+  <li><a href="">eregi_replace</a> Replace regular expression case insensitive</li>
+  <li><a href="">eregi</a> Case insensitive regular expression match</li>
+  <li><a href="">split</a> Split string into array by regular expression</li>
+  <li><a href="">spliti</a> Split string into array by regular expression case insensitive</li>
+  <li><a href="">sql_regcase</a> Make regular expression for case insensitive matche</li>
+</ul>
+
+<h3 id="22-spl">22. SPL</h3>
+
+<ul>
+  <li><a href="">class_implements</a> Return the interfaces which are implemented by the given class or interface</li>
+  <li><a href="">class_parents</a> Return the parent classes of the given class</li>
+  <li><a href="">class_uses</a> Return the traits used by the given class</li>
+  <li><a href="">iterator_apply</a> Call a function for every element in an iterator</li>
+  <li><a href="">iterator_count</a> Count the elements in an iterator</li>
+  <li><a href="">iterator_to_array</a> Copy the iterator into an array</li>
+  <li><a href="">spl_autoload_call</a> Try all registered __autoload() function to load the requested class</li>
+  <li><a href="">spl_autoload_extensions</a> Register and return default file extensions for spl_autoload</li>
+  <li><a href="">spl_autoload_functions</a> Return all registered __autoload() functions</li>
+  <li><a href="">spl_autoload_register</a> Register given function as __autoload() implementation</li>
+  <li><a href="">spl_autoload_unregister</a> Unregister given function as __autoload() implementation</li>
+  <li><a href="">spl_autoload</a> Default implementation for __autoload()</li>
+  <li><a href="">spl_classes</a> Return available SPL classes</li>
+  <li><a href="">spl_object_hash</a> Return hash id for given object</li>
+</ul>
+
+<h3 id="23-streams">23. Streams</h3>
+
+<ul>
+  <li><a href="">set_socket_blocking</a> Alias of stream_set_blocking</li>
+  <li><a href="">stream_bucket_append</a> Append bucket to brigade</li>
+  <li><a href="">stream_bucket_make_writeable</a> Return a bucket object from the brigade for operating on</li>
+  <li><a href="">stream_bucket_new</a> Create a new bucket for use on the current stream</li>
+  <li><a href="">stream_bucket_prepend</a> Prepend bucket to brigade</li>
+  <li><a href="">stream_context_create</a> Creates a stream context</li>
+  <li><a href="">stream_context_get_default</a> Retrieve the default stream context</li>
+  <li><a href="">stream_context_get_options</a> Retrieve options for a stream/wrapper/context</li>
+  <li><a href="">stream_context_get_params</a> Retrieves parameters from a context</li>
+  <li><a href="">stream_context_set_default</a> Set the default stream context</li>
+  <li><a href="">stream_context_set_option</a> Sets an option for a stream/wrapper/context</li>
+  <li><a href="">stream_context_set_params</a> Set parameters for a stream/wrapper/context</li>
+  <li><a href="">stream_copy_to_stream</a> Copies data from one stream to another</li>
+  <li><a href="">stream_encoding</a> Set character set for stream encoding</li>
+  <li><a href="">stream_filter_append</a> Attach a filter to a stream</li>
+  <li><a href="">stream_filter_prepend</a> Attach a filter to a stream</li>
+  <li><a href="">stream_filter_register</a> Register a user defined stream filter</li>
+  <li><a href="">stream_filter_remove</a> Remove a filter from a stream</li>
+  <li><a href="">stream_get_contents</a> Reads remainder of a stream into a string</li>
+  <li><a href="">stream_get_filters</a> Retrieve list of registered filters</li>
+  <li><a href="">stream_get_line</a> Gets line from stream resource up to a given delimiter</li>
+  <li><a href="">stream_get_meta_data</a> Retrieves header/meta data from streams/file pointers</li>
+  <li><a href="">stream_get_transports</a> Retrieve list of registered socket transports</li>
+  <li><a href="">stream_get_wrappers</a> Retrieve list of registered streams</li>
+  <li><a href="">stream_is_local</a> Checks if a stream is a local stream</li>
+  <li><a href="">stream_notification_callback</a> A callback function for the notification context parameter</li>
+  <li><a href="">stream_register_wrapper</a> Alias of stream_wrapper_register</li>
+  <li><a href="">stream_resolve_include_path</a> Resolve filename against the include path</li>
+  <li><a href="">stream_select</a> Runs the equivalent of the select() system call on the given arrays of streams with a timeout specified by tv_sec and tv_usec</li>
+  <li><a href="">stream_set_blocking</a> Set blocking/non-blocking mode on a stream</li>
+  <li><a href="">stream_set_chunk_size</a> Set the stream chunk size</li>
+  <li><a href="">stream_set_read_buffer</a> Set read file buffering on the given stream</li>
+  <li><a href="">stream_set_timeout</a> Set timeout period on a stream</li>
+  <li><a href="">stream_set_write_buffer</a> Sets write file buffering on the given stream</li>
+  <li><a href="">stream_socket_accept</a> Accept a connection on a socket created by stream_socket_server</li>
+  <li><a href="">stream_socket_client</a> Open Internet or Unix domain socket connection</li>
+  <li><a href="">stream_socket_enable_crypto</a> Turns encryption on/off on an already connected socket</li>
+  <li><a href="">stream_socket_get_name</a> Retrieve the name of the local or remote sockets</li>
+  <li><a href="">stream_socket_pair</a> Creates a pair of connected, indistinguishable socket streams</li>
+  <li><a href="">stream_socket_recvfrom</a> Receives data from a socket, connected or not</li>
+  <li><a href="">stream_socket_sendto</a> Sends a message to a socket, whether it is connected or not</li>
+  <li><a href="">stream_socket_server</a> Create an Internet or Unix domain server socket</li>
+  <li><a href="">stream_socket_shutdown</a> Shutdown a full-duplex connection</li>
+  <li><a href="">stream_supports_lock</a> Tells whether the stream supports locking.</li>
+  <li><a href="">stream_wrapper_register</a> Register a URL wrapper implemented as a PHP class</li>
+  <li><a href="">stream_wrapper_restore</a> Restores a previously unregistered built-in wrapper</li>
+  <li><a href="">stream_wrapper_unregister</a> Unregister a URL wrapper</li>
+</ul>
+
+<h3 id="24-tokenizer">24. Tokenizer</h3>
+
+<ul>
+  <li><a href="">token_get_all</a> Split given source into PHP tokens</li>
+  <li><a href="">token_name</a> Get the symbolic name of a given PHP token</li>
+</ul>
+
+<h3 id="25-urls">25. URLs</h3>
+
+<ul>
+  <li><a href="">base64_decode</a> Decodes data encoded with MIME base64</li>
+  <li><a href="">base64_encode</a> Encodes data with MIME base64</li>
+  <li><a href="">get_headers</a> Fetches all the headers sent by the server in response to a HTTP request</li>
+  <li><a href="">get_meta_tags</a> Extracts all meta tag content attributes from a file and returns an array</li>
+  <li><a href="">http_build_query</a> Generate URL-encoded query string</li>
+  <li><a href="">parse_url</a> Parse a URL and return its components</li>
+  <li><a href="">rawurldecode</a> Decode URL-encoded strings</li>
+  <li><a href="">rawurlencode</a> URL-encode according to RFC 3986</li>
+  <li><a href="">urldecode</a> Decodes URL-encoded string</li>
+  <li><a href="">urlencode</a> URL-encodes string</li>
+</ul>
+
+<h3 id="26-variable-handing">26. Variable Handing</h3>
+
+<ul>
+  <li><a href="">boolval</a> Get the boolean value of a variable</li>
+  <li><a href="">debug_zval_dump</a> Dumps a string representation of an internal zend value to output</li>
+  <li><a href="">doubleval</a> Alias of floatval</li>
+  <li><a href="">empty</a> Determine whether a variable is empty</li>
+  <li><a href="">floatval</a> Get float value of a variable</li>
+  <li><a href="">get_defined_vars</a> Returns an array of all defined variables</li>
+  <li><a href="">get_resource_type</a> Returns the resource type</li>
+  <li><a href="">gettype</a> Get the type of a variable</li>
+  <li><a href="">import_request_variables</a> Import GET/POST/Cookie variables into the global scope</li>
+  <li><a href="">intval</a> Get the integer value of a variable</li>
+  <li><a href="">is_array</a> Finds whether a variable is an array</li>
+  <li><a href="">is_bool</a> Finds out whether a variable is a boolean</li>
+  <li><a href="">is_callable</a> Verify that the contents of a variable can be called as a function</li>
+  <li><a href="">is_double</a> Alias of is_float</li>
+  <li><a href="">is_float</a> Finds whether the type of a variable is float</li>
+  <li><a href="">is_int</a> Find whether the type of a variable is integer</li>
+  <li><a href="">is_integer</a> Alias of is_int</li>
+  <li><a href="">is_long</a> Alias of is_int</li>
+  <li><a href="">is_null</a> Finds whether a variable is NULL</li>
+  <li><a href="">is_numeric</a> Finds whether a variable is a number or a numeric string</li>
+  <li><a href="">is_object</a> Finds whether a variable is an object</li>
+  <li><a href="">is_real</a> Alias of is_float</li>
+  <li><a href="">is_resource</a> Finds whether a variable is a resource</li>
+  <li><a href="">is_scalar</a> Finds whether a variable is a scalar</li>
+  <li><a href="">is_string</a> Find whether the type of a variable is string</li>
+  <li><a href="">isset</a> Determine if a variable is set and is not NULL</li>
+  <li><a href="">print_r</a> Prints human-readable information about a variable</li>
+  <li><a href="">serialize</a> Generates a storable representation of a value</li>
+  <li><a href="">settype</a> Set the type of a variable</li>
+  <li><a href="">strval</a> Get string value of a variable</li>
+  <li><a href="">unserialize</a> Creates a PHP value from a stored representation</li>
+  <li><a href="">unset</a> Unset a given variable</li>
+  <li><a href="">var_dump</a> Dumps information about a variable</li>
+  <li><a href="">var_export</a> Outputs or returns a parsable string representation of a variable</li>
+</ul>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#php-ref" rel="tag">php</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/linux/2017/02/12/use-vim-multiple-lines-into-one-line.html" title="使用vim进行多行折叠">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/php/2017/02/14/php-function-bundled-extensions.html" title="PHP函数参考-绑定的扩展库">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐 -->
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "PHP函数参考-核心扩展库"; //请用代码生成文章标题
+        var wumiiTags = "php"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["php"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="PHP函数参考-核心扩展库" data-url="https://pemako.cn/php/2017/02/13/php-function-reference.html" data-thread-key="/php/2017/02/13/php-function-reference"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+          和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, 
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

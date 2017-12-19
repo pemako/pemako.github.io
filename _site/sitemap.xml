@@ -66,6 +66,55 @@
 
 
 	<url>
+		<loc>https://pemako.cn/brew/2017/05/18/brew-install-mysql-and-config.html</loc>
+		<lastmod>2017-05-18</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/lua/2017/02/22/lua.html</loc>
+		<lastmod>2017-02-22</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/php/2017/02/14/php-function-bundled-extensions.html</loc>
+		<lastmod>2017-02-14</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/php/2017/02/13/php-function-reference.html</loc>
+		<lastmod>2017-02-13</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/linux/2017/02/12/use-vim-multiple-lines-into-one-line.html</loc>
+		<lastmod>2017-02-12</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/linux/2017/02/08/how-to-outpur-pre-zero.html</loc>
+		<lastmod>2017-02-08</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/php/2017/02/03/php-language-reference.html</loc>
+		<lastmod>2017-02-03</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/php/2017/02/03/how-to-use-php-documentation.html</loc>
 		<lastmod>2017-02-03</lastmod>
 		<changefreq>weekly</changefreq>
