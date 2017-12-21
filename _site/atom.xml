@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-12-21T21:36:51+08:00</updated>
+ <updated>2017-12-21T21:43:07+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -31,33 +31,33 @@
   &lt;li&gt;
     &lt;p&gt;原始字符串&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # 原始字符串对于反斜线不会做特殊处理，原始字符串以 r 开头
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c&quot;&gt;# 原始字符串对于反斜线不会做特殊处理，原始字符串以 r 开头&lt;/span&gt;
     
- $ print r'C:\nowhere' = C:\nowhere
+ &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;r'C:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;nowhere'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;nowhere&lt;/span&gt;
     
- # 注意不能在原始字符串结尾输入反斜线，除非进行转义
- $ print r'C:\nowhere\' = 错误 如果需要反斜线需转义
-&lt;/code&gt;&lt;/pre&gt;
+ &lt;span class=&quot;c&quot;&gt;# 注意不能在原始字符串结尾输入反斜线，除非进行转义&lt;/span&gt;
+ &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;r'C:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;nowhere&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; = 错误 如果需要反斜线需转义&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;python 中元组存在的意义&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; // 1. 元组可以在映射(和集合的成员)中当做健使用 - 而列表则不行
- // 2. 元组作为很多内建函数和方法的返回值存在，也就是你必须对元组进行处理
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;c&quot;&gt;# 1. 元组可以在映射(和集合的成员)中当做健使用 - 而列表则不行&lt;/span&gt;
+ &lt;span class=&quot;c&quot;&gt;# 2. 元组作为很多内建函数和方法的返回值存在，也就是你必须对元组进行处理&lt;/span&gt;
     
- // tuple([1,2,3]) 把序列转为元组 (1,2,3)
- // 一般列表可以满足对序列的所有需求
+ &lt;span class=&quot;c&quot;&gt;# tuple([1,2,3]) 把序列转为元组 (1,2,3)&lt;/span&gt;
+ &lt;span class=&quot;c&quot;&gt;# 一般列表可以满足对序列的所有需求&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;使用字典进行格式化输出字符串&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; _world = &quot;My name is %(name)s , I\'m %(age)d old&quot;
- dict = {&quot;name&quot;: &quot;pemako&quot;, &quot;age&quot;: 18}
- print _world % dict
- $ My name is pemako , Im 18 old
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;_world&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;My name is &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%(name)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s , I&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;m &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%(age)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d old&quot;&lt;/span&gt;
+ &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;pemako&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;age&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_world&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;
+ &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;My&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pemako&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Im&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;old&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -204,21 +204,21 @@
   &lt;li&gt;
     &lt;p&gt;访问内中私有的方法&lt;/p&gt;
 
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# python并不直接支持私有方式，为了让方法或特性变为私有，可以有在他的名字前加上双下划线 __
-# 前面有双下划线的名字都不会被带星号的 import 语句导入 from module import *
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# python并不直接支持私有方式，为了让方法或特性变为私有，可以有在他的名字前加上双下划线 __&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 前面有双下划线的名字都不会被带星号的 import 语句导入 from module import *&lt;/span&gt;
     
-class Secretive:
-    def __hidden(self):
-        print 'Bet you cant see me'
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Secretive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Bet you cant see me'&lt;/span&gt;
             
-    def accessible(self):
-        print 'The secret message is: '
-        self.__hidden()
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;accessible&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'The secret message is: '&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
     
-s = Secretive()
-# 如果想要直接访问 __hidden() 方法可以使用
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Secretive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 如果想要直接访问 __hidden() 方法可以使用&lt;/span&gt;
     
-s._Secretive__hidden()
+&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Secretive__hidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;
@@ -572,7 +572,7 @@ s._Secretive__hidden()
 
     &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# pdf 生成 reportlab
 # sudo -H pip install --ignore-installed rlextra -i https://www.reportlab.com/pypi/
-# 账号/密码 pemako@126.com / love716
+# 账号/密码 pemako@126.com / xxxx
 &lt;/code&gt;&lt;/pre&gt;
     &lt;/div&gt;
   &lt;/li&gt;

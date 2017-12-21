@@ -18,7 +18,7 @@ tags: [python]
     
 2. 原始字符串
 
-    ```
+    ```python
     # 原始字符串对于反斜线不会做特殊处理，原始字符串以 r 开头
     
     $ print r'C:\nowhere' = C:\nowhere
@@ -29,17 +29,17 @@ tags: [python]
 
 3. python 中元组存在的意义
 
-    ```
-    // 1. 元组可以在映射(和集合的成员)中当做健使用 - 而列表则不行
-    // 2. 元组作为很多内建函数和方法的返回值存在，也就是你必须对元组进行处理
+    ```python
+    # 1. 元组可以在映射(和集合的成员)中当做健使用 - 而列表则不行
+    # 2. 元组作为很多内建函数和方法的返回值存在，也就是你必须对元组进行处理
     
-    // tuple([1,2,3]) 把序列转为元组 (1,2,3)
-    // 一般列表可以满足对序列的所有需求
+    # tuple([1,2,3]) 把序列转为元组 (1,2,3)
+    # 一般列表可以满足对序列的所有需求
     ```
 
 4. 使用字典进行格式化输出字符串
     
-    ```
+    ```python
     _world = "My name is %(name)s , I\'m %(age)d old"
     dict = {"name": "pemako", "age": 18}
     print _world % dict
@@ -183,7 +183,7 @@ tags: [python]
     
 10. 访问内中私有的方法
     
-    ```
+    ```python
     # python并不直接支持私有方式，为了让方法或特性变为私有，可以有在他的名字前加上双下划线 __
     # 前面有双下划线的名字都不会被带星号的 import 语句导入 from module import *
     
@@ -540,7 +540,7 @@ tags: [python]
     ```
     # pdf 生成 reportlab
     # sudo -H pip install --ignore-installed rlextra -i https://www.reportlab.com/pypi/
-    # 账号/密码 pemako@126.com / love716
+    # 账号/密码 pemako@126.com / xxxx
     ```
     
 22. URL 请求
