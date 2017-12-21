@@ -1,0 +1,787 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Python基础教程 - pemako</title>
+    <meta name="description" content="Python基础教程">
+    <meta name="keywords" content="python">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/brew/2017/05/18/brew-install-mysql-and-config.html" title="brew install mysql and config" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Python基础教程 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <ol>
+  <li>
+    <p>在 python 中使用普通的除法</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+    
+ <span class="err">$</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="mf">0.5</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>原始字符串</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> # 原始字符串对于反斜线不会做特殊处理，原始字符串以 r 开头
+    
+ $ print r'C:\nowhere' = C:\nowhere
+    
+ # 注意不能在原始字符串结尾输入反斜线，除非进行转义
+ $ print r'C:\nowhere\' = 错误 如果需要反斜线需转义
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>python 中元组存在的意义</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> // 1. 元组可以在映射(和集合的成员)中当做健使用 - 而列表则不行
+ // 2. 元组作为很多内建函数和方法的返回值存在，也就是你必须对元组进行处理
+    
+ // tuple([1,2,3]) 把序列转为元组 (1,2,3)
+ // 一般列表可以满足对序列的所有需求
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>使用字典进行格式化输出字符串</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> _world = "My name is %(name)s , I\'m %(age)d old"
+ dict = {"name": "pemako", "age": 18}
+ print _world % dict
+ $ My name is pemako , Im 18 old
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>清空字典 clear方法</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="c"># clear 清除字典中所有的项，无返回值或者返回值为 None</span>
+ <span class="c"># 不直接把字典赋值为空而采用 clear ,是因为 clear可以清空原始字典中所有元素</span>
+    
+ <span class="o">//</span> <span class="n">eg</span><span class="p">:</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">35</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">36</span><span class="p">]:</span> <span class="n">x</span><span class="p">[</span><span class="s">'key'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'value'</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">y</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="p">{</span><span class="s">'key'</span><span class="p">:</span> <span class="s">'value'</span><span class="p">}</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{}</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">39</span><span class="p">]:</span> <span class="n">y</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">39</span><span class="p">]:</span> <span class="p">{</span><span class="s">'key'</span><span class="p">:</span> <span class="s">'value'</span><span class="p">}</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">40</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{}</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">41</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="n">x</span><span class="p">[</span><span class="s">'key'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'value'</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="n">y</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="p">{</span><span class="s">'key'</span><span class="p">:</span> <span class="s">'value'</span><span class="p">}</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="n">x</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">y</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="p">{}</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>字典中的 copy 和 deepcopy 问题</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="c"># copy 方法返回一个具有相同键值对的新字典，这种方法实现的是浅拷贝，当在副本中替换值的</span>
+ <span class="c"># 时候原始字典不受影响，但是如果修改了某个值，原始的字典也会改变</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">50</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span><span class="s">'admin'</span><span class="p">,</span> <span class="s">'machines'</span><span class="p">:[</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">,</span> <span class="s">'baz'</span><span class="p">]}</span>
+
+ <span class="n">In</span> <span class="p">[</span><span class="mi">51</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">52</span><span class="p">]:</span> <span class="n">y</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'pemako'</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">53</span><span class="p">]:</span> <span class="n">y</span><span class="p">[</span><span class="s">'machines'</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">'bar'</span><span class="p">)</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">54</span><span class="p">]:</span> <span class="n">y</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">54</span><span class="p">]:</span> <span class="p">{</span><span class="s">'machines'</span><span class="p">:</span> <span class="p">[</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'baz'</span><span class="p">],</span> <span class="s">'name'</span><span class="p">:</span> <span class="s">'pemako'</span><span class="p">}</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">55</span><span class="p">]:</span> <span class="n">x</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">55</span><span class="p">]:</span> <span class="p">{</span><span class="s">'machines'</span><span class="p">:</span> <span class="p">[</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'baz'</span><span class="p">],</span> <span class="s">'name'</span><span class="p">:</span> <span class="s">'admin'</span><span class="p">}</span>
+    
+ <span class="c"># 避免上面的问题可以采用深拷贝 deepcopy</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">61</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">62</span><span class="p">]:</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">63</span><span class="p">]:</span> <span class="n">d</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pemako'</span><span class="p">,</span> <span class="s">'lena'</span><span class="p">]</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">64</span><span class="p">]:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">65</span><span class="p">]:</span> <span class="n">dc</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">66</span><span class="p">]:</span> <span class="n">d</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'Alice'</span><span class="p">)</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="n">c</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="p">[</span><span class="s">'pemako'</span><span class="p">,</span> <span class="s">'lena'</span><span class="p">,</span> <span class="s">'Alice'</span><span class="p">]}</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">68</span><span class="p">]:</span> <span class="n">dc</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">68</span><span class="p">]:</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="p">[</span><span class="s">'pemako'</span><span class="p">,</span> <span class="s">'lena'</span><span class="p">]}</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>迭代序列</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="c"># 内建函数 zip 进行并行迭代</span>
+ <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Lena"</span><span class="p">,</span> <span class="s">"Mako"</span><span class="p">]</span>
+ <span class="n">ages</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+ <span class="c"># zip(names, ages) = [('Lena', 18), ('Mako', 20)]</span>
+ <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="n">ages</span><span class="p">):</span>
+     <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span>
+        
+ <span class="c"># zip 可以处理不等长的序列，当最短的序列用完的时候就会停止</span>
+ <span class="err">$</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">))</span>
+ <span class="err">$</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+    
+    
+ <span class="c"># 按索引迭代</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="n">seasons</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spring'</span><span class="p">,</span> <span class="s">'Summer'</span><span class="p">,</span> <span class="s">'Fall'</span><span class="p">,</span> <span class="s">'Winter'</span><span class="p">]</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">))</span>
+ <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s">'Spring'</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'Summer'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'Fall'</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">'Winter'</span><span class="p">)]</span>
+ <span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">seasons</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+ <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'Spring'</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">'Summer'</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">'Fall'</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">'Winter'</span><span class="p">)]</span>
+    
+ <span class="c"># Equivalent to</span>
+ <span class="k">def</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+     <span class="n">n</span> <span class="o">=</span> <span class="n">start</span>
+     <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+         <span class="k">yield</span> <span class="n">n</span><span class="p">,</span> <span class="n">elem</span>
+         <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>列表推导式</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="c"># 列表推导式是利用其他列表创建新列表的一种方法，工作方式类似于 for 循环</span>
+    
+ <span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+ <span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>文档化函数</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="n">In</span> <span class="p">[</span><span class="mi">85</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">DemoObj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+ <span class="o">...</span><span class="p">:</span>        <span class="s">'''This is d demo object'''</span>
+ <span class="o">...</span><span class="p">:</span>        <span class="k">def</span> <span class="nf">suquare</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+ <span class="o">...</span><span class="p">:</span>            <span class="s">'''Calculates the square of the number x'''</span>
+ <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+
+ <span class="n">In</span> <span class="p">[</span><span class="mi">86</span><span class="p">]:</span> <span class="n">DemoObj</span><span class="o">.</span><span class="n">__doc__</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">86</span><span class="p">]:</span> <span class="s">'This is d demo object'</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">87</span><span class="p">]:</span> <span class="n">DemoObj</span><span class="o">.</span><span class="n">suquare</span><span class="o">.</span><span class="n">__doc__</span>
+ <span class="n">Out</span><span class="p">[</span><span class="mi">87</span><span class="p">]:</span> <span class="s">'Calculates the square of the number x'</span>
+    
+ <span class="n">In</span> <span class="p">[</span><span class="mi">88</span><span class="p">]:</span> <span class="n">help</span><span class="p">(</span><span class="n">DemoObj</span><span class="p">)</span>
+    
+ <span class="n">Help</span> <span class="n">on</span> <span class="k">class</span> <span class="nc">DemoObj</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+ <span class="k">class</span> <span class="nc">DemoObj</span><span class="p">(</span><span class="n">__builtin__</span><span class="o">.</span><span class="nb">object</span><span class="p">)</span>
+  <span class="o">|</span>  <span class="n">This</span> <span class="ow">is</span> <span class="n">d</span> <span class="n">demo</span> <span class="nb">object</span>
+  <span class="o">|</span>
+  <span class="o">|</span>  <span class="n">Methods</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+  <span class="o">|</span>
+  <span class="o">|</span>  <span class="n">suquare</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="o">|</span>      <span class="n">Calculates</span> <span class="n">the</span> <span class="n">square</span> <span class="n">of</span> <span class="n">the</span> <span class="n">number</span> <span class="n">x</span>
+  <span class="o">|</span>
+  <span class="o">|</span>  <span class="o">------------------------------------------------------------</span>
+  <span class="o">|</span>  <span class="n">Data</span> <span class="n">descriptors</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+  <span class="o">|</span>
+  <span class="o">|</span>  <span class="n">__dict__</span>
+  <span class="o">|</span>      <span class="n">dictionary</span> <span class="k">for</span> <span class="n">instance</span> <span class="n">variables</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+  <span class="o">|</span>
+  <span class="o">|</span>  <span class="n">__weakref__</span>
+  <span class="o">|</span>      <span class="nb">list</span> <span class="n">of</span> <span class="n">weak</span> <span class="n">references</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">object</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>访问内中私有的方法</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code># python并不直接支持私有方式，为了让方法或特性变为私有，可以有在他的名字前加上双下划线 __
+# 前面有双下划线的名字都不会被带星号的 import 语句导入 from module import *
+    
+class Secretive:
+    def __hidden(self):
+        print 'Bet you cant see me'
+            
+    def accessible(self):
+        print 'The secret message is: '
+        self.__hidden()
+    
+s = Secretive()
+# 如果想要直接访问 __hidden() 方法可以使用
+    
+s._Secretive__hidden()
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>异常之禅</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">'Enter the first number: '</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">'Enter the second number: '</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+        
+<span class="k">except</span> <span class="p">(</span><span class="nb">ZeroDivisionError</span><span class="p">,</span> <span class="nb">TypeError</span><span class="p">),</span> <span class="n">e</span><span class="p">:</span>
+<span class="c"># 在 python3 中 上面语句被写为</span>
+<span class="c"># except (ZeroDivisionError, TypeError) as e:</span>
+    <span class="k">print</span> <span class="n">e</span>
+    
+<span class="err">$</span> <span class="n">Enter</span> <span class="n">the</span> <span class="n">first</span> <span class="n">number</span><span class="p">:</span> <span class="mi">12</span>
+<span class="err">$</span> <span class="n">Enter</span> <span class="n">the</span> <span class="n">second</span> <span class="n">number</span><span class="p">:</span> <span class="mi">0</span>
+<span class="err">$</span> <span class="n">division</span> <span class="n">by</span> <span class="n">zero</span>
+    
+    
+<span class="c"># 假设有一个字典，希望打印出存储在特定的健下面的值，如果健不存在什么也不错</span>
+    
+<span class="k">def</span> <span class="nf">describePerson</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">'Description of'</span><span class="p">,</span> <span class="n">persopn</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">'Age:'</span><span class="p">,</span> <span class="n">person</span><span class="p">[</span><span class="s">'age'</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s">'occupation'</span> <span class="ow">in</span> <span class="n">person</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">'Occupation:'</span><span class="p">,</span> <span class="n">persion</span><span class="p">[</span><span class="s">'occupation'</span><span class="p">]</span>
+    
+<span class="c"># 上面的代码非常直观但是效率不高，程序会两次查找 occupation 健</span>
+<span class="c"># 另外一个解决方案如下</span>
+ <span class="k">def</span> <span class="nf">describePerson</span><span class="p">(</span><span class="n">person</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">'Description of'</span><span class="p">,</span> <span class="n">persopn</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
+    <span class="k">print</span> <span class="s">'Age:'</span><span class="p">,</span> <span class="n">person</span><span class="p">[</span><span class="s">'age'</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c"># 这里要使用加好而不是逗号，否则 Occupation 会在异常之前打印</span>
+        <span class="k">print</span> <span class="s">'Occupation:'</span><span class="o">+</span> <span class="n">persion</span><span class="p">[</span><span class="s">'occupation'</span><span class="p">]</span>
+    <span class="n">expect</span> <span class="nb">KeyError</span><span class="p">:</span> <span class="k">pass</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>魔术方法、属性和迭代器</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># class NewStyle(object):  新式类 </span>
+<span class="c"># class OldStyle:   旧式类</span>
+    
+<span class="c"># 构造方法 __init__</span>
+<span class="c"># 如果在子类中重新定义析构方法，必须首先调用父类中的构造方法</span>
+<span class="c"># 使用 supper 函数</span>
+    
+<span class="k">class</span> <span class="nc">Bird</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hungry</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">def</span> <span class="nf">eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hungry</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'Aaaah..'</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hungry</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">'No, thanks!'</span>
+    
+<span class="k">class</span> <span class="nc">SongBird</span><span class="p">(</span><span class="n">Bird</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#Bird.__init__(self)     </span>
+        <span class="c"># 新版本绑定和上面等价，尽量使用这种方式</span>
+        <span class="c"># 对于继承多个父类的方式，也只需要调用一次 supper 即可</span>
+        <span class="n">supper</span><span class="p">(</span><span class="n">SongBird</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sound</span> <span class="o">=</span> <span class="s">'Squawk!'</span>
+    <span class="k">def</span> <span class="nf">sing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">sound</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>包和模块的一些信息</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code>    
+<span class="c"># 1. 查看模块包含的内容使用 dir 函数</span>
+<span class="c"># 2. __all__ 查看模块中包含哪些内容</span>
+<span class="c"># 3. help(modulename.methodname) 查看某个模块下某个方法</span>
+<span class="c"># 4. 使用文档  print range.__doc__</span>
+<span class="c"># 5. 使用源代码  print copy.__file__ 查看源码路径</span>
+   
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>文件处理</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code>    
+<span class="c"># 1. 如果文件不是很大，可以直接使用 read 方法一次性读取整个文件</span>
+<span class="c"># 2. 或者使用 readlines 方法，把文件读入一个字符串列表</span>
+<span class="c"># 3. 文件比较大的情况，readlines 会占用太多的内存，这个时候可以使用 while 循环和 readline 方法来替代</span>
+    
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span> <span class="k">break</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+<span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileiput</span><span class="o">.</span><span class="nb">input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        
+<span class="c"># 处理标准输入流中的数据</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>图形化界面工具</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># wxPython -&gt; https://wiki.wxpython.org/Getting%20Started</span>
+    
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>网络编程</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code>    
+<span class="c"># 1. John Goerzen 的 Foundations of Python Network Programming</span>
+<span class="c"># 2. Twisted 框架，一个丰富，成熟的用于编写网络应用程序的框架</span>
+    
+<span class="c"># urllib 和 urllib2</span>
+<span class="c"># BeautifulSoup4  - https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/</span>
+<span class="c"># socket 模块</span>
+<span class="c"># SocketServer 模块是标准库中很多服务器框架的基础，这些服务器包括 </span>
+<span class="c"># BaseHTTPServer, SimpleHTTPServer, CGIHTTPServer, SimpleXMLRPCServer 和 DocXMLRPCServer</span>
+    
+<span class="c"># CGI Common Gateway Interface, 通用网关接口</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>测试工具</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 1. unitest : 通用测试框架</span>
+<span class="c"># 2. doctest : 简单的一些模块，检查文档用的，对于编写单元测试也很在行</span>
+    
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding=utf-8 -*-</span>
+<span class="c"># @create 17/07/16 16:44:39</span>
+<span class="c"># @author pemakoa@gmail.com</span>
+    
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="s">'''
+    Square a number and returns the result.
+    
+    &gt;&gt;&gt; square(2)
+    4
+    &gt;&gt;&gt; square(3)
+    9
+    '''</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span><span class="o">,</span> <span class="nn">my_math</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">my_math</span><span class="p">)</span>
+     
+<span class="err">λ</span> <span class="n">pemakoMBookPro2</span> <span class="n">python</span> <span class="err">→</span> <span class="n">python</span> <span class="n">my_math</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">Trying</span><span class="p">:</span>
+    <span class="n">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Expecting</span><span class="p">:</span>
+    <span class="mi">4</span>
+<span class="n">ok</span>
+<span class="n">Trying</span><span class="p">:</span>
+    <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">Expecting</span><span class="p">:</span>
+    <span class="mi">9</span>
+<span class="n">ok</span>
+<span class="mi">1</span> <span class="n">items</span> <span class="n">had</span> <span class="n">no</span> <span class="n">tests</span><span class="p">:</span>
+    <span class="n">my_math</span>
+<span class="mi">1</span> <span class="n">items</span> <span class="n">passed</span> <span class="nb">all</span> <span class="n">tests</span><span class="p">:</span>
+   <span class="mi">2</span> <span class="n">tests</span> <span class="ow">in</span> <span class="n">my_math</span><span class="o">.</span><span class="n">square</span>
+<span class="mi">2</span> <span class="n">tests</span> <span class="ow">in</span> <span class="mi">2</span> <span class="n">items</span><span class="o">.</span>
+<span class="mi">2</span> <span class="n">passed</span> <span class="ow">and</span> <span class="mi">0</span> <span class="n">failed</span><span class="o">.</span>
+<span class="n">Test</span> <span class="n">passed</span><span class="o">.</span>
+    
+    
+<span class="c"># my_math.py</span>
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="s">'''
+    Square a number and returns the result.
+    
+    &gt;&gt;&gt; square(2)
+    4
+    &gt;&gt;&gt; square(3)
+    9
+    '''</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+    
+<span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+    
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span><span class="o">,</span> <span class="nn">my_math</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">my_math</span><span class="p">)</span>
+        
+<span class="c"># 使用 unittest 框架的简单测试</span>
+    
+<span class="kn">import</span> <span class="nn">unittest</span><span class="o">,</span> <span class="nn">my_math</span>
+
+<span class="k">class</span> <span class="nc">ProductTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">testIntegers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">my_math</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="s">'Integer multiplication failed'</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">testFloats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="mf">10.0</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="mf">10.0</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">my_math</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="s">'Float multiplication fauled.'</span><span class="p">)</span>
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+        
+<span class="c"># unittest.main() 函数负责实际运行测试，他会实例化所有 TestCase 的子类，运行所有名字以 test 开头的方法</span>
+    
+<span class="c"># 测试以外的可以使用 PyChecker 和 PyLint 检查源代码</span>
+    
+<span class="c"># 代码性能分析 profile, timeit 模块</span>
+    
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>程序打包</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code>    
+<span class="c"># Distutils 不仅可能够制作给予脚本的 python 库安装程序，</span>
+<span class="c"># 还可以用它来生成简单的 windows 安装程序，如果再与扩展</span>
+<span class="c"># 程序 py2exe 结合使用，还能生成独立的 Windows 可执行程序。</span>
+
+<span class="c"># distutils 基础 https://docs.python.org/2/library/distutils.html</span>
+    
+<span class="c"># 简单的 Distutils 安装脚本（setup.py）</span>
+    
+<span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Hello'</span><span class="p">,</span>
+      <span class="n">version</span><span class="o">=</span><span class="s">'1.0'</span><span class="p">,</span>
+      <span class="n">description</span><span class="o">=</span><span class="s">'A simple example'</span><span class="p">,</span>
+      <span class="n">author</span><span class="o">=</span><span class="s">'FangJie Liang'</span><span class="p">,</span>
+      <span class="n">author_email</span><span class="o">=</span><span class="s">'pemakoa@gmail.com'</span><span class="p">,</span>
+      <span class="n">url</span><span class="o">=</span><span class="s">'http://pemako.cn'</span><span class="p">,</span>
+      <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s">'hello'</span><span class="p">])</span>
+    
+<span class="c"># hello.py</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">'hello world!'</span>
+        
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">hello</span><span class="p">()</span>
+    
+<span class="c"># 运行: python setup build # 执行过程如下</span>
+<span class="c"># running build</span>
+<span class="c"># running build_py</span>
+<span class="c"># creating build</span>
+<span class="c"># creating build/lib</span>
+<span class="c"># copying hello.py -&gt; build/lib</span>
+    
+<span class="c"># 执行：python setup.py install</span>
+<span class="c"># running install</span>
+<span class="c"># running build</span>
+<span class="c"># running build_py</span>
+<span class="c"># running install_lib</span>
+<span class="c"># copying build/lib/hello.py -&gt; /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages</span>
+<span class="c"># byte-compiling /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/hello.py to hello.pyc</span>
+<span class="c"># running install_egg_info</span>
+<span class="c"># Writing /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/Hello-1.0-py2.7.egg-info</span>
+    
+<span class="c"># 此时可以直接 使用  hello 包</span>
+    
+<span class="c"># 打包 写完供用户安装模块使用的 setup.py</span>
+<span class="c"># 脚本以后，就可以用它来建立存档文件，Windows 安装程序或者 RPM 包</span>
+<span class="c"># 建立存档文件：</span>
+<span class="c"># 使用 sdist 命令（用于"源代码发布"） </span>
+    
+<span class="c"># python setup.py sdist</span>
+<span class="c"># running sdist</span>
+<span class="c"># running check</span>
+<span class="c"># warning: sdist: manifest template 'MANIFEST.in' does not exist (using default file list)</span>
+<span class="c"># warning: sdist: standard file not found: should have one of README, README.txt</span>
+<span class="c"># writing manifest file 'MANIFEST'</span>
+<span class="c"># creating Hello-1.0</span>
+<span class="c"># making hard links in Hello-1.0...</span>
+<span class="c"># hard linking hello.py -&gt; Hello-1.0</span>
+<span class="c"># hard linking setup.py -&gt; Hello-1.0</span>
+<span class="c"># creating dist</span>
+<span class="c"># Creating tar archive</span>
+<span class="c"># removing 'Hello-1.0' (and everything under it)</span>
+    
+<span class="c"># 使用 py2exe 创建可执行程序 http://py2exe.org/</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>使用配置文件</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 使用标准库的模块 ConfigParser 需要使用[files]或者[colors]这样的数据头将配置</span>
+<span class="c"># 文件划分成几个区段(section)。名字可以随意设定，但是需要将他们用方括号括起来</span>
+    
+<span class="c"># simple.cfg</span>
+<span class="p">[</span><span class="n">numbers</span><span class="p">]</span>
+<span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415925535897931</span>
+    
+<span class="p">[</span><span class="n">messages</span><span class="p">]</span>
+<span class="n">greeting</span> <span class="o">=</span> <span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">area</span> <span class="n">calulation</span> <span class="n">porgram</span><span class="err">!</span>
+<span class="n">question</span> <span class="o">=</span> <span class="n">Please</span> <span class="n">enter</span> <span class="n">the</span> <span class="n">radius</span><span class="p">:</span>
+<span class="n">result_message</span> <span class="o">=</span> <span class="n">The</span> <span class="n">area</span> <span class="ow">is</span>
+    
+<span class="c"># simple.py</span>
+<span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">'simple.cfg'</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'greeting'</span><span class="p">)</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'question'</span><span class="p">)</span> <span class="o">+</span> <span class="s">' '</span><span class="p">)</span>
+<span class="c"># 已逗号做结束将结果显示在一行</span>
+<span class="k">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'result_message'</span><span class="p">),</span> 
+<span class="k">print</span> <span class="n">config</span><span class="o">.</span><span class="n">getfloat</span><span class="p">(</span><span class="s">'numbers'</span><span class="p">,</span> <span class="s">'pi'</span><span class="p">)</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span><span class="mi">2</span>
+    
+<span class="c"># λ pemakoMBookPro2 conf → python simple.py</span>
+<span class="c"># Welcome to the area calulation porgram!</span>
+<span class="c"># Please enter the radius: 10</span>
+<span class="c"># The area is 314.159255359</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>日志记录</p>
+
+    <ul>
+      <li><a href="https://github.com/pemako/LearnPython/tree/master/logger">Github</a></li>
+      <li><a href="http://python.usyiyi.cn/python_278/howto/logging.html#logging-basic-tutorial">logging-basic-tutorual</a></li>
+      <li><a href="http://python.usyiyi.cn/documents/python_278/library/logging.config.html#logging-config-api">logging-config-api</a></li>
+    </ul>
+  </li>
+  <li>
+    <p>图像生成</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code># pdf 生成 reportlab
+# sudo -H pip install --ignore-installed rlextra -i https://www.reportlab.com/pypi/
+# 账号/密码 pemako@126.com / love716
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>URL 请求</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># http://docs.python-requests.org/zh_CN/latest/user/quickstart.html</span>
+    
+<span class="kn">import</span> <span class="nn">requests</span> <span class="c"># 需要安装 requests 模块</span>
+    
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>python相关模块查看</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 查看内置的模块存放的位置</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span> 
+    
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>文档的创建</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code>    
+<span class="c"># https://readthedocs.org/dashboard/</span>
+<span class="c"># 账号: pemakoa@gmail.com 密码：xxxx</span>
+<span class="c"># 示例：https://readthedocs.org/projects/pemako-demo/</span>
+    
+<span class="c"># 采用 Sphinx 和 reST 进行构建文档</span>
+<span class="c"># reST 语法：http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html</span>
+    
+    
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>分发打包</p>
+
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># pbr (Python Build Reasonableness) https://pypi.python.org/pypi/pbr/3.1.1</span>
+    
+<span class="c">#1. distutils 是标准库的一部分，能处理简单的包的安装</span>
+<span class="c">#2. setuptools 领先的包安装标准，曾被废弃但现在又继续开发</span>
+<span class="c">#3. distribute 从0.7 版本开始并如 setuptools</span>
+<span class="c">#4. distutils2 也被称为 packaging 已经被废弃</span>
+<span class="c">#5. distlib 可能将来会去打 distutils</span>
+<span class="c">#6. pbr 新型的打包工具目前在 OpenStack</span>
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/brew/2017/05/18/brew-install-mysql-and-config.html" title="brew install mysql and config">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "Python基础教程"; //请用代码生成文章标题
+        var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["python"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Python基础教程" data-url="https://pemako.cn/python/2017/12/21/python-introduction.html" data-thread-key="/python/2017/12/21/python-introduction"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
