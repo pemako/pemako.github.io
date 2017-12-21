@@ -2,9 +2,9 @@
 layout: post
 title: selenium模块模拟Chrome浏览器
 description: selenium模块模拟Chrome浏览器
-keywords: python,selenium
-category: python, selenium
-tags: [python]
+keywords: python, selenium
+category: python
+tags: [python, selenium]
 ---
 
 1. [参考资料1](https://huilansame.github.io/huilansame.github.io/archivers/chrome-mobile-emulation-with-webdriver)

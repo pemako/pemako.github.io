@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-12-21T22:12:39+08:00</updated>
+ <updated>2017-12-21T22:22:29+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>selenium模块模拟Chrome浏览器</title>
-   <link href="https://pemako.cn/python,%20selenium/2017/12/21/selenium-simulation-chrome.html"/>
+   <link href="https://pemako.cn/python/2017/12/21/selenium-simulation-chrome.html"/>
    <updated>2017-12-21T00:00:00+08:00</updated>
-   <id>https://pemako.cn/python,%20selenium/2017/12/21/selenium-simulation-chrome</id>
+   <id>https://pemako.cn/python/2017/12/21/selenium-simulation-chrome</id>
    <content type="html">
    	&lt;ol&gt;
   &lt;li&gt;
@@ -9102,9 +9102,9 @@ For example:
  
  <entry>
    <title>生成指定时间内的时间列表</title>
-   <link href="https://pemako.cn/python/2017/01/21/python=gen-datalist.html"/>
+   <link href="https://pemako.cn/python/2017/01/21/python-gen-datalist.html"/>
    <updated>2017-01-21T00:00:00+08:00</updated>
-   <id>https://pemako.cn/python/2017/01/21/python=gen-datalist</id>
+   <id>https://pemako.cn/python/2017/01/21/python-gen-datalist</id>
    <content type="html">
    	&lt;h2 id=&quot;获取从指定开始时间到指定结束时间的列表&quot;&gt;获取从指定开始时间到指定结束时间的列表&lt;/h2&gt;
 
