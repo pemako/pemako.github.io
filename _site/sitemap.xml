@@ -59,7 +59,35 @@
 
 
 	<url>
+		<loc>https://pemako.cn/python,%20selenium/2017/12/21/selenium-simulation-chrome.html</loc>
+		<lastmod>2017-12-21</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/python/2017/12/21/python-introduction.html</loc>
+		<lastmod>2017-12-21</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/python/2017/12/21/multi-process-log.html</loc>
+		<lastmod>2017-12-21</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/python/2017/12/21/how-to-write-high-quality-python-code.html</loc>
+		<lastmod>2017-12-21</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/python/2017/12/21/how-to-use-wrapper.html</loc>
 		<lastmod>2017-12-21</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.6</priority>

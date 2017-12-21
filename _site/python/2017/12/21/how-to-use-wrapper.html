@@ -10,9 +10,9 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-    <title>brew install mysql and config - pemako</title>
-    
-    
+    <title>Python装饰器示例 - pemako</title>
+    <meta name="description" content="Python装饰器示例">
+    <meta name="keywords" content="python, wrapper">
     <meta name="author" content="pemako">
     <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
   	<!--[if lt IE 9]>
@@ -27,10 +27,10 @@
 
     <link rel="index prerender" title="pemako" href="/" />
     
-    <link rel="prev prerender" href="/lua/2017/02/22/lua.html" title="Lua语言" />
+    <link rel="prev prerender" href="/brew/2017/05/18/brew-install-mysql-and-config.html" title="brew install mysql and config" />
     
     
-    <link rel="next prerender" href="/python/2017/12/21/how-to-use-wrapper.html" title="Python装饰器示例" />
+    <link rel="next prerender" href="/python/2017/12/21/how-to-write-high-quality-python-code.html" title="编写高质量Python代码的有效方法" />
     
     
     <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
@@ -72,22 +72,41 @@
      
 
 <div class="page-header">
-  <h1>brew install mysql and config <small></small></h1>
+  <h1>Python装饰器示例 <small></small></h1>
 </div>
 <div class="row-fluid">
   <div class="span12">  
     <div id="article">
-    <div class="highlighter-rouge"><pre class="highlight"><code># 安装 mysql
-brew install mysql
+    <p>装饰器会用一个动态创建的新函数替换原来的，新函数缺少很多原函数的属性,如 docstring和名字</p>
 
-# 按照提示进行设置
-mysql_secure_installation
+<p>python内置的 functools 模块通过其 update_wrapper 函数解决这个问题</p>
 
-# 起停
-mysql.server  {start|stop|restart|reload|force-reload|status}
+<p>手工调用 update_wrapper 创建装饰器很不方便,所以 functools提供了名为 wraps 的装饰器</p>
 
-# 设置 my.cnf 
-/usr/local/etc/my.cnf
+<p>inspect 从装饰器函数中获取相应的参数,通过 getcallargs 函数把参数转化为 dict格式</p>
+
+<p>下面使用示例：</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c"># @author: pemakoa@gmail.com</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+
+<span class="k">def</span> <span class="nf">check_is_admin</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">func_args</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getcallargs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">func_args</span><span class="p">[</span><span class="s">'username'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'admin'</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"This user is not allowed to get food"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="nd">@check_is_admin</span>
+<span class="k">def</span> <span class="nf">get_food</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">"chocolate"</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">type</span> <span class="o">+</span> <span class="s">" nom nom nom!"</span>
 </code></pre>
 </div>
 
@@ -96,9 +115,7 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
     
     
        
-      	<a href="/tags.html#brew-ref" rel="tag">brew</a>
-       
-      	<a href="/tags.html#mysql-ref" rel="tag">mysql</a>
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
       
     
     
@@ -111,11 +128,11 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/lua/2017/02/22/lua.html" title="Lua语言">&larr; 上一篇</a></li>
+        <li class="prev"><a href="/brew/2017/05/18/brew-install-mysql-and-config.html" title="brew install mysql and config">&larr; 上一篇</a></li>
       
         <li><a href="/archive.html">归档</a></li>
       
-        <li class="next"><a href="/python/2017/12/21/how-to-use-wrapper.html" title="Python装饰器示例">下一篇 &rarr;</a></li>
+        <li class="next"><a href="/python/2017/12/21/how-to-write-high-quality-python-code.html" title="编写高质量Python代码的有效方法">下一篇 &rarr;</a></li>
       
       </ul>
     </div>
@@ -128,9 +145,9 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
    <!-- wumi 阅读推荐
     <script type="text/javascript">
         var wumiiPermaLink = ""; //请用代码生成文章永久的链接
-        var wumiiTitle = "brew install mysql and config"; //请用代码生成文章标题
-        var wumiiTags = "brew,mysql"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
-        var wumiiCategories = ["brew"];
+        var wumiiTitle = "Python装饰器示例"; //请用代码生成文章标题
+        var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["python"];
         var wumiiSitePrefix = "http://pemako.cn/";
         var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
     </script>
@@ -142,7 +159,7 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
     <hr>
 
     <!-- Duoshuo Comment BEGIN -->
-    <div id="comments" class="ds-thread" data-title="brew install mysql and config" data-url="https://pemako.cn/brew/2017/05/18/brew-install-mysql-and-config.html" data-thread-key="/brew/2017/05/18/brew-install-mysql-and-config"></div>
+    <div id="comments" class="ds-thread" data-title="Python装饰器示例" data-url="https://pemako.cn/python/2017/12/21/how-to-use-wrapper.html" data-thread-key="/python/2017/12/21/how-to-use-wrapper"></div>
     <script type="text/javascript">
       var duoshuoQuery = {short_name:"pemako"};
       (function() {

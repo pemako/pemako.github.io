@@ -10,9 +10,9 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-    <title>brew install mysql and config - pemako</title>
-    
-    
+    <title>selenium模块模拟Chrome浏览器 - pemako</title>
+    <meta name="description" content="selenium模块模拟Chrome浏览器">
+    <meta name="keywords" content="python,selenium">
     <meta name="author" content="pemako">
     <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
   	<!--[if lt IE 9]>
@@ -27,10 +27,8 @@
 
     <link rel="index prerender" title="pemako" href="/" />
     
-    <link rel="prev prerender" href="/lua/2017/02/22/lua.html" title="Lua语言" />
+    <link rel="prev prerender" href="/python/2017/12/21/python-introduction.html" title="Python基础教程" />
     
-    
-    <link rel="next prerender" href="/python/2017/12/21/how-to-use-wrapper.html" title="Python装饰器示例" />
     
     
     <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
@@ -72,22 +70,68 @@
      
 
 <div class="page-header">
-  <h1>brew install mysql and config <small></small></h1>
+  <h1>selenium模块模拟Chrome浏览器 <small></small></h1>
 </div>
 <div class="row-fluid">
   <div class="span12">  
     <div id="article">
-    <div class="highlighter-rouge"><pre class="highlight"><code># 安装 mysql
-brew install mysql
+    <ol>
+  <li>
+    <p><a href="https://huilansame.github.io/huilansame.github.io/archivers/chrome-mobile-emulation-with-webdriver">参考资料1</a></p>
+  </li>
+  <li>
+    <p><a href="https://jiayi.space/post/scrapy-phantomjs-seleniumdong-tai-pa-chong">参考资料2</a></p>
+  </li>
+  <li>
+    <p><a href="https://chromedriver.storage.googleapis.com/index.html?path=2.33/">下载Chrome浏览器driver</a>
+ <code class="highlighter-rouge">brew install chromedriver</code></p>
+  </li>
+  <li>
+    <p><a href="https://doc.scrapinghub.com/index.html">crawlera神器</a> 该工具主要是为了防止反爬 iP被封</p>
+  </li>
+  <li>
+    <p><a href="https://pypi.python.org/pypi/selenium">pip selenium</a></p>
+  </li>
+</ol>
 
-# 按照提示进行设置
-mysql_secure_installation
+<p>环境说明</p>
 
-# 起停
-mysql.server  {start|stop|restart|reload|force-reload|status}
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 1. selenium  : 3.8.0</span>
+<span class="c"># 2. Scrapy    : 1.4.0</span>
+<span class="c"># 3. lxml      : 3.8.0.0</span>
+<span class="c"># 4. libxml2   : 2.9.4</span>
+<span class="c"># 5. cssselect : 1.0.1</span>
+<span class="c"># 6. parsel    : 1.2.0</span>
+<span class="c"># 7. w3lib     : 1.18.0</span>
+<span class="c"># 8. Twisted   : 17.9.0</span>
+<span class="c"># 9. Python    : 2.7.14 (default, Sep 25 2017, 09:54:19) - [GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)]</span>
+<span class="c"># 10. pyOpenSSL : 17.2.0 (OpenSSL 1.1.0f  25 May 2017)</span>
+<span class="c"># 11. Platform  : Darwin-17.2.0-x86_64-i386-64bit</span>
+</code></pre>
+</div>
 
-# 设置 my.cnf 
-/usr/local/etc/my.cnf
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="n">mobileEmulation</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"deviceMetrics"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">"width"</span><span class="p">:</span> <span class="mi">320</span><span class="p">,</span> 
+        <span class="s">"height"</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span> 
+        <span class="s">"pixelRatio"</span><span class="p">:</span> <span class="mf">3.0</span> 
+    <span class="p">},</span> 
+    <span class="s">"userAgent"</span><span class="p">:</span> <span class="s">'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'</span>
+<span class="p">}</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
+<span class="n">options</span><span class="o">.</span><span class="n">add_experimental_option</span><span class="p">(</span><span class="s">'mobileEmulation'</span><span class="p">,</span> <span class="n">mobileEmulation</span><span class="p">)</span>
+<span class="c"># self.driver = webdriver.PhantomJS(executable_path=settings['JS_BIN'])</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="s">'your chromedriver bin path'</span><span class="p">,</span>
+                          <span class="n">chrome_options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+                          <span class="n">service_args</span><span class="o">=</span><span class="p">[</span><span class="s">"--verbose"</span><span class="p">,</span> <span class="s">"--log-path=qc1.log"</span><span class="p">])</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://m.dianping.com'</span><span class="p">)</span>
+
+<span class="n">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre>
 </div>
 
@@ -96,9 +140,7 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
     
     
        
-      	<a href="/tags.html#brew-ref" rel="tag">brew</a>
-       
-      	<a href="/tags.html#mysql-ref" rel="tag">mysql</a>
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
       
     
     
@@ -111,11 +153,11 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/lua/2017/02/22/lua.html" title="Lua语言">&larr; 上一篇</a></li>
+        <li class="prev"><a href="/python/2017/12/21/python-introduction.html" title="Python基础教程">&larr; 上一篇</a></li>
       
         <li><a href="/archive.html">归档</a></li>
       
-        <li class="next"><a href="/python/2017/12/21/how-to-use-wrapper.html" title="Python装饰器示例">下一篇 &rarr;</a></li>
+        <li class="next disabled"><a>下一篇 &rarr;</a>
       
       </ul>
     </div>
@@ -128,9 +170,9 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
    <!-- wumi 阅读推荐
     <script type="text/javascript">
         var wumiiPermaLink = ""; //请用代码生成文章永久的链接
-        var wumiiTitle = "brew install mysql and config"; //请用代码生成文章标题
-        var wumiiTags = "brew,mysql"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
-        var wumiiCategories = ["brew"];
+        var wumiiTitle = "selenium模块模拟Chrome浏览器"; //请用代码生成文章标题
+        var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["python, selenium"];
         var wumiiSitePrefix = "http://pemako.cn/";
         var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
     </script>
@@ -142,7 +184,7 @@ mysql.server  {start|stop|restart|reload|force-reload|status}
     <hr>
 
     <!-- Duoshuo Comment BEGIN -->
-    <div id="comments" class="ds-thread" data-title="brew install mysql and config" data-url="https://pemako.cn/brew/2017/05/18/brew-install-mysql-and-config.html" data-thread-key="/brew/2017/05/18/brew-install-mysql-and-config"></div>
+    <div id="comments" class="ds-thread" data-title="selenium模块模拟Chrome浏览器" data-url="https://pemako.cn/python,%20selenium/2017/12/21/selenium-simulation-chrome.html" data-thread-key="/python,%20selenium/2017/12/21/selenium-simulation-chrome"></div>
     <script type="text/javascript">
       var duoshuoQuery = {short_name:"pemako"};
       (function() {
