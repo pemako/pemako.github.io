@@ -4,13 +4,133 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2017-12-21T22:22:29+08:00</updated>
+ <updated>2017-12-24T10:03:34+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>用 brew配置 mac 环境</title>
+   <link href="https://pemako.cn/brew/2017/12/24/use-brew-config-macpro.html"/>
+   <updated>2017-12-24T00:00:00+08:00</updated>
+   <id>https://pemako.cn/brew/2017/12/24/use-brew-config-macpro</id>
+   <content type="html">
+   	&lt;p&gt;使用&lt;code class=&quot;highlighter-rouge&quot;&gt;brew&lt;/code&gt; 环境要求, 已经安装&lt;code class=&quot;highlighter-rouge&quot;&gt;ruby&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; 这里假设环境已 OK，只需要在命令行终端输入一下命令，即开始进行安装&lt;code class=&quot;highlighter-rouge&quot;&gt;brew&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;brew config&lt;/code&gt; 查看自己的环境, 我的环境配置如下&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HOMEBREW_VERSION: 1.4.1-11-g583b61f
+ORIGIN: https://github.com/Homebrew/brew
+HEAD: 583b61fd324643f15bb8017a6b652afbbbfe7cbc
+Last commit: 2 days ago
+Core tap ORIGIN: https://github.com/Homebrew/homebrew-core
+Core tap HEAD: e1f84c3a98b856e0868734cefeb19047d4e2a3f7
+Core tap last commit: 14 hours ago
+HOMEBREW_PREFIX: /usr/local
+HOMEBREW_DEV_CMD_RUN: 1
+CPU: octa-core 64-bit haswell
+Homebrew Ruby: 2.3.3 =&amp;gt; /usr/local/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin/ruby
+Clang: 9.0 build 900
+Git: 2.14.3 =&amp;gt; /Applications/Xcode.app/Contents/Developer/usr/bin/git
+Curl: 7.54.0 =&amp;gt; /usr/bin/curl
+Perl: /usr/bin/perl
+Python: /usr/local/opt/python/libexec/bin/python =&amp;gt; /usr/local/Cellar/python/2.7.14/Frameworks/Python.framework/Versions/2.7/bin/python2.7
+Ruby: /Users/lena/.rvm/rubies/ruby-2.4.0/bin/ruby
+Java: 1.8.0_144, 1.8.0_121, 1.8.0_74
+macOS: 10.13.2-x86_64
+Xcode: 9.2
+CLT: 9.2.0.0.1.1510905681
+X11: 2.7.11 =&amp;gt; /opt/X11
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;安装需要的软件&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 安装 mysql 为例
+brew install mysql
+
+# 按照提示进行设置
+mysql_secure_installation
+
+# 起停
+mysql.server  {start|stop|restart|reload|force-reload|status}
+
+# 设置 my.cnf
+/usr/local/etc/my.cnf
+
+# 查看软件的详细信息
+brew info mysql
+
+# 查看软件的官网
+brew home mysql
+
+# 查看软件安装选项
+brew options mysql
+
+# 升级软件
+brew upgrade mysql
+
+# 卸载软件
+brew uninstall mysql
+
+# 搜索软件
+brew search mysql
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;安装 app brew cask&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 安装 sequel-pro 数据库管理软件为例
+brew cask install sequel-pro
+brew cask info sequel-pro
+brew cask home sequel-pro
+brew cask uninstall sequel-pro
+......
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;更多的参数命令可以查看相关的帮助文档,如下&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew cask
+
+Commands:
+
+    --version              displays the Homebrew-Cask version
+    audit                  verifies installability of Casks
+    cat                    dump raw source of the given Cask to the standard output
+    cleanup                cleans up cached downloads and tracker symlinks
+    create                 creates the given Cask and opens it in an editor
+    doctor                 checks for configuration issues
+    edit                   edits the given Cask
+    fetch                  downloads remote application files to local cache
+    home                   opens the homepage of the given Cask
+    info                   displays information about the given Cask
+    install                installs the given Cask
+    list                   with no args, lists installed Casks; given installed Casks, lists staged files
+    outdated               list the outdated installed Casks
+    reinstall              reinstalls the given Cask
+    search                 searches all known Casks
+    style                  checks Cask style using RuboCop
+    uninstall              uninstalls the given Cask
+    upgrade                upgrades all outdated casks
+    zap                    zaps all files associated with the given Cask
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>selenium模块模拟Chrome浏览器</title>
@@ -894,29 +1014,6 @@ format=%(asctime)s %(levelname)s %(message)s
 &lt;span class=&quot;nd&quot;&gt;@check_is_admin&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_food&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;chocolate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; nom nom nom!&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-   </content>
- </entry>
- 
- <entry>
-   <title>brew install mysql and config</title>
-   <link href="https://pemako.cn/brew/2017/05/18/brew-install-mysql-and-config.html"/>
-   <updated>2017-05-18T00:00:00+08:00</updated>
-   <id>https://pemako.cn/brew/2017/05/18/brew-install-mysql-and-config</id>
-   <content type="html">
-   	&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 安装 mysql
-brew install mysql
-
-# 按照提示进行设置
-mysql_secure_installation
-
-# 起停
-mysql.server  {start|stop|restart|reload|force-reload|status}
-
-# 设置 my.cnf 
-/usr/local/etc/my.cnf
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 

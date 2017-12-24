@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>用 brew配置 mac 环境 - pemako</title>
+    
+    
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/python/2017/12/21/selenium-simulation-chrome.html" title="selenium模块模拟Chrome浏览器" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>用 brew配置 mac 环境 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <p>使用<code class="highlighter-rouge">brew</code> 环境要求, 已经安装<code class="highlighter-rouge">ruby</code>, <code class="highlighter-rouge">git</code> 这里假设环境已 OK，只需要在命令行终端输入一下命令，即开始进行安装<code class="highlighter-rouge">brew</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre>
+</div>
+
+<p>使用 <code class="highlighter-rouge">brew config</code> 查看自己的环境, 我的环境配置如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>HOMEBREW_VERSION: 1.4.1-11-g583b61f
+ORIGIN: https://github.com/Homebrew/brew
+HEAD: 583b61fd324643f15bb8017a6b652afbbbfe7cbc
+Last commit: 2 days ago
+Core tap ORIGIN: https://github.com/Homebrew/homebrew-core
+Core tap HEAD: e1f84c3a98b856e0868734cefeb19047d4e2a3f7
+Core tap last commit: 14 hours ago
+HOMEBREW_PREFIX: /usr/local
+HOMEBREW_DEV_CMD_RUN: 1
+CPU: octa-core 64-bit haswell
+Homebrew Ruby: 2.3.3 =&gt; /usr/local/Homebrew/Library/Homebrew/vendor/portable-ruby/2.3.3/bin/ruby
+Clang: 9.0 build 900
+Git: 2.14.3 =&gt; /Applications/Xcode.app/Contents/Developer/usr/bin/git
+Curl: 7.54.0 =&gt; /usr/bin/curl
+Perl: /usr/bin/perl
+Python: /usr/local/opt/python/libexec/bin/python =&gt; /usr/local/Cellar/python/2.7.14/Frameworks/Python.framework/Versions/2.7/bin/python2.7
+Ruby: /Users/lena/.rvm/rubies/ruby-2.4.0/bin/ruby
+Java: 1.8.0_144, 1.8.0_121, 1.8.0_74
+macOS: 10.13.2-x86_64
+Xcode: 9.2
+CLT: 9.2.0.0.1.1510905681
+X11: 2.7.11 =&gt; /opt/X11
+</code></pre>
+</div>
+
+<ol>
+  <li>安装需要的软件</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 安装 mysql 为例
+brew install mysql
+
+# 按照提示进行设置
+mysql_secure_installation
+
+# 起停
+mysql.server  {start|stop|restart|reload|force-reload|status}
+
+# 设置 my.cnf
+/usr/local/etc/my.cnf
+
+# 查看软件的详细信息
+brew info mysql
+
+# 查看软件的官网
+brew home mysql
+
+# 查看软件安装选项
+brew options mysql
+
+# 升级软件
+brew upgrade mysql
+
+# 卸载软件
+brew uninstall mysql
+
+# 搜索软件
+brew search mysql
+
+</code></pre>
+</div>
+
+<ol>
+  <li>安装 app brew cask</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 安装 sequel-pro 数据库管理软件为例
+brew cask install sequel-pro
+brew cask info sequel-pro
+brew cask home sequel-pro
+brew cask uninstall sequel-pro
+......
+</code></pre>
+</div>
+
+<p>更多的参数命令可以查看相关的帮助文档,如下</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>brew cask
+
+Commands:
+
+    --version              displays the Homebrew-Cask version
+    audit                  verifies installability of Casks
+    cat                    dump raw source of the given Cask to the standard output
+    cleanup                cleans up cached downloads and tracker symlinks
+    create                 creates the given Cask and opens it in an editor
+    doctor                 checks for configuration issues
+    edit                   edits the given Cask
+    fetch                  downloads remote application files to local cache
+    home                   opens the homepage of the given Cask
+    info                   displays information about the given Cask
+    install                installs the given Cask
+    list                   with no args, lists installed Casks; given installed Casks, lists staged files
+    outdated               list the outdated installed Casks
+    reinstall              reinstalls the given Cask
+    search                 searches all known Casks
+    style                  checks Cask style using RuboCop
+    uninstall              uninstalls the given Cask
+    upgrade                upgrades all outdated casks
+    zap                    zaps all files associated with the given Cask
+</code></pre>
+</div>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#brew-ref" rel="tag">brew</a>
+       
+      	<a href="/tags.html#mac-ref" rel="tag">mac</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/python/2017/12/21/selenium-simulation-chrome.html" title="selenium模块模拟Chrome浏览器">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "用 brew配置 mac 环境"; //请用代码生成文章标题
+        var wumiiTags = "brew,mac"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["brew"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="用 brew配置 mac 环境" data-url="https://pemako.cn/brew/2017/12/24/use-brew-config-macpro.html" data-thread-key="/brew/2017/12/24/use-brew-config-macpro"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
