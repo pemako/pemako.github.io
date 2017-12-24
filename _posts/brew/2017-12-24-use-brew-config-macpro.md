@@ -112,3 +112,50 @@ Commands:
     upgrade                upgrades all outdated casks
     zap                    zaps all files associated with the given Cask
 ```
+
+附录电脑已安装的软件：
+
+```
+gitbook-editor GitBook-Editor
+postman		postman
+youdaodict	有道词典
+youdaonote	有道云笔记
+neteasemusic  网易云音乐
+jietu			QQ截图
+aria2gui		下载工具
+boostnote	笔记
+cheatsheet	快捷键预览
+cyberduck	ftp上传工具
+easyfind		快速查找文件
+popclip		
+tickeys		键盘声音
+wechatwebdevtools  微信开发者工具
+thunder		迅雷软件
+firefox		火狐浏览器
+google-chrome	chrome 浏览器
+appium		移动端自动测试框架
+baidunetdisk 	百度网盘
+shadowsocksx
+sequel-pro	数据库管理
+the-unarchiver 非常好用的解压工具
+qq			腾讯 qq
+qqlive		腾讯视频
+iina			视频播放器
+youku		优酷视频
+licecap		屏幕截图成动态图片
+ocrkit		图片转为文字-试用14天
+axure-rp		流程图工具收费
+mweb		markdown 工具收费
+screenflow	视频编辑和屏幕录制 收费
+rstudio		编辑器 Rstudio
+zend-studio	zend	
+android-studio
+goland		Golang 开发工具
+phpstorm		PHP 开发工具
+pycharm		Python 开发工具
+intellij-idea	 Java 开发工具
+clion			使用30天
+sublime-text	sublime 编辑器
+charles		抓包工具
+```
+
