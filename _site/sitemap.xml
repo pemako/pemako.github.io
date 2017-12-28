@@ -59,6 +59,13 @@
 
 
 	<url>
+		<loc>https://pemako.cn/python/2017/12/28/effective-python-01-pythonic-thinking.html</loc>
+		<lastmod>2017-12-28</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/brew/2017/12/24/use-brew-config-macpro.html</loc>
 		<lastmod>2017-12-24</lastmod>
 		<changefreq>weekly</changefreq>
@@ -81,13 +88,6 @@
 
 	<url>
 		<loc>https://pemako.cn/python/2017/12/21/multi-process-log.html</loc>
-		<lastmod>2017-12-21</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.6</priority>
-	</url>
-
-	<url>
-		<loc>https://pemako.cn/python/2017/12/21/how-to-write-high-quality-python-code.html</loc>
 		<lastmod>2017-12-21</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.6</priority>
