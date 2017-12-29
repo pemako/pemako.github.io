@@ -10,7 +10,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-    <title>函数 - pemako</title>
+    <title>编写高质量的python代码 -- 函数 - pemako</title>
     
     <meta name="keywords" content="python">
     <meta name="author" content="pemako">
@@ -27,7 +27,7 @@
 
     <link rel="index prerender" title="pemako" href="/" />
     
-    <link rel="prev prerender" href="/python/2017/12/28/effective-python-01-pythonic-thinking.html" title="用pythonic 方式来思考" />
+    <link rel="prev prerender" href="/python/2017/12/28/effective-python-01-pythonic-thinking.html" title="编写高质量的python代码 -- 用pythonic 方式来思考" />
     
     
     
@@ -70,7 +70,7 @@
      
 
 <div class="page-header">
-  <h1>函数 <small></small></h1>
+  <h1>编写高质量的python代码 -- 函数 <small></small></h1>
 </div>
 <div class="row-fluid">
   <div class="span12">  
@@ -368,27 +368,25 @@
   <li>关键字参数能够使函数调用的意图更加明确</li>
   <li>对于各参数之间很容易混淆的函数，可以声明只能以关键字形式指定的参数，以确保调用者必须通过关键字来指定它们。对于接受多个 Boolena 标志的函数，更应该这样做</li>
   <li>python3 有明确的语法来定义这种只能以关键字形式指定的参数</li>
-  <li>python2 的函数可以接受 **kwargs 参数，并手工抛出 TypeError 异常，以便模拟只能以关键字形式来指定的参数</li>
+  <li>python2 的函数可以接受 <code class="highlighter-rouge">**kwargs</code> 参数，并手工抛出 TypeError 异常，以便模拟只能以关键字形式来指定的参数</li>
 </ul>
 
 <p>python3 可以定义一种只能以关键字形式来指定的参数，从而确保调用该函数的代码读起来会比较明确。下面定义的这个 safe_division_c 函数，带有两个只能以关键字形式来指定的参数。参数列表里的<code class="highlighter-rouge">*</code>，标志着位置参数就此终结，之后的那些参数，都只能以关键字形式来指定。</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># python3 写法</span>
-<span class="k">def</span> <span class="nf">safe_division_c</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
-					<span class="n">ignore_overflow</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-					<span class="n">ignore_zero_division</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-	<span class="k">try</span><span class="p">:</span>
-		<span class="k">return</span> <span class="n">number</span> <span class="o">/</span><span class="n">divisor</span>
-	<span class="k">except</span> <span class="nb">OverflowError</span><span class="p">:</span>
-		<span class="k">if</span> <span class="n">ignore_overflow</span><span class="p">:</span>
-			<span class="k">return</span> <span class="mi">0</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">raise</span>
-	<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
-		<span class="k">if</span> <span class="n">ignore_zero_division</span><span class="p">:</span>
-			<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">raise</span>
+<span class="k">def</span> <span class="nf">safe_division_c</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">ignore_overflow</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">ignore_zero_division</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">number</span> <span class="o">/</span><span class="n">divisor</span>
+    <span class="k">except</span> <span class="nb">OverflowError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ignore_overflow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
+    <span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ignore_zero_division</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
 
 <span class="c"># python2 写法</span>
 <span class="k">def</span> <span class="nf">safe_division_d</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -397,17 +395,17 @@
     <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">'Unexpected **kwargs: </span><span class="si">%</span><span class="s">r'</span> <span class="o">%</span> <span class="n">kwargs</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-		<span class="k">return</span> <span class="n">number</span> <span class="o">/</span><span class="n">divisor</span>
-	<span class="k">except</span> <span class="nb">OverflowError</span><span class="p">:</span>
-		<span class="k">if</span> <span class="n">ignore_overflow</span><span class="p">:</span>
-			<span class="k">return</span> <span class="mi">0</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">raise</span>
-	<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
-		<span class="k">if</span> <span class="n">ignore_zero_division</span><span class="p">:</span>
-			<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="k">raise</span>
+        <span class="k">return</span> <span class="n">number</span> <span class="o">/</span><span class="n">divisor</span>
+    <span class="k">except</span> <span class="nb">OverflowError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ignore_overflow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
+    <span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ignore_zero_division</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
 </code></pre>
 </div>
 
@@ -429,7 +427,7 @@
     <div class="pagination">
       <ul>
       
-        <li class="prev"><a href="/python/2017/12/28/effective-python-01-pythonic-thinking.html" title="用pythonic 方式来思考">&larr; 上一篇</a></li>
+        <li class="prev"><a href="/python/2017/12/28/effective-python-01-pythonic-thinking.html" title="编写高质量的python代码 -- 用pythonic 方式来思考">&larr; 上一篇</a></li>
       
         <li><a href="/archive.html">归档</a></li>
       
@@ -446,7 +444,7 @@
    <!-- wumi 阅读推荐
     <script type="text/javascript">
         var wumiiPermaLink = ""; //请用代码生成文章永久的链接
-        var wumiiTitle = "函数"; //请用代码生成文章标题
+        var wumiiTitle = "编写高质量的python代码 -- 函数"; //请用代码生成文章标题
         var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
         var wumiiCategories = ["python"];
         var wumiiSitePrefix = "http://pemako.cn/";
@@ -460,7 +458,7 @@
     <hr>
 
     <!-- Duoshuo Comment BEGIN -->
-    <div id="comments" class="ds-thread" data-title="函数" data-url="https://pemako.cn/python/2017/12/29/effective-python-02-functions.html" data-thread-key="/python/2017/12/29/effective-python-02-functions"></div>
+    <div id="comments" class="ds-thread" data-title="编写高质量的python代码 -- 函数" data-url="https://pemako.cn/python/2017/12/29/effective-python-02-functions.html" data-thread-key="/python/2017/12/29/effective-python-02-functions"></div>
     <script type="text/javascript">
       var duoshuoQuery = {short_name:"pemako"};
       (function() {

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 用pythonic 方式来思考
+title: 编写高质量的python代码 -- 用pythonic 方式来思考
 keywords: python
 category: python
 tags: [python]

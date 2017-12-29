@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 函数
+title: 编写高质量的python代码 -- 函数
 keywords: python
 category: python
 tags: [python]
@@ -292,27 +292,25 @@ def log(message, when=None):
 - 关键字参数能够使函数调用的意图更加明确
 - 对于各参数之间很容易混淆的函数，可以声明只能以关键字形式指定的参数，以确保调用者必须通过关键字来指定它们。对于接受多个 Boolena 标志的函数，更应该这样做
 - python3 有明确的语法来定义这种只能以关键字形式指定的参数
-- python2 的函数可以接受 **kwargs 参数，并手工抛出 TypeError 异常，以便模拟只能以关键字形式来指定的参数
+- python2 的函数可以接受 `**kwargs` 参数，并手工抛出 TypeError 异常，以便模拟只能以关键字形式来指定的参数
 
 python3 可以定义一种只能以关键字形式来指定的参数，从而确保调用该函数的代码读起来会比较明确。下面定义的这个 safe_division_c 函数，带有两个只能以关键字形式来指定的参数。参数列表里的`*`，标志着位置参数就此终结，之后的那些参数，都只能以关键字形式来指定。
 
 ```python
 # python3 写法
-def safe_division_c(number, divisor, *,
-					ignore_overflow=False,
-					ignore_zero_division=False):
-	try:
-		return number /divisor
-	except OverflowError:
-		if ignore_overflow:
-			return 0
-		else:
-			raise
-	except ZeroDivisionError:
-		if ignore_zero_division:
-			return float('inf')
-		else:
-			raise
+def safe_division_c(number, divisor, *, ignore_overflow=False,ignore_zero_division=False):
+    try:
+        return number /divisor
+    except OverflowError:
+        if ignore_overflow:
+            return 0
+        else:
+            raise
+    except ZeroDivisionError:
+        if ignore_zero_division:
+            return float('inf')
+        else:
+            raise
 
 # python2 写法
 def safe_division_d(number, divisor, **kwargs):
@@ -321,15 +319,15 @@ def safe_division_d(number, divisor, **kwargs):
     if kwargs:
         raise TypeError('Unexpected **kwargs: %r' % kwargs)
     try:
-		return number /divisor
-	except OverflowError:
-		if ignore_overflow:
-			return 0
-		else:
-			raise
-	except ZeroDivisionError:
-		if ignore_zero_division:
-			return float('inf')
-		else:
-			raise
+        return number /divisor
+    except OverflowError:
+        if ignore_overflow:
+            return 0
+        else:
+            raise
+    except ZeroDivisionError:
+        if ignore_zero_division:
+            return float('inf')
+        else:
+            raise
 ```
