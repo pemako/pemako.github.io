@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>函数 - pemako</title>
+    
+    <meta name="keywords" content="python">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/python/2017/12/28/effective-python-01-pythonic-thinking.html" title="用pythonic 方式来思考" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>函数 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h4 id="14-尽量用异常来表示特殊情况而不返回-none">14. 尽量用异常来表示特殊情况，而不返回 None</h4>
+
+<ul>
+  <li>用 None 这个返回值来表示特殊意义的函数，很容易使调用者犯错，因为 None 和0以及空字符之类的值，在条件表达式里都会评估为 False</li>
+  <li>函数在遇到特殊情况时，应该抛出异常，而不要返回 None.调用者看到该函数的文档中所描述的异常之后，应该就会编写相应的代码来处理它们了</li>
+</ul>
+
+<p>如两个数字进行相除的函数</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="s">"""求两个数相除"""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+    <span class="k">except</span> <span class="nb">ZeroDivisionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'Invalid inputs'</span><span class="p">)</span> <span class="k">from</span> <span class="n">e</span>
+        
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">ValueError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Invalid inputs'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Result is {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+</code></pre>
+</div>
+
+<h4 id="15-了解如何在闭包里使用外围作用域中的变量">15. 了解如何在闭包里使用外围作用域中的变量</h4>
+
+<ul>
+  <li>对于定义在某作用域内的闭包来说，它可以引用这些作用域中的变量</li>
+  <li>使用默认方式对闭包内的变量赋值，不会影响外围作用域中的同名变量</li>
+  <li>在 python3中，程序可以在闭包内用 nonlocal 语句来修饰某个名称，使该闭包能够修改外围作用域中的同名变量</li>
+  <li>在 python2中，程序可以使用可变值(如，包含单个元素的列表)来实现与 nonlocal 语句相仿的机制</li>
+  <li>处理那种比较简单的函数，尽量不要用 nonlocal 语句</li>
+</ul>
+
+<p>示例：假如有一份列表，其中的元素都是数字，现在要对其排序，但排序时，要把出现在某个群组内的数字，放在群组外的那些数字之前。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">group</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">sort_priority</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">values</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">helper</span><span class="p">)</span>
+<span class="n">sort_priority</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+
+<span class="c"># 这个山水能正常工作是因为</span>
+<span class="c"># 1. python 支持闭包：闭包是一种定义在某个作用域中的函数，这种函数引用了那个作用域里面的变量。helper 函数之所以能够访问 sort_priority 的 group 参数，原因就在于它是闭包</span>
+<span class="c"># 2. python 的函数是一级对象，也就是说，我们可以直接饮用函数，把函数赋给变量、把函数当成参数传递给其它函数，并通过表达式及 if 语句对其进行比较和判断，等待。于是，我们可以把 helper 这个闭包函数，传递个 sort 方法的 key 参数</span>
+<span class="c"># 3. python 使用特殊的规则来比较两个元组。它首先比较各元组中下标为0的对应元素，如果相等，在比较下表为1的对应元素，依次类推</span>
+
+</code></pre>
+</div>
+
+<p>改进 sort_priority函数，返回一个值用来表示用户界面里是否出现了优先级较高的原件，使得该函数的调用者，可以根据这个返回值做出相应的处理。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">group</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">sort_priority</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>    <span class="c"># 闭包里面的赋值，相当于定义了一个新的变量 found </span>
+                            <span class="c"># 不会修改sort_priority函数中的 found 值</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">values</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">helper</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">found</span>
+    
+<span class="n">sort_priority</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="n">Found</span><span class="p">:</span> <span class="bp">False</span> <span class="c"># 期望返回 True，返回了 False</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+
+<span class="c"># 之所以出现上面的问题，是Python 语言故意这么设计的。这样做可以防止函数中的局部变量污染函数外面的那个模块。</span>
+</code></pre>
+</div>
+
+<p>python3中获取闭包内的数据，可以使用 nonlocal。也就是给相关变量赋值的时候，应该在上层作用域中查找该变量。nonlocal 的唯一限制在于，它不能延伸到模块级别，这是为了防止污染全局作用域。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sort_priority</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">nonlocal</span> <span class="n">found</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">values</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">helper</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">found</span>
+</code></pre>
+</div>
+
+<p>python2中不支持 nonlocal 关键字，为了实现类似的功能，我们需要利用 python 的作用域规则来解决。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sort_priority</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+            <span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">numbers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">helper</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>如果使用 nonlocal 的那些代码，已经写得原来越复杂，那就应该将其相关的状态封装成辅助类。下面定义的类，与 nonlocal 所表达的功能形同。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Sorter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="n">sorter</span> <span class="o">=</span> <span class="n">Sorter</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">sorter</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">sorter</span><span class="o">.</span><span class="n">found</span> <span class="ow">is</span> <span class="bp">True</span>
+</code></pre>
+</div>
+
+<h4 id="16-考虑用生成器来改写直接返回列表的函数">16. 考虑用生成器来改写直接返回列表的函数</h4>
+
+<ul>
+  <li>使用生成器比把收集到的结果放入列表里返回给调用者更加清晰</li>
+  <li>由生成器函数返回的那个迭代器，可以把生成器函数体重，传给 yield 表达式的那些纸，逐次产生出来</li>
+  <li>无论输入量有多大，生成器都能产生一系列输出，因为这些输入量和输出量，都不会影响它在执行时所耗的内存</li>
+</ul>
+
+<p>例如： 我们要查出字符串中每个词的首字母，在整个字符串里的位置。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">index_words</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+    
+<span class="c"># 把这个函数改为生成器来写会更好。生成器是使用 yield 表达式的函数。调用生成器函数时，</span>
+<span class="c"># 它不会真的运行，而是会返回迭代器。每次在这个迭代器上面调用内置的 next 函数时，迭代</span>
+<span class="c"># 器会把生成器推进到下一个 yield 表达式那里。生成器传给 yield 的每一个值，都会由迭代</span>
+<span class="c"># 器返回给调用者</span>
+
+<span class="k">def</span> <span class="nf">index_words_iter</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">index_words_iter</span><span class="p">(</span><span class="n">address</span><span class="p">))</span>
+
+<span class="c"># 下面定义一个生成器，从文件里面依次读入各行内容，然后逐个处理每行汇总的单词，并产生</span>
+<span class="c"># 相应结果。该函数执行时所耗的内存，由单行输入值的最大字符数来界定</span>
+
+<span class="k">def</span> <span class="nf">index_file</span><span class="p">(</span><span class="n">handle</span><span class="p">):</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">offset</span>
+        <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">offset</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/tmp/address.txt'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="n">index_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="17-在参数上面迭代时要多加小心">17. 在参数上面迭代时，要多加小心</h4>
+
+<ul>
+  <li>函数在输入的参数上面多次迭代时要小心：如果参数是迭代器，那么可能会导致奇怪的行为并错失某些值</li>
+  <li>python 的迭代器协议，描述了容器和迭代器应该如何与iter和 nextn 内置函数、for 循环及相关表达式相互配合</li>
+  <li>把 <strong>iter</strong> 方法实现为生成器，即可定义自己的容器类型</li>
+  <li>想判断某个值是迭代器还是容器，可以拿该值为参数，两次调用 iter 函数，若结果相同，则为迭代器，调用内置的 next 函数，即可令该迭代器前进一步</li>
+</ul>
+
+<p>以统计城市旅游的人数，占总游客的百分比。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">normalize_defensive</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">iter</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">iter</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">'Must supply a container'</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+        <span class="n">percent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">value</span> <span class="o">/</span> <span class="n">total</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">percent</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+    
+<span class="c"># 使用迭代器协议（iterator protocol）的容器类</span>
+<span class="k">class</span> <span class="nc">ReadVisits</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">data_path</span>
+        
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                
+<span class="s">'''
+/tmp/a.data 文件中包含三行数据
+15
+35
+80
+'''</span>
+
+<span class="c"># python 在 for 循环及相关表达式中遍历某中容器的内容时，就要依靠这个迭代协议。</span>
+<span class="c"># 在执行类似 for x in foo 这样的语句时，python 实际上会调动 iter(foo).内置的 iter 函数又会</span>
+<span class="c"># 调用 foo.__iter__ 这个特殊方法。该方法必须返回迭代器对象。</span>
+
+<span class="n">visits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span>
+<span class="n">normalize_defensive</span><span class="p">(</span><span class="n">visits</span><span class="p">)</span> <span class="c"># No error</span>
+<span class="n">visits</span> <span class="o">=</span> <span class="n">ReadVisits</span><span class="p">(</span><span class="s">'/tmp/a.data'</span><span class="p">)</span>
+<span class="n">normalize_defensive</span><span class="p">(</span><span class="n">visits</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="18-用数量可变的位置参数减少视觉杂讯">18. 用数量可变的位置参数减少视觉杂讯</h4>
+
+<ul>
+  <li>在 def 语句中使用<code class="highlighter-rouge">*args</code>, 即可令函数接受数量可变的位置参数</li>
+  <li>调用函数时，可以采用<code class="highlighter-rouge">*</code> 操作符，把序列中的元素当成位置参数，传给该函数</li>
+  <li>对生成器使用 <code class="highlighter-rouge">*</code> 操作符，可能导致程序耗尽内存并崩溃</li>
+  <li>在已经接受 <code class="highlighter-rouge">*args</code> 参数的函数上面继续添加位置参数，可能会产生难以排查的 bug</li>
+</ul>
+
+<h4 id="19-用关键字参数来表达可选的行为">19. 用关键字参数来表达可选的行为</h4>
+
+<ul>
+  <li>函数参数可以按位置或关键字来指定</li>
+  <li>只使用位置参数来调用函数，可能会导致这些参数值的含义不够明确，而关键字参数则能阐明每个参数的意图</li>
+  <li>给函数添加新的行为时，可以使用带默认值的关键字参数，以便与原有的函数调用代码保持兼容</li>
+  <li>可选的关键字参数，总是应该以关键字形式来指定，而不应该以位置参数的形式来指定</li>
+</ul>
+
+<h4 id="20-用-none-和文档字符串来描述具有动态默认值的参数">20. 用 None 和文档字符串来描述具有动态默认值的参数</h4>
+
+<ul>
+  <li>参数的默认值，只会在程序加载模块并读到本函数的定义时评估一次。对于{} 或 [] 等动态的值，可能会导致奇怪的行为</li>
+  <li>对于以动态值作为实际默认值的关键字参数来说，应该把形式上的默认值写为 None,并在函数的文档字符串里面描述该默认值所对应的实际行为</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">when</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{}: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">when</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+
+<span class="n">log</span><span class="p">(</span><span class="s">'Hi there!'</span><span class="p">)</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">log</span><span class="p">(</span><span class="s">'Hi again!'</span><span class="p">)</span>
+
+<span class="c"># 上面的例子输出的时间是一样的，因为 datetime.now 只执行了一次。</span>
+<span class="c"># 在 python 若想正确实动态默认值，习惯上把默认值设置为 None,并在文档字符串里面把对None 对应的实际行为</span>
+<span class="c"># 描述出来。编写函数代码时，如果返现该参数的值是 None,那就将其设为实际的默认值</span>
+
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">when</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="s">"""Log a message with a timestamp.
+    
+    Args:
+        message: Message to print.
+        when: datetime of when the message occurred.
+            Defaults to the present time.
+    """</span>
+    <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+    <span class="n">when</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="k">if</span> <span class="n">when</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">when</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'{}: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">when</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<h4 id="21-用只能以关键字形式指定的参数来确保代码清晰">21. 用只能以关键字形式指定的参数来确保代码清晰</h4>
+
+<ul>
+  <li>关键字参数能够使函数调用的意图更加明确</li>
+  <li>对于各参数之间很容易混淆的函数，可以声明只能以关键字形式指定的参数，以确保调用者必须通过关键字来指定它们。对于接受多个 Boolena 标志的函数，更应该这样做</li>
+  <li>python3 有明确的语法来定义这种只能以关键字形式指定的参数</li>
+  <li>python2 的函数可以接受 **kwargs 参数，并手工抛出 TypeError 异常，以便模拟只能以关键字形式来指定的参数</li>
+</ul>
+
+<p>python3 可以定义一种只能以关键字形式来指定的参数，从而确保调用该函数的代码读起来会比较明确。下面定义的这个 safe_division_c 函数，带有两个只能以关键字形式来指定的参数。参数列表里的<code class="highlighter-rouge">*</code>，标志着位置参数就此终结，之后的那些参数，都只能以关键字形式来指定。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># python3 写法</span>
+<span class="k">def</span> <span class="nf">safe_division_c</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+					<span class="n">ignore_overflow</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+					<span class="n">ignore_zero_division</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+	<span class="k">try</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">number</span> <span class="o">/</span><span class="n">divisor</span>
+	<span class="k">except</span> <span class="nb">OverflowError</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">ignore_overflow</span><span class="p">:</span>
+			<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span>
+	<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">ignore_zero_division</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span>
+
+<span class="c"># python2 写法</span>
+<span class="k">def</span> <span class="nf">safe_division_d</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">ignore_overflow</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'ignore_overflow'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">ignore_zero_division</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pip</span><span class="p">(</span><span class="s">'ignore_zero_division'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">'Unexpected **kwargs: </span><span class="si">%</span><span class="s">r'</span> <span class="o">%</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">number</span> <span class="o">/</span><span class="n">divisor</span>
+	<span class="k">except</span> <span class="nb">OverflowError</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">ignore_overflow</span><span class="p">:</span>
+			<span class="k">return</span> <span class="mi">0</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span>
+	<span class="k">except</span> <span class="nb">ZeroDivisionError</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">ignore_zero_division</span><span class="p">:</span>
+			<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span>
+</code></pre>
+</div>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/python/2017/12/28/effective-python-01-pythonic-thinking.html" title="用pythonic 方式来思考">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "函数"; //请用代码生成文章标题
+        var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["python"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="函数" data-url="https://pemako.cn/python/2017/12/29/effective-python-02-functions.html" data-thread-key="/python/2017/12/29/effective-python-02-functions"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
