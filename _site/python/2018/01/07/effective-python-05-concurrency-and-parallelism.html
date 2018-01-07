@@ -10,7 +10,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-    <title>编写高质量的python代码 -- 05.并发与并行 - pemako</title>
+    <title>编写高质量的python代码 -- 05. 并发与并行 - pemako</title>
     
     <meta name="keywords" content="python">
     <meta name="author" content="pemako">
@@ -70,7 +70,7 @@
      
 
 <div class="page-header">
-  <h1>编写高质量的python代码 -- 05.并发与并行 <small></small></h1>
+  <h1>编写高质量的python代码 -- 05. 并发与并行 <small></small></h1>
 </div>
 <div class="row-fluid">
   <div class="span12">  
@@ -587,6 +587,12 @@
 </code></pre>
 </div>
 
+<ul>
+  <li>把引发CPU性能瓶颈的那部分代码，用C语言扩展模块来改写，即可在尽量发挥python性能的前提下，有效提升程序的执行速度。但是这样做的工作量比较大，而且可能会引入bug</li>
+  <li>multiprocessing 模块提供了一些强大的工具。对于某些类型的任务来说，开发者只需编写少量代码，即可实现平行计算</li>
+  <li>若想利用强大的multiprocessing模块，做恰当的做饭，是通过内置的concurrent.futures模块及其ProcessPoolExecutor类来使用它</li>
+  <li>multiprocessing 模块所提供的那些高级功能，都特别复杂，所以开发者尽量不要直接使用它们</li>
+</ul>
 
     <p>继续阅读关于
     
@@ -623,7 +629,7 @@
    <!-- wumi 阅读推荐
     <script type="text/javascript">
         var wumiiPermaLink = ""; //请用代码生成文章永久的链接
-        var wumiiTitle = "编写高质量的python代码 -- 05.并发与并行"; //请用代码生成文章标题
+        var wumiiTitle = "编写高质量的python代码 -- 05. 并发与并行"; //请用代码生成文章标题
         var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
         var wumiiCategories = ["python"];
         var wumiiSitePrefix = "http://pemako.cn/";
@@ -637,7 +643,7 @@
     <hr>
 
     <!-- Duoshuo Comment BEGIN -->
-    <div id="comments" class="ds-thread" data-title="编写高质量的python代码 -- 05.并发与并行" data-url="https://pemako.cn/python/2018/01/07/effective-python-05-concurrency-and-parallelism.html" data-thread-key="/python/2018/01/07/effective-python-05-concurrency-and-parallelism"></div>
+    <div id="comments" class="ds-thread" data-title="编写高质量的python代码 -- 05. 并发与并行" data-url="https://pemako.cn/python/2018/01/07/effective-python-05-concurrency-and-parallelism.html" data-thread-key="/python/2018/01/07/effective-python-05-concurrency-and-parallelism"></div>
     <script type="text/javascript">
       var duoshuoQuery = {short_name:"pemako"};
       (function() {

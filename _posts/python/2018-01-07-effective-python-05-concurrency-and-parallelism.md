@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 编写高质量的python代码 -- 05.并发与并行
+title: 编写高质量的python代码 -- 05. 并发与并行
 keywords: python
 category: python
 tags: [python]
@@ -508,3 +508,7 @@ print('Took %.3f seconds' % (end - start))
 >>> Took 0.209 seconds
 ```
 
+- 把引发CPU性能瓶颈的那部分代码，用C语言扩展模块来改写，即可在尽量发挥python性能的前提下，有效提升程序的执行速度。但是这样做的工作量比较大，而且可能会引入bug
+- multiprocessing 模块提供了一些强大的工具。对于某些类型的任务来说，开发者只需编写少量代码，即可实现平行计算
+- 若想利用强大的multiprocessing模块，做恰当的做饭，是通过内置的concurrent.futures模块及其ProcessPoolExecutor类来使用它
+- multiprocessing 模块所提供的那些高级功能，都特别复杂，所以开发者尽量不要直接使用它们
