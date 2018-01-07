@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 编写高质量的python代码 -- 类与继承
+title: 编写高质量的python代码 -- 03. 类与继承
 keywords: python
 category: python
 tags: [python]

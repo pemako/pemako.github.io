@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 编写高质量的python代码 -- 函数
+title: 编写高质量的python代码 -- 02. 函数
 keywords: python
 category: python
 tags: [python]

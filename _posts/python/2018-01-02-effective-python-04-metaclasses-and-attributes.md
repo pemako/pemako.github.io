@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 编写高质量的python代码 -- 元类及属性
+title: 编写高质量的python代码 -- 04. 元类及属性
 keywords: python
 category: python
 tags: [python]
