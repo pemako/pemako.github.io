@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>编写高质量的python代码 -- 07. 协作开发 - pemako</title>
+    
+    <meta name="keywords" content="python">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/python/2018/01/05/effective-python-06-built-in-modules.html" title="编写高质量的python代码 -- 06. 内置模块" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>编写高质量的python代码 -- 07. 协作开发 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h3 id="49-为每个函数类和模块编写文档字符串">49. 为每个函数、类和模块编写文档字符串</h3>
+
+<ul>
+  <li>我们要通过docstring, 为每个模块，类和函数编写文档。在修改代码的时候，应该更新这些文档</li>
+  <li>为模块编写文档时，应该介绍本模块的内容，并且要把用户应该了解的重要类及重要函数列出来</li>
+  <li>为类撰写文档时，应该在class语句下面的docstring中，介绍本类的行为、重要属性，以及本来的子类应该实现的行为</li>
+  <li>为函数及方法撰写文档时，应该在def语句下面的docstring中，介绍函数的每个参数，函数的返回值，函数的执行过程中可能抛出的异常，以及其他行为。</li>
+</ul>
+
+<h3 id="50-用包来安排模块并提供稳固的api">50. 用包来安排模块，并提供稳固的API</h3>
+
+<ul>
+  <li>python 包是一种含有其他模块的模块。我们可以用包把代码划分成各自独立且互不冲突的名称空间，使得每块代码都具备独有的绝对模块名称。</li>
+  <li>主要把 <code class="highlighter-rouge">__init__.py</code> 文件放入含有其他源文件的目录里，就可以将该目录定义为包。目录中的文件，都将成为包的子模块。在包的目录下面，也可以含有其他包</li>
+  <li>把外界可见的名称，列在名为 <code class="highlighter-rouge">__all__</code>的特殊属性里，即可为包提供一套明确的API</li>
+  <li>如果想要隐藏某个包的内部实现，那么我们可以在包的<code class="highlighter-rouge">__init__.py</code> 文件中，只把外界可见的那些名称引入进来，或是给仅限内部使用的那些名称添加下划线前缀</li>
+  <li>如果软件包只在开发团队或代码库内部使用，那可能没有必要通过 <code class="highlighter-rouge">__all__</code>来明确地导出API</li>
+</ul>
+
+<h3 id="51-为自编的模块定义根异常以便将调用者与api相隔离">51. 为自编的模块定义根异常，以便将调用者与API相隔离</h3>
+
+<ul>
+  <li>为模块定义根异常，可以把API的调用者与模块的API相隔离</li>
+  <li>调用者在使用API时，可以通过捕获根异常，来发现调用代码中隐藏的bug</li>
+  <li>调用者可以通过捕获python的Exception 基类，来帮助模块的研发者找寻API实现代码中的bug</li>
+  <li>可以从模块的根异常里面，继承一些中间异常，并领API的调用者捕获这些中间异常。这样模块开发者将来就能在不破坏原有调用代码的前提下，为这些中间异常分别编写具体的异常子类</li>
+</ul>
+
+<h3 id="52-用适当的方式打破循环依赖关系">52. 用适当的方式打破循环依赖关系</h3>
+
+<ul>
+  <li>如果两个模块必须相互调用对方，才能完成引入操作，那就会出现循环依赖现象，这坑能导致程序在启动的时候崩溃</li>
+  <li>打破循环依赖关系的最佳方案，是把导致两个模块互相依赖的那部分代码，重构为单独的模块，并把它放在依赖树的底部</li>
+  <li>打破循环依赖关系的最简方案，是执行动态模块引入操作，这样既可以缩减重构所花的精力，也可以尽量降低代码的复杂度</li>
+</ul>
+
+<h3 id="53-用虚拟环境隔离项目并重建其依赖关系">53. 用虚拟环境隔离项目，并重建其依赖关系</h3>
+
+<ul>
+  <li>借助虚拟环境，我们可以在同一台电脑上面同时安装某软件的包的多个版本，而且保证他们不会冲突</li>
+  <li>pyvenv命令可以创建虚拟环境， source bin/activate 命令可以激活虚拟环境，deactivate 命令可以停用虚拟环境</li>
+  <li>pip freeze 命令可以把某套环境所依赖的软件包，汇总到一份文件里面。我们把这个 requirements.txt文件提供给 pip install -r 命令，即可重建一套与原环境相仿的新环境</li>
+  <li>如果使用python3.4之前的版本做开发，那么必须单独下载并安装类似的pyvenv工具。那个命令行工具不叫 pyvenv，而是叫做 virtualenv</li>
+</ul>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#python-ref" rel="tag">python</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/python/2018/01/05/effective-python-06-built-in-modules.html" title="编写高质量的python代码 -- 06. 内置模块">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "编写高质量的python代码 -- 07. 协作开发"; //请用代码生成文章标题
+        var wumiiTags = "python"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["python"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="编写高质量的python代码 -- 07. 协作开发" data-url="https://pemako.cn/python/2018/01/07/effective-python-07-collaboration.html" data-thread-key="/python/2018/01/07/effective-python-07-collaboration"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
