@@ -59,6 +59,13 @@
 
 
 	<url>
+		<loc>https://pemako.cn/python/2018/01/08/effective-python-06-built-in-modules.html</loc>
+		<lastmod>2018-01-08</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/python/2018/01/07/effective-python-05-concurrency-and-parallelism.html</loc>
 		<lastmod>2018-01-07</lastmod>
 		<changefreq>weekly</changefreq>
