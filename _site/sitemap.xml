@@ -59,6 +59,13 @@
 
 
 	<url>
+		<loc>https://pemako.cn/python/2018/01/24/python3-new-features.html</loc>
+		<lastmod>2018-01-24</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/python/2018/01/08/effective-python-08-deploy.html</loc>
 		<lastmod>2018-01-08</lastmod>
 		<changefreq>weekly</changefreq>
