@@ -48,7 +48,7 @@ please see [docs](https://docs.python.org/3/library/pathlib.html) and [reference
 ## Type hinting is now part of the language
 
 Example of type hinting in pycharm: <br/>
-<img src='images/pycharm-type-hinting.png' />
+<img src='https://github.com/arogozhnikov/python3_with_pleasure/blob/master/images/pycharm-type-hinting.png' />
 
 Python is not just a language for small scripts anymore, 
 data pipelines these days include numerous steps each involving different frameworks (and sometimes very different logic).

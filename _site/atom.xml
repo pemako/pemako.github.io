@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2018-01-24T12:08:24+08:00</updated>
+ <updated>2018-01-24T12:21:20+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -59,7 +59,7 @@ please see &lt;a href=&quot;https://docs.python.org/3/library/pathlib.html&quot;
 &lt;h2 id=&quot;type-hinting-is-now-part-of-the-language&quot;&gt;Type hinting is now part of the language&lt;/h2&gt;
 
 &lt;p&gt;Example of type hinting in pycharm: &lt;br /&gt;
-&lt;img src=&quot;images/pycharm-type-hinting.png&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://github.com/arogozhnikov/python3_with_pleasure/blob/master/images/pycharm-type-hinting.png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Python is not just a language for small scripts anymore, 
 data pipelines these days include numerous steps each involving different frameworks (and sometimes very different logic).&lt;/p&gt;
