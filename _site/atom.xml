@@ -4,13 +4,151 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2018-01-24T12:21:20+08:00</updated>
+ <updated>2018-03-15T22:30:04+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>vim 开发环境部署</title>
+   <link href="https://pemako.cn/vim/2018/01/26/vim-development-environment-deploy.html"/>
+   <updated>2018-01-26T00:00:00+08:00</updated>
+   <id>https://pemako.cn/vim/2018/01/26/vim-development-environment-deploy</id>
+   <content type="html">
+   	&lt;ol&gt;
+  &lt;li&gt;先上线自己的&lt;code class=&quot;highlighter-rouge&quot;&gt;.vimrc&lt;/code&gt; 配置信息&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;set nocompatible
+filetype off
+&quot; set the runtime path to include Vundle and inititalize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+&quot; let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdTree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'Yggdroot/indentLine'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'tell-k/vim-autopep8'
+Plugin 'kien/ctrlp.vim'
+Plugin 'fatih/vim-go'
+Plugin 'tpope/vim-fugitive'
+Plugin 'majutsushi/tagbar'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'elzr/vim-json'
+Plugin 'vimwiki/vimwiki'
+Plugin 'dhruvasagar/vim-table-mode'
+&quot; Plugin 'Raimondi/delimitMate'
+&quot; Plugin 'Chiel92/vim-autoformat'
+&quot; vim8 异步语法检查
+&quot; Plugin 'w0rp/ale'
+call vundle#end()
+
+set number
+syntax on
+
+set ts=4
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+filetype indent plugin on
+
+&quot; 高亮当前行
+set cursorline
+&quot; 高亮搜索结果
+set hlsearch
+colorscheme desert
+
+
+&quot; Nerdtree set
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '__pycache__$']
+
+&quot;缩进指示线&quot;
+let g:indentLine_color_term = 239
+let g:indentLine_char='┆'
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 2
+
+&quot;autopep8设置&quot;
+let g:autopep8_disable_show_diff=1
+&quot; 解决delete 键失效
+set backspace=indent,eol,start
+&quot; 代码折叠设置
+set foldmethod=indent
+set foldlevel=99
+
+&quot; 定义快捷键的前缀，即 &amp;lt;Leader&amp;gt;
+let mapleader=&quot;;&quot;
+&quot; 设置tagbartoggle 的快捷键
+nnoremap &amp;lt;Leader&amp;gt;n :NERDTree&amp;lt;CR&amp;gt;
+nnoremap &amp;lt;Leader&amp;gt;p :TagbarToggle&amp;lt;CR&amp;gt;
+nnoremap &amp;lt;Leader&amp;gt;pp :w !python&amp;lt;CR&amp;gt;
+
+&quot;-----------------
+&quot; 自动补全相关配置
+
+&quot; YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
+inoremap &amp;lt;leader&amp;gt;; &amp;lt;C-x&amp;gt;&amp;lt;C-o&amp;gt;
+&quot; 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+&quot;默认配置文件路径&quot;
+&quot;let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+&quot;打开vim时不再询问是否加载ycm_extra_conf.py配置&quot;
+let g:ycm_confirm_extra_conf=0
+set completeopt=longest,menu
+&quot;python解释器路径&quot;
+let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
+&quot;是否开启语义补全&quot;
+let g:ycm_seed_identifiers_with_syntax=1
+&quot;是否在注释中也开启补全&quot;
+let g:ycm_complete_in_comments=1
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
+&quot;开始补全的字符数&quot;
+let g:ycm_min_num_of_chars_for_completion=2
+&quot;补全后自动关机预览窗口&quot;
+let g:ycm_autoclose_preview_window_after_completion=1
+&quot; 禁止缓存匹配项,每次都重新生成匹配项&quot;
+let g:ycm_cache_omnifunc=0
+&quot; 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+&quot;字符串中也开启补全&quot;
+let g:ycm_complete_in_strings = 1
+&quot;离开插入模式后自动关闭预览窗口&quot;
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+
+function HeaderPython()
+    call setline(1, '# -*- coding:utf-8 -*-')
+    call append(1, '# '.strftime('%Y-%m-%d %T', localtime()))
+    normal G
+    normal o
+    normal o
+endf
+
+autocmd bufnewfile *.py call HeaderPython()
+
+&quot; 关于vim table model 插件的配置
+let g:table_mode_corner='|'
+&quot; 默认情况下快速激活命令 &amp;lt;Leader&amp;gt;tm&amp;lt;&amp;gt;
+&quot; Delete Row &amp;lt;Leader&amp;gt;tdd
+&quot; Delete Column &amp;lt;Leader&amp;gt;tdc
+&quot; 使用公式相关
+&quot; Table Formulas &amp;lt;Leader&amp;gt;tfa
+&quot; tfa 激活公式输入，如果数据修改激活tfe 会重新计算
+&quot; 更多内容参考 https://github.com/dhruvasagar/vim-table-mode
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>python3 新特性</title>
