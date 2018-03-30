@@ -1,0 +1,91 @@
+{
+ "result": {
+  "suitable": [],
+  "pageInfo": {
+   "bg_time": 1519704900,
+   "has_union_apply": 0,
+   "phone_require": 0,
+   "vid": "",
+   "grade": "6002",
+   "ios_check": 0,
+   "subpay_price": 0,
+   "course_logo": "https://p.qpic.cn/qqconadmin/0/24f411c85f2842568d7017f1e5a9a22f/0",
+   "deadline": 1588492183,
+   "has_discount": 0,
+   "total": 1000000,
+   "is_small_term": 0,
+   "is_login": 1,
+   "subject": 6002,
+   "course_time_desc": "每天开课",
+   "knowledge": "",
+   "term_id": 2000005534,
+   "auto_in": 0,
+   "evaluate_info": {
+    "evaluate_level": [{
+     "score": 0,
+     "name": "满分班",
+     "level": "1"
+    }, {
+     "score": 80,
+     "name": "实验班",
+     "level": "2"
+    }],
+    "evaluate_times": 0,
+    "max_evaluate_times": 3,
+    "evaluate_score": 100,
+    "evaluate_id": 100,
+    "evaluate_state": 0
+   },
+   "purchase_status": 0,
+   "sys_time": 1522326447288,
+   "desc": "",
+   "type": 7,
+   "status": 1,
+   "first_time": 1519704900,
+   "evaluate_flag": 100,
+   "price": 1,
+   "cover_url": "https://p.qpic.cn/qqconadmin/0/15ce86d956904e0888b6719f6bbcc0ce/0",
+   "bg_color": "#69C188",
+   "dis_begin_time": 0,
+   "use_coupon_type": 0,
+   "coupon_disc": 0,
+   "teacher": [{
+    "name": "alan-初中数学-1",
+    "pic": "https://pub.idqqimg.com/pc/misc/files/20180227/0e1404f1f4774259b6acbf1bf8c74db6.png",
+    "label": "alan-初中数学-1",
+    "content": "",
+    "exp": "[{&quot;icon&quot;:&quot;http://pub.idqqimg.com/pc/misc/files/20180227/075ceabc2bd64715b3be87e93e3e0b21.png&quot;}]",
+    "tid": 2300001382,
+    "good_rate": "-",
+    "desc": "alan-初中数学-1"
+   }],
+   "name": "在线教育_分班考试课程_初二数学",
+   "target": ["现网测试专用"],
+   "cid": 12535,
+   "sale": 0,
+   "addr_required": 0,
+   "express_time": "",
+   "end_time": 1553845709,
+   "directory": [{
+    "title": "验证考试",
+    "bgtime": 1519704900,
+    "tid": 2300001382,
+    "csid": 58817,
+    "tname": "alan-初中数学-1",
+    "endtime": 1519708800,
+    "cs_type": 0
+   }, {
+    "title": "验证考试",
+    "bgtime": 1519660800,
+    "tid": 2300001382,
+    "csid": 58818,
+    "tname": "alan-初中数学-1",
+    "endtime": 1519747199,
+    "cs_type": 0
+   }],
+   "dis_end_time": 0,
+   "reshelf": 0
+  }
+ },
+ "retcode": 0
+}
