@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>shell logging - pemako</title>
+    <meta name="description" content="linux, shell, logging">
+    
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/python/2018/03/30/dict-to-cls.html" title="python3 dict2cls" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>shell logging <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <p>在Shell中进行日志的打印</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># set LOG_FILEPATH, then log will be printed to the location. e.g., LOG_FILEPATH=./log/cpc_impression_report.log</span>
+<span class="c"># e.g., noticelog "first log information"</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$LOG_FILEPATH</span><span class="s2">"</span> !<span class="o">=</span> <span class="s2">""</span> <span class="o">]</span>
+<span class="k">then
+   </span><span class="nv">_logname</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$LOG_FILEPATH</span> <span class="sb">`</span>
+   <span class="nv">_logdir</span><span class="o">=</span><span class="k">${</span><span class="nv">LOG_FILEPATH</span><span class="p">%/*</span><span class="k">}</span>
+   <span class="nv">_logpath</span><span class="o">=</span><span class="nv">$LOG_FILEPATH</span>
+<span class="k">else
+   </span><span class="nv">_logname</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$0</span><span class="sb">`</span>.log
+   <span class="nv">_logdir</span><span class="o">=</span>./log <span class="o">&amp;&amp;</span> <span class="nb">test</span> -d ./logs  <span class="o">&amp;&amp;</span> <span class="nv">_logdir</span><span class="o">=</span>./logs
+   <span class="nv">_logpath</span><span class="o">=</span><span class="k">${</span><span class="nv">_logdir</span><span class="k">}</span>/<span class="k">${</span><span class="nv">_logname</span><span class="k">}</span>
+<span class="k">fi
+
+
+</span><span class="nv">_logrotate</span><span class="o">=</span>14
+<span class="nv">_script</span><span class="o">=</span><span class="nv">$0</span>
+<span class="nv">_logpathwf</span><span class="o">=</span><span class="k">${</span><span class="nv">_logpath</span><span class="k">}</span>.wf
+<span class="nv">_log_initflag</span><span class="o">=</span>1
+
+_initlog<span class="o">()</span>
+<span class="o">{</span>
+   <span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">"</span><span class="nv">$_logdir</span><span class="s2">"</span> <span class="o">]</span>
+   <span class="k">then
+	  </span><span class="nv">_logpath</span><span class="o">=</span>/dev/stdout <span class="o">&amp;&amp;</span> <span class="nv">_logpathwf</span><span class="o">=</span>/dev/stderr
+   <span class="k">fi</span>
+<span class="o">}</span>
+
+_writelog<span class="o">()</span>
+<span class="o">{</span>
+   <span class="nv">_loglevel</span><span class="o">=</span><span class="nv">$1</span>
+   <span class="k">if</span> <span class="o">[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]</span> ; <span class="k">then
+	  </span><span class="nv">_loglevel</span><span class="o">=</span><span class="s2">"INFO"</span>
+   <span class="k">fi
+   </span><span class="nv">_logmsg</span><span class="o">=</span><span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span>
+   <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_logmsg</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]</span> ; <span class="k">then
+	  </span><span class="nv">_logmsg</span><span class="o">=</span> <span class="s2">"NULL"</span>
+   <span class="k">fi
+
+   </span><span class="nv">_logstamp</span><span class="o">=</span><span class="sb">`</span>date +%Y%m%d-%H:%M:%S<span class="sb">`</span>
+
+   <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"STDOUT"</span> <span class="o">]</span> ; <span class="k">then
+	  </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span>
+	  <span class="k">return
+   fi
+
+   if</span> <span class="o">[</span> ! -d <span class="s2">"</span><span class="nv">$_logdir</span><span class="s2">"</span> <span class="o">]</span>
+   <span class="k">then
+	  if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"INFO"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"DEBUG"</span> <span class="o">]</span>
+	  <span class="k">then
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span>
+	  <span class="k">else
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span> 1&gt;&amp;2
+	  <span class="k">fi
+   else
+	  if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"INFO"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"DEBUG"</span> <span class="o">]</span>
+	  <span class="k">then
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span> &gt;&gt; <span class="k">${</span><span class="nv">_logpath</span><span class="k">}</span>
+	  <span class="k">else
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span> &gt;&gt; <span class="k">${</span><span class="nv">_logpathwf</span><span class="k">}</span>
+	  <span class="k">fi
+   fi</span>
+<span class="o">}</span>
+
+setlogpath <span class="o">()</span>
+<span class="o">{</span>
+   <span class="nv">_logpath</span><span class="o">=</span><span class="nv">$1</span>
+   <span class="nv">_logname</span><span class="o">=</span><span class="sb">`</span>basename <span class="nv">$_logpath</span> <span class="sb">`</span>
+   <span class="nv">_logdir</span><span class="o">=</span><span class="k">${</span><span class="nv">_logpath</span><span class="p">%/*</span><span class="k">}</span>
+   <span class="nv">_logpathwf</span><span class="o">=</span><span class="k">${</span><span class="nv">_logpath</span><span class="k">}</span>.wf
+
+   _initlog
+<span class="o">}</span>
+
+stdoutlog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"STDOUT"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+debuglog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"DEBUG"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+infolog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"INFO"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+noticelog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"NOTICE"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+warnlog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"WARNING"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+errorlog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"ERROR"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+fatallog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"FATAL"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+criticallog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"CRITICAL"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+_initlog
+</code></pre>
+</div>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#linux-ref" rel="tag">linux</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/python/2018/03/30/dict-to-cls.html" title="python3 dict2cls">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "shell logging"; //请用代码生成文章标题
+        var wumiiTags = "linux"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["linux"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="shell logging" data-url="https://pemako.cn/linux/2018/04/09/shell-log.html" data-thread-key="/linux/2018/04/09/shell-log"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
