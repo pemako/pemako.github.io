@@ -4,13 +4,149 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2018-04-09T21:29:17+08:00</updated>
+ <updated>2018-04-09T21:31:48+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Shell Log</title>
+   <link href="https://pemako.cn/2018/04/09/shell-log.html"/>
+   <updated>2018-04-09T00:00:00+08:00</updated>
+   <id>https://pemako.cn/2018/04/09/shell-log</id>
+   <content type="html">
+   	&lt;hr /&gt;
+&lt;p&gt;layout: post
+title: shell logging
+description: linux, shell, logging
+tags: [linux]
+category: linux&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+```shell
+#!/bin/bash
+# set LOG_FILEPATH, then log will be printed to the location. e.g., LOG_FILEPATH=./log/cpc_impression_report.log
+# e.g., noticelog &quot;first log information&quot;
+
+if [ &quot;$LOG_FILEPATH&quot; != &quot;&quot; ]
+then
+   _logname=`basename $LOG_FILEPATH `
+   _logdir=${LOG_FILEPATH%/*}
+   _logpath=$LOG_FILEPATH
+else
+   _logname=`basename $0`.log
+   _logdir=./log &amp;amp;&amp;amp; test -d ./logs  &amp;amp;&amp;amp; _logdir=./logs
+   _logpath=${_logdir}/${_logname}
+fi
+
+
+_logrotate=14
+_script=$0
+_logpathwf=${_logpath}.wf
+_log_initflag=1
+
+_initlog()
+{
+   if [ ! -d &quot;$_logdir&quot; ]
+   then
+	  _logpath=/dev/stdout &amp;amp;&amp;amp; _logpathwf=/dev/stderr
+   fi
+}
+
+_writelog()
+{
+   _loglevel=$1
+   if [ $1 == &quot;&quot; ] ; then
+	  _loglevel=&quot;INFO&quot;
+   fi
+   _logmsg=&quot;$2&quot;
+   if [ &quot;$_logmsg&quot; == &quot;&quot; ] ; then
+	  _logmsg= &quot;NULL&quot;
+   fi
+
+   _logstamp=`date +%Y%m%d-%H:%M:%S`
+
+   if [ &quot;$_loglevel&quot; == &quot;STDOUT&quot; ] ; then
+	  echo &quot;${_logstamp} ${_loglevel} : ${_logmsg}&quot;
+	  return
+   fi
+
+   if [ ! -d &quot;$_logdir&quot; ]
+   then
+	  if [ &quot;$_loglevel&quot; == &quot;INFO&quot; ] || [ &quot;$_loglevel&quot; == &quot;DEBUG&quot; ]
+	  then
+		 echo &quot;${_logstamp} ${_loglevel} : ${_logmsg}&quot;
+	  else
+		 echo &quot;${_logstamp} ${_loglevel} : ${_logmsg}&quot; 1&amp;gt;&amp;amp;2
+	  fi
+   else
+	  if [ &quot;$_loglevel&quot; == &quot;INFO&quot; ] || [ &quot;$_loglevel&quot; == &quot;DEBUG&quot; ]
+	  then
+		 echo &quot;${_logstamp} ${_loglevel} : ${_logmsg}&quot; &amp;gt;&amp;gt; ${_logpath}
+	  else
+		 echo &quot;${_logstamp} ${_loglevel} : ${_logmsg}&quot; &amp;gt;&amp;gt; ${_logpathwf}
+	  fi
+   fi
+}
+
+setlogpath ()
+{
+   _logpath=$1
+   _logname=`basename $_logpath `
+   _logdir=${_logpath%/*}
+   _logpathwf=${_logpath}.wf
+
+   _initlog
+}
+
+stdoutlog ()
+{
+   _writelog &quot;STDOUT&quot; &quot;$1&quot;
+}
+
+debuglog ()
+{
+   _writelog &quot;DEBUG&quot; &quot;$1&quot;
+}
+
+infolog ()
+{
+   _writelog &quot;INFO&quot; &quot;$1&quot;
+}
+
+noticelog ()
+{
+   _writelog &quot;NOTICE&quot; &quot;$1&quot;
+}
+
+warnlog ()
+{
+   _writelog &quot;WARNING&quot; &quot;$1&quot;
+}
+
+errorlog ()
+{
+   _writelog &quot;ERROR&quot; &quot;$1&quot;
+}
+
+fatallog ()
+{
+   _writelog &quot;FATAL&quot; &quot;$1&quot;
+}
+criticallog ()
+{
+   _writelog &quot;CRITICAL&quot; &quot;$1&quot;
+}
+
+_initlog
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>python3 dict2cls</title>
