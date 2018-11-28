@@ -95,7 +95,7 @@
   <li>可以在任意对象上面查询 <code class="highlighter-rouge">__dict__</code>属性，以观察其内部信息</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OpaqueClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OpaqueClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
@@ -114,8 +114,7 @@
 <span class="n">obj</span> <span class="o">=</span> <span class="n">OpaqueClass</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="p">{</span><span class="s">'x'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'y'</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="56-用unittest来测试全部代码">56. 用unittest来测试全部代码</h3>
 
@@ -126,8 +125,8 @@
   <li>我们必须同时编写单元测试和继承测试，前者用来独立检验程序中的每个功能，而后者则用来校验模块之间的交互行为</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># utils.py</span>
-<span class="k">def</span> <span class="nf">to_str</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># utils.py
+</span><span class="k">def</span> <span class="nf">to_str</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">data</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
@@ -135,8 +134,8 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">'Must supply str or bytes, found: </span><span class="si">%</span><span class="s">r'</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
 
-<span class="c"># utils_test.py</span>
-<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">main</span>
+<span class="c1"># utils_test.py
+</span><span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">main</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">to_str</span>
 
 <span class="k">class</span> <span class="nc">UtilsTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
@@ -152,8 +151,7 @@
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 <h3 id="57-考虑用-pdb-实现交互调试">57. 考虑用 pdb 实现交互调试</h3>
 
 <ul>
@@ -170,36 +168,36 @@
 
 <p>例如：我们想查明陈旭中某个算法卫生么运行得比较慢。下面第你故意的这个函数，采用插入排序法来排列一组数据。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">insertion_sort</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">insertion_sort</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
         <span class="n">insert_value</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
 
-<span class="c"># 下面定义的这个insert_value 函数，要对外界输入的array序列进行线性扫描，以确定插入点。因此效率是非常低的</span>
-<span class="k">def</span> <span class="nf">insert_value</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="c1"># 下面定义的这个insert_value 函数，要对外界输入的array序列进行线性扫描，以确定插入点。因此效率是非常低的
+</span><span class="k">def</span> <span class="nf">insert_value</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">existing</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="o">&gt;</span> <span class="n">value</span><span class="p">:</span>
             <span class="n">array</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="k">return</span>
     <span class="n">array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-<span class="c"># 为了分析 insertion_sort和 insert_value 的效率，创建一组随机数字，并定义test函数，以便将该函数传给profiler</span>
-
+<span class="c1"># 为了分析 insertion_sort和 insert_value 的效率，创建一组随机数字，并定义test函数，以便将该函数传给profiler
+</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
 
 <span class="n">max_size</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_size</span><span class="p">)</span> <span class="p">]</span>
 <span class="n">test</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">insertion_sort</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-<span class="c"># 示例化 cProfile模块中的Profile对象，并通过runcall方法来运行刚才定义的test函数</span>
-<span class="kn">from</span> <span class="nn">cProfile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="c1"># 示例化 cProfile模块中的Profile对象，并通过runcall方法来运行刚才定义的test函数
+</span><span class="kn">from</span> <span class="nn">cProfile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 <span class="n">profiler</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">()</span>
 <span class="n">profiler</span><span class="o">.</span><span class="n">runcall</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 
-<span class="c"># test函数运行完毕之后，我们采用内置的pstats模块和模块中的Stats类，来剖析由Profile对象所收集大的性能统计数据。Stats对象提供了各种方法，我们可以用这些方法对性能分析数据进行遴选及排序，以便把自己所关注的那部分信息单独列出来。</span>
-
+<span class="c1"># test函数运行完毕之后，我们采用内置的pstats模块和模块中的Stats类，来剖析由Profile对象所收集大的性能统计数据。Stats对象提供了各种方法，我们可以用这些方法对性能分析数据进行遴选及排序，以便把自己所关注的那部分信息单独列出来。
+</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pstats</span> <span class="kn">import</span> <span class="n">Stats</span>
 
@@ -209,12 +207,11 @@
 <span class="n">stats</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">'cumulative'</span><span class="p">)</span>
 <span class="n">stats</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>上面的代码会输出一张表格，其中的信息是按照函数来分组的。表格中的数据，是在profiler处于激活状态的时候统计出来的，也就是说，这些时间数据，都是在执行刚才那个runcall方法的过程中统计出来的。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>      20003 function calls in 1.833 seconds
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      20003 function calls in 1.833 seconds
 
    Ordered by: cumulative time
 
@@ -225,8 +222,7 @@
      9994    0.015    0.000    0.015    0.000 {method 'insert' of 'list' objects}
         6    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>下面简述性能统计表中每一列的含义：</p>
 
@@ -240,7 +236,7 @@
 
 <p>通过profiler 给出的统计表可以看到，在 cumulative time(累计时间)一栏中，insert_value 函数所占用的CPU份额是最大的。于是我们改用内置的bisect模块来重新定义此函数。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>In [55]: from bisect import bisect_left
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>In [55]: from bisect import bisect_left
     ...:
     ...: def insert_value(array, value):
     ...:     i = bisect_left(array, value)
@@ -265,14 +261,13 @@
     10000    0.006    0.000    0.006    0.000 {built-in method _bisect.bisect_left}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
         
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>所耗费的时间几乎是原来的百分之一。</p>
 
 <p>python的profiler提供了一种方式，可以在性能分析数据中列出每个函数的调用者，使我们可以据此看出该函数所耗费的执行时间，究竟是由哪些调用者所分别引发的</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>stats.print_callers()
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stats.print_callers()
 
 In [56]: stats.print_callers()
    Ordered by: cumulative time
@@ -288,8 +283,7 @@ Function                                           was called by...
 
 
 Out[56]: &lt;pstats.Stats at 0x112799898&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>左边列出的是受测函数，右边列出的是该函数的调用者。</p>
 
@@ -309,8 +303,8 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
   <li>只有python3.4及后续版本，才支持tracemalloc 模块</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># waste_memory.py</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># waste_memory.py
+</span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
 
 <span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -330,15 +324,14 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
         <span class="n">deep_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_data</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">deep_values</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>使用tracemalloc 打印出导致内存用量增大的前三个对象。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># top_n.py</span>
-<span class="kn">import</span> <span class="nn">tracemalloc</span>
-<span class="n">tracemalloc</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c"># Save up to 10 stack frames</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># top_n.py
+</span><span class="kn">import</span> <span class="nn">tracemalloc</span>
+<span class="n">tracemalloc</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Save up to 10 stack frames
+</span>
 <span class="n">time1</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">waste_memory</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">waste_memory</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -347,13 +340,12 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
 <span class="n">stats</span> <span class="o">=</span> <span class="n">time2</span><span class="o">.</span><span class="n">compare_to</span><span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="s">'lineno'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
     <span class="k">print</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>tracemalloc 模块也可以打印出python系统在执行每一个分配内存操作时，所具备的完整堆栈信息(full stack trace),打印的最大栈桢数量，由传给start函数的参数来决定。下面找到程序中最小号内存的那个内存分配操作，并将该操作的堆栈信息打印出来。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># with_trace.py</span>
-<span class="kn">import</span> <span class="nn">tracemalloc</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># with_trace.py
+</span><span class="kn">import</span> <span class="nn">tracemalloc</span>
 <span class="n">tracemalloc</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="n">time1</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
@@ -362,9 +354,8 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
 <span class="n">time2</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
 <span class="n">stats</span> <span class="o">=</span> <span class="n">time2</span><span class="o">.</span><span class="n">compare_to</span><span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="s">'traceback'</span><span class="p">)</span>
 <span class="n">top</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">traceback</span><span class="o">.</span><span class="n">format</span><span class="p">()))</span>
-</code></pre>
-</div>
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">traceback</span><span class="o">.</span><span class="nb">format</span><span class="p">()))</span>
+</code></pre></div></div>
 
 <p>如果程序中有多个地方都调用了同一个函数，那么通过上述方式就可以更好地看出，究竟是那一行调用代码导致内存占用量变大的。</p>
 

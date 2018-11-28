@@ -88,7 +88,7 @@
   <li>@property 方法需要执行地迅速一些，缓慢或复杂的工作，应该放在普通的方法里面</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Resistor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Resistor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ohms</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="n">ohms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">0</span>
@@ -96,36 +96,35 @@
 
 <span class="n">r1</span> <span class="o">=</span> <span class="n">Resistor</span><span class="p">(</span><span class="mf">50e3</span><span class="p">)</span>
 
-<span class="c"># 上面的写法比较符合python的风格，不用对属性向Java那样定义get和set方法</span>
-<span class="n">r1</span><span class="o">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="mf">10e3</span>
+<span class="c1"># 上面的写法比较符合python的风格，不用对属性向Java那样定义get和set方法
+</span><span class="n">r1</span><span class="o">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="mf">10e3</span>
 
-<span class="c"># 如果想在设置属性的时候实现特殊行为，那么可以改用@property 修饰器来和setter方法来做。</span>
-<span class="c"># 下面这个子类继承自Resistor,它在给 voltage(电压)属性赋值的时候，还会同时修改current</span>
-<span class="c"># (电流)属性。请注意：setter和getter方法的名称必须与相关属性相符，方能使这套机制正常运作</span>
-
+<span class="c1"># 如果想在设置属性的时候实现特殊行为，那么可以改用@property 修饰器来和setter方法来做。
+# 下面这个子类继承自Resistor,它在给 voltage(电压)属性赋值的时候，还会同时修改current
+# (电流)属性。请注意：setter和getter方法的名称必须与相关属性相符，方能使这套机制正常运作
+</span>
 <span class="k">class</span> <span class="nc">VoltageResistance</span><span class="p">(</span><span class="n">Resistor</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ohms</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">ohms</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="mi">0</span>
     
-    <span class="nd">@property</span>
+    <span class="o">@</span><span class="nb">property</span>
     <span class="k">def</span> <span class="nf">voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span>
     
-    <span class="nd">@voltage.setter</span>
+    <span class="o">@</span><span class="n">voltage</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voltage</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="n">voltage</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ohms</span>
 
-<span class="c"># 现在设置voltage属性时，将会执行名为voltage的setter方法。该方法会更新本对象的current属性</span>
-
+<span class="c1"># 现在设置voltage属性时，将会执行名为voltage的setter方法。该方法会更新本对象的current属性
+</span>
 <span class="n">r2</span> <span class="o">=</span> <span class="n">VoltageResistance</span><span class="p">(</span><span class="mf">1e3</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Before: </span><span class="si">%5</span><span class="s">r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="o">.</span><span class="n">current</span><span class="p">)</span> <span class="c"># Before:    0 amps</span>
-<span class="n">r2</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'After: </span><span class="si">%5</span><span class="s">r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="o">.</span><span class="n">current</span><span class="p">)</span>  <span class="c"># After:  0.01 amps</span>
-
-</code></pre>
-</div>
+<span class="k">print</span><span class="p">(</span><span class="s">'Before: </span><span class="si">%5</span><span class="s">r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="o">.</span><span class="n">current</span><span class="p">)</span> <span class="c1"># Before:    0 amps
+</span><span class="n">r2</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'After: </span><span class="si">%5</span><span class="s">r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="o">.</span><span class="n">current</span><span class="p">)</span>  <span class="c1"># After:  0.01 amps
+</span>
+</code></pre></div></div>
 
 <h3 id="30-考虑用-property-来代替属性重构">30. 考虑用 @property 来代替属性重构</h3>
 
@@ -155,7 +154,7 @@
   <li>如果要在 <code class="highlighter-rouge">__getattribute__</code>和<code class="highlighter-rouge">__setattr__</code>方法中访问实例属性，那么应该直接通过super() (也就是object类的同名方法)来做，以避免无线递归</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LazyDB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LazyDB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="mi">5</span>
     
@@ -164,14 +163,14 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span>
 
-<span class="c"># 在访问data对象所缺失的foo属性。这回导致python调用刚才定义的 __getattr__方法，从而修改实例的__dict__字典</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">LazyDB</span><span class="p">()</span>
-<span class="n">data</span><span class="o">.</span><span class="n">__dict__</span> <span class="c"># {'exists': 5}</span>
-<span class="n">data</span><span class="o">.</span><span class="n">foo</span>
-<span class="n">data</span><span class="o">.</span><span class="n">__dict__</span> <span class="c"># {'exists': 5, 'foo': 'Value for foo'}</span>
-
-<span class="c"># 给LazyDB添加记录功能，把程序对 __getattr__的调用行为记录下来。请注意，为了避免无限递归，我们需要在子类里面通过 super().__getattr__() 来获取真正的属性值。</span>
-
+<span class="c1"># 在访问data对象所缺失的foo属性。这回导致python调用刚才定义的 __getattr__方法，从而修改实例的__dict__字典
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">LazyDB</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">__dict__</span> <span class="c1"># {'exists': 5}
+</span><span class="n">data</span><span class="o">.</span><span class="n">foo</span>
+<span class="n">data</span><span class="o">.</span><span class="n">__dict__</span> <span class="c1"># {'exists': 5, 'foo': 'Value for foo'}
+</span>
+<span class="c1"># 给LazyDB添加记录功能，把程序对 __getattr__的调用行为记录下来。请注意，为了避免无限递归，我们需要在子类里面通过 super().__getattr__() 来获取真正的属性值。
+</span>
 <span class="k">class</span> <span class="nc">LoggingLazyDB</span><span class="p">(</span><span class="n">LazyDB</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'Called __getattr__(</span><span class="si">%</span><span class="s">s)'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
@@ -187,14 +186,13 @@
 <span class="n">foo</span><span class="p">:</span> <span class="n">Value</span> <span class="k">for</span> <span class="n">foo</span>
 <span class="n">foo</span><span class="p">:</span> <span class="n">Value</span> <span class="k">for</span> <span class="n">foo</span>
 
-<span class="c"># 由于exists属性本来就在实例字典里面，所以访问它的时候，不触发__getattr__。而foo属性刚开始并不在实例字典中，所以初次访问的时候会触发__getattr__。由于 __getattr__又会调用setattr方法，并把foo放到实例字典中，所以第二次访问foo的时候，就不会再触发__getattr__了。</span>
-
-</code></pre>
-</div>
+<span class="c1"># 由于exists属性本来就在实例字典里面，所以访问它的时候，不触发__getattr__。而foo属性刚开始并不在实例字典中，所以初次访问的时候会触发__getattr__。由于 __getattr__又会调用setattr方法，并把foo放到实例字典中，所以第二次访问foo的时候，就不会再触发__getattr__了。
+</span>
+</code></pre></div></div>
 
 <p>python程序在每次访问对象的属性时，系统都会调用 <code class="highlighter-rouge">__getattribute__</code>这个特殊方法，即使字典里面已有了该属性，也依然会触发<code class="highlighter-rouge">__getattribute__</code>方法。这样就可以在程序每次访问属性时，检查全局事物状态。下面定义的这个 ValidatingDB类，会在<code class="highlighter-rouge">__getattribute__</code>方法里面记录每次调用的时间。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ValidatingDB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ValidatingDB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="mi">5</span>
     
@@ -219,8 +217,7 @@
 <span class="n">foo</span><span class="p">:</span> <span class="n">Value</span> <span class="k">for</span> <span class="n">foo</span>
 <span class="n">Called</span> <span class="n">__getattribute__</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
 <span class="n">foo</span><span class="p">:</span> <span class="n">Value</span> <span class="k">for</span> <span class="n">foo</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="33-用元类来验证子类">33. 用元类来验证子类</h3>
 
@@ -230,7 +227,7 @@
 
 <p>定义原来的时候，要从type中继承，而对于使用该元类的其它类来说，python默认会把那些类的class语句体现中所含的相关内容，发送给元类的<code class="highlighter-rouge">__new__</code>方法。于是，我们就可以在系统构建出那种类型之前，先修改那个类的信息</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
@@ -241,26 +238,25 @@
     <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<span class="c">## python2中的写法有些区别,它是通过名为 __metaclass__的类属性来指定元类的，而Meta.__new__接口一致</span>
-<span class="k">class</span> <span class="nc">MyClassInPython2</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="c1">## python2中的写法有些区别,它是通过名为 __metaclass__的类属性来指定元类的，而Meta.__new__接口一致
+</span><span class="k">class</span> <span class="nc">MyClassInPython2</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">Meta</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>注意：元类中所编写的验证逻辑，针对的是该积累的子类，而不是基类本身。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ValidatePolygon</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ValidatePolygon</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
-        <span class="c"># Don't validate the abstract Polygon class</span>
-        <span class="k">if</span> <span class="n">bases</span> <span class="o">!=</span> <span class="p">(</span><span class="nb">object</span><span class="p">,):</span>
+        <span class="c1"># Don't validate the abstract Polygon class
+</span>        <span class="k">if</span> <span class="n">bases</span> <span class="o">!=</span> <span class="p">(</span><span class="nb">object</span><span class="p">,):</span>
             <span class="k">if</span> <span class="n">class_dict</span><span class="p">[</span><span class="s">'sides'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'Polygons need 3+ sides'</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">Polygon</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ValidatePolygon</span><span class="p">):</span>
-    <span class="n">sides</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c"># Specified by subclasses</span>
-
-    <span class="nd">@classmethod</span>
+    <span class="n">sides</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># Specified by subclasses
+</span>
+    <span class="o">@</span><span class="nb">classmethod</span>
     <span class="k">def</span> <span class="nf">interior_angles</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sides</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span>
 
@@ -281,8 +277,7 @@
 <span class="k">else</span><span class="p">:</span>
     <span class="k">assert</span> <span class="bp">False</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ul>
   <li>通过元类，我们可以在生成子类对象之前，先验证子类中的定义是否合乎规范</li>
@@ -302,7 +297,7 @@
 
 <p>如定义一个通用的基类，它可以基类程序调用本类构造器时所用的参数，并将其转化为JSON字典。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
 
 <span class="n">registry</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -355,8 +350,7 @@
 <span class="n">Serialized</span><span class="p">:</span> <span class="p">{</span><span class="s">"class"</span><span class="p">:</span> <span class="s">"Vector3D"</span><span class="p">,</span> <span class="s">"args"</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
 <span class="n">After</span><span class="p">:</span>      <span class="n">Vector3D</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="35-用元类来注解类的属性">35. 用元类来注解类的属性</h3>
 
@@ -364,7 +358,7 @@
 
 <p>例如：要定义新的类，用来表示客户数据库里的某一行。同时，我们还希望在该类的相关属性与数据库表的每一列之间，建立对应关系。于是，用下面的这个描述符类，把属性与列名联系起来。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="s">'_'</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
@@ -376,10 +370,10 @@
     <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-<span class="c"># 接下来定义表示数据行的Customer类，定义该类的时候，我们要为每个类属性指定对应的列名</span>
-<span class="k">class</span> <span class="nc">Customer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="c"># Class attributes</span>
-    <span class="n">first_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s">'first_name'</span><span class="p">)</span>
+<span class="c1"># 接下来定义表示数据行的Customer类，定义该类的时候，我们要为每个类属性指定对应的列名
+</span><span class="k">class</span> <span class="nc">Customer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1"># Class attributes
+</span>    <span class="n">first_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s">'first_name'</span><span class="p">)</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s">'last_name'</span><span class="p">)</span>
     <span class="n">prefix</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s">'prefix'</span><span class="p">)</span>
     <span class="n">suffix</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s">'suffix'</span><span class="p">)</span>
@@ -392,8 +386,7 @@
 <span class="n">Before</span><span class="p">:</span> <span class="s">''</span> <span class="p">{}</span>
 <span class="n">After</span><span class="p">:</span> <span class="s">'Euclid'</span> <span class="p">{</span><span class="s">'_first_name'</span><span class="p">:</span> <span class="s">'Euclid'</span><span class="p">}</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>上面的代码写法显得有些重复。在Customer 类的class语句体中，我们既然要将构建好的Field对象赋给Customer.first_name, 那为什么还要把这个字段名再传给Field的构造器呢？之所以还要把字段名传给Field构造器，是因为定义Customer类的时候，python会以从右向左的顺序解读赋值语句。首先python会以<code class="highlighter-rouge">Field('first_name')</code> 的形式来调用Field构造器。然后，它把调用构造器所得的返回值，赋给Customer.field_name。从这个顺序来看，Field对象没有办法提前知道自己会赋给Customer类里的哪一个属性。</p>
 
@@ -401,7 +394,7 @@
 
 <p><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000">元类的使用参考</a></p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
@@ -415,8 +408,8 @@
 
 <span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># These will be assigned by the metaclass.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="c1"># These will be assigned by the metaclass.
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">instance_type</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span>
@@ -438,8 +431,7 @@
 <span class="o">&gt;&gt;&gt;</span>
 <span class="n">Before</span><span class="p">:</span> <span class="s">''</span> <span class="p">{}</span>
 <span class="n">After</span><span class="p">:</span>  <span class="s">'Euler'</span> <span class="p">{</span><span class="s">'_first_name'</span><span class="p">:</span> <span class="s">'Euler'</span><span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ul>
   <li>借助元类，我们可以在某个类完全定义好之前，率先修改该类的属性</li>

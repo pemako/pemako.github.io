@@ -30,7 +30,7 @@
     <link rel="prev prerender" href="/others/2017/01/23/father-and-son.html" title="这对父子" />
     
     
-    <link rel="next prerender" href="/php/2017/01/25/composer-overview.html" title="Composer使用总结" />
+    <link rel="next prerender" href="/php/2017/01/25/composer-overview.html" title="PHP单步调试配置" />
     
     
     <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
@@ -90,7 +90,7 @@
 
 <p>废话不说上代码</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#!/usr/local/bin/bash</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/local/bin/bash</span>
 <span class="c"># @Version 0.3.1</span>
 <span class="c"># @filename to</span>
 <span class="c"># 修复等不需要要配置跳板机的时候执行命令，在配置跳板机位置默认填 no 即可</span>
@@ -103,7 +103,7 @@
 <span class="c"># 2. 需要中间机器登陆到目标机器 如 C， 其中 B 为中间机器，会先登录 B在从 B登陆到 C然后执行 command</span>
 <span class="c"># 3. 直接登录目标机器并执行相应的命令 如 D</span>
 
-<span class="nb">declare</span> -A _server_config
+<span class="nb">declare</span> <span class="nt">-A</span> _server_config
 
 _server_config[<span class="s1">'A'</span><span class="o">]=</span><span class="s2">"a_host a_user a_passwd a_port"</span>
 _server_config[<span class="s1">'B'</span><span class="o">]=</span><span class="s2">"b_host b_user b_passwd b_port"</span>
@@ -116,23 +116,23 @@ _server_config[<span class="s1">'D'</span><span class="o">]=</span><span class="
 <span class="nv">_config_status</span><span class="o">=</span><span class="nb">false</span>
 
 <span class="c"># 是否输入登陆机器</span>
-<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_login_server</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]</span>;<span class="k">then
-    </span><span class="nb">echo</span> -e <span class="s2">"</span><span class="se">\0</span><span class="s2">33[40m</span><span class="se">\0</span><span class="s2">33[31m Please input login server, you can choose one follows list </span><span class="se">\0</span><span class="s2">33[0m"</span>
-    <span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_config_keys</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>;<span class="k">do
-        </span><span class="nb">echo</span> -e <span class="s2">"</span><span class="se">\0</span><span class="s2">33[41;37m </span><span class="nv">$i</span><span class="s2"> </span><span class="se">\0</span><span class="s2">33[0m "</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_login_server</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]</span><span class="p">;</span><span class="k">then
+    </span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\0</span><span class="s2">33[40m</span><span class="se">\0</span><span class="s2">33[31m Please input login server, you can choose one follows list </span><span class="se">\0</span><span class="s2">33[0m"</span>
+    <span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_config_keys</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span><span class="k">do
+        </span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\0</span><span class="s2">33[41;37m </span><span class="nv">$i</span><span class="s2"> </span><span class="se">\0</span><span class="s2">33[0m "</span>
     <span class="k">done
     </span><span class="nb">exit
 </span><span class="k">fi</span>
 
 <span class="c"># 检查登陆的机器是否配置</span>
-<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_config_keys</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span>;<span class="k">do
-    if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_login_server</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span> <span class="o">]</span>;<span class="k">then
+<span class="k">for </span>i <span class="k">in</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_config_keys</span><span class="p">[@]</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span><span class="k">do
+    if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_login_server</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span><span class="k">then
         </span><span class="nv">_config_status</span><span class="o">=</span><span class="nb">true
     </span><span class="k">fi
 done
 
-if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_config_status</span><span class="k">}</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"false"</span> <span class="o">]</span>;<span class="k">then
-    </span><span class="nb">echo</span> -ne <span class="s2">"</span><span class="se">\0</span><span class="s2">33[40m</span><span class="se">\0</span><span class="s2">33[31m
+if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_config_status</span><span class="k">}</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"false"</span> <span class="o">]</span><span class="p">;</span><span class="k">then
+    </span><span class="nb">echo</span> <span class="nt">-ne</span> <span class="s2">"</span><span class="se">\0</span><span class="s2">33[40m</span><span class="se">\0</span><span class="s2">33[31m
         Not config server info ...
         Please config in _server_config like
         Host User Passwd Port Jump Command</span><span class="se">\0</span><span class="s2">33[0m"</span>
@@ -140,25 +140,25 @@ if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</
 </span><span class="k">fi</span>
 
 <span class="c"># 登陆 如果配置跳板机，先登陆跳板机在登陆到目标机器</span>
-<span class="nv">_host</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $1}'</span><span class="k">)</span>
-<span class="nv">_user</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $2}'</span><span class="k">)</span>
-<span class="nv">_passwd</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $3}'</span><span class="k">)</span>
-<span class="nv">_port</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $4}'</span><span class="k">)</span>
-<span class="nv">_jump</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $5}'</span><span class="k">)</span>
-<span class="nv">_command</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk -F<span class="s2">"'"</span> <span class="s1">'{print $2}'</span><span class="k">)</span>
+<span class="nv">_host</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span><span class="k">)</span>
+<span class="nv">_user</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="k">)</span>
+<span class="nv">_passwd</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $3}'</span><span class="k">)</span>
+<span class="nv">_port</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $4}'</span><span class="k">)</span>
+<span class="nv">_jump</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $5}'</span><span class="k">)</span>
+<span class="nv">_command</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_login_server</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="nt">-F</span><span class="s2">"'"</span> <span class="s1">'{print $2}'</span><span class="k">)</span>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_command</span><span class="k">}</span><span class="s2">"</span> !<span class="o">=</span> <span class="s2">""</span> <span class="o">]</span>; <span class="k">then
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_command</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">""</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
     </span><span class="nv">_command</span><span class="o">=</span><span class="s2">"expect </span><span class="se">\"</span><span class="s2">*]*</span><span class="se">\"</span><span class="s2">
     send </span><span class="se">\"</span><span class="k">${</span><span class="nv">_command</span><span class="k">}</span><span class="se">\r\"</span><span class="s2">"</span>
 <span class="k">fi
 
-if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span> !<span class="o">=</span> <span class="s2">""</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span> !<span class="o">=</span> <span class="s2">"no"</span> <span class="o">]</span>; <span class="k">then
-    </span><span class="nv">_jump_host</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $1}'</span><span class="k">)</span>
-    <span class="nv">_jump_user</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $2}'</span><span class="k">)</span>
-    <span class="nv">_jump_passwd</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $3}'</span><span class="k">)</span>
-    <span class="nv">_jump_port</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | awk <span class="s1">'{print $4}'</span><span class="k">)</span>
+if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">""</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"no"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nv">_jump_host</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span><span class="k">)</span>
+    <span class="nv">_jump_user</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="k">)</span>
+    <span class="nv">_jump_passwd</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $3}'</span><span class="k">)</span>
+    <span class="nv">_jump_port</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">_server_config</span><span class="p">[</span><span class="s2">"</span><span class="k">${</span><span class="nv">_jump</span><span class="k">}</span><span class="s2">"</span><span class="p">]</span><span class="k">}</span> | <span class="nb">awk</span> <span class="s1">'{print $4}'</span><span class="k">)</span>
 
-    expect -c <span class="s2">"
+    expect <span class="nt">-c</span> <span class="s2">"
     set timeout 30
     spawn ssh -p</span><span class="k">${</span><span class="nv">_jump_port</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_jump_user</span><span class="k">}</span><span class="s2">@</span><span class="k">${</span><span class="nv">_jump_host</span><span class="k">}</span><span class="s2">
     expect {
@@ -173,7 +173,7 @@ if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</
     </span><span class="k">${</span><span class="nv">_command</span><span class="k">}</span><span class="s2">
     interact"</span>
 <span class="k">else
-    </span>expect -c <span class="s2">"
+    </span>expect <span class="nt">-c</span> <span class="s2">"
     set timeout 30
     spawn ssh -p</span><span class="k">${</span><span class="nv">_port</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_user</span><span class="k">}</span><span class="s2">@</span><span class="k">${</span><span class="nv">_host</span><span class="k">}</span><span class="s2">
     expect {
@@ -185,8 +185,7 @@ if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</
     "</span>
 <span class="k">fi</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
     <p>继续阅读关于
     
@@ -210,7 +209,7 @@ if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</
       
         <li><a href="/archive.html">归档</a></li>
       
-        <li class="next"><a href="/php/2017/01/25/composer-overview.html" title="Composer使用总结">下一篇 &rarr;</a></li>
+        <li class="next"><a href="/php/2017/01/25/composer-overview.html" title="PHP单步调试配置">下一篇 &rarr;</a></li>
       
       </ul>
     </div>

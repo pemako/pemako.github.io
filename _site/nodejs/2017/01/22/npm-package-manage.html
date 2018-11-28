@@ -96,7 +96,7 @@
 
 <p>最小版本的 <code class="highlighter-rouge">package.json</code> 必须包含 <code class="highlighter-rouge">name</code>和<code class="highlighter-rouge">version</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>- name
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- name
     - 允许全部小写
     - 单词中不能有空格
     - 允许破折号和下滑下
@@ -109,8 +109,7 @@ For example:
     "name": "my-awesome-package",
     "version": "1.0.0"
 }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="creating-a-packagejson">Creating a package.json</h4>
 
@@ -132,11 +131,10 @@ For example:
   <li>创建对应的 <code class="highlighter-rouge">index.js</code> 文件 内容如下</li>
 </ol>
 
-<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">printMsg</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">printMsg</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"This is a message from the demo package"</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li><code class="highlighter-rouge">npm adduser</code></li>

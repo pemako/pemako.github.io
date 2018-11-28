@@ -85,8 +85,8 @@
   <li>保存内部状态的字典如果变得比较复杂，那就应该把这些代码拆解外多个辅助类</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 要把许多学生的成绩记录下来，但这些学生的名字我们事先不知道。于是定义了一个类，把学生名字全部保存在字典里面，这样就不用把每个学生表示成对象了，也无需在每个对象中预设一个存在其名字的属性</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 要把许多学生的成绩记录下来，但这些学生的名字我们事先不知道。于是定义了一个类，把学生名字全部保存在字典里面，这样就不用把每个学生表示成对象了，也无需在每个对象中预设一个存在其名字的属性
+</span>
 <span class="k">class</span> <span class="nc">SimpleGradebook</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_grades</span> <span class="o">=</span> <span class="p">{}</span>
@@ -101,8 +101,7 @@
         <span class="n">grades</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grades</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">grades</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">grades</span><span class="p">)</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="23-简单的接口应该接受函数而不是类的实例">23. 简单的接口应该接受函数，而不是类的实例</h3>
 
@@ -113,22 +112,22 @@
   <li>如果要用函数保存状态，那就应该定义新的类，并令其实现 <code class="highlighter-rouge">__call__</code>方法，而不要定义带状态的闭包</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Example 1</span>
-<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Socrates'</span><span class="p">,</span> <span class="s">'Archimedes'</span><span class="p">,</span> <span class="s">'Plato'</span><span class="p">,</span> <span class="s">'Aristotle'</span><span class="p">]</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Example 1
+</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Socrates'</span><span class="p">,</span> <span class="s">'Archimedes'</span><span class="p">,</span> <span class="s">'Plato'</span><span class="p">,</span> <span class="s">'Aristotle'</span><span class="p">]</span>
 <span class="n">names</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
 
 
-<span class="c"># Example 2</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="c1"># Example 2
+</span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="k">def</span> <span class="nf">log_missing</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="s">'Key added'</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">0</span>
 
 
-<span class="c"># Example 3</span>
-<span class="n">current</span> <span class="o">=</span> <span class="p">{</span><span class="s">'green'</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="c1"># Example 3
+</span><span class="n">current</span> <span class="o">=</span> <span class="p">{</span><span class="s">'green'</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">'blue'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="n">increments</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s">'red'</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
     <span class="p">(</span><span class="s">'blue'</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span>
@@ -141,16 +140,16 @@
 <span class="k">print</span><span class="p">(</span><span class="s">'After: '</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
 
 
-<span class="c"># Example 4</span>
-<span class="c"># 现在要给defaultdict传入一个产生默认值的挂钩，并令其统计出该字典一共遇到了多少</span>
-<span class="c"># 缺失的键。一种实现方式是使用带状态的闭包。下面定义的辅助函数就是使用这种闭包</span>
-<span class="c"># 作为产生默认值的挂钩函数</span>
-<span class="k">def</span> <span class="nf">increment_with_report</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">increments</span><span class="p">):</span>
+<span class="c1"># Example 4
+# 现在要给defaultdict传入一个产生默认值的挂钩，并令其统计出该字典一共遇到了多少
+# 缺失的键。一种实现方式是使用带状态的闭包。下面定义的辅助函数就是使用这种闭包
+# 作为产生默认值的挂钩函数
+</span><span class="k">def</span> <span class="nf">increment_with_report</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">increments</span><span class="p">):</span>
     <span class="n">added_count</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span> <span class="nf">missing</span><span class="p">():</span>
-        <span class="n">nonlocal</span> <span class="n">added_count</span>  <span class="c"># Stateful closure</span>
-        <span class="n">added_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">nonlocal</span> <span class="n">added_count</span>  <span class="c1"># Stateful closure
+</span>        <span class="n">added_count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="mi">0</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">missing</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
@@ -160,16 +159,16 @@
     <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">added_count</span>
 
 
-<span class="c"># Example 5</span>
-<span class="n">result</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">increment_with_report</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">increments</span><span class="p">)</span>
+<span class="c1"># Example 5
+</span><span class="n">result</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">increment_with_report</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">increments</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">2</span>
 <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 
-<span class="c"># Example 6</span>
-<span class="c"># 把带状态的闭包函数用作挂钩有一个缺点，就是读起来要比无状态的函数难懂一些。还有个</span>
-<span class="c"># 办法，定义一个小型的类，把需要追踪的状态封装起来</span>
-<span class="k">class</span> <span class="nc">CountMissing</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="c1"># Example 6
+# 把带状态的闭包函数用作挂钩有一个缺点，就是读起来要比无状态的函数难懂一些。还有个
+# 办法，定义一个小型的类，把需要追踪的状态封装起来
+</span><span class="k">class</span> <span class="nc">CountMissing</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">added</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -178,22 +177,22 @@
         <span class="k">return</span> <span class="mi">0</span>
 
 
-<span class="c"># Example 7</span>
-<span class="n">counter</span> <span class="o">=</span> <span class="n">CountMissing</span><span class="p">()</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">missing</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>  <span class="c"># Method reference</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="n">increments</span><span class="p">:</span>
+<span class="c1"># Example 7
+</span><span class="n">counter</span> <span class="o">=</span> <span class="n">CountMissing</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">missing</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>  <span class="c1"># Method reference
+</span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="n">increments</span><span class="p">:</span>
     <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span>
 <span class="k">assert</span> <span class="n">counter</span><span class="o">.</span><span class="n">added</span> <span class="o">==</span> <span class="mi">2</span>
 <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 
-<span class="c"># Example 8</span>
-<span class="c"># 使用例7确实比闭包函数好点，但是我们依然不太容易理解CountMissing 的意图。CountMissing</span>
-<span class="c"># 对象由谁来构建？missing方法由谁来调用？该类以后是否需要添加新的公共方法？这些问题，都</span>
-<span class="c"># 必须等看过了defaultdict的用法之后，才能明白。 </span>
-<span class="c"># 为了解决这些问题，我们可以在代码中定义名为 __call__ 的特殊方法。该方法使相关对象能够</span>
-<span class="c"># 像函数那样得到调用。此外如果把这样的实例传给内置的callable函数，那么callable函数会返回True</span>
-<span class="k">class</span> <span class="nc">BetterCountMissing</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="c1"># Example 8
+# 使用例7确实比闭包函数好点，但是我们依然不太容易理解CountMissing 的意图。CountMissing
+# 对象由谁来构建？missing方法由谁来调用？该类以后是否需要添加新的公共方法？这些问题，都
+# 必须等看过了defaultdict的用法之后，才能明白。 
+# 为了解决这些问题，我们可以在代码中定义名为 __call__ 的特殊方法。该方法使相关对象能够
+# 像函数那样得到调用。此外如果把这样的实例传给内置的callable函数，那么callable函数会返回True
+</span><span class="k">class</span> <span class="nc">BetterCountMissing</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">added</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -206,22 +205,21 @@
 <span class="k">assert</span> <span class="nb">callable</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
 
 
-<span class="c"># Example 9</span>
-<span class="n">counter</span> <span class="o">=</span> <span class="n">BetterCountMissing</span><span class="p">()</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>  <span class="c"># Relies on __call__</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="n">increments</span><span class="p">:</span>
+<span class="c1"># Example 9
+</span><span class="n">counter</span> <span class="o">=</span> <span class="n">BetterCountMissing</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>  <span class="c1"># Relies on __call__
+</span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="n">increments</span><span class="p">:</span>
     <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span>
 <span class="k">assert</span> <span class="n">counter</span><span class="o">.</span><span class="n">added</span> <span class="o">==</span> <span class="mi">2</span>
 <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="24-以-classmethod-形式的多态去通用地构建对象">24. 以 @classmethod 形式的多态去通用地构建对象</h3>
 
 <p>多态：使得继承体系中的多个类都能以各自所独有的方式来实现某个方法。这些类，都满足相同的接口或继承自相同的抽象类，但却有着各自不同的功能。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># 实现MapReduce 的流程</span>
-
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 实现MapReduce 的流程
+</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
@@ -295,14 +293,13 @@
     <span class="n">result</span> <span class="o">=</span> <span class="n">mapreduce</span><span class="p">(</span><span class="n">tmpdir</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">'There are'</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="s">'lines'</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>上面的写法有个大问题，就是MapReduce函数不够通用。如果要编写其他的InputData或Worker子类，那就得重写<code class="highlighter-rouge">generate_inputs</code>、<code class="highlighter-rouge">create_workers</code> 和 <code class="highlighter-rouge">mapreduce</code>函数，以便与之匹配。</p>
 
 <p>解决这个问题的最佳方案，是使用 @classmethod 形式的多态。这种多态形式，其实与InputData.read那样的实例方法多态非常相似，只不过它针对的是整个类，而不是从该类构建出来的对象。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
@@ -312,7 +309,7 @@
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="nb">NotImplementedError</span>
 
-    <span class="nd">@classmethod</span>
+    <span class="o">@</span><span class="nb">classmethod</span>
     <span class="k">def</span> <span class="nf">generate_inputs</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="k">raise</span> <span class="nb">NotImplementedError</span>
 
@@ -324,7 +321,7 @@
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-    <span class="nd">@classmethod</span>
+    <span class="o">@</span><span class="nb">classmethod</span>
     <span class="k">def</span> <span class="nf">generate_inputs</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="n">data_dir</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'data_dir'</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
@@ -341,7 +338,7 @@
     <span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">raise</span> <span class="nb">NotImplementedError</span>
 
-    <span class="nd">@classmethod</span>
+    <span class="o">@</span><span class="nb">classmethod</span>
     <span class="k">def</span> <span class="nf">create_workers</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">input_class</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="n">workers</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">input_data</span> <span class="ow">in</span> <span class="n">input_class</span><span class="o">.</span><span class="n">generate_inputs</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
@@ -381,8 +378,7 @@
     <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s">'data_dir'</span><span class="p">:</span> <span class="n">tmpdir</span><span class="p">}</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">mapreduce</span><span class="p">(</span><span class="n">LineCountWorker</span><span class="p">,</span> <span class="n">PathInputData</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'There are'</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="s">'lines'</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="25-用-super-初始化父类">25. 用 super 初始化父类</h3>
 
@@ -394,10 +390,9 @@
 
 <p>程序运行的顺序会与类的MRO保持一致，这个MRO顺序可以通过名为 mro 的类方法来查询。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">xxxClass</span><span class="o">.</span><span class="n">mro</span><span class="p">())</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>内置的super函数确实可以正常运行，但在python2中有两个问题需要注意</p>
 <ul>
@@ -407,7 +402,7 @@
 
 <p>python3中则没有这些问题，因为它提供了一种不带参数的super调用方式，该方式的效果与用<code class="highlighter-rouge">__class__</code>和<code class="highlighter-rouge">self</code>来调用super形同。</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyBaseClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyBaseClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
         
@@ -420,8 +415,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">value</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="k">assert</span> <span class="n">Explicit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span><span class="n">Implicit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="26-只在使用-mix-in混合类-组件制作工具类时进行多重继承">26. 只在使用 Mix-in(混合类) 组件制作工具类时进行多重继承</h3>
 
@@ -442,7 +436,7 @@
   <li>只有当子类不受自己控制时，才可以考虑用private属性来避免名称冲突</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">public_field</span> <span class="o">=</span> <span class="mi">5</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__private_field</span> <span class="o">=</span> <span class="mi">10</span>
@@ -452,12 +446,11 @@
 
 <span class="n">foo</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">()</span>
 <span class="n">foo</span><span class="o">.</span><span class="n">get_private_field</span><span class="p">()</span>
-<span class="c"># 如果直接使用 foo.__private_field 会出错，私有属性不能直接这样访问</span>
-<span class="c"># foo.__dict__  =&gt; {'_MyObject__private_field': 10, 'public_field': 5}</span>
-<span class="c"># 所有可以使用 foo._ClassName__private_filed 进行私有字段的访问</span>
-<span class="n">foo</span><span class="o">.</span><span class="n">_MyObject__private_field</span>
-</code></pre>
-</div>
+<span class="c1"># 如果直接使用 foo.__private_field 会出错，私有属性不能直接这样访问
+# foo.__dict__  =&gt; {'_MyObject__private_field': 10, 'public_field': 5}
+# 所有可以使用 foo._ClassName__private_filed 进行私有字段的访问
+</span><span class="n">foo</span><span class="o">.</span><span class="n">_MyObject__private_field</span>
+</code></pre></div></div>
 
 <h3 id="28-继承-collectionsabc-以实现自定义的容器类型">28. 继承 collections.abc 以实现自定义的容器类型</h3>
 
