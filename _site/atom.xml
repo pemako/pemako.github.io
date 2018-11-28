@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2018-11-28T10:43:56+08:00</updated>
+ <updated>2018-11-28T10:50:02+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -41,14 +41,16 @@ MANP Pro 5.1
 &lt;h2 id=&quot;步骤&quot;&gt;步骤&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;1、查看MAMP PRO 中Apache的端口 默认为8888
-&lt;img src=&quot;https://pemako.github.io/assets/imags/php/01&quot; alt=&quot;trace&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;1、查看MAMP PRO 中Apache的端口 默认为8888&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://pemako.github.io/assets/imags/php/01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;2、查看PHP的版本及扩展中xdebug是否开启
 ￼
-&lt;img src=&quot;https://pemako.github.io/assets/imags/php/02&quot; alt=&quot;trace&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://pemako.github.io/assets/imags/php/02.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;3、配置PhpStorm Xdebug 端口及Server&lt;/p&gt;
@@ -57,19 +59,19 @@ MANP Pro 5.1
       &lt;li&gt;
         &lt;p&gt;3.0、PHP的版本要和MANP中的选择的PHP版本一致
 ￼
-  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/03&quot; alt=&quot;trace&quot; /&gt;&lt;/p&gt;
+  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/03.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
       &lt;/li&gt;
       &lt;li&gt;
         &lt;p&gt;3.1、xdebug port 的值9000 和 php.ini 中 xdebug配置的port 要保持一致&lt;/p&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
 
-    &lt;p&gt;&lt;img src=&quot;https://pemako.github.io/assets/imags/php/04&quot; alt=&quot;trace&quot; /&gt;
+    &lt;p&gt;&lt;img src=&quot;https://pemako.github.io/assets/imags/php/04.png&quot; alt=&quot;&quot; /&gt;
 ￼&lt;/p&gt;
     &lt;ul&gt;
       &lt;li&gt;3.2、IDE key 要和 php.ini中配置的保持一致；主机名和端口要和MANP中配置的保持一致
 ￼
-  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/05&quot; alt=&quot;trace&quot; /&gt;&lt;/li&gt;
+  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/05.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -81,12 +83,15 @@ MANP Pro 5.1
     &lt;p&gt;4、配置一个web服务器&lt;/p&gt;
 
     &lt;ul&gt;
-      &lt;li&gt;点击Edit Configurations
-  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/06&quot; alt=&quot;trace&quot; /&gt;
-￼&lt;/li&gt;
+      &lt;li&gt;点击Edit Configurations&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://pemako.github.io/assets/imags/php/06.png&quot; alt=&quot;&quot; /&gt;
+￼&lt;/p&gt;
+    &lt;ul&gt;
       &lt;li&gt;点击 + 号添加入图所示
 ￼
-  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/07&quot; alt=&quot;trace&quot; /&gt;&lt;/li&gt;
+  &lt;img src=&quot;https://pemako.github.io/assets/imags/php/07.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;5、全部添加完成后就可以开始进行debug单步调试
@@ -95,13 +100,13 @@ MANP Pro 5.1
       &lt;li&gt;开启Debug 监听&lt;/li&gt;
       &lt;li&gt;点击 Debug 运行
 ￼
-&lt;img src=&quot;https://pemako.github.io/assets/imags/php/08&quot; alt=&quot;trace&quot; /&gt;&lt;/li&gt;
+&lt;img src=&quot;https://pemako.github.io/assets/imags/php/08.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;6、单步调试的效果如图&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://pemako.github.io/assets/imags/php/09&quot; alt=&quot;trace&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://pemako.github.io/assets/imags/php/09.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
    </content>
  </entry>
