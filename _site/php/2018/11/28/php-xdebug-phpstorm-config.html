@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>PHP单步调试 - pemako</title>
+    <meta name="description" content="php,xdebug,phpstrom">
+    <meta name="keywords" content="php,xdebug,phpstorm">
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/linux/2018/04/09/shell-log.html" title="shell logging" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>PHP单步调试 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <p>废话不说直接上步骤</p>
+
+<ul>
+  <li>系统环境</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mac 10.13.6
+PhpStorm 2018.1.4
+MANP Pro 5.1
+</code></pre></div></div>
+
+<ul>
+  <li>参考
+    <ul>
+      <li>https://blog.csdn.net/u012852597/article/details/78358463</li>
+      <li>http://www.cnblogs.com/orzlin/p/5179711.html</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="步骤">步骤</h2>
+
+<ul>
+  <li>
+    <p>1、查看MAMP PRO 中Apache的端口 默认为8888
+<img src="https://pemako.github.io/assets/imags/php/01.png" alt="trace" /></p>
+  </li>
+  <li>
+    <p>2、查看PHP的版本及扩展中xdebug是否开启
+￼
+<img src="https://pemako.github.io/assets/imags/php/02.png" alt="trace" /></p>
+  </li>
+  <li>
+    <p>3、配置PhpStorm Xdebug 端口及Server</p>
+
+    <ul>
+      <li>
+        <p>3.0、PHP的版本要和MANP中的选择的PHP版本一致
+￼
+  <img src="https://pemako.github.io/assets/imags/php/03.png" alt="trace" /></p>
+      </li>
+      <li>
+        <p>3.1、xdebug port 的值9000 和 php.ini 中 xdebug配置的port 要保持一致</p>
+      </li>
+    </ul>
+
+    <p><img src="https://pemako.github.io/assets/imags/php/04.png" alt="trace" />
+￼</p>
+    <ul>
+      <li>3.2、IDE key 要和 php.ini中配置的保持一致；主机名和端口要和MANP中配置的保持一致
+￼
+  <img src="https://pemako.github.io/assets/imags/php/05.png" alt="trace" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p>上面配置完成后保存后关闭</p>
+
+<ul>
+  <li>
+    <p>4、配置一个web服务器</p>
+
+    <ul>
+      <li>点击Edit Configurations
+  <img src="https://pemako.github.io/assets/imags/php/06.png" alt="trace" />
+￼</li>
+      <li>点击 + 号添加入图所示
+￼
+  <img src="https://pemako.github.io/assets/imags/php/07.png" alt="trace" /></li>
+    </ul>
+  </li>
+  <li>5、全部添加完成后就可以开始进行debug单步调试
+    <ul>
+      <li>选择需要调试的脚本</li>
+      <li>开启Debug 监听</li>
+      <li>点击 Debug 运行
+￼
+<img src="https://pemako.github.io/assets/imags/php/08.png" alt="trace" /></li>
+    </ul>
+  </li>
+  <li>6、单步调试的效果如图</li>
+</ul>
+
+<p><img src="https://pemako.github.io/assets/imags/php/09.png" alt="trace" /></p>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#php-ref" rel="tag">php</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/linux/2018/04/09/shell-log.html" title="shell logging">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "PHP单步调试"; //请用代码生成文章标题
+        var wumiiTags = "php"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["php"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="PHP单步调试" data-url="https://pemako.cn/php/2018/11/28/php-xdebug-phpstorm-config.html" data-thread-key="/php/2018/11/28/php-xdebug-phpstorm-config"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+
