@@ -4,13 +4,27 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2018-11-28T10:50:02+08:00</updated>
+ <updated>2018-12-22T23:51:20+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>用 brew配置 mac 环境</title>
+   <link href="https://pemako.cn/other/2018/12/22/github-pages-binding-aliyun-domain.html"/>
+   <updated>2018-12-22T00:00:00+08:00</updated>
+   <id>https://pemako.cn/other/2018/12/22/github-pages-binding-aliyun-domain</id>
+   <content type="html">
+   	&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jianshu.com/p/d92ea8542673&quot;&gt;参考1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://yq.aliyun.com/articles/208375&quot;&gt;参考2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>PHP单步调试</title>
