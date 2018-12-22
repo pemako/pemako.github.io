@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 用 brew配置 mac 环境
+title: GithubPage绑定阿里云域名
 category: other
 tags: [域名, 解析]
 ---
