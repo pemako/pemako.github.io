@@ -59,6 +59,13 @@
 
 
 	<url>
+		<loc>https://pemako.cn/golang/2019/03/07/gdb-debug-golang.html</loc>
+		<lastmod>2019-03-07</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/other/2018/12/22/github-pages-binding-aliyun-domain.html</loc>
 		<lastmod>2018-12-22</lastmod>
 		<changefreq>weekly</changefreq>
