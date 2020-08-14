@@ -1,0 +1,77 @@
+I"9<p>废话不说直接上步骤</p>
+
+<ul>
+  <li>环境信息</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MacBook 10.13.6
+PhpStorm 2018.1.4
+MANP Pro 5.1(16575)
+</code></pre></div></div>
+
+<ul>
+  <li>参考
+    <ul>
+      <li>https://blog.csdn.net/u012852597/article/details/78358463</li>
+      <li>http://www.cnblogs.com/orzlin/p/5179711.html</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="具体流程">具体流程</h2>
+
+<ul>
+  <li>
+    <p>1、查看MAMP PRO 中Apache的端口 默认为8888
+￼
+<img src="https://pemako.github.io/assets/imags/php/01.png" alt="trace" /></p>
+  </li>
+  <li>
+    <p>2、查看PHP的版本及扩展中xdebug是否开启
+￼
+<img src="https://pemako.github.io/assets/imags/php/02.png" alt="trace" /></p>
+  </li>
+  <li>
+    <p>3、配置PhpStorm Xdebug 端口及Server</p>
+  </li>
+  <li>
+    <p>3.0、PHP的版本要和MANP中的选择的PHP版本一致
+￼
+ <img src="https://pemako.github.io/assets/imags/php/03.png" alt="trace" /></p>
+  </li>
+  <li>
+    <p>3.1、xdebug port 的值9000 和 php.ini 中 xdebug配置的port 要保持一致</p>
+  </li>
+</ul>
+
+<p><img src="https://pemako.github.io/assets/imags/php/04.png" alt="trace" /></p>
+
+<ul>
+  <li>3.2、IDE key 要和 php.ini中配置的保持一致；主机名和端口要和MANP中配置的保持一致</li>
+</ul>
+
+<p><img src="https://pemako.github.io/assets/imags/php/05.png" alt="trace" /></p>
+
+<p>上面配置完成后保存后关闭</p>
+
+<ul>
+  <li>4、配置一个web服务器</li>
+  <li>点击Edit Configurations</li>
+  <li>
+    <p>点击 + 号添加入图所示
+￼
+<img src="https://pemako.github.io/assets/imags/php/06.png" alt="trace" /></p>
+  </li>
+  <li>5、全部添加完成后就可以开始进行debug单步调试</li>
+  <li>选择需要调试的脚本</li>
+  <li>开启Debug 监听</li>
+  <li>
+    <p>点击 Debug 运行
+￼
+<img src="https://pemako.github.io/assets/imags/php/07.png" alt="trace" /></p>
+  </li>
+  <li>6、单步调试的效果如图
+￼
+<img src="https://pemako.github.io/assets/imags/php/08.png" alt="trace" /></li>
+</ul>
+:ET

@@ -1,0 +1,119 @@
+I"�&<p>在Shell中进行日志的打印</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># set LOG_FILEPATH, then log will be printed to the location. e.g., LOG_FILEPATH=./log/cpc_impression_report.log</span>
+<span class="c"># e.g., noticelog "first log information"</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$LOG_FILEPATH</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">""</span> <span class="o">]</span>
+<span class="k">then
+   </span><span class="nv">_logname</span><span class="o">=</span><span class="sb">`</span><span class="nb">basename</span> <span class="nv">$LOG_FILEPATH</span> <span class="sb">`</span>
+   <span class="nv">_logdir</span><span class="o">=</span><span class="k">${</span><span class="nv">LOG_FILEPATH</span><span class="p">%/*</span><span class="k">}</span>
+   <span class="nv">_logpath</span><span class="o">=</span><span class="nv">$LOG_FILEPATH</span>
+<span class="k">else
+   </span><span class="nv">_logname</span><span class="o">=</span><span class="sb">`</span><span class="nb">basename</span> <span class="nv">$0</span><span class="sb">`</span>.log
+   <span class="nv">_logdir</span><span class="o">=</span>./log <span class="o">&amp;&amp;</span> <span class="nb">test</span> <span class="nt">-d</span> ./logs  <span class="o">&amp;&amp;</span> <span class="nv">_logdir</span><span class="o">=</span>./logs
+   <span class="nv">_logpath</span><span class="o">=</span><span class="k">${</span><span class="nv">_logdir</span><span class="k">}</span>/<span class="k">${</span><span class="nv">_logname</span><span class="k">}</span>
+<span class="k">fi
+
+
+</span><span class="nv">_logrotate</span><span class="o">=</span>14
+<span class="nv">_script</span><span class="o">=</span><span class="nv">$0</span>
+<span class="nv">_logpathwf</span><span class="o">=</span><span class="k">${</span><span class="nv">_logpath</span><span class="k">}</span>.wf
+<span class="nv">_log_initflag</span><span class="o">=</span>1
+
+_initlog<span class="o">()</span>
+<span class="o">{</span>
+   <span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$_logdir</span><span class="s2">"</span> <span class="o">]</span>
+   <span class="k">then
+	  </span><span class="nv">_logpath</span><span class="o">=</span>/dev/stdout <span class="o">&amp;&amp;</span> <span class="nv">_logpathwf</span><span class="o">=</span>/dev/stderr
+   <span class="k">fi</span>
+<span class="o">}</span>
+
+_writelog<span class="o">()</span>
+<span class="o">{</span>
+   <span class="nv">_loglevel</span><span class="o">=</span><span class="nv">$1</span>
+   <span class="k">if</span> <span class="o">[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+	  </span><span class="nv">_loglevel</span><span class="o">=</span><span class="s2">"INFO"</span>
+   <span class="k">fi
+   </span><span class="nv">_logmsg</span><span class="o">=</span><span class="s2">"</span><span class="nv">$2</span><span class="s2">"</span>
+   <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_logmsg</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">""</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+	  </span><span class="nv">_logmsg</span><span class="o">=</span> <span class="s2">"NULL"</span>
+   <span class="k">fi
+
+   </span><span class="nv">_logstamp</span><span class="o">=</span><span class="sb">`</span><span class="nb">date</span> +%Y%m%d-%H:%M:%S<span class="sb">`</span>
+
+   <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"STDOUT"</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+	  </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span>
+	  <span class="k">return
+   fi
+
+   if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$_logdir</span><span class="s2">"</span> <span class="o">]</span>
+   <span class="k">then
+	  if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"INFO"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"DEBUG"</span> <span class="o">]</span>
+	  <span class="k">then
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span>
+	  <span class="k">else
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span> 1&gt;&amp;2
+	  <span class="k">fi
+   else
+	  if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"INFO"</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$_loglevel</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"DEBUG"</span> <span class="o">]</span>
+	  <span class="k">then
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">_logpath</span><span class="k">}</span>
+	  <span class="k">else
+		 </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">_logstamp</span><span class="k">}</span><span class="s2"> </span><span class="k">${</span><span class="nv">_loglevel</span><span class="k">}</span><span class="s2"> : </span><span class="k">${</span><span class="nv">_logmsg</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">_logpathwf</span><span class="k">}</span>
+	  <span class="k">fi
+   fi</span>
+<span class="o">}</span>
+
+setlogpath <span class="o">()</span>
+<span class="o">{</span>
+   <span class="nv">_logpath</span><span class="o">=</span><span class="nv">$1</span>
+   <span class="nv">_logname</span><span class="o">=</span><span class="sb">`</span><span class="nb">basename</span> <span class="nv">$_logpath</span> <span class="sb">`</span>
+   <span class="nv">_logdir</span><span class="o">=</span><span class="k">${</span><span class="nv">_logpath</span><span class="p">%/*</span><span class="k">}</span>
+   <span class="nv">_logpathwf</span><span class="o">=</span><span class="k">${</span><span class="nv">_logpath</span><span class="k">}</span>.wf
+
+   _initlog
+<span class="o">}</span>
+
+stdoutlog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"STDOUT"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+debuglog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"DEBUG"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+infolog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"INFO"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+noticelog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"NOTICE"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+warnlog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"WARNING"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+errorlog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"ERROR"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+fatallog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"FATAL"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+criticallog <span class="o">()</span>
+<span class="o">{</span>
+   _writelog <span class="s2">"CRITICAL"</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="o">}</span>
+
+_initlog
+</code></pre></div></div>
+:ET

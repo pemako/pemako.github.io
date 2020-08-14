@@ -1,0 +1,32 @@
+I"l<p>装饰器会用一个动态创建的新函数替换原来的，新函数缺少很多原函数的属性,如 docstring和名字</p>
+
+<p>python内置的 functools 模块通过其 update_wrapper 函数解决这个问题</p>
+
+<p>手工调用 update_wrapper 创建装饰器很不方便,所以 functools提供了名为 wraps 的装饰器</p>
+
+<p>inspect 从装饰器函数中获取相应的参数,通过 getcallargs 函数把参数转化为 dict格式</p>
+
+<p>下面使用示例：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding:utf-8 -*-
+# @author: pemakoa@gmail.com
+</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+
+<span class="k">def</span> <span class="nf">check_is_admin</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">functools</span><span class="p">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">func_args</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">.</span><span class="n">getcallargs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">func_args</span><span class="p">[</span><span class="s">'username'</span><span class="p">]</span> <span class="o">!=</span> <span class="s">'admin'</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"This user is not allowed to get food"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="o">@</span><span class="n">check_is_admin</span>
+<span class="k">def</span> <span class="nf">get_food</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">"chocolate"</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">type</span> <span class="o">+</span> <span class="s">" nom nom nom!"</span>
+</code></pre></div></div>
+:ET
