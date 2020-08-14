@@ -1,0 +1,56 @@
+I"E<h1 id="简介">简介</h1>
+
+<p>PHP官方手册主要包含了四大部分为了便于查阅进行整理总结，本篇主要是第二部分函数参考。</p>
+
+<h2 id="绑定的扩展库">绑定的扩展库</h2>
+
+<h3 id="1-pdo">1. PDO</h3>
+
+<h3 id="2-apache">2. Apache</h3>
+
+<h3 id="3-bc-math">3. BC Math</h3>
+
+<h3 id="4-calendar">4. Calendar</h3>
+
+<h3 id="5-com">5. COM</h3>
+
+<h3 id="6-ctype">6. Ctype</h3>
+
+<h3 id="7-dba">7. DBA</h3>
+
+<h3 id="8-exif">8. Exif</h3>
+
+<h3 id="9-fileinfo">9. Fileinfo</h3>
+
+<h3 id="10-ftp">10. FTP</h3>
+
+<h3 id="11-iconv">11. iconv</h3>
+
+<h3 id="12-gd">12. GD</h3>
+
+<h3 id="13-intl">13. intl</h3>
+
+<h3 id="14-json">14. JSON</h3>
+
+<h3 id="15-多字节字符串">15. 多字节字符串</h3>
+
+<h3 id="16-nsapi">16. NSAPI</h3>
+
+<h3 id="17-pcntl">17. PCNTL</h3>
+
+<h3 id="18-pcre">18. PCRE</h3>
+
+<h3 id="19-posix">19. POSIX</h3>
+
+<h3 id="20-semaphore">20. Semaphore</h3>
+
+<h3 id="21-shared-memory">21. Shared Memory</h3>
+
+<h3 id="22-sockets">22. Sockets</h3>
+
+<h3 id="23-sqlite3">23. SQLite3</h3>
+
+<h3 id="24-xml-rpc">24. XML-RPC</h3>
+
+<h3 id="25-zlib">25. Zlib</h3>
+:ET

@@ -1,0 +1,504 @@
+I"|�<h3 id="42-用functoolswraps-定义函数修饰器">42. 用functools.wraps 定义函数修饰器</h3>
+
+<h4 id="1-python为修饰器提供了专门的语法它使得程序在运行的时候能够用一个函数来修改另一个函数">1. python为修饰器提供了专门的语法，它使得程序在运行的时候，能够用一个函数来修改另一个函数</h4>
+<h4 id="2-对于调试器这种依赖内省机制的工具直接编写修饰器会引发奇怪的行为">2. 对于调试器这种依赖内省机制的工具，直接编写修饰器会引发奇怪的行为</h4>
+<h4 id="3-内置的functools-模块提供了名为-wraps的修饰器开发者在定义自己的修饰器时应该用wraps对其做一些处理避免一些问题">3. 内置的functools 模块提供了名为 wraps的修饰器，开发者在定义自己的修饰器时，应该用wraps对其做一些处理，避免一些问题</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'%s(%r, %r) -&gt; %r'</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="p">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="c1"># 可以用 @ 符号把刚才那个装饰器套用到某个函数上面
+# 使用 @ 符号来修饰函数，其效果就等于先以该函数为参数，调用修饰器，然后把修饰器所返回的结果，赋给同一个作用域中与原函数同名的那个变量。
+# fibonacci = trace(fibonacci)
+</span>
+<span class="o">@</span><span class="n">trace</span>
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="s">"""Return the n-th Fibonacci number"""</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">fibonacci</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="n">fibonacci</span><span class="p">((</span><span class="mi">1</span><span class="p">,),</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+<span class="n">fibonacci</span><span class="p">((</span><span class="mi">0</span><span class="p">,),</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+<span class="n">fibonacci</span><span class="p">((</span><span class="mi">1</span><span class="p">,),</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+<span class="n">fibonacci</span><span class="p">((</span><span class="mi">2</span><span class="p">,),</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+<span class="n">fibonacci</span><span class="p">((</span><span class="mi">3</span><span class="p">,),</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="mi">2</span>
+
+</code></pre></div></div>
+
+<p>如果编写修饰器的时候，没有用wraps做相应的处理，那就会令help函数失效。除了help函数，修饰器还会导致其他一些难于排查的问题。为了维护函数的接口，修饰之后的函数，必须保留原函数的某些标准python属性，例如 <code class="language-plaintext highlighter-rouge">__name__</code>和<code class="language-plaintext highlighter-rouge">__module__</code>。因此，我们需要用wraps来确保修饰后的函数具备正确的行为</p>
+
+<p><img src="https://pemako.github.io/assets/imags/python/42.png" alt="trace" /></p>
+
+<h3 id="43-考虑以contextlib和with语句来改写可复用的tryfinally代码">43. 考虑以contextlib和with语句来改写可复用的try/finally代码</h3>
+
+<h4 id="1-可以用with语句来改写-tryfinally块中的逻辑以便提升复用程度并使代码更加整洁">1. 可以用with语句来改写 try/finally块中的逻辑，以便提升复用程度，并使代码更加整洁</h4>
+<h4 id="2-内置的contextlib模块提供了名叫contextmanager的修饰器开发者只徐亚用它来修饰自己的函数即可令该函数支持with语句">2. 内置的contextlib模块提供了名叫contextmanager的修饰器，开发者只徐亚用它来修饰自己的函数，即可令该函数支持with语句</h4>
+<h4 id="3-情景管理器可以通过yield语句向with语句返回一个值此值会赋给由as关键字所指定的变量该机制阐明了这个特殊情境的编写动机并令with块中的语句能够直接访问这个目标变量">3. 情景管理器可以通过yield语句向with语句返回一个值，此值会赋给由as关键字所指定的变量。该机制阐明了这个特殊情境的编写动机，并令with块中的语句能够直接访问这个目标变量</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
+
+<span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+<span class="c1"># 表示只有当程序持有该锁的时候，with语句块里面的那些代码，才会得到执行
+# 由于Lock类对with语句提供了适当的支持，所以上面这种写法，可以达到与try/finally结构相仿的效果
+</span><span class="k">with</span> <span class="n">lock</span><span class="p">:</span> 
+    <span class="k">print</span><span class="p">(</span><span class="s">'Lock is held'</span><span class="p">)</span>
+
+<span class="n">lock</span><span class="p">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Lock is held'</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">lock</span><span class="p">.</span><span class="n">release</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>使用contextlib模块中的 contextmanager 修饰器可以更加快捷的创建对with语句的支持。如果使用标准的方式，那就要定义新的类，并提供名为 <code class="language-plaintext highlighter-rouge">__enter__</code>和<code class="language-plaintext highlighter-rouge">__exit__</code>的特殊方法。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">().</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">WARNING</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Some debug data'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">'Error log here'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'More debug data'</span><span class="p">)</span>
+
+
+<span class="c1"># 定义一种情景管理器，来临时提升函数的信息级别（log level）。下面这个辅助函数，会在
+# 运行with块内的代码之前，临时提升信息级别，待with块执行完毕，再恢复原有级别。
+</span><span class="o">@</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">debug_logging</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">old_level</span> <span class="o">=</span> <span class="n">logger</span><span class="p">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="c1"># 这里就是with块中的语句所要展开执行的地方。with块所抛出任何异常，都会
+</span>              <span class="c1"># 由 yield表达式从新抛出，这使得开发者可以在辅助函数里面捕获它
+</span>    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">old_level</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">debug_logging</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Inside:'</span><span class="p">)</span>
+    <span class="n">my_function</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'After:'</span><span class="p">)</span>
+<span class="n">my_function</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;&gt;</span>
+<span class="n">Inside</span><span class="p">:</span>
+<span class="n">DEBUG</span><span class="p">:</span><span class="n">Some</span> <span class="n">debug</span> <span class="n">data</span>
+<span class="n">ERROR</span><span class="p">:</span><span class="n">Error</span> <span class="n">log</span> <span class="n">here</span>
+<span class="n">DEBUG</span><span class="p">:</span><span class="n">More</span> <span class="n">debug</span> <span class="n">data</span>
+<span class="n">After</span><span class="p">:</span>
+<span class="n">ERROR</span><span class="p">:</span><span class="n">Error</span> <span class="n">log</span> <span class="n">here</span>
+</code></pre></div></div>
+
+<h4 id="使用带有目标的with语句">使用带有目标的with语句</h4>
+
+<p>传给with语句的那个情境管理器，本身也可以返回一个对象。而开发者可以通过with复合语句中的as关键字，来指定一个局部变量，python会把那个对象，赋给这个局部变量。这使得with块中的代码，可以直接与外部情境相交互。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/tmp/my_output.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">handler</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'This is some data!'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>我们只需在情境管理器里，通过yield语句返回一个值，即可令自己的函数把该值提供给由as关键字所指定的目标变量。例如，下面定义的这个情境管理器，能够获取Logger实例，设置其级别，并通过yield语句将其提供给由as关键字所指定的目标</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+
+<span class="o">@</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">log_level</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">old_level</span> <span class="o">=</span> <span class="n">logger</span><span class="p">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">logger</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">old_level</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">log_level</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="s">'my-log'</span><span class="p">)</span> <span class="k">as</span> <span class="n">logger</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'This is my message!'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'This will not print'</span><span class="p">)</span>
+<span class="c1"># &gt;&gt;&gt; Output:
+# This is my message!
+# python自带的那个logger，默认会处在WARNING级别，退出with语句块之后，我们在名为'my-log'的Logger上面调用debug方法，是打印不出消息的，因为该Logger的严重级别，已经恢复到默认的WARNING了。但是由于ERROR级别高于WARNING级别，所有在这个Logger上面调用 error方法，任然能够打印出消息
+</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">'my-log'</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Debug will not print'</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">'Error will print'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="n">Error</span> <span class="n">will</span> <span class="k">print</span>
+</code></pre></div></div>
+
+<h3 id="44-用copyreg-实现可靠的pickle操作">44. 用copyreg 实现可靠的pickle操作</h3>
+
+<ul>
+  <li>内置的pickle模块，只适合用来在彼此信任的程序之间，对相关对象执行序列化和反序列化操作</li>
+  <li>如果用法比较复杂，那么pickle模块的功能也许就会出问题</li>
+  <li>我们可以把内置的copyreg 模块同 pickle结合起来使用，以便为旧数据添加缺失的属性值、进行类的版本管理，并给序列化之后的数据提供固定的引入路径</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
+<span class="n">state</span><span class="p">.</span><span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Player beat a level
+</span><span class="n">state</span><span class="p">.</span><span class="n">lives</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># Player had to try again
+</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">state_path</span> <span class="o">=</span> <span class="s">'game_state.bin'</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">state_path</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">state_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">state_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state_after</span><span class="p">,</span> <span class="n">GameState</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lives</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="n">lives</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+
+
+<span class="k">def</span> <span class="nf">pickle_game_state</span><span class="p">(</span><span class="n">game_state</span><span class="p">):</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">game_state</span><span class="p">.</span><span class="n">__dict__</span>
+    <span class="k">return</span> <span class="n">unpickle_game_state</span><span class="p">,</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">,)</span>
+
+<span class="k">def</span> <span class="nf">unpickle_game_state</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">GameState</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">copyreg</span>
+<span class="n">copyreg</span><span class="p">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">GameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
+<span class="n">state</span><span class="p">.</span><span class="n">points</span> <span class="o">+=</span> <span class="mi">1000</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lives</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">magic</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="n">lives</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
+
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">magic</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">pickle_game_state</span><span class="p">(</span><span class="n">game_state</span><span class="p">):</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">game_state</span><span class="p">.</span><span class="n">__dict__</span>
+    <span class="n">kwargs</span><span class="p">[</span><span class="s">'version'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">unpickle_game_state</span><span class="p">,</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">,)</span>
+
+<span class="k">def</span> <span class="nf">unpickle_game_state</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'version'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'lives'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">GameState</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">copyreg</span><span class="p">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">GameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+
+<span class="n">copyreg</span><span class="p">.</span><span class="n">dispatch_table</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">GameState</span>
+<span class="k">class</span> <span class="nc">BetterGameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">magic</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="bp">False</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">serialized</span><span class="p">[:</span><span class="mi">25</span><span class="p">])</span>
+
+<span class="n">copyreg</span><span class="p">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">BetterGameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
+
+<span class="n">state</span> <span class="o">=</span> <span class="n">BetterGameState</span><span class="p">()</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">serialized</span><span class="p">[:</span><span class="mi">35</span><span class="p">])</span>
+
+</code></pre></div></div>
+
+<h3 id="45-应该用datetime-模块来处理本地时间而不是用time模块">45. 应该用datetime 模块来处理本地时间，而不是用time模块</h3>
+
+<ul>
+  <li>不要用time模块在不同时区之间进行转换</li>
+  <li>如果要在不同时区之间，可靠地执行转换操作，那就应该把内置的datetime模块与开发者社区提供的pytz模块搭配起来使用</li>
+  <li>开发者总是应该先把时间表示成 UTC格式，然后对其执行各种转换操作，最后再把它转回本地时间</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">mktime</span><span class="p">,</span> <span class="n">strptime</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+
+<span class="n">time_format</span> <span class="o">=</span> <span class="s">'%Y-%m-%d %H:%M:%S'</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">now_utc</span> <span class="o">=</span> <span class="n">now</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="p">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="n">now_local</span> <span class="o">=</span> <span class="n">now_utc</span><span class="p">.</span><span class="n">astimezone</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">now_local</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">11</span> <span class="mi">02</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">30</span><span class="o">+</span><span class="mi">08</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="n">time_str</span> <span class="o">=</span> <span class="s">'2014-08-10 11:18:30'</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span>
+<span class="n">time_tuple</span> <span class="o">=</span> <span class="n">now</span><span class="p">.</span><span class="n">timetuple</span><span class="p">()</span>
+<span class="n">utc_now</span> <span class="o">=</span> <span class="n">mktime</span><span class="p">(</span><span class="n">time_tuple</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">utc_now</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mf">1407640710.0</span>
+
+<span class="c1"># 进行协调时区转换操作
+</span><span class="kn">import</span> <span class="nn">pytz</span>
+<span class="n">arrival_nyc</span> <span class="o">=</span> <span class="s">'2014-05-01 23:33:24'</span>
+<span class="n">nyc_dt_naive</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">arrival_nyc</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span>
+<span class="n">eastern</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'US/Eastern'</span><span class="p">)</span>
+<span class="n">nyc_dt</span> <span class="o">=</span> <span class="n">eastern</span><span class="p">.</span><span class="n">localize</span><span class="p">(</span><span class="n">nyc_dt_naive</span><span class="p">)</span>
+<span class="n">utc_dt</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">utc</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">nyc_dt</span><span class="p">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">pytz</span><span class="p">.</span><span class="n">utc</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">utc_dt</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">02</span> <span class="mi">03</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">24</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="n">pacific</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'US/Pacific'</span><span class="p">)</span>
+<span class="n">sf_dt</span> <span class="o">=</span> <span class="n">pacific</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">utc_dt</span><span class="p">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">pacific</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sf_dt</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">01</span> <span class="mi">20</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">24</span><span class="o">-</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="n">nepal</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'Asia/Katmandu'</span><span class="p">)</span>
+<span class="n">nepal_dt</span> <span class="o">=</span> <span class="n">nepal</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">utc_dt</span><span class="p">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">nepal</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nepal_dt</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">02</span> <span class="mi">09</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">24</span><span class="o">+</span><span class="mi">05</span><span class="p">:</span><span class="mi">45</span>
+</code></pre></div></div>
+
+<h3 id="46-使用内置算法与数据结构">46. 使用内置算法与数据结构</h3>
+
+<ul>
+  <li>
+    <p>双向队列</p>
+
+    <p>collections 模块中的deque类，是一种双向队列(double-ended queue,双端队列)。从该队列的头部或尾部插入或移除一个元素，只需要消耗常数级别的时间。这一特性，使得它非常适合用来表示先进先出的队列。从list尾部插入或移除元素，也仅仅需要常数级别的时间。但是，从list头部插入或移除元素，却会耗费线性级别的时间，这与deque的常数级时间相比，要慢的多。</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+  <span class="n">fifo</span> <span class="o">=</span> <span class="n">deuqe</span><span class="p">()</span>
+  <span class="n">fifo</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># Producer
+</span>  <span class="n">x</span> <span class="o">=</span> <span class="n">fifo</span><span class="p">.</span><span class="n">popleft</span><span class="p">()</span>  <span class="c1"># Consumer
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>有序字典</p>
+
+    <p>标准的字典是无序的，可以使用 collections 模块中的 OrderedDict类，一种特殊的字典，它能够按照健的插入顺序，来保留键值对在字典中的次序。</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+    
+  <span class="n">a</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+  <span class="n">a</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">a</span><span class="p">[</span><span class="s">'bar'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+  <span class="n">b</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'red'</span>
+  <span class="n">b</span><span class="p">[</span><span class="s">'bar'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'blue'</span>
+    
+  <span class="k">for</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">b</span><span class="p">.</span><span class="n">values</span><span class="p">()):</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)</span>
+  <span class="o">&gt;&gt;&gt;</span>
+  <span class="mi">1</span> <span class="n">red</span>
+  <span class="mi">2</span> <span class="n">blue</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>带有默认值的字典</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="s">'my_counter'</span>
+  <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span>
+      <span class="n">stats</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">stats</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+    
+  <span class="c1"># 使用默认值字典代替上面的代码
+</span>  <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+  <span class="n">stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+  <span class="n">stats</span><span class="p">[</span><span class="s">'my_counter'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">stats</span><span class="p">))</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>堆队列(优先级队列)</p>
+
+    <p>堆(heap) 是一种数据结构，很适合用来实现优先级队列。heapq 模块提供了heappush、heappop和nsmallest等一些函数，能够在标准的list类型只中创建堆结构。</p>
+
+    <p>各种优先级的元素，都可以按任意顺序插入堆中。</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="o">*</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    
+  <span class="k">print</span><span class="p">(</span><span class="n">heappop</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">heappop</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">heappop</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">heappop</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+  <span class="o">&gt;&gt;&gt;</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">7</span>
+    
+  <span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+  <span class="n">heappush</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">nsmallest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="s">'Before:'</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'After: '</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+  <span class="o">&gt;&gt;&gt;</span>
+  <span class="n">Before</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+  <span class="n">After</span><span class="p">:</span>  <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>二分查找</p>
+
+    <p>在list上面使用index方法来搜索某个元素，所耗的时间会与列表的长度呈线性比例。二分搜索算法的复杂度，是对数级别的。这意味着，用bisect来搜索包含一百万个元素的列表，与用index来搜索包含14个元素的列表，所耗的时间差不多。</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">timeit</span>
+    
+  <span class="k">print</span><span class="p">(</span><span class="n">timeit</span><span class="p">(</span>
+      <span class="s">'a.index(len(a)-1)'</span><span class="p">,</span>
+      <span class="s">'a = list(range(100))'</span><span class="p">,</span>
+      <span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+  <span class="o">&gt;&gt;&gt;</span><span class="mf">0.0018944389885291457</span>
+    
+  <span class="k">print</span><span class="p">(</span><span class="n">timeit</span><span class="p">(</span>
+      <span class="s">'bisect_left(a, len(a)-1)'</span><span class="p">,</span>
+      <span class="s">'from bisect import bisect_left;'</span>
+      <span class="s">'a = list(range(10**6))'</span><span class="p">,</span>
+      <span class="n">number</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+  <span class="o">&gt;&gt;&gt;</span><span class="mf">0.0007423810020554811</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>与迭代器相关的工具</p>
+
+    <p>内置的itertools 模块中，包含大量的函数，可以用来组合并控制迭代器。itertools 函数分为三大类</p>
+
+    <ol>
+      <li>
+        <p>能够把迭代器连接起来的函数</p>
+
+        <ul>
+          <li>chain 将多个迭代器按顺序连接成一个迭代器</li>
+          <li>cycle 无线地重复某个迭代器中的各个元素</li>
+          <li>tee 把一个迭代器拆分成多个平行的迭代器</li>
+          <li>zip_longest 与内置的zip函数相似，但是它可以应对长度不同的迭代器</li>
+        </ul>
+      </li>
+      <li>
+        <p>能够从迭代器中过滤元素的函数</p>
+
+        <ul>
+          <li>islice 在不进行复制的前提下，根据所有来切割迭代器</li>
+          <li>takewhile 在判定函数为True的时候，从迭代器中逐个返回元素</li>
+          <li>dropwhile 在判定函数初次为False的地方开始，逐个返回迭代器中的元素</li>
+          <li>filterfalse 从迭代器中逐个返回能令判定函数为False的所有元素。其效果与内置的filter函数相反</li>
+        </ul>
+      </li>
+      <li>
+        <p>能够把迭代器中的元素组合起来的函数</p>
+
+        <ul>
+          <li>product 根据迭代器中的元素计算笛卡尔积，并将其返回。可以用product来改写深度嵌套的列表推导操作</li>
+          <li>permutations 用迭代器中的元素构建长度为N的各种有序排列，并将所有排列形式返回给调用者</li>
+          <li>combination 用迭代器中的元素构建长度为N的各种无序组合，并将所有组合形式返回给调用者</li>
+        </ul>
+      </li>
+    </ol>
+
+    <p>除了上述的模块，itertools模块里面还有其他一些函数及教程，如果你发现自己要编写一段非常麻烦的迭代程序，那就应该先花时间来阅读 itertools的文档，看看里面有没有现成的工具可以使用。</p>
+  </li>
+</ul>
+
+<h3 id="47-在重视精度的场合应该使用decimal">47. 在重视精度的场合，应该使用decimal</h3>
+
+<ul>
+  <li>对于编程中可能用到的每一种数值，我们都可以拿对应的python内置类型，或内置模块中的类表示</li>
+  <li>Decimal 类非常适合用在那种对精度要求很高，且对舍入行为要求很严格的场合，例如，涉及货币计算的场合</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">ROUND_UP</span>
+<span class="n">rate</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">'1.45'</span><span class="p">)</span>
+<span class="n">seconds</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">'222'</span><span class="p">)</span>  <span class="c1"># 3*60 + 42
+</span><span class="n">cost</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">seconds</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">'60'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mf">5.365</span>
+
+<span class="n">rounded</span> <span class="o">=</span> <span class="n">cost</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s">'0.01'</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_UP</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rounded</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mf">5.37</span>
+
+<span class="n">rate</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">'0.05'</span><span class="p">)</span>
+<span class="n">seconds</span> <span class="o">=</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">'5'</span><span class="p">)</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">seconds</span> <span class="o">/</span> <span class="n">Decimal</span><span class="p">(</span><span class="s">'60'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mf">0.004166666666666666666666666667</span>
+
+<span class="c1"># Example 8
+</span><span class="n">rounded</span> <span class="o">=</span> <span class="n">cost</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s">'0.01'</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_UP</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rounded</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="mf">0.01</span>
+</code></pre></div></div>
+
+<h3 id="48-学会安装由python开发者社区所构建的模块">48. 学会安装由python开发者社区所构建的模块</h3>
+
+<ul>
+  <li>Python Package Index(PyPI) 包含了许多常用的软件包，它们都是由Python开发者社区来构建并维护的</li>
+  <li>pip是命令行工具，可以从PyPI中安装软件包</li>
+  <li>Pyhton3.4及后续版本，默认装有pip, &lt;3.4版本的需要自行安装pip</li>
+  <li>大部分PyPI模块，都是自由软件或开源软件</li>
+</ul>
+:ET

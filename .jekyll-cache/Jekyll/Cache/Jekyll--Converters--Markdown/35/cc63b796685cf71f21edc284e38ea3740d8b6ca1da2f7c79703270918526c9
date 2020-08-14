@@ -1,0 +1,26 @@
+I"�<h2 id="获取从指定开始时间到指定结束时间的列表">获取从指定开始时间到指定结束时间的列表</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">def</span> <span class="nf">date_range1</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="s">"%Y%m%d"</span><span class="p">)</span> <span class="o">-</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="s">"%Y%m%d"</span><span class="p">)).</span><span class="n">days</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="s">"%Y%m%d"</span><span class="p">)</span> <span class="o">+</span> <span class="n">datetime</span><span class="p">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s">"%Y%m%d"</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">days</span><span class="p">)]</span>
+
+
+<span class="k">def</span> <span class="nf">date_range2</span><span class="p">(</span><span class="n">beginDate</span><span class="p">,</span> <span class="n">endDate</span><span class="p">):</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">beginDate</span><span class="p">,</span> <span class="s">"%Y%m%d"</span><span class="p">)</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">beginDate</span><span class="p">[:]</span>
+    <span class="k">while</span> <span class="n">date</span> <span class="o">&lt;=</span> <span class="n">endDate</span><span class="p">:</span>
+        <span class="n">dates</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">datetime</span><span class="p">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">dt</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y%m%d"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dates</span>
+
+<span class="n">dt_list</span> <span class="o">=</span> <span class="n">date_range1</span><span class="p">(</span><span class="s">'20161218'</span><span class="p">,</span> <span class="s">'20161220'</span><span class="p">)</span>
+<span class="o">//</span> <span class="p">[</span><span class="s">'20161218'</span><span class="p">,</span> <span class="s">'20161219'</span><span class="p">,</span> <span class="s">'20161220'</span><span class="p">]</span>
+
+</code></pre></div></div>
+:ET

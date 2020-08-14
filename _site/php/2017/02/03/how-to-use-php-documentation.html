@@ -94,9 +94,9 @@
 
 <h4 id="1-php-标记">1. PHP 标记</h4>
 
-<p>当解析一个文件时，PHP 会寻找起始和结束标记，也就是 <?php 和 ?>，这告诉 PHP 开始和停止解析二者之间的代码。此种解析方式使得 PHP 可以被嵌入到各种不同的文档中去，而任何起始和结束标记之外的部分都会被 PHP 解析器忽略。</p>
+<p>当解析一个文件时，PHP 会寻找起始和结束标记，也就是 &lt;?php 和 ?&gt;，这告诉 PHP 开始和停止解析二者之间的代码。此种解析方式使得 PHP 可以被嵌入到各种不同的文档中去，而任何起始和结束标记之外的部分都会被 PHP 解析器忽略。</p>
 
-<p>PHP 也允许使用短标记 <? 和 ?>，但不鼓励使用。只有通过激活 php.ini 中的 <code class="highlighter-rouge">short_open_tag</code> 配置指令或者在编译 PHP 时使用了配置选项 –enable-short-tags 时才能使用短标记。</p>
+<p>PHP 也允许使用短标记 &lt;? 和 ?&gt;，但不鼓励使用。只有通过激活 php.ini 中的 <code class="language-plaintext highlighter-rouge">short_open_tag</code> 配置指令或者在编译 PHP 时使用了配置选项 –enable-short-tags 时才能使用短标记。</p>
 
 <p>如果文件内容是纯 PHP 代码，最好在文件末尾删除 PHP 结束标记。这可以避免在 PHP 结束标记之后万一意外加入了空格或者换行符，会导致 PHP 开始输出这些空白，而脚本中此时并无输出的意图。</p>
 
@@ -176,7 +176,7 @@
 
 <span class="k">echo</span> <span class="s2">"This is a test"</span><span class="p">;</span> <span class="c1">// This is a one-line c++ style comment</span>
 
-<span class="sd">/**
+<span class="cd">/**
  * This is a multi line comment
  * yet another line of comment
  */</span>
@@ -224,13 +224,13 @@
 <p>当转换为 Boolena 值时，以下值被认为 FALSE：</p>
 
 <ul>
-  <li><code class="highlighter-rouge">the boolena FALSE itself</code></li>
-  <li><code class="highlighter-rouge">the integer 0(zero)</code></li>
-  <li><code class="highlighter-rouge">the float 0.0(zero)</code></li>
-  <li><code class="highlighter-rouge">the empty string, and the string "0"</code></li>
-  <li><code class="highlighter-rouge">the array with zero elements</code></li>
-  <li><code class="highlighter-rouge">the special type NULL (including unset variables)</code></li>
-  <li><code class="highlighter-rouge">SimpleXML objects created from empty tags</code></li>
+  <li><code class="language-plaintext highlighter-rouge">the boolena FALSE itself</code></li>
+  <li><code class="language-plaintext highlighter-rouge">the integer 0(zero)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">the float 0.0(zero)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">the empty string, and the string "0"</code></li>
+  <li><code class="language-plaintext highlighter-rouge">the array with zero elements</code></li>
+  <li><code class="language-plaintext highlighter-rouge">the special type NULL (including unset variables)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SimpleXML objects created from empty tags</code></li>
 </ul>
 
 <h4 id="2-integer-整型"><span id="integer">2. Integer 整型</span></h4>
@@ -241,7 +241,7 @@
 
 <p>要使用八进制表达，数字前必须加上 0（零）。要使用十六进制表达，数字前必须加上 0x。要使用二进制表达，数字前必须加上 0b。</p>
 
-<p>整型数的字长和平台有关，PHP 不支持无符号整数。Integer 值的字长可以用常量<code class="highlighter-rouge">PHP_INT_SIZE</code>来表示，自PHP4.4.0和 PHP5.0.5后，最大值可以用常量<code class="highlighter-rouge">PHP_INT_MAX</code> 来表示。</p>
+<p>整型数的字长和平台有关，PHP 不支持无符号整数。Integer 值的字长可以用常量<code class="language-plaintext highlighter-rouge">PHP_INT_SIZE</code>来表示，自PHP4.4.0和 PHP5.0.5后，最大值可以用常量<code class="language-plaintext highlighter-rouge">PHP_INT_MAX</code> 来表示。</p>
 
 <p>Warning: 如果向八进制数传递了一个非法数字(即8或9),则后面其余的数字会被忽略</p>
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
@@ -272,7 +272,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">NaN</code> 某些数学运算会产生一个由常量 NAN 所代表的结果。此结果代表着一个在浮点数运算中未定义或不可表述的值。任何拿此值与其它任何值进行的松散或严格比较的结果都是 FALSE.</p>
+<p><code class="language-plaintext highlighter-rouge">NaN</code> 某些数学运算会产生一个由常量 NAN 所代表的结果。此结果代表着一个在浮点数运算中未定义或不可表述的值。任何拿此值与其它任何值进行的松散或严格比较的结果都是 FALSE.</p>
 
 <p>由于 NAN 代表着任何不同值，不应拿 NAN 去和其它值进行比较，包括其自身，应该用 is_nan() 来检查。</p>
 
@@ -284,7 +284,7 @@
       <li><a href="#single-quotes">单引号</a></li>
       <li><a href="#double-quotes">双引号</a></li>
       <li><a href="#heredoc">heredoc 语法结构</a></li>
-      <li><a href="#nowdoc">nowdoc 语法结构</a> <code class="highlighter-rouge">php5.3.0起</code></li>
+      <li><a href="#nowdoc">nowdoc 语法结构</a> <code class="language-plaintext highlighter-rouge">php5.3.0起</code></li>
     </ul>
   </li>
 </ul>
@@ -303,32 +303,32 @@
 
 <p>结束时所引用的标识符必须在该行的第一列，而且，标识符的命名也要像其它标签一样遵守 PHP 的规则：只能包含字母、数字和下划线，并且必须以字母和下划线作为开头。</p>
 
-<p><code class="highlighter-rouge">Warning</code>要注意的是结束标识符这行除了可能有一个分号（;）外，绝对不能包含其它字符。这意味着标识符不能缩进，分号的前后也不能有任何空白或制表符。更重要的是结束标识符的前面必须是个被本地操作系统认可的换行，比如在 UNIX 和 Mac OS X 系统中是 \n，而结束定界符（可能其后有个分号）之后也必须紧跟一个换行。</p>
+<p><code class="language-plaintext highlighter-rouge">Warning</code>要注意的是结束标识符这行除了可能有一个分号（;）外，绝对不能包含其它字符。这意味着标识符不能缩进，分号的前后也不能有任何空白或制表符。更重要的是结束标识符的前面必须是个被本地操作系统认可的换行，比如在 UNIX 和 Mac OS X 系统中是 \n，而结束定界符（可能其后有个分号）之后也必须紧跟一个换行。</p>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 <span class="c1"># 1 非法的示例</span>
-<span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">foo</span> <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;EOT
 bar
-    EOT;
-}
-?&gt;
+    EOT;</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span>
 
 # 2 正确的示例
-$str = &lt;&lt;&lt;EOD
-Example of string spanning multiple lines
-useing heredoc syntax.
-EOD;
+$str = <span class="nt">&lt;</span><span class="err">&lt;&lt;</span><span class="na">EOD</span>
+<span class="na">Example</span> <span class="na">of</span> <span class="na">string</span> <span class="na">spanning</span> <span class="na">multiple</span> <span class="na">lines</span>
+<span class="na">useing</span> <span class="na">heredoc</span> <span class="na">syntax.</span>
+<span class="na">EOD</span><span class="err">;</span>
 
-/*含有变量的更复杂的示例*/
-class foo
-{
-    var $foo;
-    var $bar;
+<span class="err">/</span><span class="na">*含有变量的更复杂的示例*</span><span class="err">/</span>
+<span class="na">class</span> <span class="na">foo</span>
+<span class="err">{</span>
+    <span class="na">var</span> <span class="err">$</span><span class="na">foo</span><span class="err">;</span>
+    <span class="na">var</span> <span class="err">$</span><span class="na">bar</span><span class="err">;</span>
     
-    function foo()
-    {
-        $this-&gt;foo = 'Foo';
+    <span class="na">function</span> <span class="na">foo</span><span class="err">()</span>
+    <span class="err">{</span>
+        <span class="err">$</span><span class="na">this-</span><span class="nt">&gt;</span>foo = 'Foo';
         $this-&gt;bar = array('Bar1', 'Bar2', 'Bar3');
     }
 }
@@ -336,35 +336,35 @@ class foo
 $foo = new foo();
 $name = 'MyName';
 
-echo &lt;&lt;&lt;EOT
-My name is "$name". I am printing some $foo-&gt;foo.
+echo <span class="nt">&lt;</span><span class="err">&lt;&lt;</span><span class="na">EOT</span>
+<span class="na">My</span> <span class="na">name</span> <span class="na">is</span> <span class="err">"$</span><span class="na">name</span><span class="err">".</span> <span class="na">I</span> <span class="na">am</span> <span class="na">printing</span> <span class="na">some</span> <span class="err">$</span><span class="na">foo-</span><span class="nt">&gt;</span>foo.
 Now, I am printing some {$foo-&gt;bar[1]}.
 This should print a capital 'A': \x41
 EOT;
-</span><span class="c1">// 输出结果如下</span>
-<span class="nx">My</span> <span class="nx">name</span> <span class="nx">is</span> <span class="s2">"MyName"</span><span class="o">.</span> <span class="nx">I</span> <span class="nx">am</span> <span class="nx">printing</span> <span class="nx">some</span> <span class="nx">Foo</span><span class="o">.</span>
-<span class="nx">Now</span><span class="p">,</span> <span class="nx">I</span> <span class="nx">am</span> <span class="nx">printing</span> <span class="nx">some</span> <span class="nx">Bar2</span><span class="o">.</span>
-<span class="nx">This</span> <span class="nx">should</span> <span class="k">print</span> <span class="nx">a</span> <span class="nx">capital</span> <span class="s1">'A'</span><span class="o">:</span> <span class="nx">A</span>
+// 输出结果如下
+My name is "MyName". I am printing some Foo.
+Now, I am printing some Bar2.
+This should print a capital 'A': A
 </code></pre></div></div>
 
 <p>在 PHP 5.3.0 以后，也可以用 Heredoc 结构来初始化静态变量和类的属性和常量，还可以在 Heredoc 结构中庸双引号来声明标识符。</p>
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 <span class="c1">// 静态变量</span>
-<span class="k">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">function</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">static</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;LABEL
 Nothing in here...
-LABEL;
-</span><span class="p">}</span>
+LABEL;</span>
+<span class="p">}</span>
 
 <span class="c1">// 类的常量，属性</span>
-<span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">foo</span> <span class="p">{</span>
     <span class="k">const</span> <span class="no">BAR</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;FOOBAR
 Constant example
-FOOBAR;
-</span>
-    <span class="k">public</span> <span class="nv">$baz</span> <span class="o">=</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">"FOOBAR"</span>
-<span class="nx">property</span> <span class="nx">example</span>
-<span class="nx">FOOBAR</span><span class="p">;</span>
+FOOBAR;</span>
+
+    <span class="k">public</span> <span class="nv">$baz</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;"FOOBAR"
+property example
+FOOBAR;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -377,34 +377,34 @@ FOOBAR;
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 <span class="nv">$str</span> <span class="o">=</span> <span class="sh">&lt;&lt;&lt;'EOD'
 Example of string useing nowdoc syntax.
-EOD;
-</span>
-<span class="k">class</span> <span class="nc">foo</span>
+EOD;</span>
+
+<span class="kd">class</span> <span class="nc">foo</span>
 <span class="p">{</span>
     <span class="k">var</span> <span class="nv">$foo</span><span class="p">;</span>
     <span class="k">var</span> <span class="nv">$bar</span><span class="p">;</span>
     
-    <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+    <span class="k">function</span> <span class="n">foo</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">foo</span> <span class="o">=</span> <span class="s1">'Foo'</span><span class="p">;</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">bar</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Bar1'</span><span class="p">,</span> <span class="s1">'Bar2'</span><span class="p">,</span> <span class="s1">'Bar3'</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">foo</span> <span class="o">=</span> <span class="s1">'Foo'</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">bar</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'Bar1'</span><span class="p">,</span> <span class="s1">'Bar2'</span><span class="p">,</span> <span class="s1">'Bar3'</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">();</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">foo</span><span class="p">();</span>
 <span class="nv">$name</span> <span class="o">=</span> <span class="s1">'MyName'</span><span class="p">;</span>
 
 <span class="k">echo</span> <span class="sh">&lt;&lt;&lt;'EOT'
 My name is "$name". I am printing some $foo-&gt;foo.
 Now, I am printing some {$foo-&gt;bar[1]}.
 This should print a capital 'A': \x41
-EOT;
-</span><span class="c1">// 内用将原样输出不做解析</span>
+EOT;</span>
+<span class="c1">// 内用将原样输出不做解析</span>
 </code></pre></div></div>
 
 <h4 id="5-array-数组"><span id="array">5. Array 数组</span></h4>
 
-<p>PHP中的数组实际上是一个有序映射。映射是一种把 values 关联到 keys 的类型。定义数组使用 array(), 自5.4起可以使用短数组定义语法,用<code class="highlighter-rouge">[]</code>替代 array()。</p>
+<p>PHP中的数组实际上是一个有序映射。映射是一种把 values 关联到 keys 的类型。定义数组使用 array(), 自5.4起可以使用短数组定义语法,用<code class="language-plaintext highlighter-rouge">[]</code>替代 array()。</p>
 
 <p>key 可以是 integer 或者 string。value 可以是任意类型。此外 key 会有以下强制转换规则</p>
 <ul>
@@ -427,19 +427,19 @@ EOT;
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 
 <span class="c1"># 数组间接引用</span>
-<span class="k">function</span> <span class="nf">getArray</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">function</span> <span class="n">getArray</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// on PHP 5.4</span>
-<span class="nv">$secondElement</span> <span class="o">=</span> <span class="nx">getArray</span><span class="p">()[</span><span class="mi">1</span><span class="p">];</span>
+<span class="nv">$secondElement</span> <span class="o">=</span> <span class="nf">getArray</span><span class="p">()[</span><span class="mi">1</span><span class="p">];</span>
 
 <span class="c1">// previously</span>
-<span class="nv">$tmp</span> <span class="o">=</span> <span class="nx">getArray</span><span class="p">();</span>
+<span class="nv">$tmp</span> <span class="o">=</span> <span class="nf">getArray</span><span class="p">();</span>
 <span class="nv">$secondElement</span> <span class="o">=</span> <span class="nv">$tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
 
 <span class="c1">// or</span>
-<span class="k">list</span><span class="p">(,</span> <span class="nv">$secondElement</span><span class="p">)</span> <span class="o">=</span> <span class="nx">getArray</span><span class="p">();</span>
+<span class="k">list</span><span class="p">(,</span> <span class="nv">$secondElement</span><span class="p">)</span> <span class="o">=</span> <span class="nf">getArray</span><span class="p">();</span>
 </code></pre></div></div>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
@@ -472,23 +472,23 @@ EOT;
 </ul>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-<span class="k">class</span> <span class="nc">foo</span> <span class="p">{</span>
-    <span class="k">function</span> <span class="nf">do_foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">foo</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">do_foo</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s2">"Doing foo."</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">;</span>
-<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">do_foo</span><span class="p">();</span>
+<span class="nv">$bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">foo</span><span class="p">;</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="nf">do_foo</span><span class="p">();</span>
 
 <span class="c1"># 转换为对象</span>
-<span class="nv">$obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="s1">'ciao'</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="na">scalar</span><span class="p">;</span> <span class="c1">// outputs 'ciao'</span>
+<span class="nv">$obj</span> <span class="o">=</span> <span class="p">(</span><span class="n">object</span><span class="p">)</span><span class="s1">'ciao'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$obj</span><span class="o">-&gt;</span><span class="n">scalar</span><span class="p">;</span> <span class="c1">// outputs 'ciao'</span>
 
 <span class="c1">// In PHP 7 there are a few ways to create an empty object:</span>
-<span class="nv">$obj1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\stdCalss</span><span class="p">;</span> <span class="c1">// Instantiate stdClass object</span>
-<span class="nv">$obj2</span> <span class="o">=</span> <span class="k">new</span> <span class="k">class</span><span class="err">{};</span> <span class="err">//</span> <span class="nc">Instantiate</span> <span class="nx">anonymous</span> <span class="k">class</span>
-<span class="err">$</span><span class="nc">obj3</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)[];</span>  <span class="c1">// Cast empty array to object</span>
+<span class="nv">$obj1</span> <span class="o">=</span> <span class="k">new</span> <span class="err">\</span><span class="n">stdCalss</span><span class="p">;</span> <span class="c1">// Instantiate stdClass object</span>
+<span class="nv">$obj2</span> <span class="o">=</span> <span class="k">new</span> <span class="kd">class</span><span class="p">{};</span> <span class="c1">// Instantiate anonymous class</span>
+<span class="nv">$obj3</span> <span class="o">=</span> <span class="p">(</span><span class="n">object</span><span class="p">)[];</span>  <span class="c1">// Cast empty array to object</span>
 
 <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj1</span><span class="p">);</span> <span class="c1">// object(stdClass)#1 (0) {}</span>
 <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$obj2</span><span class="p">);</span> <span class="c1">// object(class@anonymous)#2 (0) {}</span>
@@ -497,9 +497,9 @@ EOT;
 <span class="c1">// $obj1 and $obj3 are the same type, but $obj1 !== $obj3. Also, all three will json_encode() to a simple JS object {}:</span>
 
 <span class="k">echo</span> <span class="nb">json_encode</span><span class="p">([</span>
-    <span class="k">new</span> <span class="nx">\stdClass</span><span class="p">,</span>
-    <span class="k">new</span> <span class="k">class</span><span class="err">{},</span>
-    <span class="err">(</span><span class="nc">object</span><span class="p">)[],</span>
+    <span class="k">new</span> <span class="err">\</span><span class="n">stdClass</span><span class="p">,</span>
+    <span class="k">new</span> <span class="kd">class</span><span class="p">{},</span>
+    <span class="p">(</span><span class="n">object</span><span class="p">)[],</span>
 <span class="p">]);</span>
 <span class="c1">// Output: [{},{},{}]</span>
 </code></pre></div></div>
@@ -508,7 +508,7 @@ EOT;
 
 <ul>
   <li>资源 resource 是一种特殊变量，保存了到外部资源的一个引用。资源是通过专门的函数来建立和使用的。所有的这些函数及其相应资源类型见<a href="http://nl3.php.net/manual/zh/resource.php">附录</a></li>
-  <li>资源类型可以通过<code class="highlighter-rouge">get_resource_type</code> 函数获取</li>
+  <li>资源类型可以通过<code class="language-plaintext highlighter-rouge">get_resource_type</code> 函数获取</li>
   <li>PHP Zend 引擎会自动检查一个资源不在被引用，资源使用的所有外部资源都会被垃圾回收系统释放。很少需要手工释放内存</li>
   <li>Note: 持久化链接比较特殊，它们不会被垃圾回收系统销毁。参见<a href="http://nl3.php.net/manual/zh/features.persistent-connections.php">数据库永久链接</a>一章</li>
 </ul>
@@ -553,13 +553,13 @@ EOT;
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 
-<span class="k">function</span> <span class="nf">my_callback_function</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">function</span> <span class="n">my_callback_function</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s2">"hello world"</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// An example callback method</span>
-<span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
-    <span class="k">static</span> <span class="k">function</span> <span class="nf">myCallbackMethod</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="k">function</span> <span class="n">myCallbackMethod</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s2">"Hello World!"</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -571,21 +571,21 @@ EOT;
 <span class="nb">call_user_func</span><span class="p">([</span><span class="s1">'MyClass'</span><span class="p">,</span> <span class="s1">'myCallbackMethod'</span><span class="p">]);</span>
 
 <span class="c1">// Type3 : Object method call</span>
-<span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+<span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">();</span>
 <span class="nb">call_user_func</span><span class="p">([</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">'myCallbackMethod'</span><span class="p">]);</span>
 
 <span class="c1">// Type4 : Static calss method call (As of PHP 5.2.3)</span>
 <span class="nb">call_user_func</span><span class="p">(</span><span class="s1">'MyClass::myCallbackMethod'</span><span class="p">);</span>
 
 <span class="c1">// Type5 : Relative static calss method call(As of PHP 5.3.0)</span>
-<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">who</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">who</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s2">"A</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">class</span> <span class="nc">B</span> <span class="k">extends</span> <span class="nx">A</span> <span class="p">{</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">who</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">who</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s2">"B</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -593,13 +593,13 @@ EOT;
 <span class="nb">call_user_func</span><span class="p">([</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'parent::who'</span><span class="p">]);</span> <span class="c1">// A</span>
 
 <span class="c1">// Type6 : Objects implementing __invoke can be used as callables (since PHP 5.3)</span>
-<span class="k">class</span> <span class="nc">C</span> <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__invoke</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">C</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__invoke</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">echo</span> <span class="s2">"Hello "</span><span class="p">,</span> <span class="nv">$name</span><span class="p">,</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nv">$c</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">C</span><span class="p">();</span>
+<span class="nv">$c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">C</span><span class="p">();</span>
 <span class="nb">call_user_func</span><span class="p">(</span><span class="nv">$c</span><span class="p">,</span> <span class="s1">'PHP!'</span><span class="p">);</span> <span class="c1">// Hello PHP!</span>
 </code></pre></div></div>
 
@@ -657,7 +657,7 @@ EOT;
   <li>变量默认总是传值赋值,那也就是说，当将一个表达式的值赋予一个变量时，整个原始表达式的值被赋值到目标变量。这意味着，例如，当一个变量的值赋予另外一个变量时，改变其中一个变量的值，将不会影响到另外一个变量</li>
   <li>PHP 也提供了另外一种方式给变量赋值：引用赋值。这意味着新的变量简单的引用（换言之，”成为其别名”或者”指向”）了原始变量。改动新的变量将影响到原始变量，反之亦然</li>
   <li>使用引用赋值，简单地将一个 &amp; 符号加到将要赋值的变量前（源变量）</li>
-  <li><code class="highlighter-rouge">Note:</code>那就是只有有名字的变量才可以引用赋值</li>
+  <li><code class="language-plaintext highlighter-rouge">Note:</code>那就是只有有名字的变量才可以引用赋值</li>
   <li>虽然在 PHP 中并不需要初始化变量，但对变量进行初始化是个好习惯</li>
 </ul>
 
@@ -713,17 +713,17 @@ EOT;
 <span class="nv">$a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="nv">$b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
-<span class="k">function</span> <span class="nf">Sum</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">function</span> <span class="n">Sum</span><span class="p">()</span> <span class="p">{</span>
     <span class="nv">$GLOBALS</span><span class="p">[</span><span class="s1">'b'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$GLOBALS</span><span class="p">[</span><span class="s1">'a'</span><span class="p">]</span> <span class="o">+</span> <span class="nv">$GLOBALS</span><span class="p">[</span><span class="s1">'b'</span><span class="p">];</span> <span class="c1">// 等同于下面两行</span>
     <span class="c1">// global $a, $b;</span>
     <span class="c1">// $b = $a + $b;</span>
 <span class="p">}</span>
 
-<span class="nx">Sum</span><span class="p">();</span>
+<span class="nf">Sum</span><span class="p">();</span>
 <span class="k">echo</span> <span class="nv">$b</span><span class="p">;</span> <span class="c1">// 3</span>
 
 <span class="c1"># 静态变量</span>
-<span class="k">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">function</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">static</span> <span class="nv">$int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">static</span> <span class="nv">$int2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// wrong</span>
     <span class="k">static</span> <span class="nv">$int3</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="mi">121</span><span class="p">);</span> <span class="c1">// wrong</span>
@@ -733,7 +733,7 @@ EOT;
 <h4 id="3-可变变量">3. 可变变量</h4>
 
 <ul>
-  <li>要将可变变量用于数组，必须解决一个模棱两可的问题。这就是当写下 <script type="math/tex">a[1] 时，解析器需要知道是想要 $a[1] 作为一个变量呢，还是想要</script>a 作为一个变量并取出该变量中索引为 [1] 的值。解决此问题的语法是，对第一种情况用 ${$a[1]}，对第二种情况用 ${$a}[1]</li>
+  <li>要将可变变量用于数组，必须解决一个模棱两可的问题。这就是当写下 \(a[1] 时，解析器需要知道是想要 $a[1] 作为一个变量呢，还是想要\)a 作为一个变量并取出该变量中索引为 [1] 的值。解决此问题的语法是，对第一种情况用 ${$a[1]}，对第二种情况用 ${$a}[1]</li>
   <li>类的属性也可以通过可变属性名来访问。可变属性名将在该调用所处的范围内被解析。例如，对于 $foo-&gt;$bar 表达式，则会在本地范围来解析 $bar 并且其值将被用于 $foo 的属性名。对于 $bar 是数组单元时也是一样。</li>
   <li>也可使用花括号来给属性名清晰定界。最有用是在属性位于数组中，或者属性名包含有多个部分或者属性名包含有非法字符时</li>
 </ul>
@@ -751,11 +751,11 @@ EOT;
 </ul>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">'action'</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">'action'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'submitted'</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="k">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">'action'</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">'action'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'submitted'</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">'&lt;pre&gt;'</span><span class="p">;</span>
 
     <span class="nb">print_r</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">);</span>
-    <span class="k">echo</span> <span class="s1">'&lt;a href="'</span><span class="o">.</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'PHP_SELF'</span><span class="p">]</span> <span class="o">.</span><span class="s1">'"&gt;Please try again&lt;/a&gt;'</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">'&lt;a href="'</span><span class="mf">.</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'PHP_SELF'</span><span class="p">]</span> <span class="mf">.</span><span class="s1">'"&gt;Please try again&lt;/a&gt;'</span><span class="p">;</span>
 
     <span class="k">echo</span> <span class="s1">'&lt;/pre&gt;'</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -830,14 +830,14 @@ Array
 <span class="c1">// Works as of PHP 5.3.0</span>
 <span class="k">const</span> <span class="no">CONSTANT</span> <span class="o">=</span> <span class="s1">'Hello World'</span><span class="p">;</span>
 
-<span class="k">echo</span> <span class="nx">CONSTANT</span><span class="p">;</span>
+<span class="k">echo</span> <span class="no">CONSTANT</span><span class="p">;</span>
 
 <span class="c1">// Works as of PHP 5.6.0</span>
-<span class="k">const</span> <span class="no">ANOTHER_CONST</span> <span class="o">=</span> <span class="nx">CONSTANT</span><span class="o">.</span><span class="s1">'; Goodbye World'</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">ANOTHER_CONST</span><span class="p">;</span>
+<span class="k">const</span> <span class="no">ANOTHER_CONST</span> <span class="o">=</span> <span class="no">CONSTANT</span><span class="mf">.</span><span class="s1">'; Goodbye World'</span><span class="p">;</span>
+<span class="k">echo</span> <span class="no">ANOTHER_CONST</span><span class="p">;</span>
 
 <span class="k">const</span> <span class="no">ANIMALS</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'dog'</span><span class="p">,</span> <span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'bird'</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nx">ANIMALS</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">// outputs "cat"</span>
+<span class="k">echo</span> <span class="no">ANIMALS</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">// outputs "cat"</span>
 
 <span class="c1">// Works as of PHP 7</span>
 <span class="nb">define</span><span class="p">(</span><span class="s1">'ANIMALS'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
@@ -845,7 +845,7 @@ Array
     <span class="s1">'cat'</span><span class="p">,</span>
     <span class="s1">'bird'</span>
 <span class="p">));</span>
-<span class="k">echo</span> <span class="nx">ANIMALS</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">// outputs "cat"</span>
+<span class="k">echo</span> <span class="no">ANIMALS</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">// outputs "cat"</span>
 </code></pre></div></div>
 
 <ul>
@@ -869,7 +869,7 @@ Array
 
 <h3 id="运算符">运算符</h3>
 
-<p>运算符可以按照其能接受几个值来分组。一元运算符只能接受一个值，如<code class="highlighter-rouge">!, ++,--</code>。二元运算符可接受两个值。最后一种是三元运算符<code class="highlighter-rouge">?:</code>。</p>
+<p>运算符可以按照其能接受几个值来分组。一元运算符只能接受一个值，如<code class="language-plaintext highlighter-rouge">!, ++,--</code>。二元运算符可接受两个值。最后一种是三元运算符<code class="language-plaintext highlighter-rouge">?:</code>。</p>
 
 <ul>
   <li>运算符优先级
@@ -1028,10 +1028,10 @@ Array
 </table>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-<span class="k">echo</span> <span class="p">(</span><span class="mi">5</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>           <span class="c1">// prints 2</span>
-<span class="k">echo</span> <span class="p">(</span><span class="mi">5</span> <span class="o">%</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>          <span class="c1">// prints 2</span>
-<span class="k">echo</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>          <span class="c1">// prints -2</span>
-<span class="k">echo</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">%</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>         <span class="c1">// prints -2</span>
+<span class="k">echo</span> <span class="p">(</span><span class="mi">5</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span><span class="mf">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>           <span class="c1">// prints 2</span>
+<span class="k">echo</span> <span class="p">(</span><span class="mi">5</span> <span class="o">%</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="mf">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>          <span class="c1">// prints 2</span>
+<span class="k">echo</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span><span class="mf">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>          <span class="c1">// prints -2</span>
+<span class="k">echo</span> <span class="p">(</span><span class="o">-</span><span class="mi">5</span> <span class="o">%</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="mf">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>         <span class="c1">// prints -2</span>
 </code></pre></div></div>
 
 <ul>
@@ -1276,65 +1276,65 @@ array(3) {
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 <span class="c1"># 1 对类使用 instanceof</span>
-<span class="k">class</span> <span class="nc">MyClass</span><span class="p">{}</span>
-<span class="k">class</span> <span class="nc">NotMyClass</span><span class="p">{}</span>
-<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nx">MyClass</span><span class="p">);</span> <span class="c1">// bool(true)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nx">NotMyClass</span><span class="p">);</span> <span class="c1">// bool(false)</span>
+<span class="kd">class</span> <span class="nc">MyClass</span><span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">NotMyClass</span><span class="p">{}</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nc">MyClass</span><span class="p">);</span> <span class="c1">// bool(true)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nc">NotMyClass</span><span class="p">);</span> <span class="c1">// bool(false)</span>
 <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?php</span>
 <span class="c1"># 2 对继承类的使用</span>
-<span class="k">class</span> <span class="nc">ParentClass</span> <span class="p">{}</span>
-<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">extends</span> <span class="nx">ParentClass</span> <span class="p">{}</span>
-<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nx">MyClass</span><span class="p">);</span>	<span class="c1">// bool(true)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nx">ParentClass</span><span class="p">);</span><span class="c1">// bool(true)</span>
+<span class="kd">class</span> <span class="nc">ParentClass</span> <span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">MyClass</span> <span class="kd">extends</span> <span class="nc">ParentClass</span> <span class="p">{}</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nc">MyClass</span><span class="p">);</span>	<span class="c1">// bool(true)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nc">ParentClass</span><span class="p">);</span><span class="c1">// bool(true)</span>
 <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?php</span>
 <span class="c1"># 3 使用 instanceof 检查对象不是某个类的实例</span>
-<span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{}</span>
-<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="k">stdClass</span><span class="p">));</span> <span class="c1">// bool(true)</span>
+<span class="kd">class</span> <span class="nc">MyClass</span> <span class="p">{}</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="n">stdClass</span><span class="p">));</span> <span class="c1">// bool(true)</span>
 <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?php</span>
 <span class="c1"># 4 对接口使用 instanceof</span>
-<span class="k">interface</span> <span class="nx">MyInterface</span> <span class="p">{}</span>
-<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">implements</span> <span class="nx">MyInterface</span> <span class="p">{}</span>
-<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nx">MyClass</span><span class="p">);</span>	<span class="c1">// bool(true)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nx">MyInterface</span><span class="p">);</span><span class="c1">// bool(true)</span>
+<span class="kd">interface</span> <span class="nc">MyInterface</span> <span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">MyClass</span> <span class="kd">implements</span> <span class="nc">MyInterface</span> <span class="p">{}</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nc">MyClass</span><span class="p">);</span>	<span class="c1">// bool(true)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nc">MyInterface</span><span class="p">);</span><span class="c1">// bool(true)</span>
 <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?php</span>
 <span class="c1"># 5 对其他变量使用 instanceof</span>
-<span class="k">interface</span> <span class="nx">MyInterface</span> <span class="p">{}</span>
-<span class="k">class</span> <span class="nc">MyClass</span> <span class="k">implements</span> <span class="nx">MyInterface</span> <span class="p">{}</span>
-<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
-<span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">;</span>
+<span class="kd">interface</span> <span class="nc">MyInterface</span> <span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">MyClass</span> <span class="kd">implements</span> <span class="nc">MyInterface</span> <span class="p">{}</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">;</span>
+<span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyClass</span><span class="p">;</span>
 <span class="nv">$c</span> <span class="o">=</span> <span class="s1">'MyClass'</span><span class="p">;</span>
 <span class="nv">$d</span> <span class="o">=</span> <span class="s1">'NotMyClass'</span><span class="p">;</span>
 
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nv">$b</span><span class="p">);</span>	<span class="c1">//$b is an object of class MyClass bool(true)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nv">$c</span><span class="p">);</span> <span class="c1">//$c is a string 'MyClass'  bool(true)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="nv">$d</span><span class="p">);</span> <span class="c1">//$d is a string 'NotMyClass' bool(false)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nv">$b</span><span class="p">);</span>	<span class="c1">//$b is an object of class MyClass bool(true)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nv">$c</span><span class="p">);</span> <span class="c1">//$c is a string 'MyClass'  bool(true)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="nv">$d</span><span class="p">);</span> <span class="c1">//$d is a string 'NotMyClass' bool(false)</span>
 <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?php</span>
 <span class="c1"># 6 用 instanceof 检测其它变量</span>
 <span class="nv">$a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="nv">$b</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">;</span>
+<span class="nv">$b</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">;</span>
 <span class="nv">$c</span> <span class="o">=</span> <span class="nb">imagecreate</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="nx">instanceof</span> <span class="k">stdClass</span><span class="p">);</span> <span class="c1">// $a is an integer bool(false)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$b</span> <span class="nx">instanceof</span> <span class="k">stdClass</span><span class="p">);</span> <span class="c1">// $b is NULL bool(false)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$c</span> <span class="nx">instanceof</span> <span class="k">stdClass</span><span class="p">);</span> <span class="c1">// $c is a resource bool(false)</span>
-<span class="nb">var_dump</span><span class="p">(</span><span class="k">FALSE</span> <span class="nx">instanceof</span> <span class="k">stdClass</span><span class="p">);</span> <span class="c1">//PHP Fatal error:  instanceof expects an object instance, constant given</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$a</span> <span class="k">instanceof</span> <span class="n">stdClass</span><span class="p">);</span> <span class="c1">// $a is an integer bool(false)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$b</span> <span class="k">instanceof</span> <span class="n">stdClass</span><span class="p">);</span> <span class="c1">// $b is NULL bool(false)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$c</span> <span class="k">instanceof</span> <span class="n">stdClass</span><span class="p">);</span> <span class="c1">// $c is a resource bool(false)</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="kc">FALSE</span> <span class="k">instanceof</span> <span class="n">stdClass</span><span class="p">);</span> <span class="c1">//PHP Fatal error:  instanceof expects an object instance, constant given</span>
 </code></pre></div></div>
 
 <h3 id="流程控制">流程控制</h3>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- if else / if elseif else
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- if else / if elseif else
 - 流程控制的替代语法
 	- PHP 提供了一些流程控制的替代语法，包括 if，while，for，foreach 和 switch。替代语法的基本形式是把左花括号（{）换成冒号（:），把右花括号（}）分别换成 endif;，endwhile;，endfor;，endforeach; 以及 endswitch;
 - while
@@ -1401,13 +1401,13 @@ array(3) {
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 <span class="c1">#1 简单的类定义</span>
-<span class="k">class</span> <span class="nc">SimpleClass</span> <span class="p">{</span>
+<span class="kd">class</span> <span class="nc">SimpleClass</span> <span class="p">{</span>
     <span class="c1">// property declaration</span>
     <span class="k">public</span> <span class="nv">$var</span> <span class="o">=</span> <span class="s1">'a default value'</span><span class="p">;</span>
 
     <span class="c1">// method declaration</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">displayVar</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">var</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">displayVar</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="k">var</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -1416,31 +1416,31 @@ array(3) {
 
 <span class="c1">#2 $this 伪变量的示例</span>
 
-<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
-    <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">echo</span> <span class="s1">'$this is defind ('</span><span class="o">.</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$this</span><span class="p">)</span><span class="o">.</span> <span class="s2">")</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="k">isset</span><span class="p">(</span><span class="nv">$this</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="s1">'$this is defind ('</span><span class="mf">.</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$this</span><span class="p">)</span><span class="mf">.</span> <span class="s2">")</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
             <span class="k">echo</span> <span class="s2">"</span><span class="se">\$</span><span class="s2">this is not defined.</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">class</span> <span class="nc">B</span> <span class="p">{</span>
-	<span class="k">function</span> <span class="nf">bar</span><span class="p">()</span> <span class="p">{</span>
-		<span class="nx">A</span><span class="o">::</span><span class="na">foo</span><span class="p">();</span> <span class="c1">// Note: the next line will issue a warning if E_STRICT is enabled.</span>
+<span class="kd">class</span> <span class="nc">B</span> <span class="p">{</span>
+	<span class="k">function</span> <span class="n">bar</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nc">A</span><span class="o">::</span><span class="nf">foo</span><span class="p">();</span> <span class="c1">// Note: the next line will issue a warning if E_STRICT is enabled.</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 
-<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">();</span>
-<span class="nv">$a</span><span class="o">-&gt;</span><span class="na">foo</span><span class="p">();</span> <span class="c1">// $this is defined (A)</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">A</span><span class="p">();</span>
+<span class="nv">$a</span><span class="o">-&gt;</span><span class="nf">foo</span><span class="p">();</span> <span class="c1">// $this is defined (A)</span>
 
-<span class="nx">A</span><span class="o">::</span><span class="na">foo</span><span class="p">();</span>
+<span class="nc">A</span><span class="o">::</span><span class="nf">foo</span><span class="p">();</span>
 
-<span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">B</span><span class="p">();</span>
-<span class="nv">$b</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">();</span>
+<span class="nv">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">B</span><span class="p">();</span>
+<span class="nv">$b</span><span class="o">-&gt;</span><span class="nf">bar</span><span class="p">();</span>
 
-<span class="nx">B</span><span class="o">::</span><span class="na">bar</span><span class="p">();</span>
+<span class="nc">B</span><span class="o">::</span><span class="nf">bar</span><span class="p">();</span>
 
 <span class="cm">/*
 # PHP5 output 
@@ -1470,7 +1470,7 @@ $this is not defined.
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
 
 <span class="c1"># 创建一个实例</span>
-<span class="nv">$instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SimpleClass</span><span class="p">();</span>
+<span class="nv">$instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleClass</span><span class="p">();</span>
 
 <span class="c1">// 也可以如下面这样</span>
 <span class="nv">$className</span> <span class="o">=</span> <span class="s1">'SimpleClass'</span><span class="p">;</span>

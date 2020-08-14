@@ -81,7 +81,7 @@
 
 <ul>
   <li>系统环境
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  HOMEBREW_VERSION: 2.0.3
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  HOMEBREW_VERSION: 2.0.3
   ORIGIN: https://github.com/Homebrew/brew
   HEAD: 6865aee729ebc28dfa4af6fdbaeec297df0ac34c
   Last commit: 2 days ago
@@ -104,20 +104,20 @@
   <li>
     <p>go 版本</p>
 
-    <p><code class="highlighter-rouge">go version go1.12 darwin/amd64</code></p>
+    <p><code class="language-plaintext highlighter-rouge">go version go1.12 darwin/amd64</code></p>
   </li>
   <li>
     <p>gdb 版本</p>
 
-    <p><code class="highlighter-rouge">GNU gdb (GDB) 8.2.1</code></p>
+    <p><code class="language-plaintext highlighter-rouge">GNU gdb (GDB) 8.2.1</code></p>
   </li>
 </ul>
 
 <h3 id="安装设置">安装设置</h3>
 
 <ul>
-  <li><code class="highlighter-rouge">brew install gdb</code></li>
-  <li><code class="highlighter-rouge">echo "set startup-with-shell off" &gt;&gt; ~/.gdbinit</code></li>
+  <li><code class="language-plaintext highlighter-rouge">brew install gdb</code></li>
+  <li><code class="language-plaintext highlighter-rouge">echo "set startup-with-shell off" &gt;&gt; ~/.gdbinit</code></li>
   <li>创建证书
     <ul>
       <li>1、打开 Keychain Access -&gt; Certificate Assistant -&gt; Create a Certificate…</li>
@@ -137,16 +137,16 @@
     <p>Go环境设置</p>
 
     <ul>
-      <li><code class="highlighter-rouge">export GOFLAGS="-ldflags=-compressdwarf=false"</code> <a href="https://golang.org/doc/gdb#Known_Issues">参考</a> 第4点</li>
+      <li><code class="language-plaintext highlighter-rouge">export GOFLAGS="-ldflags=-compressdwarf=false"</code> <a href="https://golang.org/doc/gdb#Known_Issues">参考</a> 第4点</li>
     </ul>
   </li>
   <li>
-    <p>编译 <code class="highlighter-rouge">go build -gcflags "-N -l" -o hello-world hello-world.go</code></p>
+    <p>编译 <code class="language-plaintext highlighter-rouge">go build -gcflags "-N -l" -o hello-world hello-world.go</code></p>
   </li>
   <li>调试demo</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  methods gdb hello-world
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>➜  methods gdb hello-world
 GNU gdb (GDB) 8.2.1
 Copyright (C) 2018 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;

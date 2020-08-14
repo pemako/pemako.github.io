@@ -86,7 +86,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s(</span><span class="si">%</span><span class="s">r, </span><span class="si">%</span><span class="s">r) -&gt; </span><span class="si">%</span><span class="s">r'</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'%s(%r, %r) -&gt; %r'</span> <span class="o">%</span> <span class="p">(</span><span class="n">func</span><span class="p">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 
@@ -111,7 +111,7 @@
 
 </code></pre></div></div>
 
-<p>如果编写修饰器的时候，没有用wraps做相应的处理，那就会令help函数失效。除了help函数，修饰器还会导致其他一些难于排查的问题。为了维护函数的接口，修饰之后的函数，必须保留原函数的某些标准python属性，例如 <code class="highlighter-rouge">__name__</code>和<code class="highlighter-rouge">__module__</code>。因此，我们需要用wraps来确保修饰后的函数具备正确的行为</p>
+<p>如果编写修饰器的时候，没有用wraps做相应的处理，那就会令help函数失效。除了help函数，修饰器还会导致其他一些难于排查的问题。为了维护函数的接口，修饰之后的函数，必须保留原函数的某些标准python属性，例如 <code class="language-plaintext highlighter-rouge">__name__</code>和<code class="language-plaintext highlighter-rouge">__module__</code>。因此，我们需要用wraps来确保修饰后的函数具备正确的行为</p>
 
 <p><img src="https://pemako.github.io/assets/imags/python/42.png" alt="trace" /></p>
 
@@ -129,40 +129,40 @@
 </span><span class="k">with</span> <span class="n">lock</span><span class="p">:</span> 
     <span class="k">print</span><span class="p">(</span><span class="s">'Lock is held'</span><span class="p">)</span>
 
-<span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+<span class="n">lock</span><span class="p">.</span><span class="n">acquire</span><span class="p">()</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">'Lock is held'</span><span class="p">)</span>
 <span class="k">finally</span><span class="p">:</span>
-    <span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+    <span class="n">lock</span><span class="p">.</span><span class="n">release</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>使用contextlib模块中的 contextmanager 修饰器可以更加快捷的创建对with语句的支持。如果使用标准的方式，那就要定义新的类，并提供名为 <code class="highlighter-rouge">__enter__</code>和<code class="highlighter-rouge">__exit__</code>的特殊方法。</p>
+<p>使用contextlib模块中的 contextmanager 修饰器可以更加快捷的创建对with语句的支持。如果使用标准的方式，那就要定义新的类，并提供名为 <code class="language-plaintext highlighter-rouge">__enter__</code>和<code class="language-plaintext highlighter-rouge">__exit__</code>的特殊方法。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
 
-<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+<span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">().</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">WARNING</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Some debug data'</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">'Error log here'</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'More debug data'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Some debug data'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">'Error log here'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'More debug data'</span><span class="p">)</span>
 
 
 <span class="c1"># 定义一种情景管理器，来临时提升函数的信息级别（log level）。下面这个辅助函数，会在
 # 运行with块内的代码之前，临时提升信息级别，待with块执行完毕，再恢复原有级别。
 </span><span class="o">@</span><span class="n">contextmanager</span>
 <span class="k">def</span> <span class="nf">debug_logging</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
-    <span class="n">old_level</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">()</span>
+    <span class="n">old_level</span> <span class="o">=</span> <span class="n">logger</span><span class="p">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">yield</span> <span class="c1"># 这里就是with块中的语句所要展开执行的地方。with块所抛出任何异常，都会
 </span>              <span class="c1"># 由 yield表达式从新抛出，这使得开发者可以在辅助函数里面捕获它
 </span>    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">old_level</span><span class="p">)</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">old_level</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">debug_logging</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">debug_logging</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">'Inside:'</span><span class="p">)</span>
     <span class="n">my_function</span><span class="p">()</span>
 
@@ -183,7 +183,7 @@
 <p>传给with语句的那个情境管理器，本身也可以返回一个对象。而开发者可以通过with复合语句中的as关键字，来指定一个局部变量，python会把那个对象，赋给这个局部变量。这使得with块中的代码，可以直接与外部情境相交互。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/tmp/my_output.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
-    <span class="n">handler</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'This is some data!'</span><span class="p">)</span>
+    <span class="n">handler</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'This is some data!'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>我们只需在情境管理器里，通过yield语句返回一个值，即可令自己的函数把该值提供给由as关键字所指定的目标变量。例如，下面定义的这个情境管理器，能够获取Logger实例，设置其级别，并通过yield语句将其提供给由as关键字所指定的目标</p>
@@ -193,24 +193,24 @@
 
 <span class="o">@</span><span class="n">contextmanager</span>
 <span class="k">def</span> <span class="nf">log_level</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">old_level</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">old_level</span> <span class="o">=</span> <span class="n">logger</span><span class="p">.</span><span class="n">getEffectiveLevel</span><span class="p">()</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">logger</span>
     <span class="k">finally</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">old_level</span><span class="p">)</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">old_level</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">log_level</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="s">'my-log'</span><span class="p">)</span> <span class="k">as</span> <span class="n">logger</span><span class="p">:</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'This is my message!'</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'This will not print'</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">log_level</span><span class="p">(</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="s">'my-log'</span><span class="p">)</span> <span class="k">as</span> <span class="n">logger</span><span class="p">:</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'This is my message!'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'This will not print'</span><span class="p">)</span>
 <span class="c1"># &gt;&gt;&gt; Output:
 # This is my message!
 # python自带的那个logger，默认会处在WARNING级别，退出with语句块之后，我们在名为'my-log'的Logger上面调用debug方法，是打印不出消息的，因为该Logger的严重级别，已经恢复到默认的WARNING了。但是由于ERROR级别高于WARNING级别，所有在这个Logger上面调用 error方法，任然能够打印出消息
 </span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">'my-log'</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Debug will not print'</span><span class="p">)</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">'Error will print'</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">'my-log'</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Debug will not print'</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">'Error will print'</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span>
 <span class="n">Error</span> <span class="n">will</span> <span class="k">print</span>
 </code></pre></div></div>
@@ -225,124 +225,124 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">4</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
-<span class="n">state</span><span class="o">.</span><span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Player beat a level
-</span><span class="n">state</span><span class="o">.</span><span class="n">lives</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># Player had to try again
+<span class="n">state</span><span class="p">.</span><span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># Player beat a level
+</span><span class="n">state</span><span class="p">.</span><span class="n">lives</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># Player had to try again
 </span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="n">state_path</span> <span class="o">=</span> <span class="s">'game_state.bin'</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">state_path</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">state_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    <span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">4</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
-<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">state_path</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+    <span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 
 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state_after</span><span class="p">,</span> <span class="n">GameState</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lives</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">=</span> <span class="n">lives</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="n">lives</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
 
 
 <span class="k">def</span> <span class="nf">pickle_game_state</span><span class="p">(</span><span class="n">game_state</span><span class="p">):</span>
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">game_state</span><span class="o">.</span><span class="n">__dict__</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">game_state</span><span class="p">.</span><span class="n">__dict__</span>
     <span class="k">return</span> <span class="n">unpickle_game_state</span><span class="p">,</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">,)</span>
 
 <span class="k">def</span> <span class="nf">unpickle_game_state</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">GameState</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">copyreg</span>
-<span class="n">copyreg</span><span class="o">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">GameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
+<span class="n">copyreg</span><span class="p">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">GameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
-<span class="n">state</span><span class="o">.</span><span class="n">points</span> <span class="o">+=</span> <span class="mi">1000</span>
-<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="n">state</span><span class="p">.</span><span class="n">points</span> <span class="o">+=</span> <span class="mi">1000</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lives</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">magic</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">=</span> <span class="n">lives</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lives</span> <span class="o">=</span> <span class="n">lives</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
 
-<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">GameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">magic</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="k">assert</span> <span class="bp">False</span>
 
 <span class="k">def</span> <span class="nf">pickle_game_state</span><span class="p">(</span><span class="n">game_state</span><span class="p">):</span>
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">game_state</span><span class="o">.</span><span class="n">__dict__</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">game_state</span><span class="p">.</span><span class="n">__dict__</span>
     <span class="n">kwargs</span><span class="p">[</span><span class="s">'version'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="k">return</span> <span class="n">unpickle_game_state</span><span class="p">,</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">,)</span>
 
 <span class="k">def</span> <span class="nf">unpickle_game_state</span><span class="p">(</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'version'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'version'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'lives'</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'lives'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">GameState</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="n">copyreg</span><span class="o">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">GameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
-<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="n">copyreg</span><span class="p">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">GameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
+<span class="n">state_after</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">state_after</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 
-<span class="n">copyreg</span><span class="o">.</span><span class="n">dispatch_table</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">copyreg</span><span class="p">.</span><span class="n">dispatch_table</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
 <span class="n">state</span> <span class="o">=</span> <span class="n">GameState</span><span class="p">()</span>
-<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 <span class="k">del</span> <span class="n">GameState</span>
 <span class="k">class</span> <span class="nc">BetterGameState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">magic</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">magic</span> <span class="o">=</span> <span class="n">magic</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="k">assert</span> <span class="bp">False</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">serialized</span><span class="p">[:</span><span class="mi">25</span><span class="p">])</span>
 
-<span class="n">copyreg</span><span class="o">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">BetterGameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
+<span class="n">copyreg</span><span class="p">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">BetterGameState</span><span class="p">,</span> <span class="n">pickle_game_state</span><span class="p">)</span>
 
 <span class="n">state</span> <span class="o">=</span> <span class="n">BetterGameState</span><span class="p">()</span>
-<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">serialized</span><span class="p">[:</span><span class="mi">35</span><span class="p">])</span>
 
 </code></pre></div></div>
@@ -358,17 +358,17 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">mktime</span><span class="p">,</span> <span class="n">strptime</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
 
-<span class="n">time_format</span> <span class="o">=</span> <span class="s">'</span><span class="si">%</span><span class="s">Y-</span><span class="si">%</span><span class="s">m-</span><span class="si">%</span><span class="s">d </span><span class="si">%</span><span class="s">H:</span><span class="si">%</span><span class="s">M:</span><span class="si">%</span><span class="s">S'</span>
+<span class="n">time_format</span> <span class="o">=</span> <span class="s">'%Y-%m-%d %H:%M:%S'</span>
 
 <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="n">now_utc</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-<span class="n">now_local</span> <span class="o">=</span> <span class="n">now_utc</span><span class="o">.</span><span class="n">astimezone</span><span class="p">()</span>
+<span class="n">now_utc</span> <span class="o">=</span> <span class="n">now</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="p">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="n">now_local</span> <span class="o">=</span> <span class="n">now_utc</span><span class="p">.</span><span class="n">astimezone</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">now_local</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">11</span> <span class="mi">02</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">30</span><span class="o">+</span><span class="mi">08</span><span class="p">:</span><span class="mi">00</span>
 
 <span class="n">time_str</span> <span class="o">=</span> <span class="s">'2014-08-10 11:18:30'</span>
-<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span>
-<span class="n">time_tuple</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span>
+<span class="n">time_tuple</span> <span class="o">=</span> <span class="n">now</span><span class="p">.</span><span class="n">timetuple</span><span class="p">()</span>
 <span class="n">utc_now</span> <span class="o">=</span> <span class="n">mktime</span><span class="p">(</span><span class="n">time_tuple</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">utc_now</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mf">1407640710.0</span>
@@ -376,20 +376,20 @@
 <span class="c1"># 进行协调时区转换操作
 </span><span class="kn">import</span> <span class="nn">pytz</span>
 <span class="n">arrival_nyc</span> <span class="o">=</span> <span class="s">'2014-05-01 23:33:24'</span>
-<span class="n">nyc_dt_naive</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">arrival_nyc</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span>
-<span class="n">eastern</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'US/Eastern'</span><span class="p">)</span>
-<span class="n">nyc_dt</span> <span class="o">=</span> <span class="n">eastern</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">nyc_dt_naive</span><span class="p">)</span>
-<span class="n">utc_dt</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">nyc_dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+<span class="n">nyc_dt_naive</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">arrival_nyc</span><span class="p">,</span> <span class="n">time_format</span><span class="p">)</span>
+<span class="n">eastern</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'US/Eastern'</span><span class="p">)</span>
+<span class="n">nyc_dt</span> <span class="o">=</span> <span class="n">eastern</span><span class="p">.</span><span class="n">localize</span><span class="p">(</span><span class="n">nyc_dt_naive</span><span class="p">)</span>
+<span class="n">utc_dt</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">utc</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">nyc_dt</span><span class="p">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">pytz</span><span class="p">.</span><span class="n">utc</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">utc_dt</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">02</span> <span class="mi">03</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">24</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
 
-<span class="n">pacific</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'US/Pacific'</span><span class="p">)</span>
-<span class="n">sf_dt</span> <span class="o">=</span> <span class="n">pacific</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">utc_dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">pacific</span><span class="p">))</span>
+<span class="n">pacific</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'US/Pacific'</span><span class="p">)</span>
+<span class="n">sf_dt</span> <span class="o">=</span> <span class="n">pacific</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">utc_dt</span><span class="p">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">pacific</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">sf_dt</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">01</span> <span class="mi">20</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">24</span><span class="o">-</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span>
 
-<span class="n">nepal</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'Asia/Katmandu'</span><span class="p">)</span>
-<span class="n">nepal_dt</span> <span class="o">=</span> <span class="n">nepal</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">utc_dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">nepal</span><span class="p">))</span>
+<span class="n">nepal</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">'Asia/Katmandu'</span><span class="p">)</span>
+<span class="n">nepal_dt</span> <span class="o">=</span> <span class="n">nepal</span><span class="p">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">utc_dt</span><span class="p">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">nepal</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">nepal_dt</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">02</span> <span class="mi">09</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">24</span><span class="o">+</span><span class="mi">05</span><span class="p">:</span><span class="mi">45</span>
 </code></pre></div></div>
@@ -404,8 +404,8 @@
 
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
   <span class="n">fifo</span> <span class="o">=</span> <span class="n">deuqe</span><span class="p">()</span>
-  <span class="n">fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># Producer
-</span>  <span class="n">x</span> <span class="o">=</span> <span class="n">fifo</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>  <span class="c1"># Consumer
+  <span class="n">fifo</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># Producer
+</span>  <span class="n">x</span> <span class="o">=</span> <span class="n">fifo</span><span class="p">.</span><span class="n">popleft</span><span class="p">()</span>  <span class="c1"># Consumer
 </span></code></pre></div>    </div>
   </li>
   <li>
@@ -422,7 +422,7 @@
   <span class="n">b</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'red'</span>
   <span class="n">b</span><span class="p">[</span><span class="s">'bar'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'blue'</span>
     
-  <span class="k">for</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">b</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+  <span class="k">for</span> <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">b</span><span class="p">.</span><span class="n">values</span><span class="p">()):</span>
       <span class="k">print</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)</span>
   <span class="o">&gt;&gt;&gt;</span>
   <span class="mi">1</span> <span class="n">red</span>
@@ -471,7 +471,7 @@
   <span class="k">assert</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">nsmallest</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">a</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
 
   <span class="k">print</span><span class="p">(</span><span class="s">'Before:'</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-  <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
   <span class="k">print</span><span class="p">(</span><span class="s">'After: '</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
   <span class="o">&gt;&gt;&gt;</span>
   <span class="n">Before</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
@@ -556,7 +556,7 @@
 <span class="k">print</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="mf">5.365</span>
 
-<span class="n">rounded</span> <span class="o">=</span> <span class="n">cost</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s">'0.01'</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_UP</span><span class="p">)</span>
+<span class="n">rounded</span> <span class="o">=</span> <span class="n">cost</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s">'0.01'</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_UP</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">rounded</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mf">5.37</span>
 
@@ -567,7 +567,7 @@
 <span class="o">&gt;&gt;&gt;</span><span class="mf">0.004166666666666666666666666667</span>
 
 <span class="c1"># Example 8
-</span><span class="n">rounded</span> <span class="o">=</span> <span class="n">cost</span><span class="o">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s">'0.01'</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_UP</span><span class="p">)</span>
+</span><span class="n">rounded</span> <span class="o">=</span> <span class="n">cost</span><span class="p">.</span><span class="n">quantize</span><span class="p">(</span><span class="n">Decimal</span><span class="p">(</span><span class="s">'0.01'</span><span class="p">),</span> <span class="n">rounding</span><span class="o">=</span><span class="n">ROUND_UP</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">rounded</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="mf">0.01</span>
 </code></pre></div></div>

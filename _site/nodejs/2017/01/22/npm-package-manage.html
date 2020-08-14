@@ -77,26 +77,26 @@
 <div class="row-fluid">
   <div class="span12">  
     <div id="article">
-    <p>OSX use <code class="highlighter-rouge">brew install node</code> 目前安装的版本是 <code class="highlighter-rouge">v7.4.0</code>。安装完成 <code class="highlighter-rouge">nodejs</code> 后就可以使用 <code class="highlighter-rouge">npm</code> 进行相应的包管理。</p>
+    <p>OSX use <code class="language-plaintext highlighter-rouge">brew install node</code> 目前安装的版本是 <code class="language-plaintext highlighter-rouge">v7.4.0</code>。安装完成 <code class="language-plaintext highlighter-rouge">nodejs</code> 后就可以使用 <code class="language-plaintext highlighter-rouge">npm</code> 进行相应的包管理。</p>
 
 <h3 id="updating-npm">Updating npm</h3>
 
-<p>如有需要把 <code class="highlighter-rouge">npm</code> 更新为最新的版本可以使用 <code class="highlighter-rouge">npm install npm@latest -g</code></p>
+<p>如有需要把 <code class="language-plaintext highlighter-rouge">npm</code> 更新为最新的版本可以使用 <code class="language-plaintext highlighter-rouge">npm install npm@latest -g</code></p>
 
 <h3 id="installing-package">Installing package</h3>
 
-<p><code class="highlighter-rouge">npm install &lt;package_name&gt;</code>
-这个命令会在当前的目录下创建 <code class="highlighter-rouge">node_modules</code> 文件夹。如果需要全局安装包的话加上 <code class="highlighter-rouge">-g</code> 参数</p>
+<p><code class="language-plaintext highlighter-rouge">npm install &lt;package_name&gt;</code>
+这个命令会在当前的目录下创建 <code class="language-plaintext highlighter-rouge">node_modules</code> 文件夹。如果需要全局安装包的话加上 <code class="language-plaintext highlighter-rouge">-g</code> 参数</p>
 
 <h3 id="using-a-packagejson">Using a package.json</h3>
 
-<p>通过 <code class="highlighter-rouge">package.json</code> 来管理本地安装的 npm packages 是一种最好的方式。</p>
+<p>通过 <code class="language-plaintext highlighter-rouge">package.json</code> 来管理本地安装的 npm packages 是一种最好的方式。</p>
 
 <h4 id="requirements">Requirements</h4>
 
-<p>最小版本的 <code class="highlighter-rouge">package.json</code> 必须包含 <code class="highlighter-rouge">name</code>和<code class="highlighter-rouge">version</code></p>
+<p>最小版本的 <code class="language-plaintext highlighter-rouge">package.json</code> 必须包含 <code class="language-plaintext highlighter-rouge">name</code>和<code class="language-plaintext highlighter-rouge">version</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- name
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- name
     - 允许全部小写
     - 单词中不能有空格
     - 允许破折号和下滑下
@@ -113,58 +113,58 @@ For example:
 
 <h4 id="creating-a-packagejson">Creating a package.json</h4>
 
-<p><code class="highlighter-rouge">npm init [--yes|-y]</code> 创建默认的 <code class="highlighter-rouge">package.json</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm init [--yes|-y]</code> 创建默认的 <code class="language-plaintext highlighter-rouge">package.json</code></p>
 
 <h3 id="uninstall-packages">Uninstall packages</h3>
 
-<p>删除 node_modules 中的模块可以直接是用 <code class="highlighter-rouge">npm uninstall &lt;package&gt;</code></p>
+<p>删除 node_modules 中的模块可以直接是用 <code class="language-plaintext highlighter-rouge">npm uninstall &lt;package&gt;</code></p>
 
-<p>删除 package.json 中的依赖可以使用 <code class="highlighter-rouge">npm uninstall --save &lt;package&gt;</code></p>
+<p>删除 package.json 中的依赖可以使用 <code class="language-plaintext highlighter-rouge">npm uninstall --save &lt;package&gt;</code></p>
 
-<p>注意：如果安装的包的是<code class="highlighter-rouge">devDependency</code>版本 <code class="highlighter-rouge">--save</code>不起作用的情况下可以使用 <code class="highlighter-rouge">--save-dev</code> unistall it.</p>
+<p>注意：如果安装的包的是<code class="language-plaintext highlighter-rouge">devDependency</code>版本 <code class="language-plaintext highlighter-rouge">--save</code>不起作用的情况下可以使用 <code class="language-plaintext highlighter-rouge">--save-dev</code> unistall it.</p>
 
 <h3 id="publishing-npm-packages">Publishing npm packages</h3>
 
 <ol>
-  <li>必须在 <code class="highlighter-rouge">https://www.nmpjs.com/</code> 进行注册过</li>
-  <li><code class="highlighter-rouge">npm init</code> 创建一个 package.json</li>
-  <li>创建对应的 <code class="highlighter-rouge">index.js</code> 文件 内容如下</li>
+  <li>必须在 <code class="language-plaintext highlighter-rouge">https://www.nmpjs.com/</code> 进行注册过</li>
+  <li><code class="language-plaintext highlighter-rouge">npm init</code> 创建一个 package.json</li>
+  <li>创建对应的 <code class="language-plaintext highlighter-rouge">index.js</code> 文件 内容如下</li>
 </ol>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">exports</span><span class="p">.</span><span class="nx">printMsg</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> 
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"This is a message from the demo package"</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">This is a message from the demo package</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <ol>
-  <li><code class="highlighter-rouge">npm adduser</code></li>
-  <li><code class="highlighter-rouge">npm login</code></li>
-  <li><code class="highlighter-rouge">npm publish</code> 发布完成可以在<code class="highlighter-rouge">https://www.nmpjs.com</code> 中查看</li>
-  <li>使用刚发布的包 <code class="highlighter-rouge">npm install npm-demo-pkg424</code></li>
-  <li><code class="highlighter-rouge">echo "var demo = require("npm-demo-pkg424"); demo.printMsg();"&gt; test.js &amp;&amp; node test.js</code></li>
+  <li><code class="language-plaintext highlighter-rouge">npm adduser</code></li>
+  <li><code class="language-plaintext highlighter-rouge">npm login</code></li>
+  <li><code class="language-plaintext highlighter-rouge">npm publish</code> 发布完成可以在<code class="language-plaintext highlighter-rouge">https://www.nmpjs.com</code> 中查看</li>
+  <li>使用刚发布的包 <code class="language-plaintext highlighter-rouge">npm install npm-demo-pkg424</code></li>
+  <li><code class="language-plaintext highlighter-rouge">echo "var demo = require("npm-demo-pkg424"); demo.printMsg();"&gt; test.js &amp;&amp; node test.js</code></li>
 </ol>
 
 <h3 id="注意事项">注意事项</h3>
 
 <h4 id="semver-for-publishers">Semver for publishers</h4>
 
-<p>如果你的版本将要发布供其他人使用的话，版本应该从 <code class="highlighter-rouge">1.0.0</code> 开始。
+<p>如果你的版本将要发布供其他人使用的话，版本应该从 <code class="language-plaintext highlighter-rouge">1.0.0</code> 开始。
 当你的包有需要升级时，按照下面的原则修改版本号</p>
 
 <ol>
-  <li>Bug fixes and other minor changes: Patch release 修改最后一位版本号 eg. <code class="highlighter-rouge">1.0.1</code></li>
-  <li>New features which don’t break existing feature: Minor release, 修改中间版本号 eg.<code class="highlighter-rouge">1.1.0</code></li>
-  <li>Changes which break backwards compatibility: Major relese,修改第一位版本号 eg. <code class="highlighter-rouge">2.0.0</code></li>
+  <li>Bug fixes and other minor changes: Patch release 修改最后一位版本号 eg. <code class="language-plaintext highlighter-rouge">1.0.1</code></li>
+  <li>New features which don’t break existing feature: Minor release, 修改中间版本号 eg.<code class="language-plaintext highlighter-rouge">1.1.0</code></li>
+  <li>Changes which break backwards compatibility: Major relese,修改第一位版本号 eg. <code class="language-plaintext highlighter-rouge">2.0.0</code></li>
 </ol>
 
 <h4 id="semver-for-consumers">Semver for consumers</h4>
 
-<p>作为使用者你必须指定需要更新的版本的。如果你想使用一个包的版本为 <code class="highlighter-rouge">1.0.4</code> 必须如下进行严格指定</p>
+<p>作为使用者你必须指定需要更新的版本的。如果你想使用一个包的版本为 <code class="language-plaintext highlighter-rouge">1.0.4</code> 必须如下进行严格指定</p>
 
 <ol>
-  <li>Patch release: <code class="highlighter-rouge">1.0</code> or <code class="highlighter-rouge">1.0.x</code> or <code class="highlighter-rouge">~1.0.4</code></li>
-  <li>Minor release: <code class="highlighter-rouge">1</code> or <code class="highlighter-rouge">1.x</code> or <code class="highlighter-rouge">^1.0.4</code></li>
-  <li>Major release: <code class="highlighter-rouge">*</code> or <code class="highlighter-rouge">x</code></li>
+  <li>Patch release: <code class="language-plaintext highlighter-rouge">1.0</code> or <code class="language-plaintext highlighter-rouge">1.0.x</code> or <code class="language-plaintext highlighter-rouge">~1.0.4</code></li>
+  <li>Minor release: <code class="language-plaintext highlighter-rouge">1</code> or <code class="language-plaintext highlighter-rouge">1.x</code> or <code class="language-plaintext highlighter-rouge">^1.0.4</code></li>
+  <li>Major release: <code class="language-plaintext highlighter-rouge">*</code> or <code class="language-plaintext highlighter-rouge">x</code></li>
 </ol>
 
     <p>继续阅读关于

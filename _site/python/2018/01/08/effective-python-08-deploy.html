@@ -91,28 +91,28 @@
   <li>针对内置的python类型来调用print函数，会根据该值打印出一条易于阅读的字符串，这个自测隐藏了类型信息</li>
   <li>只对内置的python类型来调用repr函数，会根据该值返回一条可供打印的字符串。把这个repr字符串传给内置的eval函数，就可以将其还原为初始的那个值</li>
   <li>在格式化字符串里使用 %s, 能够产生于str函数的返回值相仿的易读字符串，而在格式化字符串里使用 %r,则能够产生与 repr函数的返回值相仿的可打印字符串</li>
-  <li>可以在类中编写 <code class="highlighter-rouge">__repr__</code>方法，用自定义的方式来提供一中可打印的字符串，并在其中给出更为详细的调试信息</li>
-  <li>可以在任意对象上面查询 <code class="highlighter-rouge">__dict__</code>属性，以观察其内部信息</li>
+  <li>可以在类中编写 <code class="language-plaintext highlighter-rouge">__repr__</code>方法，用自定义的方式来提供一中可打印的字符串，并在其中给出更为详细的调试信息</li>
+  <li>可以在任意对象上面查询 <code class="language-plaintext highlighter-rouge">__dict__</code>属性，以观察其内部信息</li>
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OpaqueClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
 
 <span class="k">class</span> <span class="nc">BetterClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">'BetterClass(</span><span class="si">%</span><span class="s">d, </span><span class="si">%</span><span class="s">d)'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">'BetterClass(%d, %d)'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">)</span>
 
 <span class="n">obj</span> <span class="o">=</span> <span class="n">BetterClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="n">BetterClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="n">obj</span> <span class="o">=</span> <span class="n">OpaqueClass</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span><span class="p">{</span><span class="s">'x'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'y'</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 </code></pre></div></div>
 
@@ -130,9 +130,9 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">data</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">'Must supply str or bytes, found: </span><span class="si">%</span><span class="s">r'</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">'Must supply str or bytes, found: %r'</span> <span class="o">%</span> <span class="n">data</span><span class="p">)</span>
 
 <span class="c1"># utils_test.py
 </span><span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">main</span>
@@ -140,13 +140,13 @@
 
 <span class="k">class</span> <span class="nc">UtilsTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">test_to_str_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">'hello'</span><span class="p">,</span> <span class="n">to_str</span><span class="p">(</span><span class="n">b</span><span class="s">'hello'</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">'hello'</span><span class="p">,</span> <span class="n">to_str</span><span class="p">(</span><span class="s">b'hello'</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">test_to_str_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">'hello'</span><span class="p">,</span> <span class="n">to_str</span><span class="p">(</span><span class="s">'hello'</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">'hello'</span><span class="p">,</span> <span class="n">to_str</span><span class="p">(</span><span class="s">'hello'</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">test_to_str_bad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="nb">TypeError</span><span class="p">,</span> <span class="n">to_str</span><span class="p">,</span> <span class="nb">object</span><span class="p">())</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="nb">TypeError</span><span class="p">,</span> <span class="n">to_str</span><span class="p">,</span> <span class="nb">object</span><span class="p">())</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
@@ -155,7 +155,7 @@
 <h3 id="57-考虑用-pdb-实现交互调试">57. 考虑用 pdb 实现交互调试</h3>
 
 <ul>
-  <li>我们可以修改python程序，在想要调试的代码上方直接加入 <code class="highlighter-rouge">import pdb;pdb.set_trace()</code>语句，以触发互动调试器</li>
+  <li>我们可以修改python程序，在想要调试的代码上方直接加入 <code class="language-plaintext highlighter-rouge">import pdb;pdb.set_trace()</code>语句，以触发互动调试器</li>
   <li>python调试器也是一个完整的python提示符界面，我们可以检查并修改受测程序的状态</li>
   <li>我们可以在pdb提示符中输入命令，以便精确地控制程序的执行流程，这些命令是的我们能够交替地查看程序状态并继续向下运行程序</li>
 </ul>
@@ -178,9 +178,9 @@
 </span><span class="k">def</span> <span class="nf">insert_value</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">existing</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="o">&gt;</span> <span class="n">value</span><span class="p">:</span>
-            <span class="n">array</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="n">array</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="k">return</span>
-    <span class="n">array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">array</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
 <span class="c1"># 为了分析 insertion_sort和 insert_value 的效率，创建一组随机数字，并定义test函数，以便将该函数传给profiler
 </span>
@@ -194,7 +194,7 @@
 </span><span class="kn">from</span> <span class="nn">cProfile</span> <span class="kn">import</span> <span class="n">Profile</span>
 
 <span class="n">profiler</span> <span class="o">=</span> <span class="n">Profile</span><span class="p">()</span>
-<span class="n">profiler</span><span class="o">.</span><span class="n">runcall</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">profiler</span><span class="p">.</span><span class="n">runcall</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 
 <span class="c1"># test函数运行完毕之后，我们采用内置的pstats模块和模块中的Stats类，来剖析由Profile对象所收集大的性能统计数据。Stats对象提供了各种方法，我们可以用这些方法对性能分析数据进行遴选及排序，以便把自己所关注的那部分信息单独列出来。
 </span>
@@ -203,15 +203,15 @@
 
 <span class="n">stats</span> <span class="o">=</span> <span class="n">Stats</span><span class="p">(</span><span class="n">profiler</span><span class="p">)</span>
 <span class="n">stats</span> <span class="o">=</span> <span class="n">Stats</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">STDOUT</span><span class="p">)</span>
-<span class="n">stats</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span>
-<span class="n">stats</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">'cumulative'</span><span class="p">)</span>
-<span class="n">stats</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">strip_dirs</span><span class="p">()</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">'cumulative'</span><span class="p">)</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">print_stats</span><span class="p">()</span>
 
 </code></pre></div></div>
 
 <p>上面的代码会输出一张表格，其中的信息是按照函数来分组的。表格中的数据，是在profiler处于激活状态的时候统计出来的，也就是说，这些时间数据，都是在执行刚才那个runcall方法的过程中统计出来的。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      20003 function calls in 1.833 seconds
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      20003 function calls in 1.833 seconds
 
    Ordered by: cumulative time
 
@@ -236,7 +236,7 @@
 
 <p>通过profiler 给出的统计表可以看到，在 cumulative time(累计时间)一栏中，insert_value 函数所占用的CPU份额是最大的。于是我们改用内置的bisect模块来重新定义此函数。</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>In [55]: from bisect import bisect_left
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>In [55]: from bisect import bisect_left
     ...:
     ...: def insert_value(array, value):
     ...:     i = bisect_left(array, value)
@@ -267,7 +267,7 @@
 
 <p>python的profiler提供了一种方式，可以在性能分析数据中列出每个函数的调用者，使我们可以据此看出该函数所耗费的执行时间，究竟是由哪些调用者所分别引发的</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stats.print_callers()
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stats.print_callers()
 
 In [56]: stats.print_callers()
    Ordered by: cumulative time
@@ -309,20 +309,20 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
 
 <span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha1</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">get_data</span><span class="p">():</span>
     <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">()</span>
-        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">values</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">values</span>
 
 <span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
     <span class="n">deep_values</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-        <span class="n">deep_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_data</span><span class="p">())</span>
+        <span class="n">deep_values</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_data</span><span class="p">())</span>
     <span class="k">return</span> <span class="n">deep_values</span>
 </code></pre></div></div>
 
@@ -330,14 +330,14 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># top_n.py
 </span><span class="kn">import</span> <span class="nn">tracemalloc</span>
-<span class="n">tracemalloc</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Save up to 10 stack frames
+<span class="n">tracemalloc</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Save up to 10 stack frames
 </span>
-<span class="n">time1</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
+<span class="n">time1</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="p">.</span><span class="n">take_snapshot</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">waste_memory</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">waste_memory</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-<span class="n">time2</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">waste_memory</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">time2</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="p">.</span><span class="n">take_snapshot</span><span class="p">()</span>
 
-<span class="n">stats</span> <span class="o">=</span> <span class="n">time2</span><span class="o">.</span><span class="n">compare_to</span><span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="s">'lineno'</span><span class="p">)</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">time2</span><span class="p">.</span><span class="n">compare_to</span><span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="s">'lineno'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
     <span class="k">print</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span>
 </code></pre></div></div>
@@ -346,15 +346,15 @@ Out[56]: &lt;pstats.Stats at 0x112799898&gt;
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># with_trace.py
 </span><span class="kn">import</span> <span class="nn">tracemalloc</span>
-<span class="n">tracemalloc</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">tracemalloc</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="n">time1</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
+<span class="n">time1</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="p">.</span><span class="n">take_snapshot</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">waste_memory</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">waste_memory</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-<span class="n">time2</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">take_snapshot</span><span class="p">()</span>
-<span class="n">stats</span> <span class="o">=</span> <span class="n">time2</span><span class="o">.</span><span class="n">compare_to</span><span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="s">'traceback'</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">waste_memory</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">time2</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="p">.</span><span class="n">take_snapshot</span><span class="p">()</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">time2</span><span class="p">.</span><span class="n">compare_to</span><span class="p">(</span><span class="n">time1</span><span class="p">,</span> <span class="s">'traceback'</span><span class="p">)</span>
 <span class="n">top</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">traceback</span><span class="o">.</span><span class="nb">format</span><span class="p">()))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">top</span><span class="p">.</span><span class="n">traceback</span><span class="p">.</span><span class="nb">format</span><span class="p">()))</span>
 </code></pre></div></div>
 
 <p>如果程序中有多个地方都调用了同一个函数，那么通过上述方式就可以更好地看出，究竟是那一行调用代码导致内存占用量变大的。</p>

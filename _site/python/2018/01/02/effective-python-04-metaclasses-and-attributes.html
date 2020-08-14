@@ -77,7 +77,7 @@
 <div class="row-fluid">
   <div class="span12">  
     <div id="article">
-    <p><code class="highlighter-rouge">metaclass</code> 元类这个词，只是模糊地描述了一种高于类，而又超乎类的概念。简单来说，就是我们可以把python的class语句转译为元类，并令其在每次定义具体的类时，都提供独特的行为。</p>
+    <p><code class="language-plaintext highlighter-rouge">metaclass</code> 元类这个词，只是模糊地描述了一种高于类，而又超乎类的概念。简单来说，就是我们可以把python的class语句转译为元类，并令其在每次定义具体的类时，都提供独特的行为。</p>
 
 <h3 id="29-用纯属性取代get和set方法">29. 用纯属性取代get和set方法</h3>
 
@@ -90,14 +90,14 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Resistor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ohms</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="n">ohms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="n">ohms</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="n">r1</span> <span class="o">=</span> <span class="n">Resistor</span><span class="p">(</span><span class="mf">50e3</span><span class="p">)</span>
 
 <span class="c1"># 上面的写法比较符合python的风格，不用对属性向Java那样定义get和set方法
-</span><span class="n">r1</span><span class="o">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="mf">10e3</span>
+</span><span class="n">r1</span><span class="p">.</span><span class="n">ohms</span> <span class="o">=</span> <span class="mf">10e3</span>
 
 <span class="c1"># 如果想在设置属性的时候实现特殊行为，那么可以改用@property 修饰器来和setter方法来做。
 # 下面这个子类继承自Resistor,它在给 voltage(电压)属性赋值的时候，还会同时修改current
@@ -105,24 +105,24 @@
 </span>
 <span class="k">class</span> <span class="nc">VoltageResistance</span><span class="p">(</span><span class="n">Resistor</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ohms</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">ohms</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">ohms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="mi">0</span>
     
     <span class="o">@</span><span class="nb">property</span>
     <span class="k">def</span> <span class="nf">voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">_voltage</span>
     
-    <span class="o">@</span><span class="n">voltage</span><span class="o">.</span><span class="n">setter</span>
+    <span class="o">@</span><span class="n">voltage</span><span class="p">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voltage</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="n">voltage</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_voltage</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ohms</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_voltage</span> <span class="o">=</span> <span class="n">voltage</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_voltage</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">ohms</span>
 
 <span class="c1"># 现在设置voltage属性时，将会执行名为voltage的setter方法。该方法会更新本对象的current属性
 </span>
 <span class="n">r2</span> <span class="o">=</span> <span class="n">VoltageResistance</span><span class="p">(</span><span class="mf">1e3</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Before: </span><span class="si">%5</span><span class="s">r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="o">.</span><span class="n">current</span><span class="p">)</span> <span class="c1"># Before:    0 amps
-</span><span class="n">r2</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'After: </span><span class="si">%5</span><span class="s">r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="o">.</span><span class="n">current</span><span class="p">)</span>  <span class="c1"># After:  0.01 amps
+<span class="k">print</span><span class="p">(</span><span class="s">'Before: %5r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="p">.</span><span class="n">current</span><span class="p">)</span> <span class="c1"># Before:    0 amps
+</span><span class="n">r2</span><span class="p">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'After: %5r amps'</span> <span class="o">%</span> <span class="n">r2</span><span class="p">.</span><span class="n">current</span><span class="p">)</span>  <span class="c1"># After:  0.01 amps
 </span>
 </code></pre></div></div>
 
@@ -141,45 +141,45 @@
 <ul>
   <li>如果想复用 @property 方法集其验证机制，那么可以自己定义描述符类</li>
   <li>WeakKeyDictionary 可以保证描述符类不会泄露内存</li>
-  <li>通过描述符协议来实现属性的获取和设置操作时，不要纠结于 <code class="highlighter-rouge">__getattribute__</code>的方法具体运作细节</li>
+  <li>通过描述符协议来实现属性的获取和设置操作时，不要纠结于 <code class="language-plaintext highlighter-rouge">__getattribute__</code>的方法具体运作细节</li>
 </ul>
 
-<h3 id="32-用-__getattr____getattribute__和__setattr__实现按需生成的属性">32. 用 <code class="highlighter-rouge">__getattr__</code>、<code class="highlighter-rouge">__getattribute__</code>和<code class="highlighter-rouge">__setattr__</code>实现按需生成的属性</h3>
+<h3 id="32-用-__getattr____getattribute__和__setattr__实现按需生成的属性">32. 用 <code class="language-plaintext highlighter-rouge">__getattr__</code>、<code class="language-plaintext highlighter-rouge">__getattribute__</code>和<code class="language-plaintext highlighter-rouge">__setattr__</code>实现按需生成的属性</h3>
 
-<p>对于一些动态行为的对象，可以通过python的<code class="highlighter-rouge">__getattr__</code>特殊方法来做。如果某个类定义了<code class="highlighter-rouge">__getattr__</code>，同时系统在该类对象的实例字典中又找不到待查询的属性，那么，系统就会调用这个方法。</p>
+<p>对于一些动态行为的对象，可以通过python的<code class="language-plaintext highlighter-rouge">__getattr__</code>特殊方法来做。如果某个类定义了<code class="language-plaintext highlighter-rouge">__getattr__</code>，同时系统在该类对象的实例字典中又找不到待查询的属性，那么，系统就会调用这个方法。</p>
 
 <ul>
-  <li>通过 <code class="highlighter-rouge">__getattr__</code> 和 <code class="highlighter-rouge">__setattr__</code> 我们可以用惰性的方式来加载并保存对象的属性</li>
-  <li>要理解 <code class="highlighter-rouge">__getattr__</code> 于 <code class="highlighter-rouge">__getattribute__</code>的区别：前者只会在待访问的属性缺失时触发，而后者则会在每次访问属性时触发</li>
-  <li>如果要在 <code class="highlighter-rouge">__getattribute__</code>和<code class="highlighter-rouge">__setattr__</code>方法中访问实例属性，那么应该直接通过super() (也就是object类的同名方法)来做，以避免无线递归</li>
+  <li>通过 <code class="language-plaintext highlighter-rouge">__getattr__</code> 和 <code class="language-plaintext highlighter-rouge">__setattr__</code> 我们可以用惰性的方式来加载并保存对象的属性</li>
+  <li>要理解 <code class="language-plaintext highlighter-rouge">__getattr__</code> 于 <code class="language-plaintext highlighter-rouge">__getattribute__</code>的区别：前者只会在待访问的属性缺失时触发，而后者则会在每次访问属性时触发</li>
+  <li>如果要在 <code class="language-plaintext highlighter-rouge">__getattribute__</code>和<code class="language-plaintext highlighter-rouge">__setattr__</code>方法中访问实例属性，那么应该直接通过super() (也就是object类的同名方法)来做，以避免无线递归</li>
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LazyDB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">exists</span> <span class="o">=</span> <span class="mi">5</span>
     
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="s">'Value for </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">name</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s">'Value for %s'</span> <span class="o">%</span> <span class="n">name</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span>
 
 <span class="c1"># 在访问data对象所缺失的foo属性。这回导致python调用刚才定义的 __getattr__方法，从而修改实例的__dict__字典
 </span><span class="n">data</span> <span class="o">=</span> <span class="n">LazyDB</span><span class="p">()</span>
-<span class="n">data</span><span class="o">.</span><span class="n">__dict__</span> <span class="c1"># {'exists': 5}
-</span><span class="n">data</span><span class="o">.</span><span class="n">foo</span>
-<span class="n">data</span><span class="o">.</span><span class="n">__dict__</span> <span class="c1"># {'exists': 5, 'foo': 'Value for foo'}
+<span class="n">data</span><span class="p">.</span><span class="n">__dict__</span> <span class="c1"># {'exists': 5}
+</span><span class="n">data</span><span class="p">.</span><span class="n">foo</span>
+<span class="n">data</span><span class="p">.</span><span class="n">__dict__</span> <span class="c1"># {'exists': 5, 'foo': 'Value for foo'}
 </span>
 <span class="c1"># 给LazyDB添加记录功能，把程序对 __getattr__的调用行为记录下来。请注意，为了避免无限递归，我们需要在子类里面通过 super().__getattr__() 来获取真正的属性值。
 </span>
 <span class="k">class</span> <span class="nc">LoggingLazyDB</span><span class="p">(</span><span class="n">LazyDB</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'Called __getattr__(</span><span class="si">%</span><span class="s">s)'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__getattr__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Called __getattr__(%s)'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__getattr__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">LoggingLazyDB</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'exists:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'exists:'</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">exists</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">foo</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span>
 <span class="n">exists</span><span class="p">:</span> <span class="mi">5</span>
 <span class="n">Called</span> <span class="n">__getattr__</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
@@ -190,25 +190,25 @@
 </span>
 </code></pre></div></div>
 
-<p>python程序在每次访问对象的属性时，系统都会调用 <code class="highlighter-rouge">__getattribute__</code>这个特殊方法，即使字典里面已有了该属性，也依然会触发<code class="highlighter-rouge">__getattribute__</code>方法。这样就可以在程序每次访问属性时，检查全局事物状态。下面定义的这个 ValidatingDB类，会在<code class="highlighter-rouge">__getattribute__</code>方法里面记录每次调用的时间。</p>
+<p>python程序在每次访问对象的属性时，系统都会调用 <code class="language-plaintext highlighter-rouge">__getattribute__</code>这个特殊方法，即使字典里面已有了该属性，也依然会触发<code class="language-plaintext highlighter-rouge">__getattribute__</code>方法。这样就可以在程序每次访问属性时，检查全局事物状态。下面定义的这个 ValidatingDB类，会在<code class="language-plaintext highlighter-rouge">__getattribute__</code>方法里面记录每次调用的时间。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ValidatingDB</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exists</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">exists</span> <span class="o">=</span> <span class="mi">5</span>
     
     <span class="k">def</span> <span class="nf">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'Called __getattribute__(</span><span class="si">%</span><span class="s">s)'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Called __getattribute__(%s)'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="nb">AttributeError</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="s">'Value for </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">name</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="s">'Value for %s'</span> <span class="o">%</span> <span class="n">name</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">value</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">ValidatingDB</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'exists:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">exists</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'exists:'</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">exists</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'foo:'</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">foo</span><span class="p">)</span>
 
 <span class="o">&gt;&gt;&gt;</span>
 <span class="n">Called</span> <span class="n">__getattribute__</span><span class="p">(</span><span class="n">exists</span><span class="p">)</span>
@@ -223,14 +223,14 @@
 
 <p>元类最简单的一种用途，就是验证某个类定义得是否正确。构建复杂的类体系时，我们可能需要确保类的风格协调一致。确保某些方法得到了覆写，或是确保类属性之间具备某些严格的关系。原来提供了一种可靠的验证方式，每当开发者定义新的类时，它都会运行验证代码，以确保这个新类符合预定的规范。</p>
 
-<p>开发者一般会把验证代码放在本类的 <code class="highlighter-rouge">__init__</code>方法里面运行，这是由于程序构建该类的对象时，会调用本类型的<code class="highlighter-rouge">__init__</code>方法。但如果改用原来来进行验证，我们还可以把验证时机提前一些，以便尽早发现错误。</p>
+<p>开发者一般会把验证代码放在本类的 <code class="language-plaintext highlighter-rouge">__init__</code>方法里面运行，这是由于程序构建该类的对象时，会调用本类型的<code class="language-plaintext highlighter-rouge">__init__</code>方法。但如果改用原来来进行验证，我们还可以把验证时机提前一些，以便尽早发现错误。</p>
 
-<p>定义原来的时候，要从type中继承，而对于使用该元类的其它类来说，python默认会把那些类的class语句体现中所含的相关内容，发送给元类的<code class="highlighter-rouge">__new__</code>方法。于是，我们就可以在系统构建出那种类型之前，先修改那个类的信息</p>
+<p>定义原来的时候，要从type中继承，而对于使用该元类的其它类来说，python默认会把那些类的class语句体现中所含的相关内容，发送给元类的<code class="language-plaintext highlighter-rouge">__new__</code>方法。于是，我们就可以在系统构建出那种类型之前，先修改那个类的信息</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
         
 <span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">Meta</span><span class="p">):</span>
     <span class="n">stuff</span> <span class="o">=</span> <span class="mi">123</span>
@@ -251,19 +251,19 @@
 </span>        <span class="k">if</span> <span class="n">bases</span> <span class="o">!=</span> <span class="p">(</span><span class="nb">object</span><span class="p">,):</span>
             <span class="k">if</span> <span class="n">class_dict</span><span class="p">[</span><span class="s">'sides'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'Polygons need 3+ sides'</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">Polygon</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ValidatePolygon</span><span class="p">):</span>
     <span class="n">sides</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># Specified by subclasses
 </span>
     <span class="o">@</span><span class="nb">classmethod</span>
     <span class="k">def</span> <span class="nf">interior_angles</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">sides</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">cls</span><span class="p">.</span><span class="n">sides</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span>
 
 <span class="k">class</span> <span class="nc">Triangle</span><span class="p">(</span><span class="n">Polygon</span><span class="p">):</span>
     <span class="n">sides</span> <span class="o">=</span> <span class="mi">3</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">Triangle</span><span class="o">.</span><span class="n">interior_angles</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Triangle</span><span class="p">.</span><span class="n">interior_angles</span><span class="p">())</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">'Before class'</span><span class="p">)</span>
@@ -273,7 +273,7 @@
         <span class="k">print</span><span class="p">(</span><span class="s">'After sides'</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">'After class'</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
+    <span class="n">logging</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="s">'Expected'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="k">assert</span> <span class="bp">False</span>
 
@@ -282,7 +282,7 @@
 <ul>
   <li>通过元类，我们可以在生成子类对象之前，先验证子类中的定义是否合乎规范</li>
   <li>pyhton2和3指定元类的语法略有不同</li>
-  <li>python系统把子类的整个class语句体处理完毕后，就会调用其原来的 <code class="highlighter-rouge">__new__</code>方法</li>
+  <li>python系统把子类的整个class语句体处理完毕后，就会调用其原来的 <code class="language-plaintext highlighter-rouge">__new__</code>方法</li>
 </ul>
 
 <h3 id="34-用元类来注册子类">34. 用元类来注册子类</h3>
@@ -302,31 +302,31 @@
 <span class="n">registry</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="k">def</span> <span class="nf">register_class</span><span class="p">(</span><span class="n">target_class</span><span class="p">):</span>
-    <span class="n">registry</span><span class="p">[</span><span class="n">target_class</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_class</span>
+    <span class="n">registry</span><span class="p">[</span><span class="n">target_class</span><span class="p">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_class</span>
 
 <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s">'class'</span><span class="p">]</span>
     <span class="n">target_class</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">target_class</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">[</span><span class="s">'args'</span><span class="p">])</span>
     
 <span class="k">class</span> <span class="nc">BetterSerializable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
 
     <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-            <span class="s">'class'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
-            <span class="s">'args'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span>
+        <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">({</span>
+            <span class="s">'class'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">__class__</span><span class="p">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="s">'args'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">args</span><span class="p">,</span>
         <span class="p">})</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">'</span><span class="si">%</span><span class="s">s(</span><span class="si">%</span><span class="s">s)'</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s">'%s(%s)'</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__class__</span><span class="p">.</span><span class="n">__name__</span><span class="p">,</span> <span class="s">', '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">args</span><span class="p">))</span>
 
 <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
-        <span class="n">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
         <span class="n">register_class</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cls</span>
 
@@ -336,12 +336,12 @@
 
 <span class="k">class</span> <span class="nc">Vector3D</span><span class="p">(</span><span class="n">RegisteredSerializable</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
 
 <span class="n">v3</span> <span class="o">=</span> <span class="n">Vector3D</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'Before:    '</span><span class="p">,</span> <span class="n">v3</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">v3</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">v3</span><span class="p">.</span><span class="n">serialize</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'Serialized:'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'After:     '</span><span class="p">,</span> <span class="n">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
@@ -360,15 +360,15 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="s">'_'</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="s">'_'</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">name</span>
         
     <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">instance_type</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 <span class="c1"># 接下来定义表示数据行的Customer类，定义该类的时候，我们要为每个类属性指定对应的列名
 </span><span class="k">class</span> <span class="nc">Customer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -379,16 +379,16 @@
     <span class="n">suffix</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="s">'suffix'</span><span class="p">)</span>
 
 <span class="n">foo</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Before:'</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
-<span class="n">foo</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s">'Euclid'</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'After:'</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Before:'</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="n">foo</span><span class="p">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s">'Euclid'</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'After:'</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span>
 <span class="n">Before</span><span class="p">:</span> <span class="s">''</span> <span class="p">{}</span>
 <span class="n">After</span><span class="p">:</span> <span class="s">'Euclid'</span> <span class="p">{</span><span class="s">'_first_name'</span><span class="p">:</span> <span class="s">'Euclid'</span><span class="p">}</span>
 
 </code></pre></div></div>
 
-<p>上面的代码写法显得有些重复。在Customer 类的class语句体中，我们既然要将构建好的Field对象赋给Customer.first_name, 那为什么还要把这个字段名再传给Field的构造器呢？之所以还要把字段名传给Field构造器，是因为定义Customer类的时候，python会以从右向左的顺序解读赋值语句。首先python会以<code class="highlighter-rouge">Field('first_name')</code> 的形式来调用Field构造器。然后，它把调用构造器所得的返回值，赋给Customer.field_name。从这个顺序来看，Field对象没有办法提前知道自己会赋给Customer类里的哪一个属性。</p>
+<p>上面的代码写法显得有些重复。在Customer 类的class语句体中，我们既然要将构建好的Field对象赋给Customer.first_name, 那为什么还要把这个字段名再传给Field的构造器呢？之所以还要把字段名传给Field构造器，是因为定义Customer类的时候，python会以从右向左的顺序解读赋值语句。首先python会以<code class="language-plaintext highlighter-rouge">Field('first_name')</code> 的形式来调用Field构造器。然后，它把调用构造器所得的返回值，赋给Customer.field_name。从这个顺序来看，Field对象没有办法提前知道自己会赋给Customer类里的哪一个属性。</p>
 
 <p>为了消除这种重复代码，我们使用元类来改写它。使用元类就相当于直接在class语句上面放置挂钩，只要class语句体处理完毕，这个挂钩就会立刻触发。于是我们可以借助元类，为Field描述符自动设置其Field.name 和 Field.internal_name，而不用再像刚才那样，把列的名称手工传给Field构造器</p>
 
@@ -396,11 +396,11 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_dict</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Field</span><span class="p">):</span>
-                <span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
-                <span class="n">value</span><span class="o">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="s">'_'</span> <span class="o">+</span> <span class="n">key</span>
-        <span class="n">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
+                <span class="n">value</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
+                <span class="n">value</span><span class="p">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="s">'_'</span> <span class="o">+</span> <span class="n">key</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">class_dict</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cls</span>
 
 <span class="k">class</span> <span class="nc">DatabaseRow</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">Meta</span><span class="p">):</span>
@@ -409,14 +409,14 @@
 <span class="k">class</span> <span class="nc">Field</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># These will be assigned by the metaclass.
-</span>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="bp">None</span>
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">internal_name</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">instance_type</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">internal_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">BetterCustomer</span><span class="p">(</span><span class="n">DatabaseRow</span><span class="p">):</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
@@ -425,9 +425,9 @@
     <span class="n">suffix</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
 
 <span class="n">foo</span> <span class="o">=</span> <span class="n">BetterCustomer</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Before:'</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
-<span class="n">foo</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s">'Euler'</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'After: '</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Before:'</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
+<span class="n">foo</span><span class="p">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s">'Euler'</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'After: '</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">first_name</span><span class="p">),</span> <span class="n">foo</span><span class="p">.</span><span class="n">__dict__</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span>
 <span class="n">Before</span><span class="p">:</span> <span class="s">''</span> <span class="p">{}</span>
 <span class="n">After</span><span class="p">:</span>  <span class="s">'Euler'</span> <span class="p">{</span><span class="s">'_first_name'</span><span class="p">:</span> <span class="s">'Euler'</span><span class="p">}</span>

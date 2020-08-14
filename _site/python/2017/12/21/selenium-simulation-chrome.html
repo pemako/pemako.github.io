@@ -86,7 +86,7 @@
   </li>
   <li>
     <p><a href="https://chromedriver.storage.googleapis.com/index.html?path=2.33/">下载Chrome浏览器driver</a>
- <code class="highlighter-rouge">brew install chromedriver</code></p>
+ <code class="language-plaintext highlighter-rouge">brew install chromedriver</code></p>
   </li>
   <li>
     <p><a href="https://doc.scrapinghub.com/index.html">crawlera神器</a> 该工具主要是为了防止反爬 iP被封</p>
@@ -123,16 +123,16 @@
     <span class="p">},</span> 
     <span class="s">"userAgent"</span><span class="p">:</span> <span class="s">'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'</span>
 <span class="p">}</span>
-<span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
-<span class="n">options</span><span class="o">.</span><span class="n">add_experimental_option</span><span class="p">(</span><span class="s">'mobileEmulation'</span><span class="p">,</span> <span class="n">mobileEmulation</span><span class="p">)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
+<span class="n">options</span><span class="p">.</span><span class="n">add_experimental_option</span><span class="p">(</span><span class="s">'mobileEmulation'</span><span class="p">,</span> <span class="n">mobileEmulation</span><span class="p">)</span>
 <span class="c1"># self.driver = webdriver.PhantomJS(executable_path=settings['JS_BIN'])
-</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="s">'your chromedriver bin path'</span><span class="p">,</span>
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">executable_path</span><span class="o">=</span><span class="s">'your chromedriver bin path'</span><span class="p">,</span>
                           <span class="n">chrome_options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
                           <span class="n">service_args</span><span class="o">=</span><span class="p">[</span><span class="s">"--verbose"</span><span class="p">,</span> <span class="s">"--log-path=qc1.log"</span><span class="p">])</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://m.dianping.com'</span><span class="p">)</span>
+<span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://m.dianping.com'</span><span class="p">)</span>
 
 <span class="n">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">driver</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></div>
 
     <p>继续阅读关于

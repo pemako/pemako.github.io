@@ -79,9 +79,9 @@
     <div id="article">
     <p><a href="https://github.com/arogozhnikov/python3_with_pleasure">fork from arogozhnikov/python3with_pleasure</a></p>
 
-<h2 id="better-paths-handling-with-pathlib">Better paths handling with <code class="highlighter-rouge">pathlib</code></h2>
+<h2 id="better-paths-handling-with-pathlib">Better paths handling with <code class="language-plaintext highlighter-rouge">pathlib</code></h2>
 
-<p><code class="highlighter-rouge">pathlib</code> is a default module in python3, that helps you to avoid tons of <code class="highlighter-rouge">os.path.join</code>s:</p>
+<p><code class="language-plaintext highlighter-rouge">pathlib</code> is a default module in python3, that helps you to avoid tons of <code class="language-plaintext highlighter-rouge">os.path.join</code>s:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
@@ -91,26 +91,26 @@
 <span class="n">train_path</span> <span class="o">=</span> <span class="n">datasets_root</span> <span class="o">/</span> <span class="n">dataset</span> <span class="o">/</span> <span class="s">'train'</span>
 <span class="n">test_path</span> <span class="o">=</span> <span class="n">datasets_root</span> <span class="o">/</span> <span class="n">dataset</span> <span class="o">/</span> <span class="s">'test'</span>
 
-<span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">train_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">image_path</span><span class="o">.</span><span class="nb">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> <span class="c1"># note, open is a method of Path object
+<span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">train_path</span><span class="p">.</span><span class="n">iterdir</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">image_path</span><span class="p">.</span><span class="nb">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> <span class="c1"># note, open is a method of Path object
 </span>        <span class="c1"># do something with an image
 </span></code></pre></div></div>
 
 <p>Previously it was always tempting to use string concatenation (concise, but obviously bad), 
-now with <code class="highlighter-rouge">pathlib</code> the code is safe, concise, and readable.</p>
+now with <code class="language-plaintext highlighter-rouge">pathlib</code> the code is safe, concise, and readable.</p>
 
-<p>Also <code class="highlighter-rouge">pathlib.Path</code> has a bunch of methods, that every python novice previously had to google:</p>
+<p>Also <code class="language-plaintext highlighter-rouge">pathlib.Path</code> has a bunch of methods, that every python novice previously had to google:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">parts</span><span class="p">()</span>
-<span class="n">p</span><span class="o">.</span><span class="n">with_name</span><span class="p">(</span><span class="s">'sibling.png'</span><span class="p">)</span> <span class="c1"># only change the name, but keep the folder
-</span><span class="n">p</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s">'.jpg'</span><span class="p">)</span> <span class="c1"># only change the extension, but keep the folder and the name
-</span><span class="n">p</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">rmdir</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span><span class="p">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="n">p</span><span class="p">.</span><span class="n">is_dir</span><span class="p">()</span>
+<span class="n">p</span><span class="p">.</span><span class="n">parts</span><span class="p">()</span>
+<span class="n">p</span><span class="p">.</span><span class="n">with_name</span><span class="p">(</span><span class="s">'sibling.png'</span><span class="p">)</span> <span class="c1"># only change the name, but keep the folder
+</span><span class="n">p</span><span class="p">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s">'.jpg'</span><span class="p">)</span> <span class="c1"># only change the extension, but keep the folder and the name
+</span><span class="n">p</span><span class="p">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">rmdir</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">pathlib</code> should save you lots of time, 
+<p><code class="language-plaintext highlighter-rouge">pathlib</code> should save you lots of time, 
 please see <a href="https://docs.python.org/3/library/pathlib.html">docs</a> and <a href="https://pymotw.com/3/pathlib/">reference</a> for more.</p>
 
 <h2 id="type-hinting-is-now-part-of-the-language">Type hinting is now part of the language</h2>
@@ -130,20 +130,20 @@ Previously different modules used custom ways to point <a href="https://www.jetb
     <span class="s">""" Each entry in the data is doubled 
     &lt;blah blah nobody reads the documentation till the end&gt;
     """</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">numpy</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </code></pre></div></div>
 
-<p>This code e.g. works for <code class="highlighter-rouge">numpy.array</code> (incl. multidimensional ones), <code class="highlighter-rouge">astropy.Table</code> and <code class="highlighter-rouge">astropy.Column</code>, <code class="highlighter-rouge">bcolz</code>, <code class="highlighter-rouge">cupy</code> and some others.</p>
+<p>This code e.g. works for <code class="language-plaintext highlighter-rouge">numpy.array</code> (incl. multidimensional ones), <code class="language-plaintext highlighter-rouge">astropy.Table</code> and <code class="language-plaintext highlighter-rouge">astropy.Column</code>, <code class="language-plaintext highlighter-rouge">bcolz</code>, <code class="language-plaintext highlighter-rouge">cupy</code> and some others.</p>
 
-<p>This code will work for <code class="highlighter-rouge">pandas.Series</code>, but in the wrong way:</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">repeat_each_entry</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]))</span> <span class="c1"># returns Series with Nones inside
+<p>This code will work for <code class="language-plaintext highlighter-rouge">pandas.Series</code>, but in the wrong way:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">repeat_each_entry</span><span class="p">(</span><span class="n">pandas</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]))</span> <span class="c1"># returns Series with Nones inside
 </span></code></pre></div></div>
 
 <p>This was code of two lines. Imagine how unpredictable behavior of a complex system, because just one function may misbehave. 
 Putting explicitly which types method expects is very helpful in large systems, this will warn you if function wasn’t expected to get such arguments.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">repeat_each_entry</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bcolz</span><span class="o">.</span><span class="n">carray</span><span class="p">]):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">repeat_each_entry</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">bcolz</span><span class="p">.</span><span class="n">carray</span><span class="p">]):</span>
 </code></pre></div></div>
 
 <p>If you have a significant codebase, hinting tools like <a href="http://mypy.readthedocs.io">MyPy</a> are likely to become part of your continuous integration pipeline. 
@@ -158,7 +158,7 @@ A webinar <a href="https://www.youtube.com/watch?v=JqBCFfiE11g">“Putting Type 
 <p>However, you can enforce type checking in runtime with tools like … <a href="https://github.com/RussBaz/enforce">enforce</a>, 
 this can help you in debugging (there are many cases when type hinting is not working).</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">enforce</span><span class="o">.</span><span class="n">runtime_validation</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">enforce</span><span class="p">.</span><span class="n">runtime_validation</span>
 <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
@@ -166,7 +166,7 @@ this can help you in debugging (there are many cases when type hinting is not wo
 </span><span class="n">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>    <span class="c1"># fails
 </span>
 
-<span class="o">@</span><span class="n">enforce</span><span class="o">.</span><span class="n">runtime_validation</span>
+<span class="o">@</span><span class="n">enforce</span><span class="p">.</span><span class="n">runtime_validation</span>
 <span class="k">def</span> <span class="nf">any2</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
@@ -186,18 +186,18 @@ this can help you in debugging (there are many cases when type hinting is not wo
 <p>As mentioned before, annotations do not influence code execution, but rather provide some meta-information, 
 and you can use it as you wish.</p>
 
-<p>For instance, measure units is a common pain in scientific areas, <code class="highlighter-rouge">astropy</code> package <a href="http://docs.astropy.org/en/stable/units/quantity.html#functions-that-accept-quantities">provides a simple decorator</a> to control units of input quantities and convert output to required units</p>
+<p>For instance, measure units is a common pain in scientific areas, <code class="language-plaintext highlighter-rouge">astropy</code> package <a href="http://docs.astropy.org/en/stable/units/quantity.html#functions-that-accept-quantities">provides a simple decorator</a> to control units of input quantities and convert output to required units</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 3
 </span><span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
-<span class="o">@</span><span class="n">u</span><span class="o">.</span><span class="n">quantity_input</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">frequency</span><span class="p">(</span><span class="n">speed</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">m</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">u</span><span class="o">.</span><span class="n">terahertz</span><span class="p">:</span>
+<span class="o">@</span><span class="n">u</span><span class="p">.</span><span class="n">quantity_input</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">frequency</span><span class="p">(</span><span class="n">speed</span><span class="p">:</span> <span class="n">u</span><span class="p">.</span><span class="n">meter</span> <span class="o">/</span> <span class="n">u</span><span class="p">.</span><span class="n">s</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="n">u</span><span class="p">.</span><span class="n">m</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">u</span><span class="p">.</span><span class="n">terahertz</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">speed</span> <span class="o">/</span> <span class="n">wavelength</span>
     
-<span class="n">frequency</span><span class="p">(</span><span class="n">speed</span><span class="o">=</span><span class="mi">300_000</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">km</span> <span class="o">/</span> <span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="mi">555</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">nm</span><span class="p">)</span>
+<span class="n">frequency</span><span class="p">(</span><span class="n">speed</span><span class="o">=</span><span class="mi">300_000</span> <span class="o">*</span> <span class="n">u</span><span class="p">.</span><span class="n">km</span> <span class="o">/</span> <span class="n">u</span><span class="p">.</span><span class="n">s</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="mi">555</span> <span class="o">*</span> <span class="n">u</span><span class="p">.</span><span class="n">nm</span><span class="p">)</span>
 <span class="c1"># output: 540.5405405405404 THz, frequency of green visible light
 </span></code></pre></div></div>
 
-<p>If you’re processing tabular scientific data in python (not necessarily astronomical), you should give <code class="highlighter-rouge">astropy</code> a shot.</p>
+<p>If you’re processing tabular scientific data in python (not necessarily astronomical), you should give <code class="language-plaintext highlighter-rouge">astropy</code> a shot.</p>
 
 <p>You can also define your application-specific decorators to perform control / conversion of inputs and output in the same manner.</p>
 
@@ -208,14 +208,14 @@ and you can use it as you wish.</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># l2-regularized linear regression: || AX - b ||^2 + alpha * ||x||^2 -&gt; min
 </span>
 <span class="c1"># Python 2
-</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])).</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">T</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
 <span class="c1"># Python 3
-</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">@</span> <span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">b</span><span class="p">)</span>
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">@</span> <span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">b</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>The code with <code class="highlighter-rouge">@</code> becomes more readable and more translatable between deep learning frameworks: same code <code class="highlighter-rouge">X @ W + b[None, :]</code> for a single layer of perceptron works in <code class="highlighter-rouge">numpy</code>, <code class="highlighter-rouge">cupy</code>, <code class="highlighter-rouge">pytorch</code>, <code class="highlighter-rouge">tensorflow</code> (and other frameworks that operate with tensors).</p>
+<p>The code with <code class="language-plaintext highlighter-rouge">@</code> becomes more readable and more translatable between deep learning frameworks: same code <code class="language-plaintext highlighter-rouge">X @ W + b[None, :]</code> for a single layer of perceptron works in <code class="language-plaintext highlighter-rouge">numpy</code>, <code class="language-plaintext highlighter-rouge">cupy</code>, <code class="language-plaintext highlighter-rouge">pytorch</code>, <code class="language-plaintext highlighter-rouge">tensorflow</code> (and other frameworks that operate with tensors).</p>
 
-<h2 id="globbing-with-">Globbing with <code class="highlighter-rouge">**</code></h2>
+<h2 id="globbing-with-">Globbing with <code class="language-plaintext highlighter-rouge">**</code></h2>
 
 <p>Recursive folder globbing is not easy in Python 2, even custom module <a href="https://github.com/miracle2k/python-glob2">glob2</a> exists that overcomes this. Recursive flag is supported since Python 3.6:</p>
 
@@ -223,19 +223,19 @@ and you can use it as you wish.</p>
 
 <span class="c1"># Python 2
 </span><span class="n">found_images</span> <span class="o">=</span> \
-    <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*.jpg'</span><span class="p">)</span> \
-  <span class="o">+</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*.jpg'</span><span class="p">)</span> \
-  <span class="o">+</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*/*.jpg'</span><span class="p">)</span> \
-  <span class="o">+</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*/*/*.jpg'</span><span class="p">)</span> \
-  <span class="o">+</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*/*/*/*.jpg'</span><span class="p">)</span> 
+    <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*.jpg'</span><span class="p">)</span> \
+  <span class="o">+</span> <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*.jpg'</span><span class="p">)</span> \
+  <span class="o">+</span> <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*/*.jpg'</span><span class="p">)</span> \
+  <span class="o">+</span> <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*/*/*.jpg'</span><span class="p">)</span> \
+  <span class="o">+</span> <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/*/*/*/*/*.jpg'</span><span class="p">)</span> 
 
 <span class="c1"># Python 3
-</span><span class="n">found_images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/**/*.jpg'</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class="n">found_images</span> <span class="o">=</span> <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'/path/**/*.jpg'</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Better option is to use <code class="highlighter-rouge">pathlib</code> in python3 (minus one import!):</p>
+<p>Better option is to use <code class="language-plaintext highlighter-rouge">pathlib</code> in python3 (minus one import!):</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 3
-</span><span class="n">found_images</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s">'/path/'</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">'**/*.jpg'</span><span class="p">)</span>
+</span><span class="n">found_images</span> <span class="o">=</span> <span class="n">pathlib</span><span class="p">.</span><span class="n">Path</span><span class="p">(</span><span class="s">'/path/'</span><span class="p">).</span><span class="n">glob</span><span class="p">(</span><span class="s">'**/*.jpg'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="print-is-a-function-now">Print is a function now</h2>
@@ -244,11 +244,11 @@ and you can use it as you wish.</p>
 
 <ul>
   <li>simple syntax for using file descriptor:
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"critical error"</span>      <span class="c1"># Python 2
-</span>  <span class="k">print</span><span class="p">(</span><span class="s">"critical error"</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>  <span class="c1"># Python 3
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"critical error"</span>      <span class="c1"># Python 2
+</span>  <span class="k">print</span><span class="p">(</span><span class="s">"critical error"</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">)</span>  <span class="c1"># Python 3
 </span></code></pre></div>    </div>
   </li>
-  <li>printing tab-aligned tables without <code class="highlighter-rouge">str.join</code>:
+  <li>printing tab-aligned tables without <code class="language-plaintext highlighter-rouge">str.join</code>:
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Python 3
 </span>  <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span>
   <span class="k">print</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)</span>
@@ -260,24 +260,24 @@ and you can use it as you wish.</p>
 </span>  <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
       <span class="k">pass</span>  <span class="c1"># do something useful, e.g. store output to some file
 </span></code></pre></div>    </div>
-    <p>In jupyter it is desirable to log each output to a separate file (to track what’s happening after you got disconnected), so you can override <code class="highlighter-rouge">print</code> now.</p>
+    <p>In jupyter it is desirable to log each output to a separate file (to track what’s happening after you got disconnected), so you can override <code class="language-plaintext highlighter-rouge">print</code> now.</p>
 
     <p>Below you see a context manager that temporarily overrides behavior of print:</p>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">@</span><span class="n">contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">@</span><span class="n">contextlib</span><span class="p">.</span><span class="n">contextmanager</span>
   <span class="k">def</span> <span class="nf">replace_print</span><span class="p">():</span>
       <span class="kn">import</span> <span class="nn">builtins</span>
       <span class="n">_print</span> <span class="o">=</span> <span class="k">print</span> <span class="c1"># saving old print function
 </span>      <span class="c1"># or use some other function here
-</span>      <span class="n">builtins</span><span class="o">.</span><span class="k">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">_print</span><span class="p">(</span><span class="s">'new printing'</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span>      <span class="n">builtins</span><span class="p">.</span><span class="k">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">_print</span><span class="p">(</span><span class="s">'new printing'</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
       <span class="k">yield</span>
-      <span class="n">builtins</span><span class="o">.</span><span class="k">print</span> <span class="o">=</span> <span class="n">_print</span>
+      <span class="n">builtins</span><span class="p">.</span><span class="k">print</span> <span class="o">=</span> <span class="n">_print</span>
 
   <span class="k">with</span> <span class="n">replace_print</span><span class="p">():</span>
       <span class="o">&lt;</span><span class="n">code</span> <span class="n">here</span> <span class="n">will</span> <span class="n">invoke</span> <span class="n">other</span> <span class="k">print</span> <span class="n">function</span><span class="o">&gt;</span>
 </code></pre></div>    </div>
     <p>It is <em>not</em> a recommended approach, but a small dirty hack that is now possible.</p>
   </li>
-  <li><code class="highlighter-rouge">print</code> can participate in list comprehensions and other language constructs
+  <li><code class="language-plaintext highlighter-rouge">print</code> can participate in list comprehensions and other language constructs
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Python 3
 </span>  <span class="n">result</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">is_valid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">else</span> <span class="k">print</span><span class="p">(</span><span class="s">'invalid item: '</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </code></pre></div>    </div>
@@ -293,33 +293,33 @@ Resulting code is either too verbose or too fragile towards any changes.</p>
 It is common to have a code like:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 2
-</span><span class="k">print</span><span class="p">(</span><span class="s">'{batch:3} {epoch:3} / {total_epochs:3}  accuracy: {acc_mean:0.4f}±{acc_std:0.4f} time: {avg_time:3.2f}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span>
+</span><span class="k">print</span><span class="p">(</span><span class="s">'{batch:3} {epoch:3} / {total_epochs:3}  accuracy: {acc_mean:0.4f}±{acc_std:0.4f} time: {avg_time:3.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
     <span class="n">batch</span><span class="o">=</span><span class="n">batch</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">,</span> <span class="n">total_epochs</span><span class="o">=</span><span class="n">total_epochs</span><span class="p">,</span> 
-    <span class="n">acc_mean</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span> <span class="n">acc_std</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span>
+    <span class="n">acc_mean</span><span class="o">=</span><span class="n">numpy</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span> <span class="n">acc_std</span><span class="o">=</span><span class="n">numpy</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span>
     <span class="n">avg_time</span><span class="o">=</span><span class="n">time</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_batch</span><span class="p">)</span>
 <span class="p">))</span>
 
 <span class="c1"># Python 2 (too error-prone during fast modifications, please avoid):
-</span><span class="k">print</span><span class="p">(</span><span class="s">'{:3} {:3} / {:3}  accuracy: {:0.4f}±{:0.4f} time: {:3.2f}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span>
-    <span class="n">batch</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">total_epochs</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span>
+</span><span class="k">print</span><span class="p">(</span><span class="s">'{:3} {:3} / {:3}  accuracy: {:0.4f}±{:0.4f} time: {:3.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+    <span class="n">batch</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">total_epochs</span><span class="p">,</span> <span class="n">numpy</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span> <span class="n">numpy</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">accuracies</span><span class="p">),</span>
     <span class="n">time</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_batch</span><span class="p">)</span>
 <span class="p">))</span>
 </code></pre></div></div>
 
 <p>Sample output:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>120  12 / 300  accuracy: 0.8180±0.4649 time: 56.60
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>120  12 / 300  accuracy: 0.8180±0.4649 time: 56.60
 </code></pre></div></div>
 
 <p><strong>f-strings</strong> aka formatted string literals were introduced in Python 3.6:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 3.6+
-</span><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'{batch:3} {epoch:3} / {total_epochs:3}  accuracy: {numpy.mean(accuracies):0.4f}±{numpy.std(accuracies):0.4f} time: {time / len(data_batch):3.2f}'</span><span class="p">)</span>
+</span><span class="k">print</span><span class="p">(</span><span class="s">f'</span><span class="si">{</span><span class="n">batch</span><span class="p">:</span><span class="mi">3</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">epoch</span><span class="p">:</span><span class="mi">3</span><span class="si">}</span><span class="s"> / </span><span class="si">{</span><span class="n">total_epochs</span><span class="p">:</span><span class="mi">3</span><span class="si">}</span><span class="s">  accuracy: </span><span class="si">{</span><span class="n">numpy</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accuracies</span><span class="p">):</span><span class="mf">0.4</span><span class="n">f</span><span class="si">}</span><span class="s">±</span><span class="si">{</span><span class="n">numpy</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">accuracies</span><span class="p">):</span><span class="mf">0.4</span><span class="n">f</span><span class="si">}</span><span class="s"> time: </span><span class="si">{</span><span class="n">time</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_batch</span><span class="p">):</span><span class="mf">3.2</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="explicit-difference-between-true-division-and-integer-division">Explicit difference between ‘true division’ and ‘integer division’</h2>
 
 <p>For data science this is definitely a handy change (but not for system programming, I believe)</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'timing.csv'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'timing.csv'</span><span class="p">)</span>
 <span class="n">velocity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'distance'</span><span class="p">]</span> <span class="o">/</span> <span class="n">data</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span>
 </code></pre></div></div>
 
@@ -331,15 +331,15 @@ In Python 3, result is correct in both cases, because result of division is floa
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n_gifts</span> <span class="o">=</span> <span class="n">money</span> <span class="o">//</span> <span class="n">gift_price</span>  <span class="c1"># correct for int and float arguments
 </span></code></pre></div></div>
 
-<p>Note, that this applies both to built-in types and to custom types provided by data packages (e.g. <code class="highlighter-rouge">numpy</code> or <code class="highlighter-rouge">pandas</code>).</p>
+<p>Note, that this applies both to built-in types and to custom types provided by data packages (e.g. <code class="language-plaintext highlighter-rouge">numpy</code> or <code class="language-plaintext highlighter-rouge">pandas</code>).</p>
 
-<h2 id="constants-in-math-module">Constants in <code class="highlighter-rouge">math</code> module</h2>
+<h2 id="constants-in-math-module">Constants in <code class="language-plaintext highlighter-rouge">math</code> module</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 3
-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span> <span class="c1"># 'largest' number
-</span><span class="n">math</span><span class="o">.</span><span class="n">nan</span> <span class="c1"># not a number
+</span><span class="n">math</span><span class="p">.</span><span class="n">inf</span> <span class="c1"># 'largest' number
+</span><span class="n">math</span><span class="p">.</span><span class="n">nan</span> <span class="c1"># not a number
 </span>
-<span class="n">max_quality</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span>  <span class="c1"># no more magic initial values!
+<span class="n">max_quality</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="p">.</span><span class="n">inf</span>  <span class="c1"># no more magic initial values!
 </span>
 <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">trained_models</span><span class="p">:</span>
     <span class="n">max_quality</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_quality</span><span class="p">,</span> <span class="n">compute_quality</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
@@ -381,17 +381,17 @@ In Python 3, result is correct in both cases, because result of division is floa
 </code></pre></div></div>
 <p>Output:</p>
 <ul>
-  <li>Python 2: <code class="highlighter-rouge">6\n��</code></li>
-  <li>Python 3: <code class="highlighter-rouge">2\n您好</code>.</li>
+  <li>Python 2: <code class="language-plaintext highlighter-rouge">6\n��</code></li>
+  <li>Python 3: <code class="language-plaintext highlighter-rouge">2\n您好</code>.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = u'со'
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = u'со'
 x += 'co' # ok
 x += 'со' # fail
 </code></pre></div></div>
 <p>Python 2 fails, Python 3 works as expected (because I’ve used russian letters in strings).</p>
 
-<p>In Python 3 <code class="highlighter-rouge">str</code>s are unicode strings, and it is more convenient for NLP processing of non-english texts.</p>
+<p>In Python 3 <code class="language-plaintext highlighter-rouge">str</code>s are unicode strings, and it is more convenient for NLP processing of non-english texts.</p>
 
 <p>There are other funny things, for instance:</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'a'</span> <span class="o">&lt;</span> <span class="nb">type</span> <span class="o">&lt;</span> <span class="s">u'a'</span>  <span class="c1"># Python 2: True
@@ -403,45 +403,45 @@ x += 'со' # fail
 </code></pre></div></div>
 
 <ul>
-  <li>Python 2: <code class="highlighter-rouge">Counter({'\xc3': 2, 'b': 1, 'e': 1, 'c': 1, 'k': 1, 'M': 1, 'l': 1, 's': 1, 't': 1, '\xb6': 1, '\xbc': 1})</code></li>
-  <li>Python 3: <code class="highlighter-rouge">Counter({'M': 1, 'ö': 1, 'b': 1, 'e': 1, 'l': 1, 's': 1, 't': 1, 'ü': 1, 'c': 1, 'k': 1})</code></li>
+  <li>Python 2: <code class="language-plaintext highlighter-rouge">Counter({'\xc3': 2, 'b': 1, 'e': 1, 'c': 1, 'k': 1, 'M': 1, 'l': 1, 's': 1, 't': 1, '\xb6': 1, '\xbc': 1})</code></li>
+  <li>Python 3: <code class="language-plaintext highlighter-rouge">Counter({'M': 1, 'ö': 1, 'b': 1, 'e': 1, 'l': 1, 's': 1, 't': 1, 'ü': 1, 'c': 1, 'k': 1})</code></li>
 </ul>
 
 <p>You can handle all of this in Python 2 properly, but Python 3 is more friendly.</p>
 
 <h2 id="preserving-order-of-dictionaries-and-kwargs">Preserving order of dictionaries and **kwargs</h2>
 
-<p>In CPython 3.6+ dicts behave like <code class="highlighter-rouge">OrderedDict</code> by default (and <a href="https://stackoverflow.com/questions/39980323/are-dictionaries-ordered-in-python-3-6">this is guaranteed in Python 3.7+</a>).
+<p>In CPython 3.6+ dicts behave like <code class="language-plaintext highlighter-rouge">OrderedDict</code> by default (and <a href="https://stackoverflow.com/questions/39980323/are-dictionaries-ordered-in-python-3-6">this is guaranteed in Python 3.7+</a>).
 This preserves order during dict comprehensions (and other operations, e.g. during json serialization/deserialization)</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">):</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
-<span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1"># Python 2
 </span><span class="p">{</span><span class="s">u'1'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">u'0'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">u'3'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">u'2'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">u'4'</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
 <span class="c1"># Python 3
 </span><span class="p">{</span><span class="s">'0'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'1'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'2'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'3'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'4'</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
 </code></pre></div></div>
 
-<p>Same applies to <code class="highlighter-rouge">**kwargs</code> (in Python 3.6+), they’re kept in the same order as they appear in parameters. 
+<p>Same applies to <code class="language-plaintext highlighter-rouge">**kwargs</code> (in Python 3.6+), they’re kept in the same order as they appear in parameters. 
 Order is crucial when it comes to data pipelines, previously we had to write it in a cumbersome manner:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">from</span> <span class="n">torch</span> <span class="n">import</span> <span class="n">nn</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from torch import nn
 
-<span class="p">#</span> <span class="n">Python</span> <span class="m">2</span>
-<span class="k">model</span> <span class="p">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">([</span>
-          <span class="p">(</span><span class="s1">'conv1'</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">5</span><span class="p">)),</span>
-          <span class="p">(</span><span class="s1">'relu1'</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()),</span>
-          <span class="p">(</span><span class="s1">'conv2'</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">64</span><span class="p">,</span><span class="m">5</span><span class="p">)),</span>
-          <span class="p">(</span><span class="s1">'relu2'</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">())</span>
-        <span class="p">]))</span>
+# Python 2
+model = nn.Sequential(OrderedDict([
+          ('conv1', nn.Conv2d(1,20,5)),
+          ('relu1', nn.ReLU()),
+          ('conv2', nn.Conv2d(20,64,5)),
+          ('relu2', nn.ReLU())
+        ]))
 
-<span class="p">#</span> <span class="n">Python</span> <span class="m">3.6</span><span class="p">+,</span> <span class="n">how</span> <span class="n">it</span> <span class="p">*</span><span class="n">can</span><span class="p">*</span> <span class="n">be</span> <span class="n">done</span><span class="p">,</span> <span class="k">not</span> <span class="n">supported</span> <span class="n">right</span> <span class="n">now</span> <span class="k">in</span> <span class="n">pytorch</span>
-<span class="k">model</span> <span class="p">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">conv1</span><span class="p">=</span><span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">20</span><span class="p">,</span><span class="m">5</span><span class="p">),</span>
-    <span class="n">relu1</span><span class="p">=</span><span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">(),</span>
-    <span class="n">conv2</span><span class="p">=</span><span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="m">64</span><span class="p">,</span><span class="m">5</span><span class="p">),</span>
-    <span class="n">relu2</span><span class="p">=</span><span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">())</span>
-<span class="p">)</span>        
+# Python 3.6+, how it *can* be done, not supported right now in pytorch
+model = nn.Sequential(
+    conv1=nn.Conv2d(1,20,5),
+    relu1=nn.ReLU(),
+    conv2=nn.Conv2d(20,64,5),
+    relu2=nn.ReLU())
+)        
 </code></pre></div></div>
 
 <p>Did you notice? Uniqueness of names is also checked automatically.</p>
@@ -464,23 +464,23 @@ Order is crucial when it comes to data pipelines, previously we had to write it 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 2
 </span><span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="n">pickle</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])))</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">numpy</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])))</span>
 <span class="c1"># result: 23691675
 </span>
 <span class="c1"># Python 3
 </span><span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])))</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">pickle</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">numpy</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])))</span>
 <span class="c1"># result: 8000162
 </span></code></pre></div></div>
 
 <p>Three times less space. And it is <em>much</em> faster.
-Actually similar compression (but not speed) is achievable with <code class="highlighter-rouge">protocol=2</code> parameter, but users typically ignore this option (or simply not aware of it).</p>
+Actually similar compression (but not speed) is achievable with <code class="language-plaintext highlighter-rouge">protocol=2</code> parameter, but users typically ignore this option (or simply not aware of it).</p>
 
 <h2 id="safer-comprehensions">Safer comprehensions</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">labels</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">initial_value</span><span class="o">&gt;</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
 
 <span class="c1"># labels are overwritten in Python 2
 # labels are not affected by comprehension in Python 3
@@ -488,30 +488,30 @@ Actually similar compression (but not speed) is achievable with <code class="hig
 
 <h2 id="super-simply-super">Super, simply super()</h2>
 
-<p>Python 2 <code class="highlighter-rouge">super(...)</code> was a frequent source of mistakes in code.</p>
+<p>Python 2 <code class="language-plaintext highlighter-rouge">super(...)</code> was a frequent source of mistakes in code.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python 2
 </span><span class="k">class</span> <span class="nc">MySubClass</span><span class="p">(</span><span class="n">MySuperClass</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MySubClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'subclass'</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MySubClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'subclass'</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
         
 <span class="c1"># Python 3
 </span><span class="k">class</span> <span class="nc">MySubClass</span><span class="p">(</span><span class="n">MySuperClass</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'subclass'</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'subclass'</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>More on <code class="highlighter-rouge">super</code> and method resolution order on <a href="https://stackoverflow.com/questions/576169/understanding-python-super-with-init-methods">stackoverlow</a>.</p>
+<p>More on <code class="language-plaintext highlighter-rouge">super</code> and method resolution order on <a href="https://stackoverflow.com/questions/576169/understanding-python-super-with-init-methods">stackoverlow</a>.</p>
 
 <h2 id="single-integer-type">Single integer type</h2>
 
-<p>Python 2 provides two basic integer types, which are <code class="highlighter-rouge">int</code> (64-bit signed integer) and <code class="highlighter-rouge">long</code> for long arithmetics (quite confusing after C++).</p>
+<p>Python 2 provides two basic integer types, which are <code class="language-plaintext highlighter-rouge">int</code> (64-bit signed integer) and <code class="language-plaintext highlighter-rouge">long</code> for long arithmetics (quite confusing after C++).</p>
 
-<p>Python 3 has a single type <code class="highlighter-rouge">int</code>, which incorporates long arithmetics.</p>
+<p>Python 3 has a single type <code class="language-plaintext highlighter-rouge">int</code>, which incorporates long arithmetics.</p>
 
 <p>Here is how you check that value is integer:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isinstance(x, numbers.Integral) # Python 2, the canonical way
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>isinstance(x, numbers.Integral) # Python 2, the canonical way
 isinstance(x, (long, int))      # Python 2
 isinstance(x, int)              # Python 3, easier to remember
 </code></pre></div></div>
@@ -528,8 +528,8 @@ isinstance(x, int)              # Python 3, easier to remember
 
 <p>See <a href="https://stackoverflow.com/questions/38987/how-to-merge-two-dictionaries-in-a-single-expression">this thread at StackOverflow</a> for comparison with Python 2.</p>
 
-<p>Functions also <a href="https://docs.python.org/3/whatsnew/3.5.html#whatsnew-pep-448">support this</a> for <code class="highlighter-rouge">*args</code> and <code class="highlighter-rouge">**kwargs</code>:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Python 3.5+
+<p>Functions also <a href="https://docs.python.org/3/whatsnew/3.5.html#whatsnew-pep-448">support this</a> for <code class="language-plaintext highlighter-rouge">*args</code> and <code class="language-plaintext highlighter-rouge">**kwargs</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Python 3.5+
 do_something(**{**default_settings, **custom_settings})
 
 # Also possible, this code also checks there is no intersection between keys of dictionaries
@@ -541,20 +541,20 @@ do_something(**first_args, **second_args)
 <ul>
   <li>keyword-only arguments allows much <a href="http://www.asmeurer.com/python3-presentation/slides.html#12">simpler creation of ‘future-proof APIs’</a>
     <ul>
-      <li>example  <code class="highlighter-rouge">def f(a, b, *, option=True):</code></li>
-      <li>user won’t be able to write something like <code class="highlighter-rouge">numpy.unique(arr, True)</code>, but has to specify name of parameter (<code class="highlighter-rouge">return_index=True</code>)</li>
+      <li>example  <code class="language-plaintext highlighter-rouge">def f(a, b, *, option=True):</code></li>
+      <li>user won’t be able to write something like <code class="language-plaintext highlighter-rouge">numpy.unique(arr, True)</code>, but has to specify name of parameter (<code class="language-plaintext highlighter-rouge">return_index=True</code>)</li>
       <li>best mechanism so far that allows keep good combination of reliability and flexibility of APIs</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">Enum</code>s are theoretically useful, but
+  <li><code class="language-plaintext highlighter-rouge">Enum</code>s are theoretically useful, but
     <ul>
       <li>string-typing is already widely adopted in the python data stack</li>
-      <li><code class="highlighter-rouge">Enum</code>s don’t seem to interplay with numpy and categorical from pandas</li>
+      <li><code class="language-plaintext highlighter-rouge">Enum</code>s don’t seem to interplay with numpy and categorical from pandas</li>
     </ul>
   </li>
   <li>coroutines also <em>sound</em> very promising for data pipelining (see <a href="http://www.dabeaz.com/coroutines/Coroutines.pdf">slides</a> by David Beazley), but I don’t see their adoption in the wild.</li>
   <li>Python 3 has <a href="https://www.python.org/dev/peps/pep-0384/">stable ABI</a></li>
-  <li>Python 3 supports unicode identifies (so <code class="highlighter-rouge">ω = Δφ / Δt</code> is ok), but you’d <a href="https://stackoverflow.com/a/29855176/498892">better use good old ASCII names</a></li>
+  <li>Python 3 supports unicode identifies (so <code class="language-plaintext highlighter-rouge">ω = Δφ / Δt</code> is ok), but you’d <a href="https://stackoverflow.com/a/29855176/498892">better use good old ASCII names</a></li>
   <li>some libraries e.g. <a href="https://github.com/jupyterhub/jupyterhub">jupyterhub</a> (jupyter in cloud), django and fresh ipython only support Python 3, so features that sound useless for you are useful for libraries you’ll probably want to use once.</li>
 </ul>
 
@@ -562,15 +562,15 @@ do_something(**first_args, **second_args)
 
 <ul>
   <li>support for nested arguments <a href="https://www.python.org/dev/peps/pep-3113/">was dropped</a>
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>map(lambda x, (y, z): x, z, dict.items())
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>map(lambda x, (y, z): x, z, dict.items())
 </code></pre></div>    </div>
 
     <p>However, it is still perfectly working with different comprehensions:</p>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">z</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="n">z</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="ow">in</span> <span class="n">d</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
 </code></pre></div>    </div>
     <p>In general, comprehensions are also better ‘translatable’ between Python 2 and 3.</p>
   </li>
-  <li><code class="highlighter-rouge">map()</code>, <code class="highlighter-rouge">.keys()</code>, <code class="highlighter-rouge">.values()</code>, <code class="highlighter-rouge">.items()</code>, etc. return iterators, not lists. Main problems with iterators are:
+  <li><code class="language-plaintext highlighter-rouge">map()</code>, <code class="language-plaintext highlighter-rouge">.keys()</code>, <code class="language-plaintext highlighter-rouge">.values()</code>, <code class="language-plaintext highlighter-rouge">.items()</code>, etc. return iterators, not lists. Main problems with iterators are:
     <ul>
       <li>no trivial slicing</li>
       <li>can’t be iterated twice</li>

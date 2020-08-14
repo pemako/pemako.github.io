@@ -1,0 +1,78 @@
+I"�<ol>
+  <li>python 在多进程下打日志出现丢失错乱等问题，是由于 python 源码的问题。可以引入第三方包进行轻松解决</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install ConcurrentLogHandler
+
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">sample.py</code></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">()</span>
+<span class="c1"># Use an absolute path to prevent file rotation trouble.
+</span><span class="n">logfile</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">"mylogfile.log"</span><span class="p">)</span>
+<span class="c1"># Rotate log after reaching 512K, keep 5 old copies.
+</span><span class="n">rotateHandler</span> <span class="o">=</span> <span class="n">ConcurrentRotatingFileHandler</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s">"a"</span><span class="p">,</span> <span class="mi">512</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">log</span><span class="p">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">rotateHandler</span><span class="p">)</span>
+<span class="n">log</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">time</span><span class="p">,</span> <span class="n">os</span>
+    <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">getLogger</span><span class="p">,</span> <span class="n">INFO</span>
+    <span class="kn">from</span> <span class="nn">cloghandler</span> <span class="kn">import</span> <span class="n">ConcurrentRotatingFileHandler</span>
+    
+    <span class="n">log</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">()</span>
+    <span class="c1"># Use an absolute path to prevent file rotation trouble.
+</span>    <span class="n">logfile</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">"mylogfile.log"</span><span class="p">)</span>
+    <span class="c1"># Rotate log after reaching 512K, keep 5 old copies.
+</span>    <span class="n">rotateHandler</span> <span class="o">=</span> <span class="n">ConcurrentRotatingFileHandler</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="s">"a"</span><span class="p">,</span> <span class="mi">512</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">log</span><span class="p">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">rotateHandler</span><span class="p">)</span>
+    <span class="n">log</span><span class="p">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getpid</span><span class="p">())</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">sample.config.py</code></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">os</span><span class="p">,</span> <span class="n">time</span>
+    <span class="kn">import</span> <span class="nn">logging</span><span class="p">,</span> <span class="n">logging</span><span class="p">.</span><span class="n">config</span>
+    <span class="kn">import</span> <span class="nn">cloghandler</span>
+
+    <span class="n">logging</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="n">fileConfig</span><span class="p">(</span><span class="s">"logging.ini"</span><span class="p">)</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getpid</span><span class="p">())</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">logging.ini</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[loggers]
+keys=root
+
+[handlers]
+keys=hand01
+
+[formatters]
+keys=form01
+
+[logger_root]
+level=NOTSET
+handlers=hand01
+
+[handler_hand01]
+class=handlers.ConcurrentRotatingFileHandler
+level=NOTSET
+formatter=form01
+args=("rotating.log", "a", 512*1024, 5)
+
+[formatter_form01]
+format=%(asctime)s %(levelname)s %(message)s
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. nohup python xxx &amp; 多个文件进行观察日志打印情况
+2. ps aux | grep xxx | grep -v grep | awk '{print $2}' | xargs kill -9  # 杀死所有进程
+</code></pre></div></div>
+:ET

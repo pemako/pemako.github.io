@@ -94,7 +94,7 @@
  <span class="err">$</span> <span class="k">print</span> <span class="s">r'C:\nowhere'</span> <span class="o">=</span> <span class="n">C</span><span class="p">:</span>\<span class="n">nowhere</span>
     
  <span class="c1"># 注意不能在原始字符串结尾输入反斜线，除非进行转义
-</span> <span class="err">$</span> <span class="k">print</span> <span class="s">r'C:\nowhere\' = 错误 如果需要反斜线需转义</span><span class="err">
+</span> <span class="err">$</span> <span class="k">print</span> <span class="s">r'C:\nowhere\' = 错误 如果需要反斜线需转义
 </span></code></pre></div>    </div>
   </li>
   <li>
@@ -110,7 +110,7 @@
   <li>
     <p>使用字典进行格式化输出字符串</p>
 
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">_world</span> <span class="o">=</span> <span class="s">"My name is </span><span class="si">%(name)</span><span class="s">s , I</span><span class="se">\'</span><span class="s">m </span><span class="si">%(age)</span><span class="s">d old"</span>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">_world</span> <span class="o">=</span> <span class="s">"My name is %(name)s , I</span><span class="se">\'</span><span class="s">m %(age)d old"</span>
  <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">"name"</span><span class="p">:</span> <span class="s">"pemako"</span><span class="p">,</span> <span class="s">"age"</span><span class="p">:</span> <span class="mi">18</span><span class="p">}</span>
  <span class="k">print</span> <span class="n">_world</span> <span class="o">%</span> <span class="nb">dict</span>
  <span class="err">$</span> <span class="n">My</span> <span class="n">name</span> <span class="ow">is</span> <span class="n">pemako</span> <span class="p">,</span> <span class="n">Im</span> <span class="mi">18</span> <span class="n">old</span>
@@ -136,7 +136,7 @@
  <span class="n">In</span> <span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="n">x</span><span class="p">[</span><span class="s">'key'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'value'</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="n">y</span>
  <span class="n">Out</span><span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="p">{</span><span class="s">'key'</span><span class="p">:</span> <span class="s">'value'</span><span class="p">}</span>
- <span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="n">x</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="n">x</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">y</span>
  <span class="n">Out</span><span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="p">{}</span>
 </code></pre></div>    </div>
@@ -149,11 +149,11 @@
 </span>    
  <span class="n">In</span> <span class="p">[</span><span class="mi">50</span><span class="p">]:</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span><span class="s">'admin'</span><span class="p">,</span> <span class="s">'machines'</span><span class="p">:[</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'bar'</span><span class="p">,</span> <span class="s">'baz'</span><span class="p">]}</span>
 
- <span class="n">In</span> <span class="p">[</span><span class="mi">51</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">51</span><span class="p">]:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
     
  <span class="n">In</span> <span class="p">[</span><span class="mi">52</span><span class="p">]:</span> <span class="n">y</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'pemako'</span>
     
- <span class="n">In</span> <span class="p">[</span><span class="mi">53</span><span class="p">]:</span> <span class="n">y</span><span class="p">[</span><span class="s">'machines'</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">'bar'</span><span class="p">)</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">53</span><span class="p">]:</span> <span class="n">y</span><span class="p">[</span><span class="s">'machines'</span><span class="p">].</span><span class="n">remove</span><span class="p">(</span><span class="s">'bar'</span><span class="p">)</span>
     
  <span class="n">In</span> <span class="p">[</span><span class="mi">54</span><span class="p">]:</span> <span class="n">y</span>
  <span class="n">Out</span><span class="p">[</span><span class="mi">54</span><span class="p">]:</span> <span class="p">{</span><span class="s">'machines'</span><span class="p">:</span> <span class="p">[</span><span class="s">'foo'</span><span class="p">,</span> <span class="s">'baz'</span><span class="p">],</span> <span class="s">'name'</span><span class="p">:</span> <span class="s">'pemako'</span><span class="p">}</span>
@@ -166,9 +166,9 @@
  <span class="n">In</span> <span class="p">[</span><span class="mi">61</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">62</span><span class="p">]:</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">63</span><span class="p">]:</span> <span class="n">d</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'pemako'</span><span class="p">,</span> <span class="s">'lena'</span><span class="p">]</span>
- <span class="n">In</span> <span class="p">[</span><span class="mi">64</span><span class="p">]:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">64</span><span class="p">]:</span> <span class="n">c</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">65</span><span class="p">]:</span> <span class="n">dc</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
- <span class="n">In</span> <span class="p">[</span><span class="mi">66</span><span class="p">]:</span> <span class="n">d</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'Alice'</span><span class="p">)</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">66</span><span class="p">]:</span> <span class="n">d</span><span class="p">[</span><span class="s">'name'</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="s">'Alice'</span><span class="p">)</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="n">c</span>
  <span class="n">Out</span><span class="p">[</span><span class="mi">67</span><span class="p">]:</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="p">[</span><span class="s">'pemako'</span><span class="p">,</span> <span class="s">'lena'</span><span class="p">,</span> <span class="s">'Alice'</span><span class="p">]}</span>
  <span class="n">In</span> <span class="p">[</span><span class="mi">68</span><span class="p">]:</span> <span class="n">dc</span>
@@ -218,22 +218,22 @@
     <p>文档化函数</p>
 
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">In</span> <span class="p">[</span><span class="mi">85</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">DemoObj</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
- <span class="o">...</span><span class="p">:</span>        <span class="s">'''This is d demo object'''</span>
- <span class="o">...</span><span class="p">:</span>        <span class="k">def</span> <span class="nf">suquare</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
- <span class="o">...</span><span class="p">:</span>            <span class="s">'''Calculates the square of the number x'''</span>
- <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+ <span class="p">...:</span>        <span class="s">'''This is d demo object'''</span>
+ <span class="p">...:</span>        <span class="k">def</span> <span class="nf">suquare</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+ <span class="p">...:</span>            <span class="s">'''Calculates the square of the number x'''</span>
+ <span class="p">...:</span>         <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
 
- <span class="n">In</span> <span class="p">[</span><span class="mi">86</span><span class="p">]:</span> <span class="n">DemoObj</span><span class="o">.</span><span class="n">__doc__</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">86</span><span class="p">]:</span> <span class="n">DemoObj</span><span class="p">.</span><span class="n">__doc__</span>
  <span class="n">Out</span><span class="p">[</span><span class="mi">86</span><span class="p">]:</span> <span class="s">'This is d demo object'</span>
     
- <span class="n">In</span> <span class="p">[</span><span class="mi">87</span><span class="p">]:</span> <span class="n">DemoObj</span><span class="o">.</span><span class="n">suquare</span><span class="o">.</span><span class="n">__doc__</span>
+ <span class="n">In</span> <span class="p">[</span><span class="mi">87</span><span class="p">]:</span> <span class="n">DemoObj</span><span class="p">.</span><span class="n">suquare</span><span class="p">.</span><span class="n">__doc__</span>
  <span class="n">Out</span><span class="p">[</span><span class="mi">87</span><span class="p">]:</span> <span class="s">'Calculates the square of the number x'</span>
     
  <span class="n">In</span> <span class="p">[</span><span class="mi">88</span><span class="p">]:</span> <span class="n">help</span><span class="p">(</span><span class="n">DemoObj</span><span class="p">)</span>
     
  <span class="n">Help</span> <span class="n">on</span> <span class="k">class</span> <span class="nc">DemoObj</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
 
- <span class="k">class</span> <span class="nc">DemoObj</span><span class="p">(</span><span class="n">__builtin__</span><span class="o">.</span><span class="nb">object</span><span class="p">)</span>
+ <span class="k">class</span> <span class="nc">DemoObj</span><span class="p">(</span><span class="n">__builtin__</span><span class="p">.</span><span class="nb">object</span><span class="p">)</span>
   <span class="o">|</span>  <span class="n">This</span> <span class="ow">is</span> <span class="n">d</span> <span class="n">demo</span> <span class="nb">object</span>
   <span class="o">|</span>
   <span class="o">|</span>  <span class="n">Methods</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
@@ -263,12 +263,12 @@
             
     <span class="k">def</span> <span class="nf">accessible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">print</span> <span class="s">'The secret message is: '</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hidden</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__hidden</span><span class="p">()</span>
     
 <span class="n">s</span> <span class="o">=</span> <span class="n">Secretive</span><span class="p">()</span>
 <span class="c1"># 如果想要直接访问 __hidden() 方法可以使用
 </span>    
-<span class="n">s</span><span class="o">.</span><span class="n">_Secretive__hidden</span><span class="p">()</span>
+<span class="n">s</span><span class="p">.</span><span class="n">_Secretive__hidden</span><span class="p">()</span>
 </code></pre></div>    </div>
   </li>
   <li>
@@ -320,11 +320,11 @@
 </span>    
 <span class="k">class</span> <span class="nc">Bird</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hungry</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">hungry</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="k">def</span> <span class="nf">eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hungry</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">hungry</span><span class="p">:</span>
             <span class="k">print</span> <span class="s">'Aaaah..'</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">hungry</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">hungry</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span> <span class="s">'No, thanks!'</span>
     
@@ -333,10 +333,10 @@
         <span class="c1">#Bird.__init__(self)     
 </span>        <span class="c1"># 新版本绑定和上面等价，尽量使用这种方式
 </span>        <span class="c1"># 对于继承多个父类的方式，也只需要调用一次 supper 即可
-</span>        <span class="n">supper</span><span class="p">(</span><span class="n">SongBird</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sound</span> <span class="o">=</span> <span class="s">'Squawk!'</span>
+</span>        <span class="n">supper</span><span class="p">(</span><span class="n">SongBird</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">sound</span> <span class="o">=</span> <span class="s">'Squawk!'</span>
     <span class="k">def</span> <span class="nf">sing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">sound</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="p">.</span><span class="n">sound</span>
 </code></pre></div>    </div>
   </li>
   <li>
@@ -361,18 +361,18 @@
 </span>    
 <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">readline</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span> <span class="k">break</span>
     <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
     
 <span class="kn">import</span> <span class="nn">fileinput</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileiput</span><span class="o">.</span><span class="nb">input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileiput</span><span class="p">.</span><span class="nb">input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         
 <span class="c1"># 处理标准输入流中的数据
 </span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">:</span>
     <span class="n">process</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 </code></pre></div>    </div>
   </li>
@@ -423,9 +423,9 @@
     
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span><span class="p">,</span> <span class="n">my_math</span>
-    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">my_math</span><span class="p">)</span>
+    <span class="n">doctest</span><span class="p">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">my_math</span><span class="p">)</span>
      
-<span class="err">λ</span> <span class="n">pemakoMBookPro2</span> <span class="n">python</span> <span class="err">→</span> <span class="n">python</span> <span class="n">my_math</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">λ</span> <span class="n">pemakoMBookPro2</span> <span class="n">python</span> <span class="err">→</span> <span class="n">python</span> <span class="n">my_math</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span>
 <span class="n">Trying</span><span class="p">:</span>
     <span class="n">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">Expecting</span><span class="p">:</span>
@@ -439,10 +439,10 @@
 <span class="mi">1</span> <span class="n">items</span> <span class="n">had</span> <span class="n">no</span> <span class="n">tests</span><span class="p">:</span>
     <span class="n">my_math</span>
 <span class="mi">1</span> <span class="n">items</span> <span class="n">passed</span> <span class="nb">all</span> <span class="n">tests</span><span class="p">:</span>
-   <span class="mi">2</span> <span class="n">tests</span> <span class="ow">in</span> <span class="n">my_math</span><span class="o">.</span><span class="n">square</span>
-<span class="mi">2</span> <span class="n">tests</span> <span class="ow">in</span> <span class="mi">2</span> <span class="n">items</span><span class="o">.</span>
-<span class="mi">2</span> <span class="n">passed</span> <span class="ow">and</span> <span class="mi">0</span> <span class="n">failed</span><span class="o">.</span>
-<span class="n">Test</span> <span class="n">passed</span><span class="o">.</span>
+   <span class="mi">2</span> <span class="n">tests</span> <span class="ow">in</span> <span class="n">my_math</span><span class="p">.</span><span class="n">square</span>
+<span class="mi">2</span> <span class="n">tests</span> <span class="ow">in</span> <span class="mi">2</span> <span class="n">items</span><span class="p">.</span>
+<span class="mi">2</span> <span class="n">passed</span> <span class="ow">and</span> <span class="mi">0</span> <span class="n">failed</span><span class="p">.</span>
+<span class="n">Test</span> <span class="n">passed</span><span class="p">.</span>
     
     
 <span class="c1"># my_math.py
@@ -463,30 +463,30 @@
     
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span><span class="p">,</span> <span class="n">my_math</span>
-    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">my_math</span><span class="p">)</span>
+    <span class="n">doctest</span><span class="p">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">my_math</span><span class="p">)</span>
         
 <span class="c1"># 使用 unittest 框架的简单测试
 </span>    
 <span class="kn">import</span> <span class="nn">unittest</span><span class="p">,</span> <span class="n">my_math</span>
 
-<span class="k">class</span> <span class="nc">ProductTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ProductTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="p">.</span><span class="n">TestCase</span><span class="p">):</span>
     
     <span class="k">def</span> <span class="nf">testIntegers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="n">my_math</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="s">'Integer multiplication failed'</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">my_math</span><span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">failUnless</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="s">'Integer multiplication failed'</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">testFloats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
                 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="mf">10.0</span>
                 <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="mf">10.0</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="n">my_math</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">failUnless</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="s">'Float multiplication fauled.'</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">my_math</span><span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">failUnless</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">x</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="s">'Float multiplication fauled.'</span><span class="p">)</span>
     
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+    <span class="n">unittest</span><span class="p">.</span><span class="n">main</span><span class="p">()</span>
         
 <span class="c1"># unittest.main() 函数负责实际运行测试，他会实例化所有 TestCase 的子类，运行所有名字以 test 开头的方法
 </span>    
@@ -584,13 +584,13 @@
 </span><span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">'simple.cfg'</span><span class="p">)</span>
+<span class="n">config</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="s">'simple.cfg'</span><span class="p">)</span>
 
-<span class="k">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'greeting'</span><span class="p">)</span>
-<span class="n">radius</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'question'</span><span class="p">)</span> <span class="o">+</span> <span class="s">' '</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'greeting'</span><span class="p">)</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'question'</span><span class="p">)</span> <span class="o">+</span> <span class="s">' '</span><span class="p">)</span>
 <span class="c1"># 已逗号做结束将结果显示在一行
-</span><span class="k">print</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'result_message'</span><span class="p">),</span> 
-<span class="k">print</span> <span class="n">config</span><span class="o">.</span><span class="n">getfloat</span><span class="p">(</span><span class="s">'numbers'</span><span class="p">,</span> <span class="s">'pi'</span><span class="p">)</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span><span class="mi">2</span>
+</span><span class="k">print</span> <span class="n">config</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'messages'</span><span class="p">,</span> <span class="s">'result_message'</span><span class="p">),</span> 
+<span class="k">print</span> <span class="n">config</span><span class="p">.</span><span class="n">getfloat</span><span class="p">(</span><span class="s">'numbers'</span><span class="p">,</span> <span class="s">'pi'</span><span class="p">)</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span><span class="mi">2</span>
     
 <span class="c1"># λ pemakoMBookPro2 conf → python simple.py
 # Welcome to the area calulation porgram!
@@ -610,7 +610,7 @@
   <li>
     <p>图像生成</p>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pdf 生成 reportlab
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pdf 生成 reportlab
 # sudo -H pip install --ignore-installed rlextra -i https://www.reportlab.com/pypi/
 # 账号/密码 pemako@126.com / xxxx
 </code></pre></div>    </div>
@@ -628,7 +628,7 @@
     <p>python相关模块查看</p>
 
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 查看内置的模块存放的位置
-</span><span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span> 
+</span><span class="n">sys</span><span class="p">.</span><span class="n">builtin_module_names</span> 
     
 </code></pre></div>    </div>
   </li>

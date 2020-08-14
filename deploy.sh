@@ -2,7 +2,7 @@
 
 T=`date "+%Y-%m-%d %H:%I:%S"`
 
-# 后台云心 jekyll server
+# 后台运行 jekyll server
 jekyll serve --detach
 
 # 关闭进程

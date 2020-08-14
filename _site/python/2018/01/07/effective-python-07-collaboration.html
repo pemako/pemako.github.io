@@ -90,10 +90,10 @@
 
 <ul>
   <li>python 包是一种含有其他模块的模块。我们可以用包把代码划分成各自独立且互不冲突的名称空间，使得每块代码都具备独有的绝对模块名称。</li>
-  <li>主要把 <code class="highlighter-rouge">__init__.py</code> 文件放入含有其他源文件的目录里，就可以将该目录定义为包。目录中的文件，都将成为包的子模块。在包的目录下面，也可以含有其他包</li>
-  <li>把外界可见的名称，列在名为 <code class="highlighter-rouge">__all__</code>的特殊属性里，即可为包提供一套明确的API</li>
-  <li>如果想要隐藏某个包的内部实现，那么我们可以在包的<code class="highlighter-rouge">__init__.py</code> 文件中，只把外界可见的那些名称引入进来，或是给仅限内部使用的那些名称添加下划线前缀</li>
-  <li>如果软件包只在开发团队或代码库内部使用，那可能没有必要通过 <code class="highlighter-rouge">__all__</code>来明确地导出API</li>
+  <li>主要把 <code class="language-plaintext highlighter-rouge">__init__.py</code> 文件放入含有其他源文件的目录里，就可以将该目录定义为包。目录中的文件，都将成为包的子模块。在包的目录下面，也可以含有其他包</li>
+  <li>把外界可见的名称，列在名为 <code class="language-plaintext highlighter-rouge">__all__</code>的特殊属性里，即可为包提供一套明确的API</li>
+  <li>如果想要隐藏某个包的内部实现，那么我们可以在包的<code class="language-plaintext highlighter-rouge">__init__.py</code> 文件中，只把外界可见的那些名称引入进来，或是给仅限内部使用的那些名称添加下划线前缀</li>
+  <li>如果软件包只在开发团队或代码库内部使用，那可能没有必要通过 <code class="language-plaintext highlighter-rouge">__all__</code>来明确地导出API</li>
 </ul>
 
 <h3 id="51-为自编的模块定义根异常以便将调用者与api相隔离">51. 为自编的模块定义根异常，以便将调用者与API相隔离</h3>

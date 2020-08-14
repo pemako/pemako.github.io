@@ -1,0 +1,391 @@
+I"vt<h2 id="安装">安装</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Git: https://github.com/golang/go</code></li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Video: https://www.youtube.com/watch?v=XCsL89YtqCs</code></p>
+  </li>
+  <li>源码安装</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 获取代码仓库
+$ git clone https://go.googlesource.com/go
+$ cd go
+$ git checkout go1.7
+
+- 安装 go
+$ cd src
+$ ./all.bash
+</code></pre></div></div>
+
+<ul>
+  <li>设置工作环境</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> - 工作空间
+    - src go 源码文件
+    - pkg 包对象
+    - bin 目录包含可执行命令
+
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/work/golang
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
+</code></pre></div></div>
+
+<h1 id="概述">概述</h1>
+<h2 id="变量">变量</h2>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="k">var</span> <span class="n">x</span> <span class="kt">int32</span> <span class="c">// 变量声明使用 var 默认值为0</span>
+    <span class="n">y</span> <span class="o">:=</span> <span class="m">100</span> <span class="c">// 在函数内部可以省略 var 进行类型推断</span>
+    
+    <span class="k">var</span> <span class="n">s</span> <span class="o">=</span> <span class="err">'</span><span class="n">Hello</span> <span class="n">world</span><span class="o">!</span><span class="err">'</span>
+    
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="c">// 0 100 Hello world</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="表达式">表达式</h2>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// go 有三种流程控制语句  if switch for</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">x</span> <span class="o">:=</span> <span class="m">100</span>
+    
+    <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">){</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"x"</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="m">0</span><span class="p">){</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"-x"</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"0"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file name switch.go</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">x</span> <span class="o">:=</span> <span class="m">100</span>
+
+    <span class="k">switch</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="m">0</span><span class="o">:</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="m">0</span><span class="o">:</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"0"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file name for.go</span>
+
+<span class="k">package</span> <span class="n">main</span> 
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="m">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"---"</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">4</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span> <span class="p">{</span>
+    	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"-------"</span><span class="p">)</span>
+    
+    <span class="n">x</span> <span class="o">:=</span> <span class="m">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="m">5</span> <span class="p">{</span>	<span class="c">// 相当于 while(x&lt;5)</span>
+    	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    	<span class="n">x</span><span class="o">++</span>
+    <span class="p">}</span>
+
+    <span class="n">y</span> <span class="o">:=</span> <span class="m">4</span>
+    <span class="k">for</span> <span class="p">{</span> <span class="c">// 相当于 wile(true)</span>
+    	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    	<span class="n">y</span><span class="o">--</span>
+
+    	<span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="m">0</span> <span class="p">{</span>
+    		<span class="k">break</span>
+    	<span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// file name for-range.go</span>
+<span class="k">package</span> <span class="n">main</span> 
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">x</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="m">100</span><span class="p">,</span> <span class="m">101</span><span class="p">,</span> <span class="m">102</span><span class="p">,</span> <span class="m">103</span><span class="p">,</span> <span class="m">104</span><span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">x</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"index is "</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">"values is"</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="函数">函数</h2>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 函数可以定义多个返回值，甚至对其命令</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"errors"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"division by zero"</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">:=</span> <span class="m">10</span><span class="p">,</span> <span class="m">2</span>	<span class="c">// 定义多个变量</span>
+    <span class="n">c</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 函数是第一类型，可以作为参数或返回值</span>
+<span class="k">package</span> <span class="n">main</span> 
+
+<span class="k">func</span> <span class="n">test</span><span class="p">(</span><span class="n">x</span> <span class="kt">int</span><span class="p">)</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+    	<span class="nb">println</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">x</span> <span class="o">:=</span> <span class="m">100</span>
+
+    <span class="n">f</span> <span class="o">:=</span> <span class="n">test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 用 defer 定义延迟调用，无论函数是否出错，它都确保结束前调用</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">func</span> <span class="n">test</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="nb">println</span><span class="p">(</span><span class="s">"dispose...."</span><span class="p">)</span>
+    <span class="nb">println</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">test</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="数据">数据</h2>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 切片(slice) 可以实现类似动态数组的功能</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">x</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">5</span><span class="p">)</span> <span class="c">// 创建容量为5的切片</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span><span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="m">8</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>    <span class="c">// 追加数据，当超出容量限制时，自动分配更大的存储空间</span>
+    <span class="p">}</span>
+    
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// map 字典类型</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">m</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>   <span class="c">// 创建字典类型对象</span>
+    <span class="n">m</span><span class="p">[</span><span class="s">"a"</span><span class="p">]</span> <span class="o">=</span> <span class="m">1</span>  <span class="c">// 添加或设置</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">ok</span> <span class="o">:=</span> <span class="n">m</span><span class="p">[</span><span class="s">"b"</span><span class="p">]</span> <span class="c">// 使用 ok-idiom 获取值，可知道 key/value 是否存在</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ok</span><span class="p">)</span>
+    
+    <span class="nb">delete</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s">"a"</span><span class="p">)</span>  <span class="c">// 删除</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// struct 可以匿名嵌入其它类型</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">type</span> <span class="n">user</span> <span class="k">struct</span> <span class="p">{</span> <span class="c">// 结构体类型</span>
+    <span class="n">name</span> <span class="kt">string</span>
+    <span class="n">age</span> <span class="kt">byte</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">manager</span> <span class="k">struct</span> <span class="p">{</span> <span class="c">// 你们嵌入其它类型</span>
+    <span class="n">user</span>
+    <span class="n">title</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">m</span> <span class="n">manager</span>
+    
+    <span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"Tom"</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="m">29</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">"CTO"</span>
+    
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="方法">方法</h2>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 可以为当前包内的任意类型定义方法</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">type</span> <span class="n">X</span> <span class="kt">int</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span><span class="n">X</span><span class="p">)</span> <span class="n">inc</span><span class="p">()</span> <span class="p">{</span> <span class="c">// 名称前的参数成为 receiver,作用类似 python self</span>
+    <span class="o">*</span><span class="n">x</span><span class="o">++</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="k">var</span> <span class="n">x</span> <span class="n">X</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
+    <span class="nb">println</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c">// 1</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 还可以直接调用匿名字段的方法，这种方式可实现与继承类似的功能</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">type</span> <span class="n">user</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">name</span> <span class="kt">string</span>
+    <span class="n">age</span> <span class="kt">byte</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">u</span> <span class="n">user</span><span class="p">)</span> <span class="n">ToString</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%+v"</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">manager</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">user</span>
+    <span class="n">title</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">m</span> <span class="n">manager</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"Tom"</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="m">29</span>
+    
+    <span class="nb">println</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">ToString</span><span class="p">())</span> <span class="c">// 调用 user.ToString() {name:Tom age:29}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="接口">接口</h2>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 接口无需在实现类型上添加显示声明</span>
+<span class="c">// 另外空接口类型 interface{} 可接收任意类型对象</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">"fmt"</span>
+
+<span class="k">type</span> <span class="n">user</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">name</span> <span class="kt">string</span>
+    <span class="n">age</span> <span class="kt">byte</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="p">(</span><span class="n">u</span> <span class="n">user</span><span class="p">)</span> <span class="n">Print</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%+v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">type</span> <span class="n">Printer</span> <span class="k">interface</span> <span class="p">{</span><span class="c">// 接口类型</span>
+    <span class="n">Print</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="k">var</span> <span class="n">u</span> <span class="n">user</span>
+    <span class="n">u</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">"Tom"</span>
+    <span class="n">u</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="m">29</span>
+    
+    <span class="k">var</span> <span class="n">p</span> <span class="n">Printer</span> <span class="o">=</span> <span class="n">u</span> <span class="c">// 只需包含接口所需的全部方法，即表示实现了该接口</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">Print</span><span class="p">()</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="并发">并发</h2>
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">task</span><span class="p">(</span><span class="n">id</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="m">5</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%d: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">go</span> <span class="n">task</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    <span class="k">go</span> <span class="n">task</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+    
+    <span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span> <span class="o">*</span> <span class="m">6</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// 通道 channel 与 goroutine 搭配，实现用通讯代替内存共享</span>
+<span class="k">package</span> <span class="n">main</span>
+
+<span class="c">// 消费者</span>
+<span class="k">func</span> <span class="n">consumer</span><span class="p">(</span><span class="n">data</span> <span class="k">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="n">done</span> <span class="k">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="o">:</span> <span class="o">=</span> <span class="k">range</span> <span class="n">data</span> <span class="p">{</span> <span class="c">// 接收数据，知道通道被关闭</span>
+        <span class="nb">println</span><span class="p">(</span><span class="s">"recv:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="n">done</span> <span class="o">&lt;-</span> <span class="no">true</span> <span class="c">// 通知 main, 消费结束</span>
+<span class="p">}</span>
+
+<span class="c">// 生产者</span>
+<span class="k">func</span> <span class="n">producer</span><span class="p">(</span><span class="n">data</span> <span class="k">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="m">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">i</span>
+    <span class="p">}</span>
+    <span class="nb">close</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c">// 生产结束，关闭通道</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">done</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="c">// 用于接收消费结束信号</span>
+    <span class="n">data</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">int</span><span class="p">)</span>  <span class="c">// 数据管道</span>
+    
+    <span class="k">go</span> <span class="n">consumer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">done</span><span class="p">)</span> <span class="c">// 启动消费者</span>
+    <span class="k">go</span> <span class="n">producer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>   <span class="c">// 启动生产者</span>
+    
+    <span class="o">&lt;-</span><span class="n">done</span>  <span class="c">// 阻塞，知道消费者发送结束信号</span>
+<span class="p">}</span>
+<span class="c">/*
+recv: 0
+recv: 1
+recv: 2
+recv: 3
+*/</span>
+</code></pre></div></div>
+
+:ET

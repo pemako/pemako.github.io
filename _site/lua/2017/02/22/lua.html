@@ -212,7 +212,7 @@
 
     <p>局部变量的作用于为从生命位置开始到所在语句块结束</p>
 
-    <p>变量的默认值均为 <code class="highlighter-rouge">nil</code></p>
+    <p>变量的默认值均为 <code class="language-plaintext highlighter-rouge">nil</code></p>
   </li>
   <li>
     <p>表中的域</p>
@@ -222,11 +222,11 @@
 
     <ul>
       <li>Lua 可以对多个变量同时赋值，变量列表和值列表的各个元素使用逗号分开，复制语句右边的值会依次赋值给左边的变量</li>
-      <li><code class="highlighter-rouge">x, y = y, x</code> – 交换 x y 的值</li>
+      <li><code class="language-plaintext highlighter-rouge">x, y = y, x</code> – 交换 x y 的值</li>
       <li>当变量的个数和值的个数不一致时，Lua会一直以变量个数为基础采取以下策略</li>
     </ul>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  a. 变量的个数 &gt; 值的个数    按变量个数补足 nil
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  a. 变量的个数 &gt; 值的个数    按变量个数补足 nil
   b. 变量的格式 &lt; 值的格式    多余的值会被忽略
 </code></pre></div>    </div>
 
@@ -238,8 +238,8 @@
     <p>索引</p>
 
     <ul>
-      <li><code class="highlighter-rouge">t[i]</code></li>
-      <li><code class="highlighter-rouge">t.i</code> 当索引为字符串类型时的一种简化写法</li>
+      <li><code class="language-plaintext highlighter-rouge">t[i]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">t.i</code> 当索引为字符串类型时的一种简化写法</li>
     </ul>
   </li>
 </ul>
@@ -247,9 +247,9 @@
 <h2 id="3-lua-循环">3. Lua 循环</h2>
 
 <ul>
-  <li><code class="highlighter-rouge">while</code></li>
-  <li><code class="highlighter-rouge">for</code></li>
-  <li><code class="highlighter-rouge">repeat...until</code> 重复执行循环，知道指定的条件为真时为止</li>
+  <li><code class="language-plaintext highlighter-rouge">while</code></li>
+  <li><code class="language-plaintext highlighter-rouge">for</code></li>
+  <li><code class="language-plaintext highlighter-rouge">repeat...until</code> 重复执行循环，知道指定的条件为真时为止</li>
   <li>循环嵌套  可以在循环内嵌套一个或多个循环语句(while for do..while)</li>
 </ul>
 
@@ -275,7 +275,7 @@
   <li>可变参数</li>
 </ul>
 
-<p>可变参数使用三个点(…) 便是函数有可变参数。Lua 将函数的参数放在一个叫 arg 的表中，<code class="highlighter-rouge">#arg</code> 便是传入参数的个数</p>
+<p>可变参数使用三个点(…) 便是函数有可变参数。Lua 将函数的参数放在一个叫 arg 的表中，<code class="language-plaintext highlighter-rouge">#arg</code> 便是传入参数的个数</p>
 
 <div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="nf">average</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
@@ -296,10 +296,10 @@
 <h2 id="6-lua-运算符">6. Lua 运算符</h2>
 
 <ul>
-  <li>算术运算符： <code class="highlighter-rouge">+</code> <code class="highlighter-rouge">-</code> <code class="highlighter-rouge">*</code> <code class="highlighter-rouge">/</code> <code class="highlighter-rouge">%</code> <code class="highlighter-rouge">^</code></li>
-  <li>关系运算符：<code class="highlighter-rouge">==</code> <code class="highlighter-rouge">~=(不等于)</code> <code class="highlighter-rouge">&gt;</code> <code class="highlighter-rouge">&lt;</code> <code class="highlighter-rouge">&gt;=</code> <code class="highlighter-rouge">&lt;=</code></li>
-  <li>逻辑运算符：<code class="highlighter-rouge">and</code> <code class="highlighter-rouge">or</code> <code class="highlighter-rouge">not</code></li>
-  <li>其它运算符：<code class="highlighter-rouge">..(链接两个字符串)</code> <code class="highlighter-rouge">#(返回字符串或表的程度)</code></li>
+  <li>算术运算符： <code class="language-plaintext highlighter-rouge">+</code> <code class="language-plaintext highlighter-rouge">-</code> <code class="language-plaintext highlighter-rouge">*</code> <code class="language-plaintext highlighter-rouge">/</code> <code class="language-plaintext highlighter-rouge">%</code> <code class="language-plaintext highlighter-rouge">^</code></li>
+  <li>关系运算符：<code class="language-plaintext highlighter-rouge">==</code> <code class="language-plaintext highlighter-rouge">~=(不等于)</code> <code class="language-plaintext highlighter-rouge">&gt;</code> <code class="language-plaintext highlighter-rouge">&lt;</code> <code class="language-plaintext highlighter-rouge">&gt;=</code> <code class="language-plaintext highlighter-rouge">&lt;=</code></li>
+  <li>逻辑运算符：<code class="language-plaintext highlighter-rouge">and</code> <code class="language-plaintext highlighter-rouge">or</code> <code class="language-plaintext highlighter-rouge">not</code></li>
+  <li>其它运算符：<code class="language-plaintext highlighter-rouge">..(链接两个字符串)</code> <code class="language-plaintext highlighter-rouge">#(返回字符串或表的程度)</code></li>
 </ul>
 
 <h2 id="7-lua-字符串">7. Lua 字符串</h2>
@@ -378,7 +378,7 @@
   <li>
     <p>无状态的迭代器</p>
 
-    <p>无状态迭代器的典型的简单的例子是 <code class="highlighter-rouge">ipairs</code>, 他遍历数组的每一个元素</p>
+    <p>无状态迭代器的典型的简单的例子是 <code class="language-plaintext highlighter-rouge">ipairs</code>, 他遍历数组的每一个元素</p>
   </li>
 </ul>
 
@@ -468,7 +468,7 @@
 <span class="n">Python</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- table.remove(table[,pos])
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- table.remove(table[,pos])
 - table.sort(table[,comp])
 </code></pre></div></div>
 
@@ -523,14 +523,14 @@
 <p>对指定的表设置元表</p>
 
 <ul>
-  <li><code class="highlighter-rouge">setmetatable(table, metatable):</code> 对指定的 table 设置元表(metatable),如果元表中存在<code class="highlighter-rouge">__metatable</code>值，<code class="highlighter-rouge">setmetatable</code>会失败</li>
+  <li><code class="language-plaintext highlighter-rouge">setmetatable(table, metatable):</code> 对指定的 table 设置元表(metatable),如果元表中存在<code class="language-plaintext highlighter-rouge">__metatable</code>值，<code class="language-plaintext highlighter-rouge">setmetatable</code>会失败</li>
   <li>
-    <p><code class="highlighter-rouge">getmetatable(table):</code> 返回对象的元表(<code class="highlighter-rouge">metatable</code>)</p>
+    <p><code class="language-plaintext highlighter-rouge">getmetatable(table):</code> 返回对象的元表(<code class="language-plaintext highlighter-rouge">metatable</code>)</p>
   </li>
-  <li><code class="highlighter-rouge">__index</code>元方法</li>
+  <li><code class="language-plaintext highlighter-rouge">__index</code>元方法</li>
 </ul>
 
-<p>当你通过健来访问 table 的时候，如果这个健没有值，那么 Lua 就会寻找该 table 的 metatable(假定有 metatable)中的<code class="highlighter-rouge">__index</code> 健。如果<code class="highlighter-rouge">__index</code>包含一个表格，Lua 会在表格中查找相应的健。</p>
+<p>当你通过健来访问 table 的时候，如果这个健没有值，那么 Lua 就会寻找该 table 的 metatable(假定有 metatable)中的<code class="language-plaintext highlighter-rouge">__index</code> 健。如果<code class="language-plaintext highlighter-rouge">__index</code>包含一个表格，Lua 会在表格中查找相应的健。</p>
 
 <div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Lua</span> <span class="mi">5</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">4</span>  <span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">1994</span><span class="o">-</span><span class="mi">2017</span> <span class="n">Lua</span><span class="p">.</span><span class="n">org</span><span class="p">,</span> <span class="n">PUC</span><span class="o">-</span><span class="n">Rio</span>
 <span class="o">&gt;</span> <span class="n">other</span> <span class="o">=</span> <span class="p">{</span> <span class="n">foo</span> <span class="o">=</span> <span class="mi">3</span><span class="p">}</span>
@@ -541,7 +541,7 @@
 <span class="kc">nil</span>
 </code></pre></div></div>
 
-<p>如果 <code class="highlighter-rouge">__index</code>包含一个函数的话，Lua 就会调用那个函数，table 和健会作为参数传递给函数。<code class="highlighter-rouge">__index</code>元房费查看表中元素是否存在，如果不存在，返回结果为 nil, 如果存在则由<code class="highlighter-rouge">__index</code>返回结果。</p>
+<p>如果 <code class="language-plaintext highlighter-rouge">__index</code>包含一个函数的话，Lua 就会调用那个函数，table 和健会作为参数传递给函数。<code class="language-plaintext highlighter-rouge">__index</code>元房费查看表中元素是否存在，如果不存在，返回结果为 nil, 如果存在则由<code class="language-plaintext highlighter-rouge">__index</code>返回结果。</p>
 
 <div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mytable</span> <span class="o">=</span> <span class="nb">setmetatable</span><span class="p">({</span><span class="n">key1</span> <span class="o">=</span> <span class="s2">"value1"</span><span class="p">},</span> <span class="p">{</span>
     <span class="n">__index</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">mytable</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
@@ -572,10 +572,10 @@
 </blockquote>
 
 <ul>
-  <li><code class="highlighter-rouge">__newindex</code> 元方法</li>
+  <li><code class="language-plaintext highlighter-rouge">__newindex</code> 元方法</li>
 </ul>
 
-<p><code class="highlighter-rouge">__newindex</code>元方法用来对表更新，<code class="highlighter-rouge">__index</code>则用来对表访问。当你给表的一个缺少的索引赋值，解释器就会查找<code class="highlighter-rouge">__newindex</code>元方法；如果存在则调用这个函数而不进行赋值操作。</p>
+<p><code class="language-plaintext highlighter-rouge">__newindex</code>元方法用来对表更新，<code class="language-plaintext highlighter-rouge">__index</code>则用来对表访问。当你给表的一个缺少的索引赋值，解释器就会查找<code class="language-plaintext highlighter-rouge">__newindex</code>元方法；如果存在则调用这个函数而不进行赋值操作。</p>
 
 <pre><code class="language-Lua">mymetatable = {}
 mytable = setmetatable({key1 = "vlaue1"}, { __newindex = mymetatable })
@@ -594,7 +594,7 @@ print(mytable.key1, mymetatable.key1)       -- 新值1 nil
 </blockquote>
 
 <ul>
-  <li><code class="highlighter-rouge">__add</code>方法</li>
+  <li><code class="language-plaintext highlighter-rouge">__add</code>方法</li>
 </ul>
 
 <p>进行两个表相加操作。</p>
@@ -638,7 +638,7 @@ print(mytable.key1, mymetatable.key1)       -- 新值1 nil
 <span class="c1">-- 6	10</span>
 </code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>__add +
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>__add +
 __sub -
 __mul *
 __div /
@@ -651,7 +651,7 @@ __le &lt;=
 </code></pre></div></div>
 
 <ul>
-  <li><code class="highlighter-rouge">__call</code>元方法在 Lua 调用一个值时调用。下面演示了计算表中元素的和</li>
+  <li><code class="language-plaintext highlighter-rouge">__call</code>元方法在 Lua 调用一个值时调用。下面演示了计算表中元素的和</li>
 </ul>
 
 <div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 定义元方法 __call</span>
@@ -676,10 +676,10 @@ __le &lt;=
 </code></pre></div></div>
 
 <ul>
-  <li><code class="highlighter-rouge">__tostring</code>元方法</li>
+  <li><code class="language-plaintext highlighter-rouge">__tostring</code>元方法</li>
 </ul>
 
-<p><code class="highlighter-rouge">__tostring</code>元方法用于修改表的输出行为。</p>
+<p><code class="language-plaintext highlighter-rouge">__tostring</code>元方法用于修改表的输出行为。</p>
 
 <div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mytable</span> <span class="o">=</span> <span class="nb">setmetatable</span><span class="p">({</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">},</span> <span class="p">{</span>
     <span class="n">__tostring</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="n">mytable</span><span class="p">)</span>
