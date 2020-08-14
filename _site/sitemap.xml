@@ -59,13 +59,6 @@
 
 
 	<url>
-		<loc>https://pemako.cn/golang/2020/08/14/test.html</loc>
-		<lastmod>2020-08-14</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.6</priority>
-	</url>
-
-	<url>
 		<loc>https://pemako.cn/golang/2019/03/07/gdb-debug-golang.html</loc>
 		<lastmod>2019-03-07</lastmod>
 		<changefreq>weekly</changefreq>
