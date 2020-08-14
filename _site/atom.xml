@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2020-08-14T23:29:44+08:00</updated>
+ <updated>2020-08-14T23:31:47+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>Mac下gdb调试go程序</title>
+   <title>2020-08-15-test</title>
    <link href="https://pemako.cn/golang/2019/03/07/gdb-debug-golang.html"/>
    <updated>2019-03-07T00:00:00+08:00</updated>
    <id>https://pemako.cn/golang/2019/03/07/gdb-debug-golang</id>
