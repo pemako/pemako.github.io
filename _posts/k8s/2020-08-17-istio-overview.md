@@ -74,8 +74,6 @@ tags: k8s
 - 认证策略 `PeerAuthentication` `RequestAuthentication`
 
 
-
-
 ---
 
 > 名词翻译
