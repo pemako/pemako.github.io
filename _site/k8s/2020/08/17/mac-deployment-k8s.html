@@ -1,0 +1,923 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>Mac上搭建k8s集群实战 - pemako</title>
+    
+    
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/k8s/2020/08/17/istio-overview.html" title="istio概述" />
+    
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>Mac上搭建k8s集群实战 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h1 id="mac上搭建k8s集群实战">Mac上搭建k8s集群实战</h1>
+
+<h2 id="0准备工作">0、准备工作</h2>
+
+<blockquote>
+  <p>下列所需软件可以从<a href="https://pan.baidu.com/s/1RyNsQpQ6oaesWTxrkx3vkw">地址</a> 获取 提取码: <code class="language-plaintext highlighter-rouge">jtxj</code></p>
+</blockquote>
+
+<ul>
+  <li>macOS Catalina 10.15.5 系统
+    <ul>
+      <li>16G 6core</li>
+    </ul>
+  </li>
+  <li>VMware Fusion 11
+    <ul>
+      <li>激活码: <code class="language-plaintext highlighter-rouge">7HYY8-Z8WWY-F1MAN-ECKNY-LUXYX</code></li>
+    </ul>
+  </li>
+  <li>CentOS_7.7.1908_VMM</li>
+  <li>提前解决macOS Catalina系统Vmware Fusion虚拟机黑屏问题
+    <ul>
+      <li>参考: https://zhuanlan.zhihu.com/p/108613520</li>
+      <li>主要包括下面几步进行解决
+        <ul>
+          <li>1)、重启按住 Command+R 进入恢复模式，找到实用工具在终端中输入 <code class="language-plaintext highlighter-rouge">csrutil disable</code>
+            <ul>
+              <li>该命令的作用是关闭macOS的系统完整性保护机制</li>
+              <li>系统显示“Successfully disabled System Integrity Protection. Please restart the machine for the changes to take effect”，表明macOS的系统完整性保护机制已经成功关闭了</li>
+              <li>重启正常模式进入</li>
+            </ul>
+          </li>
+          <li>2)、修改vmware的配置，在系统TCC.db数据库中添加下面三个事件的权限
+            <ul>
+              <li>vmware Fusion的屏幕捕获（Screen Capture）</li>
+              <li>事件监听（Listen Event）</li>
+              <li>事件发送（Post Event）</li>
+            </ul>
+          </li>
+          <li>3)、修改 文件<code class="language-plaintext highlighter-rouge">"/Library/Application Support/com.apple.TCC/TCC.db"</code>
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo chmod 777 com.apple.TCC
+  sudo rm -fr com.apple.TCC/TCC.db
+  tccutil reset All com.vmware.fusion
+  sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'insert into access values ("kTCCServiceScreenCapture", "com.vmware.fusion", 0, 1, 1, "", "", "", "UNUSED", "", 0, 1565595574)'
+  sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'insert into access values ("kTCCServiceListenEvent",   "com.vmware.fusion", 0, 1, 1, "", "", "", "UNUSED", "", 0, 1565595574)'
+  sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'insert into access values ("kTCCServicePostEvent",     "com.vmware.fusion", 0, 1, 1, "", "", "", "UNUSED", "", 0, 1565595574)'
+</code></pre></div>            </div>
+          </li>
+          <li>4)、重启按照第一步进入恢复模式恢复系统的保护机制 <code class="language-plaintext highlighter-rouge">csrutil enable</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>提前配置好<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors">阿里云</a>docker镜像加速器
+    <ul>
+      <li>我的镜像加速地址 https://cxjmzodm.mirror.aliyuncs.com</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="1-环境检查">1 环境检查</h2>
+
+<blockquote>
+  <p>准备工作做好之后在VMware 中安装三个Centos虚拟机，节点规划及信息如下</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>节点</th>
+      <th>主机名</th>
+      <th>ip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>master</td>
+      <td>master.k8s.com</td>
+      <td>192.168.156.128</td>
+    </tr>
+    <tr>
+      <td>node1</td>
+      <td>node1.k8s.com</td>
+      <td>192.168.156.129</td>
+    </tr>
+    <tr>
+      <td>node2</td>
+      <td>node2.k8s.com</td>
+      <td>192.168.156.130</td>
+    </tr>
+    <tr>
+      <td>node3</td>
+      <td>node3.k8s.com</td>
+      <td>192.168.156.131</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>1) 修改主机名 <code class="language-plaintext highlighter-rouge">hostnamectl set-hostname &lt;hostname&gt;</code></li>
+  <li>2) 查看修改结果 <code class="language-plaintext highlighter-rouge">hostnamectl status</code></li>
+  <li>3) 设置<code class="language-plaintext highlighter-rouge">hostname</code>解析</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &lt;&lt; EOF &gt;&gt; /etc/hosts
+192.168.156.128 master.k8s.com
+192.168.156.129 node1.k8s.com
+192.168.156.130 node2.k8s.com
+EOF
+</code></pre></div></div>
+<ul>
+  <li>4) 检查网络，确保各个节点之间互通</li>
+  <li>5) 安装常用基础包</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install -y vim wget yum-utils device-mapper-persistent-data lvm2 bash-completion
+source /etc/profile.d/bash_completion.sh
+</code></pre></div></div>
+
+<ul>
+  <li>6) 关闭防火墙
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">systemctl stop firewalld &amp;&amp; systemctl disable firewalld</code></li>
+    </ul>
+  </li>
+  <li>7) 禁用selinux
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">setenforce 0</code></li>
+      <li><code class="language-plaintext highlighter-rouge">sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config</code></li>
+    </ul>
+  </li>
+  <li>8) 关闭swap
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">swapoff -a</code></li>
+      <li><code class="language-plaintext highlighter-rouge">yes | cp /etc/fstab /etc/fstab_bak</code></li>
+      <li><code class="language-plaintext highlighter-rouge">cat /etc/fstab_bak |grep -v swap &gt; /etc/fstab</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2docker安装">2、Docker安装</h3>
+
+<ul>
+  <li>设置docker源
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code></li>
+    </ul>
+  </li>
+  <li>安装Docker CE
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">yum list docker-ce --showduplicates | sort -r</code></li>
+      <li><code class="language-plaintext highlighter-rouge">yum install -y docker-ce-18.09.6 docker-ce-cli-18.09.6 containerd.io</code></li>
+    </ul>
+  </li>
+  <li>启动docker
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">systemctl start docker</code></li>
+      <li><code class="language-plaintext highlighter-rouge">systemctl enable docker</code></li>
+    </ul>
+  </li>
+  <li>配置镜像加速
+    <blockquote>
+      <p>exec-opt配置<a href="https://kubernetes.io/zh/docs/setup/production-environment/container-runtimes/#cgroup-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F">参考</a></p>
+    </blockquote>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'
+  {
+    "registry-mirrors": ["https://cxjmzodm.mirror.aliyuncs.com"],
+    "exec-opts": ["native.cgroupdriver=systemd"
+  }
+  EOF
+</code></pre></div>    </div>
+  </li>
+  <li>重新加载docker
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">systemctl daemon-reload &amp;&amp; systemctl restart docker</code></li>
+    </ul>
+  </li>
+  <li>验证docker
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">docker --version</code></li>
+      <li><code class="language-plaintext highlighter-rouge">docker run hello-world</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="3k8s安装">3、k8s安装</h2>
+
+<ul>
+  <li>
+    <p>内核参数修改</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
+  net.bridge.bridge-nf-call-ip6tables = 1
+  net.bridge.bridge-nf-call-iptables = 1
+  EOF
+</code></pre></div>    </div>
+    <ul>
+      <li>sysctl -p /etc/sysctl.d/k8s.conf</li>
+    </ul>
+  </li>
+  <li>
+    <p>设置 kubernetes源</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+  [kubernetes]
+  name=Kubernetes
+  baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+  enabled=1
+  gpgcheck=1
+  repo_gpgcheck=1
+  gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+  EOF
+</code></pre></div>    </div>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">yum clean all &amp;&amp; yum -y makecache</code></li>
+    </ul>
+  </li>
+  <li>安装k8s
+    <blockquote>
+      <p>kubelet,kubectl, kubeadm 不要一次性 <code class="language-plaintext highlighter-rouge">yum install -y xxx xxx xxx</code>出错，<a href="https://www.codenong.com/cs107098459/">参考</a></p>
+    </blockquote>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">yum list kubelet --showduplicates | sort -r</code></li>
+      <li><code class="language-plaintext highlighter-rouge">yum install -y kubelet-1.14.2</code></li>
+      <li><code class="language-plaintext highlighter-rouge">yum install -y kubectl-1.14.2</code></li>
+      <li><code class="language-plaintext highlighter-rouge">yum install -y kubeadm-1.14.2</code></li>
+    </ul>
+  </li>
+  <li>启动kubelet并设置开机启动
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">systemctl enable kubelet &amp;&amp; systemctl start kubelet</code></li>
+    </ul>
+  </li>
+  <li>kubelet命令补全
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">echo "source &lt;(kubectl completion bash)" &gt;&gt; ~/.bash_profile</code></li>
+      <li><code class="language-plaintext highlighter-rouge">source .bash_profile</code></li>
+    </ul>
+  </li>
+  <li>编辑下载镜像的脚本 image.sh
+    <blockquote>
+      <p>镜像下载的地址为<code class="language-plaintext highlighter-rouge">k8s.gcr.io</code> 由于网络原因可以提前下载好；可参考<a href="https://github.com/gotok8s/k8s-docker-desktop-for-mac">github</a></p>
+    </blockquote>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">bash -x image.sh</code></li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #!/bin/bash
+  url=registry.cn-hangzhou.aliyuncs.com/google_containers
+  version=v1.14.2
+  images=(`kubeadm config images list --kubernetes-version=$version|awk -F '/' '{print $2}'`)
+  for imagename in ${images[@]} ; do
+    docker pull $url/$imagename
+    docker tag $url/$imagename k8s.gcr.io/$imagename
+    docker rmi -f $url/$imagename
+  done 
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">docker images</code>查看所需images信息</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [root@master ~]# docker images
+  REPOSITORY                                                                 TAG                 IMAGE ID            CREATED             SIZE
+  quay.io/coreos/flannel                                                     v0.12.0-amd64       4e9f801d2217        3 months ago        52.8MB
+  hello-world                                                                latest              bf756fb1ae65        6 months ago        13.3kB
+  k8s.gcr.io/kube-proxy                                                      v1.14.2             5c24210246bb        13 months ago       82.1MB
+  k8s.gcr.io/kube-apiserver                                                  v1.14.2             5eeff402b659        13 months ago       210MB
+  k8s.gcr.io/kube-controller-manager                                         v1.14.2             8be94bdae139        13 months ago       158MB
+  k8s.gcr.io/kube-scheduler                                                  v1.14.2             ee18f350636d        13 months ago       81.6MB
+  k8s.gcr.io/coredns                                                         1.3.1               eb516548c180        17 months ago       40.3MB
+  registry.cn-hangzhou.aliyuncs.com/kuberneters/kubernetes-dashboard-amd64   v1.10.1             f9aed6605b81        18 months ago       122MB
+  k8s.gcr.io/etcd                                                            3.3.10              2c4adeb21b4f        19 months ago       258MB
+  k8s.gcr.io/pause
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<!--![2yXEn.png](https://wx2.sbimg.cn/2020/07/04/2yXEn.png)-->
+
+<blockquote>
+  <p>==注意：以上内容需要在三个节点主机上分别设置, 可使用<a href="https://raw.githubusercontent.com/pemako/to/master/k8s.sh">脚本</a>进行批量设置 ==</p>
+</blockquote>
+
+<h2 id="4k8s相关设置">4、k8s相关设置</h2>
+
+<ul>
+  <li>初始化<code class="language-plaintext highlighter-rouge">master</code>节点，仅需要在<code class="language-plaintext highlighter-rouge">master.k8s.com</code>的主机上设置即可
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">kubeadm init --apiserver-advertise-address 192.168.156.128 --pod-network-cidr=10.244.0.0/16</code></li>
+      <li>看到成功提示信息后继续下面操作，失败则<code class="language-plaintext highlighter-rouge">kubeadm reset</code>后重新初始化</li>
+    </ul>
+  </li>
+  <li>加载环境变量
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">echo "export KUBECONFIG=/etc/kubernetes/admin.conf" &gt;&gt; ~/.bash_profile</code></li>
+      <li><code class="language-plaintext highlighter-rouge">source .bash_profile</code></li>
+    </ul>
+  </li>
+  <li>安装 pod 网络
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code></li>
+      <li>如有网络问题则可以从准备工作的软件包中下载</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>注意: 默认情况下集群不会在master上调度pod</p>
+</blockquote>
+
+<h5 id="把nodes节点加入到集群中">把<code class="language-plaintext highlighter-rouge">nodes</code>节点加入到集群中</h5>
+
+<blockquote>
+  <p>下面几条命令下master节点执行，获取加入时候需要的token信息，如果过期怎么重新生成</p>
+</blockquote>
+
+<ul>
+  <li>查看令牌信息
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">kubeadm token list</code>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [root@master ~]# kubeadm token list
+  TOKEN                     TTL       EXPIRES                     USAGES                   DESCRIPTION                                                EXTRA GROUPS
+  fi723h.k2bjdiz8ehvw8vgz   1h        2020-07-04T15:55:34-04:00   authentication,signing   The default bootstrap token generated by 'kubeadm init'.   system:bootstrappers:kubeadm:default-node-token
+</code></pre></div>        </div>
+        <p><!--![2ypkh.png](https://wx1.sbimg.cn/2020/07/05/2ypkh.png)--></p>
+      </li>
+      <li>如过期重新生成
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">kubeadm token create</code></li>
+        </ul>
+      </li>
+      <li>生成新的加密串
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null |    openssl dgst -sha256 -hex | sed 's/^.* //'</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>下面分别把<code class="language-plaintext highlighter-rouge">node1</code> <code class="language-plaintext highlighter-rouge">node2</code> 节点加入到集群中</p>
+</blockquote>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">kubeadm join 192.168.156.128:6443 --token fi723h.k2bjdiz8ehvw8vgz --discovery-token-ca-cert-hash sha256:bf7b6f860e5bad38b3a99668f9115ea25c3c1c0cd8da8285fb7ce88babe2c855</code></li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">kubeadm join 192.168.156.128:6443 --token fi723h.k2bjdiz8ehvw8vgz --discovery-token-ca-cert-hash sha256:bf7b6f860e5bad38b3a99668f9115ea25c3c1c0cd8da8285fb7ce88babe2c855</code></p>
+  </li>
+  <li>查看节点是否都正确添加,并且状态为 <code class="language-plaintext highlighter-rouge">Ready</code></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@master ~]# kubectl get nodes
+NAME             STATUS   ROLES    AGE   VERSION
+master.k8s.com   Ready    master   20h   v1.14.2
+node1.k8s.com    Ready    &lt;none&gt;   19h   v1.14.2
+node2.k8s.com    Ready    &lt;none&gt;   19h   v1.14.2
+</code></pre></div></div>
+
+<blockquote>
+  <p>==到这里所有的集群部署及初始化完成，下面进行相关验证==</p>
+</blockquote>
+
+<h2 id="5集群测试">5、集群测试</h2>
+
+<ul>
+  <li>命令方式部署应用
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">kubectl run httpd-app --image=httpd --replicas=4</code></li>
+      <li>查看pods会有三个 httpd-app的pods生成
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@master ~]# kubectl get pods
+NAME                         READY   STATUS              RESTARTS   AGE
+httpd-app-6df58645c6-2gk8x   0/1     ContainerCreating   0          54s
+httpd-app-6df58645c6-6f9vw   0/1     ContainerCreating   0          54s
+httpd-app-6df58645c6-qrs49   0/1     ContainerCreating   0          54s
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>通过命令行方式部署<code class="language-plaintext highlighter-rouge">nginx</code>服务，配置文件方式部署应用</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat &gt;&gt; nginx.yml &lt;&lt; EOF
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: nginx
+        image: nginx:latest
+EOF
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">kubectl apply -f nginx.yml</code></li>
+  <li>查看节点状态 <code class="language-plaintext highlighter-rouge">kubectl get nodes</code></li>
+  <li>查看pod状态 <code class="language-plaintext highlighter-rouge">kubectl get pod --all-namespaces</code></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@master ~]# kubectl get pod --all-namespaces -o wide
+NAMESPACE     NAME                                     READY   STATUS    RESTARTS   AGE   IP                NODE             NOMINATED NODE   READINESS GATES
+default       nginx-9d4cf4f77-c7f6d                    1/1     Running   0          93m   10.244.2.10       node2.k8s.com    &lt;none&gt;           &lt;none&gt;
+default       nginx-9d4cf4f77-gh76b                    1/1     Running   0          10m   10.244.1.11       node1.k8s.com    &lt;none&gt;           &lt;none&gt;
+default       nginx-9d4cf4f77-kmx5f                    1/1     Running   0          10m   10.244.1.10       node1.k8s.com    &lt;none&gt;           &lt;none&gt;
+default       nginx-9d4cf4f77-q2dss                    1/1     Running   0          93m   10.244.2.9        node2.k8s.com    &lt;none&gt;           &lt;none&gt;
+kube-system   coredns-fb8b8dccf-94swc                  1/1     Running   64         22h   10.244.0.8        master.k8s.com   &lt;none&gt;           &lt;none&gt;
+.......
+</code></pre></div></div>
+
+<ul>
+  <li>查看副本数 <code class="language-plaintext highlighter-rouge">kubectl get deployments</code>
+    <ul>
+      <li>可以看到nginx被调度到平均调度到 node1 node2节点上</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@master ~]# kubectl get deployments
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   4/4     4            4           94m
+
+
+[root@master ~]# kubectl get pod -o wide
+NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES
+nginx-9d4cf4f77-c7f6d   1/1     Running   0          95m   10.244.2.10   node2.k8s.com   &lt;none&gt;           &lt;none&gt;
+nginx-9d4cf4f77-gh76b   1/1     Running   0          12m   10.244.1.11   node1.k8s.com   &lt;none&gt;           &lt;none&gt;
+nginx-9d4cf4f77-kmx5f   1/1     Running   0          12m   10.244.1.10   node1.k8s.com   &lt;none&gt;           &lt;none&gt;
+nginx-9d4cf4f77-q2dss   1/1     Running   0          95m   10.244.2.9    node2.k8s.com   &lt;none&gt;           &lt;none&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>查看集群基本组件状态</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@master ~]# kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+controller-manager   Healthy   ok
+scheduler            Healthy   ok
+etcd-0               Healthy   {"health":"true"}
+</code></pre></div></div>
+
+<h2 id="6dashboard安装">6、Dashboard安装</h2>
+
+<ul>
+  <li>准备<code class="language-plaintext highlighter-rouge">kubernetes-dashboard.ymal</code>文件</li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Copyright 2017 The Kubernetes Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the "License");</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an "AS IS" BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="c1"># ------------------- Dashboard Secrets ------------------- #</span>
+
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Secret</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-certs</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">Opaque</span>
+
+<span class="nn">---</span>
+
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Secret</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-csrf</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">Opaque</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="na">csrf</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+
+<span class="nn">---</span>
+<span class="c1"># ------------------- Dashboard Service Account ------------------- #</span>
+
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+
+<span class="nn">---</span>
+<span class="c1"># ------------------- Dashboard Role &amp; Role Binding ------------------- #</span>
+
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Role</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-minimal</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">rules</span><span class="pi">:</span>
+  <span class="c1"># Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.</span>
+<span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">"</span><span class="pi">]</span>
+  <span class="na">resources</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">secrets"</span><span class="pi">]</span>
+  <span class="na">verbs</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">create"</span><span class="pi">]</span>
+  <span class="c1"># Allow Dashboard to create 'kubernetes-dashboard-settings' config map.</span>
+<span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">"</span><span class="pi">]</span>
+  <span class="na">resources</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">configmaps"</span><span class="pi">]</span>
+  <span class="na">verbs</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">create"</span><span class="pi">]</span>
+  <span class="c1"># Allow Dashboard to get, update and delete Dashboard exclusive secrets.</span>
+<span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">"</span><span class="pi">]</span>
+  <span class="na">resources</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">secrets"</span><span class="pi">]</span>
+  <span class="na">resourceNames</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">kubernetes-dashboard-key-holder"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">kubernetes-dashboard-certs"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">kubernetes-dashboard-csrf"</span><span class="pi">]</span>
+  <span class="na">verbs</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">get"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">update"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">delete"</span><span class="pi">]</span>
+  <span class="c1"># Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.</span>
+<span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">"</span><span class="pi">]</span>
+  <span class="na">resources</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">configmaps"</span><span class="pi">]</span>
+  <span class="na">resourceNames</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">kubernetes-dashboard-settings"</span><span class="pi">]</span>
+  <span class="na">verbs</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">get"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">update"</span><span class="pi">]</span>
+  <span class="c1"># Allow Dashboard to get metrics from heapster.</span>
+<span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">"</span><span class="pi">]</span>
+  <span class="na">resources</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">services"</span><span class="pi">]</span>
+  <span class="na">resourceNames</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">heapster"</span><span class="pi">]</span>
+  <span class="na">verbs</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">proxy"</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="na">apiGroups</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">"</span><span class="pi">]</span>
+  <span class="na">resources</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">services/proxy"</span><span class="pi">]</span>
+  <span class="na">resourceNames</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">heapster"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">http:heapster:"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">https:heapster:"</span><span class="pi">]</span>
+  <span class="na">verbs</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">get"</span><span class="pi">]</span>
+
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">RoleBinding</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-minimal</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">roleRef</span><span class="pi">:</span>
+  <span class="na">apiGroup</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">Role</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-minimal</span>
+<span class="na">subjects</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+
+<span class="nn">---</span>
+<span class="c1"># ------------------- Dashboard Deployment ------------------- #</span>
+
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">revisionHistoryLimit</span><span class="pi">:</span> <span class="m">10</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">registry.cn-hangzhou.aliyuncs.com/kuberneters/kubernetes-dashboard-amd64:v1.10.1</span>
+        <span class="na">ports</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">8443</span>
+          <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+        <span class="na">args</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">--auto-generate-certificates</span>
+          <span class="c1"># Uncomment the following line to manually specify Kubernetes API server Host</span>
+          <span class="c1"># If not specified, Dashboard will attempt to auto discover the API server and connect</span>
+          <span class="c1"># to it. Uncomment only if the default does not work.</span>
+          <span class="c1"># - --apiserver-host=http://my-address:port</span>
+        <span class="na">volumeMounts</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-certs</span>
+          <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/certs</span>
+          <span class="c1"># Create on-disk volume to store exec logs</span>
+        <span class="pi">-</span> <span class="na">mountPath</span><span class="pi">:</span> <span class="s">/tmp</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">tmp-volume</span>
+        <span class="na">livenessProbe</span><span class="pi">:</span>
+          <span class="na">httpGet</span><span class="pi">:</span>
+            <span class="na">scheme</span><span class="pi">:</span> <span class="s">HTTPS</span>
+            <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+            <span class="na">port</span><span class="pi">:</span> <span class="m">8443</span>
+          <span class="na">initialDelaySeconds</span><span class="pi">:</span> <span class="m">30</span>
+          <span class="na">timeoutSeconds</span><span class="pi">:</span> <span class="m">30</span>
+      <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-certs</span>
+        <span class="na">secret</span><span class="pi">:</span>
+          <span class="na">secretName</span><span class="pi">:</span> <span class="s">kubernetes-dashboard-certs</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">tmp-volume</span>
+        <span class="na">emptyDir</span><span class="pi">:</span> <span class="pi">{}</span>
+      <span class="na">serviceAccountName</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+      <span class="c1"># Comment the following tolerations if Dashboard must not be deployed on master</span>
+      <span class="na">tolerations</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">node-role.kubernetes.io/master</span>
+        <span class="na">effect</span><span class="pi">:</span> <span class="s">NoSchedule</span>
+
+<span class="nn">---</span>
+<span class="c1"># ------------------- Dashboard Service ------------------- #</span>
+
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">443</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">8443</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30001</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">k8s-app</span><span class="pi">:</span> <span class="s">kubernetes-dashboard</span>
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">dashboard-admin</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+
+<span class="nn">---</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1beta1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRoleBinding</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">dashboard-admin</span>
+<span class="na">subjects</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">dashboard-admin</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">roleRef</span><span class="pi">:</span>
+  <span class="na">apiGroup</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRole</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">cluster-admin</span>
+</code></pre></div></div>
+
+<ul>
+  <li>部署Dashboard
+    <ul>
+      <li>kubectl apply -f kubernetes-dashboard.yaml</li>
+    </ul>
+  </li>
+  <li>查看状态
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">kubectl get deployment kubernetes-dashboard -n kube-system</code>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [root@master ~]# kubectl get deployment kubernetes-dashboard -n kube-system
+  NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+  kubernetes-dashboard   1/1     1            1           30m
+</code></pre></div>        </div>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">kubectl get services -n kube-system</code></li>
+    </ul>
+  </li>
+  <li>查看令牌
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">kubectl describe secrets -n kube-system dashboard-admin</code></li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [root@master ~]# kubectl describe secrets -n kube-system dashboard-admin
+  Name:         dashboard-admin-token-xwcsc
+  Namespace:    kube-system
+  Labels:       &lt;none&gt;
+  Annotations:  kubernetes.io/service-account.name: dashboard-admin
+                kubernetes.io/service-account.uid: fd1745bb-be20-11ea-9ef8-005056295e82
+    
+  Type:  kubernetes.io/service-account-token
+    
+  Data
+  ====
+  ca.crt:     1025 bytes
+  namespace:  11 bytes
+  token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tdG9rZW4teHdjc2MiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGFzaGJvYXJkLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiZmQxNzQ1YmItYmUyMC0xMWVhLTllZjgtMDA1MDU2Mjk1ZTgyIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRhc2hib2FyZC1hZG1pbiJ9.ZSFNSVR561VS4QnkCPzBWUe8p4O25OBtWhZgpWSTzhIZP57vYzyoTCMW9KW08teSPGAlNwdGNl572UKowjKBSsrVNg-dCFpThls4T4AAKnFkxxsb3OysvCIrVYe18W319lGbvMvxqIXR-iZq3MU6mnhO-otznkA7W_Ob_PFJE5nx0yps-VYsA8s1kZJ9Z3KBJXPrMUavUzsEJReATf5LgHykdyTpC1KZjFXsDRAhPyvPXcxqjsRIZVwrOGb_Coc0Eb3ZnmceXU-sRAUG5EBJEifaabz3_8lDCp-MA7as4pFHfrSG4S0IzJnTmCDxGNpHOmnX-Fl58nd2jGx_2He1fQ
+</code></pre></div>    </div>
+  </li>
+  <li>web访问
+    <blockquote>
+      <p>注意一定要使用https 通过token的方式访问；dashboard部署在了master节点（ip:192.168.156.128）映射的端口为 <code class="language-plaintext highlighter-rouge">30001</code> 故访问的时候直接使用 https://192.168.156.128:30001/ 即可</p>
+    </blockquote>
+  </li>
+  <li>效果展示
+  <img src="https://wx2.sbimg.cn/2020/07/05/2yPHK.png" alt="2yPHK.png" />
+  <img src="https://wx1.sbimg.cn/2020/07/05/2yDAI.png" alt="2yDAI.png" /></li>
+</ul>
+
+<h2 id="7问题及排错">7、问题及排错</h2>
+
+<ul>
+  <li>在集群在节点运行kubectl出现的错误：The connection to the server localhost:8080 was refused - did you specify the right host or port?
+    <ul>
+      <li><a href="https://blog.csdn.net/lfm940624/article/details/84706118">参考</a></li>
+      <li>将主节点（master节点）中的【/etc/kubernetes/admin.conf】文件拷贝到从节点相同目录下:</li>
+      <li>配置环境变量
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  scp -r /etc/kubernetes/admin.conf ${node1}:/etc/kubernetes/admin.conf
+  echo “export KUBECONFIG=/etc/kubernetes/admin.conf” &gt;&gt; ~/.bash_profile
+  source ~/.bash_profile
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>kubeadm 初始化主节点的相关错误
+    <blockquote>
+      <p>初始化的时候回做一系列的检查是否符合条件，根据相关的错误进行设置即可，如会有下面几项需要设置。参考<a href="https://github.com/kubernetes/kubeadm/blob/master/docs/design/design_v1.10.md#kubeadm-init-phases">kubeadm github</a></p>
+    </blockquote>
+
+    <ul>
+      <li>[error] if /proc/sys/net/bridge/bridge-nf-call-iptables file does not exist/does not contain 1.</li>
+      <li>[error] if swap is on</li>
+      <li>[warning] if firewalld is active</li>
+      <li>[error] if advertise address is ipv6 and /proc/sys/net/bridge/bridge-nf-call-ip6tables does not exist/does not contain 1.</li>
+      <li>….</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="附录参考">附录参考</h3>
+
+<ul>
+  <li>https://github.com/kubernetes/kubeadm/blob/master/docs/design/design_v1.10.md#kubeadm-init-phases</li>
+  <li>https://www.backendcloud.cn/2020/04/10/centos7-7-k8s-3nodes/</li>
+  <li>https://developer.aliyun.com/article/754337</li>
+</ul>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#k8s-ref" rel="tag">k8s</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/k8s/2020/08/17/istio-overview.html" title="istio概述">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "Mac上搭建k8s集群实战"; //请用代码生成文章标题
+        var wumiiTags = "k8s"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["k8s"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="Mac上搭建k8s集群实战" data-url="https://pemako.cn/k8s/2020/08/17/mac-deployment-k8s.html" data-thread-key="/k8s/2020/08/17/mac-deployment-k8s"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

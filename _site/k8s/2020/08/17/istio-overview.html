@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="baidu-site-verification" content="4b3e974cd0c8e6f4efe03ef247e355e4"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <title>istio概述 - pemako</title>
+    
+    
+    <meta name="author" content="pemako">
+    <link rel="alternate" title="pemako" href="/atom.xml" type="application/rss+xml" />
+  	<!--[if lt IE 9]>
+  	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+  	<script src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/assets/themes/twitter/css/style.css?v=201312251006" rel="stylesheet" media="all" />
+    <link href="/assets/themes/twitter/css/pygments.css?v=201312251006" rel="stylesheet" media="all" />
+
+    <link rel="index prerender" title="pemako" href="/" />
+    
+    <link rel="prev prerender" href="/golang/2019/03/07/gdb-debug-golang.html" title="2020-08-15-test" />
+    
+    
+    <link rel="next prerender" href="/k8s/2020/08/17/mac-deployment-k8s.html" title="Mac上搭建k8s集群实战" />
+    
+    
+    <link rel="apple-touch-icon" href="/assets/themes/twitter/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/themes/twitter/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/themes/twitter/images/apple-touch-icon-114x114.png">
+    
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand hidden-phone" href="/">pemako</a>
+          <ul class="nav">
+            <li class="visible-phone"><a href="/">首页</a></li>
+            <!-- <li><a href="/codepuzzle.html">代码之谜</a></li> -->
+            <li><a href="/categories.html">目录</a></li>
+            <!-- <li><a href="/sitemap.xml">订阅</a></li> -->
+            <!-- <li class="hidden-phone"><a href="/resume.html">关于我</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">我在这里<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!--<li><a href="https://www.domob.cn/" target="_blank" rel="noopener">Domob.cn</a></li>
+                <li><a href="http://weibo.com/pemako" target="_blank" rel="noopener">微博</a></li>
+                <li><a href="http://www.zhihu.com/people/pemako" target="_blank" rel="noopener">知乎</a></li>
+                <li><a href="https://segmentfault.com/u/pemako" target="_blank" rel="noopener">SegmentFault</a></li>-->
+                <li><a href="https://github.com/pemako" target="_blank" rel="noopener">GitHub</a></li>
+                <!-- <li><a href="http://stackoverflow.com/users/343194/justjavac" target="_blank" rel="noopener">StackOverFlow</a></li> -->
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+     
+
+<div class="page-header">
+  <h1>istio概述 <small></small></h1>
+</div>
+<div class="row-fluid">
+  <div class="span12">  
+    <div id="article">
+    <h1 id="概述">概述</h1>
+
+<p><img src="https://raw.githubusercontent.com/pemako/imgs/master/public/20200715161731.png" alt="" /></p>
+
+<h2 id="1-连接">1. 连接</h2>
+
+<ul>
+  <li>流量管理</li>
+  <li>负载均衡</li>
+  <li>灰度发布</li>
+</ul>
+
+<h2 id="2-安全">2. 安全</h2>
+
+<ul>
+  <li>认证</li>
+  <li>鉴权</li>
+</ul>
+
+<h2 id="3-控制">3. 控制</h2>
+
+<ul>
+  <li>限流</li>
+  <li>ACL</li>
+</ul>
+
+<h2 id="4-观察">4. 观察</h2>
+
+<ul>
+  <li>监控</li>
+  <li>调用链</li>
+</ul>
+
+<hr />
+
+<h1 id="二istio-架构">二、istio 架构</h1>
+
+<ul>
+  <li>数据平面由一组智能代理（Envoy）组成，被部署为 sidecar。这些代理通过一个通用的策略和遥测中心（Mixer）传递和控制微服务之间的所有网络通信。</li>
+  <li>控制平面管理并配置代理来进行流量路由。此外，控制平面配置 Mixer 来执行策略和收集遥测数据。</li>
+</ul>
+
+<p><img src="https://istio.io/v1.5/zh/docs/ops/deployment/architecture/arch.svg" alt="" /></p>
+
+<h2 id="组件">组件</h2>
+
+<ul>
+  <li>Mixer (适配组件) 在整个服务网格中执行访问控制和策略使用，并从 Envoy 代理和其他服务收集遥测数据</li>
+  <li>Pilot (策略配置组件)Pilot 为 Envoy sidecar 提供服务发现、用于智能路由的流量管理功能（例如，A/B 测试、金丝雀发布等）以及弹性功能（超时、重试、熔断器等）</li>
+  <li>Citadel 安全组件</li>
+  <li>Galley 配置管理，验证，分发</li>
+</ul>
+
+<h3 id="istio-4个配置资源落地所有流量管理需求">istio 4个配置资源，落地所有流量管理需求</h3>
+
+<ul>
+  <li>虚拟服务 <code class="language-plaintext highlighter-rouge">VirtualService</code> 实现服务请求路由规则的功能</li>
+  <li>目标规则 <code class="language-plaintext highlighter-rouge">DestinationRule</code> 实现目标服务的负载均衡，服务发现，故障处理和故障注入的功能</li>
+  <li>网关     <code class="language-plaintext highlighter-rouge">Gateway</code> 让服务网格内的服务，可以被外网访问</li>
+  <li>服务入口 <code class="language-plaintext highlighter-rouge">ServiceEntry</code> 让服务网格内的服务，可以访问网格外的服务</li>
+</ul>
+
+<h3 id="安全">安全</h3>
+
+<blockquote>
+  <p>安装架构</p>
+</blockquote>
+
+<p><img src="https://istio.io/v1.5/zh/docs/concepts/security/arch-sec.svg" alt="安全架构" /></p>
+
+<blockquote>
+  <p>授权架构</p>
+</blockquote>
+
+<p><img src="https://istio.io/v1.5/zh/docs/concepts/security/authz.svg" alt="授权架构" /></p>
+
+<ul>
+  <li>认证策略 <code class="language-plaintext highlighter-rouge">PeerAuthentication</code> <code class="language-plaintext highlighter-rouge">RequestAuthentication</code></li>
+</ul>
+
+<hr />
+
+<blockquote>
+  <p>名词翻译</p>
+</blockquote>
+
+<ol>
+  <li>策略执行点（Policy Enforcement Points(PEPs)</li>
+  <li>秘钥发现服务 secret discovery service（SDS）</li>
+  <li>指标（Metric）</li>
+</ol>
+
+    <p>继续阅读关于
+    
+    
+    
+       
+      	<a href="/tags.html#k8s-ref" rel="tag">k8s</a>
+      
+    
+    
+    
+    的文章</p>
+    </div>  
+
+    <hr/>
+
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/golang/2019/03/07/gdb-debug-golang.html" title="2020-08-15-test">&larr; 上一篇</a></li>
+      
+        <li><a href="/archive.html">归档</a></li>
+      
+        <li class="next"><a href="/k8s/2020/08/17/mac-deployment-k8s.html" title="Mac上搭建k8s集群实战">下一篇 &rarr;</a></li>
+      
+      </ul>
+    </div>
+    
+    <!-- <p>
+      欢迎订阅我的微信公众帐号，只推送原创文字。欢迎扫描二维码订阅：<br/>
+      <img src="/assets/images/weixin-justjavac.jpg" alt="justjavac微信公众帐号"/>
+    </p>
+    <hr/> -->
+   <!-- wumi 阅读推荐
+    <script type="text/javascript">
+        var wumiiPermaLink = ""; //请用代码生成文章永久的链接
+        var wumiiTitle = "istio概述"; //请用代码生成文章标题
+        var wumiiTags = "k8s"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+        var wumiiCategories = ["k8s"];
+        var wumiiSitePrefix = "http://pemako.cn/";
+        var wumiiParams = "&num=5&mode=3&pf=JAVASCRIPT";
+    </script>
+    <script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+    <a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+        <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+    </a>
+    -->
+    <hr>
+
+    <!-- Duoshuo Comment BEGIN -->
+    <div id="comments" class="ds-thread" data-title="istio概述" data-url="https://pemako.cn/k8s/2020/08/17/istio-overview.html" data-thread-key="/k8s/2020/08/17/istio-overview"></div>
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name:"pemako"};
+      (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
+<!-- Duoshuo Comment END -->
+  </div>
+ 
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; <a href="http://weibo.com/pemako" rel="noopener" target="_blank">@pemako</a> 2017
+          <!--基于 <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework" rel="nofollow noopener">Jekyll Bootstrap</a>
+              和 <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow noopener">Twitter Bootstrap</a> 构建, --!>
+          源码托管在 <a href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">Github</a> 上
+        </p>
+      </footer>
+
+    </div>
+
+    <a class="v-fork-me" href="https://github.com/pemako/pemako.github.io" target="_blank" rel="noopener">
+      <img src="/assets/themes/twitter/bootstrap/img/forkme_right_darkblue.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="//cdn.bootcss.com/jquery/1.9.0/jquery.js"></script>
+    <script src="//cdn.bootcss.com/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-affix.js"></script>
+
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b3e974cd0c8e6f4efe03ef247e355e4";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+       
+  </body>
+</html>
+

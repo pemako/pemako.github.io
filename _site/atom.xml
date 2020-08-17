@@ -4,13 +4,868 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2020-08-14T23:50:12+08:00</updated>
+ <updated>2020-08-17T09:28:20+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
    <email>pemakoa@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Mac上搭建k8s集群实战</title>
+   <link href="https://pemako.cn/k8s/2020/08/17/mac-deployment-k8s.html"/>
+   <updated>2020-08-17T00:00:00+08:00</updated>
+   <id>https://pemako.cn/k8s/2020/08/17/mac-deployment-k8s</id>
+   <content type="html">
+   	&lt;h1 id=&quot;mac上搭建k8s集群实战&quot;&gt;Mac上搭建k8s集群实战&lt;/h1&gt;
+
+&lt;h2 id=&quot;0准备工作&quot;&gt;0、准备工作&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;下列所需软件可以从&lt;a href=&quot;https://pan.baidu.com/s/1RyNsQpQ6oaesWTxrkx3vkw&quot;&gt;地址&lt;/a&gt; 获取 提取码: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jtxj&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;macOS Catalina 10.15.5 系统
+    &lt;ul&gt;
+      &lt;li&gt;16G 6core&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;VMware Fusion 11
+    &lt;ul&gt;
+      &lt;li&gt;激活码: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;7HYY8-Z8WWY-F1MAN-ECKNY-LUXYX&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CentOS_7.7.1908_VMM&lt;/li&gt;
+  &lt;li&gt;提前解决macOS Catalina系统Vmware Fusion虚拟机黑屏问题
+    &lt;ul&gt;
+      &lt;li&gt;参考: https://zhuanlan.zhihu.com/p/108613520&lt;/li&gt;
+      &lt;li&gt;主要包括下面几步进行解决
+        &lt;ul&gt;
+          &lt;li&gt;1)、重启按住 Command+R 进入恢复模式，找到实用工具在终端中输入 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;csrutil disable&lt;/code&gt;
+            &lt;ul&gt;
+              &lt;li&gt;该命令的作用是关闭macOS的系统完整性保护机制&lt;/li&gt;
+              &lt;li&gt;系统显示“Successfully disabled System Integrity Protection. Please restart the machine for the changes to take effect”，表明macOS的系统完整性保护机制已经成功关闭了&lt;/li&gt;
+              &lt;li&gt;重启正常模式进入&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;2)、修改vmware的配置，在系统TCC.db数据库中添加下面三个事件的权限
+            &lt;ul&gt;
+              &lt;li&gt;vmware Fusion的屏幕捕获（Screen Capture）&lt;/li&gt;
+              &lt;li&gt;事件监听（Listen Event）&lt;/li&gt;
+              &lt;li&gt;事件发送（Post Event）&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;3)、修改 文件&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;/Library/Application Support/com.apple.TCC/TCC.db&quot;&lt;/code&gt;
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  sudo chmod 777 com.apple.TCC
+  sudo rm -fr com.apple.TCC/TCC.db
+  tccutil reset All com.vmware.fusion
+  sudo sqlite3 &quot;/Library/Application Support/com.apple.TCC/TCC.db&quot; 'insert into access values (&quot;kTCCServiceScreenCapture&quot;, &quot;com.vmware.fusion&quot;, 0, 1, 1, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;UNUSED&quot;, &quot;&quot;, 0, 1565595574)'
+  sudo sqlite3 &quot;/Library/Application Support/com.apple.TCC/TCC.db&quot; 'insert into access values (&quot;kTCCServiceListenEvent&quot;,   &quot;com.vmware.fusion&quot;, 0, 1, 1, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;UNUSED&quot;, &quot;&quot;, 0, 1565595574)'
+  sudo sqlite3 &quot;/Library/Application Support/com.apple.TCC/TCC.db&quot; 'insert into access values (&quot;kTCCServicePostEvent&quot;,     &quot;com.vmware.fusion&quot;, 0, 1, 1, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;UNUSED&quot;, &quot;&quot;, 0, 1565595574)'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;4)、重启按照第一步进入恢复模式恢复系统的保护机制 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;csrutil enable&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;提前配置好&lt;a href=&quot;https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors&quot;&gt;阿里云&lt;/a&gt;docker镜像加速器
+    &lt;ul&gt;
+      &lt;li&gt;我的镜像加速地址 https://cxjmzodm.mirror.aliyuncs.com&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-环境检查&quot;&gt;1 环境检查&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;准备工作做好之后在VMware 中安装三个Centos虚拟机，节点规划及信息如下&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;节点&lt;/th&gt;
+      &lt;th&gt;主机名&lt;/th&gt;
+      &lt;th&gt;ip&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;master&lt;/td&gt;
+      &lt;td&gt;master.k8s.com&lt;/td&gt;
+      &lt;td&gt;192.168.156.128&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;node1&lt;/td&gt;
+      &lt;td&gt;node1.k8s.com&lt;/td&gt;
+      &lt;td&gt;192.168.156.129&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;node2&lt;/td&gt;
+      &lt;td&gt;node2.k8s.com&lt;/td&gt;
+      &lt;td&gt;192.168.156.130&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;node3&lt;/td&gt;
+      &lt;td&gt;node3.k8s.com&lt;/td&gt;
+      &lt;td&gt;192.168.156.131&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;1) 修改主机名 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hostnamectl set-hostname &amp;lt;hostname&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;2) 查看修改结果 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hostnamectl status&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;3) 设置&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hostname&lt;/code&gt;解析&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt;&amp;gt; /etc/hosts
+192.168.156.128 master.k8s.com
+192.168.156.129 node1.k8s.com
+192.168.156.130 node2.k8s.com
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;4) 检查网络，确保各个节点之间互通&lt;/li&gt;
+  &lt;li&gt;5) 安装常用基础包&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum install -y vim wget yum-utils device-mapper-persistent-data lvm2 bash-completion
+source /etc/profile.d/bash_completion.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;6) 关闭防火墙
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemctl stop firewalld &amp;amp;&amp;amp; systemctl disable firewalld&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;7) 禁用selinux
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setenforce 0&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/selinux/config&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;8) 关闭swap
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;swapoff -a&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yes | cp /etc/fstab /etc/fstab_bak&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cat /etc/fstab_bak |grep -v swap &amp;gt; /etc/fstab&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2docker安装&quot;&gt;2、Docker安装&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;设置docker源
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;安装Docker CE
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum list docker-ce --showduplicates | sort -r&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum install -y docker-ce-18.09.6 docker-ce-cli-18.09.6 containerd.io&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;启动docker
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemctl start docker&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemctl enable docker&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;配置镜像加速
+    &lt;blockquote&gt;
+      &lt;p&gt;exec-opt配置&lt;a href=&quot;https://kubernetes.io/zh/docs/setup/production-environment/container-runtimes/#cgroup-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  sudo tee /etc/docker/daemon.json &amp;lt;&amp;lt;-'EOF'
+  {
+    &quot;registry-mirrors&quot;: [&quot;https://cxjmzodm.mirror.aliyuncs.com&quot;],
+    &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;
+  }
+  EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;重新加载docker
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemctl daemon-reload &amp;amp;&amp;amp; systemctl restart docker&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;验证docker
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker --version&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run hello-world&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3k8s安装&quot;&gt;3、k8s安装&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;内核参数修改&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  cat &amp;lt;&amp;lt;EOF &amp;gt;  /etc/sysctl.d/k8s.conf
+  net.bridge.bridge-nf-call-ip6tables = 1
+  net.bridge.bridge-nf-call-iptables = 1
+  EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;sysctl -p /etc/sysctl.d/k8s.conf&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;设置 kubernetes源&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  cat &amp;lt;&amp;lt;EOF &amp;gt; /etc/yum.repos.d/kubernetes.repo
+  [kubernetes]
+  name=Kubernetes
+  baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+  enabled=1
+  gpgcheck=1
+  repo_gpgcheck=1
+  gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+  EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum clean all &amp;amp;&amp;amp; yum -y makecache&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;安装k8s
+    &lt;blockquote&gt;
+      &lt;p&gt;kubelet,kubectl, kubeadm 不要一次性 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum install -y xxx xxx xxx&lt;/code&gt;出错，&lt;a href=&quot;https://www.codenong.com/cs107098459/&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum list kubelet --showduplicates | sort -r&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum install -y kubelet-1.14.2&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum install -y kubectl-1.14.2&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum install -y kubeadm-1.14.2&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;启动kubelet并设置开机启动
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemctl enable kubelet &amp;amp;&amp;amp; systemctl start kubelet&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;kubelet命令补全
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo &quot;source &amp;lt;(kubectl completion bash)&quot; &amp;gt;&amp;gt; ~/.bash_profile&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source .bash_profile&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;编辑下载镜像的脚本 image.sh
+    &lt;blockquote&gt;
+      &lt;p&gt;镜像下载的地址为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;k8s.gcr.io&lt;/code&gt; 由于网络原因可以提前下载好；可参考&lt;a href=&quot;https://github.com/gotok8s/k8s-docker-desktop-for-mac&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bash -x image.sh&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  #!/bin/bash
+  url=registry.cn-hangzhou.aliyuncs.com/google_containers
+  version=v1.14.2
+  images=(`kubeadm config images list --kubernetes-version=$version|awk -F '/' '{print $2}'`)
+  for imagename in ${images[@]} ; do
+    docker pull $url/$imagename
+    docker tag $url/$imagename k8s.gcr.io/$imagename
+    docker rmi -f $url/$imagename
+  done 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker images&lt;/code&gt;查看所需images信息&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [root@master ~]# docker images
+  REPOSITORY                                                                 TAG                 IMAGE ID            CREATED             SIZE
+  quay.io/coreos/flannel                                                     v0.12.0-amd64       4e9f801d2217        3 months ago        52.8MB
+  hello-world                                                                latest              bf756fb1ae65        6 months ago        13.3kB
+  k8s.gcr.io/kube-proxy                                                      v1.14.2             5c24210246bb        13 months ago       82.1MB
+  k8s.gcr.io/kube-apiserver                                                  v1.14.2             5eeff402b659        13 months ago       210MB
+  k8s.gcr.io/kube-controller-manager                                         v1.14.2             8be94bdae139        13 months ago       158MB
+  k8s.gcr.io/kube-scheduler                                                  v1.14.2             ee18f350636d        13 months ago       81.6MB
+  k8s.gcr.io/coredns                                                         1.3.1               eb516548c180        17 months ago       40.3MB
+  registry.cn-hangzhou.aliyuncs.com/kuberneters/kubernetes-dashboard-amd64   v1.10.1             f9aed6605b81        18 months ago       122MB
+  k8s.gcr.io/etcd                                                            3.3.10              2c4adeb21b4f        19 months ago       258MB
+  k8s.gcr.io/pause
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!--![2yXEn.png](https://wx2.sbimg.cn/2020/07/04/2yXEn.png)--&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;==注意：以上内容需要在三个节点主机上分别设置, 可使用&lt;a href=&quot;https://raw.githubusercontent.com/pemako/to/master/k8s.sh&quot;&gt;脚本&lt;/a&gt;进行批量设置 ==&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;4k8s相关设置&quot;&gt;4、k8s相关设置&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;初始化&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;节点，仅需要在&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master.k8s.com&lt;/code&gt;的主机上设置即可
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm init --apiserver-advertise-address 192.168.156.128 --pod-network-cidr=10.244.0.0/16&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;看到成功提示信息后继续下面操作，失败则&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm reset&lt;/code&gt;后重新初始化&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;加载环境变量
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;echo &quot;export KUBECONFIG=/etc/kubernetes/admin.conf&quot; &amp;gt;&amp;gt; ~/.bash_profile&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source .bash_profile&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;安装 pod 网络
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;如有网络问题则可以从准备工作的软件包中下载&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注意: 默认情况下集群不会在master上调度pod&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;把nodes节点加入到集群中&quot;&gt;把&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nodes&lt;/code&gt;节点加入到集群中&lt;/h5&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;下面几条命令下master节点执行，获取加入时候需要的token信息，如果过期怎么重新生成&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看令牌信息
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm token list&lt;/code&gt;
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [root@master ~]# kubeadm token list
+  TOKEN                     TTL       EXPIRES                     USAGES                   DESCRIPTION                                                EXTRA GROUPS
+  fi723h.k2bjdiz8ehvw8vgz   1h        2020-07-04T15:55:34-04:00   authentication,signing   The default bootstrap token generated by 'kubeadm init'.   system:bootstrappers:kubeadm:default-node-token
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+        &lt;p&gt;&lt;!--![2ypkh.png](https://wx1.sbimg.cn/2020/07/05/2ypkh.png)--&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;如过期重新生成
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm token create&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;生成新的加密串
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&amp;gt;/dev/null |    openssl dgst -sha256 -hex | sed 's/^.* //'&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;下面分别把&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node1&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node2&lt;/code&gt; 节点加入到集群中&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm join 192.168.156.128:6443 --token fi723h.k2bjdiz8ehvw8vgz --discovery-token-ca-cert-hash sha256:bf7b6f860e5bad38b3a99668f9115ea25c3c1c0cd8da8285fb7ce88babe2c855&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubeadm join 192.168.156.128:6443 --token fi723h.k2bjdiz8ehvw8vgz --discovery-token-ca-cert-hash sha256:bf7b6f860e5bad38b3a99668f9115ea25c3c1c0cd8da8285fb7ce88babe2c855&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;查看节点是否都正确添加,并且状态为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ready&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@master ~]# kubectl get nodes
+NAME             STATUS   ROLES    AGE   VERSION
+master.k8s.com   Ready    master   20h   v1.14.2
+node1.k8s.com    Ready    &amp;lt;none&amp;gt;   19h   v1.14.2
+node2.k8s.com    Ready    &amp;lt;none&amp;gt;   19h   v1.14.2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;==到这里所有的集群部署及初始化完成，下面进行相关验证==&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;5集群测试&quot;&gt;5、集群测试&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;命令方式部署应用
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl run httpd-app --image=httpd --replicas=4&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;查看pods会有三个 httpd-app的pods生成
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@master ~]# kubectl get pods
+NAME                         READY   STATUS              RESTARTS   AGE
+httpd-app-6df58645c6-2gk8x   0/1     ContainerCreating   0          54s
+httpd-app-6df58645c6-6f9vw   0/1     ContainerCreating   0          54s
+httpd-app-6df58645c6-qrs49   0/1     ContainerCreating   0          54s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;通过命令行方式部署&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nginx&lt;/code&gt;服务，配置文件方式部署应用&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat &amp;gt;&amp;gt; nginx.yml &amp;lt;&amp;lt; EOF
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: nginx
+        image: nginx:latest
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl apply -f nginx.yml&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;查看节点状态 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl get nodes&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;查看pod状态 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl get pod --all-namespaces&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@master ~]# kubectl get pod --all-namespaces -o wide
+NAMESPACE     NAME                                     READY   STATUS    RESTARTS   AGE   IP                NODE             NOMINATED NODE   READINESS GATES
+default       nginx-9d4cf4f77-c7f6d                    1/1     Running   0          93m   10.244.2.10       node2.k8s.com    &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+default       nginx-9d4cf4f77-gh76b                    1/1     Running   0          10m   10.244.1.11       node1.k8s.com    &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+default       nginx-9d4cf4f77-kmx5f                    1/1     Running   0          10m   10.244.1.10       node1.k8s.com    &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+default       nginx-9d4cf4f77-q2dss                    1/1     Running   0          93m   10.244.2.9        node2.k8s.com    &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+kube-system   coredns-fb8b8dccf-94swc                  1/1     Running   64         22h   10.244.0.8        master.k8s.com   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+.......
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看副本数 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl get deployments&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;可以看到nginx被调度到平均调度到 node1 node2节点上&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@master ~]# kubectl get deployments
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   4/4     4            4           94m
+
+
+[root@master ~]# kubectl get pod -o wide
+NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES
+nginx-9d4cf4f77-c7f6d   1/1     Running   0          95m   10.244.2.10   node2.k8s.com   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+nginx-9d4cf4f77-gh76b   1/1     Running   0          12m   10.244.1.11   node1.k8s.com   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+nginx-9d4cf4f77-kmx5f   1/1     Running   0          12m   10.244.1.10   node1.k8s.com   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+nginx-9d4cf4f77-q2dss   1/1     Running   0          95m   10.244.2.9    node2.k8s.com   &amp;lt;none&amp;gt;           &amp;lt;none&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看集群基本组件状态&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[root@master ~]# kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+controller-manager   Healthy   ok
+scheduler            Healthy   ok
+etcd-0               Healthy   {&quot;health&quot;:&quot;true&quot;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;6dashboard安装&quot;&gt;6、Dashboard安装&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;准备&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubernetes-dashboard.ymal&lt;/code&gt;文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Copyright 2017 The Kubernetes Authors.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# you may not use this file except in compliance with the License.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# You may obtain a copy of the License at&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#     http://www.apache.org/licenses/LICENSE-2.0&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Unless required by applicable law or agreed to in writing, software&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# distributed under the License is distributed on an &quot;AS IS&quot; BASIS,&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# See the License for the specific language governing permissions and&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# limitations under the License.&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# ------------------- Dashboard Secrets ------------------- #&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Secret&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-certs&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Opaque&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Secret&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-csrf&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Opaque&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;csrf&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ------------------- Dashboard Service Account ------------------- #&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ServiceAccount&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ------------------- Dashboard Role &amp;amp; Role Binding ------------------- #&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Role&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-minimal&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;secrets&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;create&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Allow Dashboard to create 'kubernetes-dashboard-settings' config map.&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;configmaps&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;create&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Allow Dashboard to get, update and delete Dashboard exclusive secrets.&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;secrets&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resourceNames&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-key-holder&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-certs&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-csrf&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;get&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;update&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;delete&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;configmaps&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resourceNames&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-settings&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;get&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;update&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Allow Dashboard to get metrics from heapster.&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;services&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resourceNames&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;heapster&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;proxy&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;services/proxy&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resourceNames&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;heapster&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;http:heapster:&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https:heapster:&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;get&quot;&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;RoleBinding&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-minimal&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;roleRef&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apiGroup&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Role&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-minimal&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;subjects&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ServiceAccount&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ------------------- Dashboard Deployment ------------------- #&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Deployment&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;apps/v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;revisionHistoryLimit&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;registry.cn-hangzhou.aliyuncs.com/kuberneters/kubernetes-dashboard-amd64:v1.10.1&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8443&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;TCP&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;--auto-generate-certificates&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;# Uncomment the following line to manually specify Kubernetes API server Host&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;# If not specified, Dashboard will attempt to auto discover the API server and connect&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;# to it. Uncomment only if the default does not work.&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;# - --apiserver-host=http://my-address:port&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;volumeMounts&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-certs&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/certs&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;# Create on-disk volume to store exec logs&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/tmp&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tmp-volume&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;livenessProbe&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;httpGet&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;scheme&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;HTTPS&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8443&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;initialDelaySeconds&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;timeoutSeconds&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-certs&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;secret&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;secretName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard-certs&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;tmp-volume&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;emptyDir&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{}&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;serviceAccountName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# Comment the following tolerations if Dashboard must not be deployed on master&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;tolerations&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node-role.kubernetes.io/master&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;effect&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NoSchedule&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ------------------- Dashboard Service ------------------- #&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Service&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;443&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;8443&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;nodePort&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;30001&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;NodePort&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;k8s-app&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kubernetes-dashboard&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;v1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ServiceAccount&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dashboard-admin&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io/v1beta1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterRoleBinding&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dashboard-admin&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;subjects&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ServiceAccount&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dashboard-admin&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;kube-system&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;roleRef&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;apiGroup&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rbac.authorization.k8s.io&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ClusterRole&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;cluster-admin&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;部署Dashboard
+    &lt;ul&gt;
+      &lt;li&gt;kubectl apply -f kubernetes-dashboard.yaml&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;查看状态
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl get deployment kubernetes-dashboard -n kube-system&lt;/code&gt;
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [root@master ~]# kubectl get deployment kubernetes-dashboard -n kube-system
+  NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+  kubernetes-dashboard   1/1     1            1           30m
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl get services -n kube-system&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;查看令牌
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl describe secrets -n kube-system dashboard-admin&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  [root@master ~]# kubectl describe secrets -n kube-system dashboard-admin
+  Name:         dashboard-admin-token-xwcsc
+  Namespace:    kube-system
+  Labels:       &amp;lt;none&amp;gt;
+  Annotations:  kubernetes.io/service-account.name: dashboard-admin
+                kubernetes.io/service-account.uid: fd1745bb-be20-11ea-9ef8-005056295e82
+    
+  Type:  kubernetes.io/service-account-token
+    
+  Data
+  ====
+  ca.crt:     1025 bytes
+  namespace:  11 bytes
+  token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tdG9rZW4teHdjc2MiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGFzaGJvYXJkLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiZmQxNzQ1YmItYmUyMC0xMWVhLTllZjgtMDA1MDU2Mjk1ZTgyIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRhc2hib2FyZC1hZG1pbiJ9.ZSFNSVR561VS4QnkCPzBWUe8p4O25OBtWhZgpWSTzhIZP57vYzyoTCMW9KW08teSPGAlNwdGNl572UKowjKBSsrVNg-dCFpThls4T4AAKnFkxxsb3OysvCIrVYe18W319lGbvMvxqIXR-iZq3MU6mnhO-otznkA7W_Ob_PFJE5nx0yps-VYsA8s1kZJ9Z3KBJXPrMUavUzsEJReATf5LgHykdyTpC1KZjFXsDRAhPyvPXcxqjsRIZVwrOGb_Coc0Eb3ZnmceXU-sRAUG5EBJEifaabz3_8lDCp-MA7as4pFHfrSG4S0IzJnTmCDxGNpHOmnX-Fl58nd2jGx_2He1fQ
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;web访问
+    &lt;blockquote&gt;
+      &lt;p&gt;注意一定要使用https 通过token的方式访问；dashboard部署在了master节点（ip:192.168.156.128）映射的端口为 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;30001&lt;/code&gt; 故访问的时候直接使用 https://192.168.156.128:30001/ 即可&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;效果展示
+  &lt;img src=&quot;https://wx2.sbimg.cn/2020/07/05/2yPHK.png&quot; alt=&quot;2yPHK.png&quot; /&gt;
+  &lt;img src=&quot;https://wx1.sbimg.cn/2020/07/05/2yDAI.png&quot; alt=&quot;2yDAI.png&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;7问题及排错&quot;&gt;7、问题及排错&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在集群在节点运行kubectl出现的错误：The connection to the server localhost:8080 was refused - did you specify the right host or port?
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/lfm940624/article/details/84706118&quot;&gt;参考&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;将主节点（master节点）中的【/etc/kubernetes/admin.conf】文件拷贝到从节点相同目录下:&lt;/li&gt;
+      &lt;li&gt;配置环境变量
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  scp -r /etc/kubernetes/admin.conf ${node1}:/etc/kubernetes/admin.conf
+  echo “export KUBECONFIG=/etc/kubernetes/admin.conf” &amp;gt;&amp;gt; ~/.bash_profile
+  source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;kubeadm 初始化主节点的相关错误
+    &lt;blockquote&gt;
+      &lt;p&gt;初始化的时候回做一系列的检查是否符合条件，根据相关的错误进行设置即可，如会有下面几项需要设置。参考&lt;a href=&quot;https://github.com/kubernetes/kubeadm/blob/master/docs/design/design_v1.10.md#kubeadm-init-phases&quot;&gt;kubeadm github&lt;/a&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;[error] if /proc/sys/net/bridge/bridge-nf-call-iptables file does not exist/does not contain 1.&lt;/li&gt;
+      &lt;li&gt;[error] if swap is on&lt;/li&gt;
+      &lt;li&gt;[warning] if firewalld is active&lt;/li&gt;
+      &lt;li&gt;[error] if advertise address is ipv6 and /proc/sys/net/bridge/bridge-nf-call-ip6tables does not exist/does not contain 1.&lt;/li&gt;
+      &lt;li&gt;….&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;附录参考&quot;&gt;附录参考&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/kubernetes/kubeadm/blob/master/docs/design/design_v1.10.md#kubeadm-init-phases&lt;/li&gt;
+  &lt;li&gt;https://www.backendcloud.cn/2020/04/10/centos7-7-k8s-3nodes/&lt;/li&gt;
+  &lt;li&gt;https://developer.aliyun.com/article/754337&lt;/li&gt;
+&lt;/ul&gt;
+
+   </content>
+ </entry>
+ 
+ <entry>
+   <title>istio概述</title>
+   <link href="https://pemako.cn/k8s/2020/08/17/istio-overview.html"/>
+   <updated>2020-08-17T00:00:00+08:00</updated>
+   <id>https://pemako.cn/k8s/2020/08/17/istio-overview</id>
+   <content type="html">
+   	&lt;h1 id=&quot;概述&quot;&gt;概述&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/pemako/imgs/master/public/20200715161731.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-连接&quot;&gt;1. 连接&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;流量管理&lt;/li&gt;
+  &lt;li&gt;负载均衡&lt;/li&gt;
+  &lt;li&gt;灰度发布&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-安全&quot;&gt;2. 安全&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;认证&lt;/li&gt;
+  &lt;li&gt;鉴权&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-控制&quot;&gt;3. 控制&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;限流&lt;/li&gt;
+  &lt;li&gt;ACL&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-观察&quot;&gt;4. 观察&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;监控&lt;/li&gt;
+  &lt;li&gt;调用链&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&quot;二istio-架构&quot;&gt;二、istio 架构&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;数据平面由一组智能代理（Envoy）组成，被部署为 sidecar。这些代理通过一个通用的策略和遥测中心（Mixer）传递和控制微服务之间的所有网络通信。&lt;/li&gt;
+  &lt;li&gt;控制平面管理并配置代理来进行流量路由。此外，控制平面配置 Mixer 来执行策略和收集遥测数据。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://istio.io/v1.5/zh/docs/ops/deployment/architecture/arch.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;组件&quot;&gt;组件&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Mixer (适配组件) 在整个服务网格中执行访问控制和策略使用，并从 Envoy 代理和其他服务收集遥测数据&lt;/li&gt;
+  &lt;li&gt;Pilot (策略配置组件)Pilot 为 Envoy sidecar 提供服务发现、用于智能路由的流量管理功能（例如，A/B 测试、金丝雀发布等）以及弹性功能（超时、重试、熔断器等）&lt;/li&gt;
+  &lt;li&gt;Citadel 安全组件&lt;/li&gt;
+  &lt;li&gt;Galley 配置管理，验证，分发&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;istio-4个配置资源落地所有流量管理需求&quot;&gt;istio 4个配置资源，落地所有流量管理需求&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;虚拟服务 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualService&lt;/code&gt; 实现服务请求路由规则的功能&lt;/li&gt;
+  &lt;li&gt;目标规则 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DestinationRule&lt;/code&gt; 实现目标服务的负载均衡，服务发现，故障处理和故障注入的功能&lt;/li&gt;
+  &lt;li&gt;网关     &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gateway&lt;/code&gt; 让服务网格内的服务，可以被外网访问&lt;/li&gt;
+  &lt;li&gt;服务入口 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ServiceEntry&lt;/code&gt; 让服务网格内的服务，可以访问网格外的服务&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;安全&quot;&gt;安全&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;安装架构&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://istio.io/v1.5/zh/docs/concepts/security/arch-sec.svg&quot; alt=&quot;安全架构&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;授权架构&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://istio.io/v1.5/zh/docs/concepts/security/authz.svg&quot; alt=&quot;授权架构&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;认证策略 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PeerAuthentication&lt;/code&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RequestAuthentication&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;名词翻译&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;策略执行点（Policy Enforcement Points(PEPs)&lt;/li&gt;
+  &lt;li&gt;秘钥发现服务 secret discovery service（SDS）&lt;/li&gt;
+  &lt;li&gt;指标（Metric）&lt;/li&gt;
+&lt;/ol&gt;
+
+   </content>
+ </entry>
  
  <entry>
    <title>2020-08-15-test</title>

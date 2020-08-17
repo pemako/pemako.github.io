@@ -59,6 +59,20 @@
 
 
 	<url>
+		<loc>https://pemako.cn/k8s/2020/08/17/mac-deployment-k8s.html</loc>
+		<lastmod>2020-08-17</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
+		<loc>https://pemako.cn/k8s/2020/08/17/istio-overview.html</loc>
+		<lastmod>2020-08-17</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>0.6</priority>
+	</url>
+
+	<url>
 		<loc>https://pemako.cn/golang/2019/03/07/gdb-debug-golang.html</loc>
 		<lastmod>2019-03-07</lastmod>
 		<changefreq>weekly</changefreq>
