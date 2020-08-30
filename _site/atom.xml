@@ -4,7 +4,7 @@
  <title>pemako</title>
  <link href="https://pemako.cn" rel="self"/>
  <link href="https://pemako.cn"/>
- <updated>2020-08-17T09:38:37+08:00</updated>
+ <updated>2020-08-30T21:30:11+08:00</updated>
  <id>https://pemako.cn</id>
  <author>
    <name>pemako</name>
@@ -188,7 +188,7 @@ source /etc/profile.d/bash_completion.sh
     &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  sudo tee /etc/docker/daemon.json &amp;lt;&amp;lt;-'EOF'
   {
     &quot;registry-mirrors&quot;: [&quot;https://cxjmzodm.mirror.aliyuncs.com&quot;],
-    &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;
+    &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;]
   }
   EOF
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
@@ -751,6 +751,156 @@ etcd-0               Healthy   {&quot;health&quot;:&quot;true&quot;}
       &lt;li&gt;[warning] if firewalld is active&lt;/li&gt;
       &lt;li&gt;[error] if advertise address is ipv6 and /proc/sys/net/bridge/bridge-nf-call-ip6tables does not exist/does not contain 1.&lt;/li&gt;
       &lt;li&gt;….&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;8设置虚拟机静态ip&quot;&gt;8、设置虚拟机静态IP&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;设置虚拟机的IP为静态IP防止因为网络变更导致IP变更&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;81设置mac的-vmnet8&quot;&gt;8.1、设置Mac的 vmnet8&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;设定苹果机器上的 vmnet8网卡的网段和ip地址
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  Downloads cat /Library/Preferences/VMware\ Fusion/networking
+VERSION=1,0
+answer VNET_1_DHCP yes
+answer VNET_1_DHCP_CFG_HASH 5D225212161CE90EF3B07B1D1E35C7EA51D7680C
+answer VNET_1_HOSTONLY_NETMASK 255.255.255.0
+answer VNET_1_HOSTONLY_SUBNET 172.16.42.0
+answer VNET_1_VIRTUAL_ADAPTER yes
+answer VNET_8_DHCP no  #关闭dhcp
+answer VNET_8_DHCP_CFG_HASH DA5D502E642D998635A74298B9119E5B27B66EEC
+answer VNET_8_HOSTONLY_NETMASK 255.255.255.0  # 子网掩码
+answer VNET_8_HOSTONLY_SUBNET 192.168.156.0   # IP段
+answer VNET_8_NAT yes
+answer VNET_8_VIRTUAL_ADAPTER yes
+answer VNET_8_VIRTUAL_ADAPTER_ADDR 192.168.156.1  # vmnet8 的IP
+add_bridge_mapping en0 2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;设定nat的网关&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  Downloads cat /Library/Preferences/VMware\ Fusion/vmnet8/nat.conf
+# VMware NAT configuration file
+# Manual editing of this file is not recommended. Using UI is preferred.
+
+[host]
+
+# NAT gateway address
+ip = 192.168.156.2  # 设定nat网管和子网
+netmask = 255.255.255.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;重启vmnet8网卡&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 查看网卡状态
+sudo /Applications/VMware\ Fusion.app/Contents/Library/vmnet-cli --status  
+
+#启动网卡
+sudo /Applications/VMware\ Fusion.app/Contents/Library/vmnet-cli --start
+
+# 关闭网卡
+sudo /Applications/VMware\ Fusion.app/Contents/Library/vmnet-cli --stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;查看设置是否生效&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;➜  Downloads ifconfig | grep -C 3 vmnet8
+vmnet1: flags=8863&amp;lt;UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST&amp;gt; mtu 1500
+        ether 00:50:56:c0:00:01
+        inet 172.16.42.1 netmask 0xffffff00 broadcast 172.16.42.255
+vmnet8: flags=8863&amp;lt;UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST&amp;gt; mtu 1500
+        ether 00:50:56:c0:00:08
+        inet 192.168.156.1 netmask 0xffffff00 broadcast 192.168.156.255
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;82配置centos的网卡&quot;&gt;8.2、配置centos的网卡&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;配置网卡&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+[root@master ~]# cat /etc/sysconfig/network-scripts/ifcfg-ens33
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static  # 设置为静态IP
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+DEVICE=ens33
+ONBOOT=yes              # 设置开机启动
+IPV6_PRIVACY=no
+
+IPADDR=192.168.156.128  # 设置IP地址
+GATEWAY=192.168.156.2   # 设置网关
+NETMASK=255.255.255.0   # 设定掩码
+DNS1=8.8.8.8            # 设定DSN
+DNS2=8.8.4.4
+
+------------------------------------
+# 设定网关的时候虚拟机的网络配置要的dsn要和这里的nameserver的值保持一致
+[root@master ~]# cat /etc/resolv.conf
+# Generated by NetworkManager
+search k8s.com
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;重启网络服务&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service network restart
+
+或
+systemctl restart network
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;83虚拟机网络配置&quot;&gt;8.3、虚拟机网络配置&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/pemako/imgs/master/public/20200830211303.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;9k8s-dashboard-token-过期时间修改&quot;&gt;9、k8s dashboard token 过期时间修改&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;直接修改deployment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; kubectl edit deployments kubernetes-dashboard -n kube-system
+ 
+ # 找到containers.args 添加 --toker-ttl=秒数
+    containers:
+      - args:
+        - --auto-generate-certificates
+        - –token-ttl=2592000  # 这里设置30天过期
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;在dashboard web界面上找到部署进行修改和上面修改一致&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;查看dashboard的详细参数&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;https://github.com/kubernetes/dashboard/blob/master/docs/common/dashboard-arguments.md&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
