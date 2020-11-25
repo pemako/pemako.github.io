@@ -27,7 +27,7 @@
   * [others](posts/others/README.md)
     * [2017-01-23-father-and-son](posts/others/2017-01-23-father-and-son.md)
   * [php](posts/php/README.md)
-    * [简介](posts/php/2017-02-13-php-function-reference.md)
+    * [核心扩展库](posts/php/2017-02-13-php-function-reference.md)
     * [简介](posts/php/2017-02-03-php-language-reference.md)
     * [简介](posts/php/2017-02-03-how-to-use-php-documentation.md)
     * [2017-01-25-composer-overview](posts/php/2017-01-25-composer-overview.md)
