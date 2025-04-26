@@ -412,6 +412,59 @@ This is pre text
 </nav>
 
   </footer>
+<div id="comments">
+  <script src="https://giscus.app/client.js"
+          data-repo="pemako/pemako.github.io"
+          data-repo-id="R_kgDOOf3OGw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOOf3OG84Cpfhr"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="true"
+          data-emit-metadata="true"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+
+<script>
+  
+  function setGiscusTheme(theme) {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage({
+      giscus: {
+        setConfig: {
+          theme: theme
+        }
+      }
+    }, 'https://giscus.app'); 
+  }
+
+  
+  function syncGiscusTheme() {
+    const theme = document.documentElement.getAttribute('data-theme');
+    setGiscusTheme(theme === 'dark' ? 'dark' : 'light'); 
+  }
+
+  
+  window.addEventListener('load', () => {
+    syncGiscusTheme(); 
+  });
+
+  
+  const observer = new MutationObserver(() => {
+    const theme = document.documentElement.getAttribute('data-theme');
+    setGiscusTheme(theme === 'dark' ? 'dark' : 'light');
+  });
+
+  observer.observe(document.documentElement, { attributes: true });
+</script>
+
+
 </article>
     </main>
     

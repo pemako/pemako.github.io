@@ -1,0 +1,1 @@
+(function(){function e(e){const t=document.querySelector("iframe.giscus-frame");if(!t)return;t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}const t=new MutationObserver(()=>{const t=document.documentElement.getAttribute("data-theme");e(t==="dark"?"dark":"light")});t.observe(document.documentElement,{attributes:!0})})()

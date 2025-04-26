@@ -143,16 +143,18 @@ params:
   #     minMatchCharLength: 0
   #     keys: ["title", "permalink", "summary", "content"]
 
-  giscus:
-    repo: "pemako/pemako.github.io" # 替换为你的 GitHub 仓库
-    repoId: "R_kgDOOf3OGw" # 替换为仓库的 ID（通常由 Giscus 自动生成）
-    category: "Announcements" # 替换为评论类别
-    categoryId: "DIC_kwDOOf3OG84Cpfhr" # 替换为类别的 ID
-    mapping: "pathname" # 评论映射模式，可以是 `url`, `title`, `identifier`
-    reactionsEnabled: true # 启用反应（如 👍 👎）
-    emitMetadata: true # 启用元数据（显示文章信息）
-    theme: "light" # 评论框主题，支持 "light" 或 "dark"
-    lang: "en" # 评论框语言，可以是 "en", "zh-CN" 等
+  comments:
+    giscus:
+      repo: "pemako/pemako.github.io" # 替换为你的 GitHub 仓库
+      repoId: "R_kgDOOf3OGw" # 替换为仓库的 ID（通常由 Giscus 自动生成）
+      category: "Announcements" # 替换为评论类别
+      categoryId: "DIC_kwDOOf3OG84Cpfhr" # 替换为类别的 ID
+      mapping: "pathname" # 评论映射模式，可以是 `url`, `title`, `identifier`
+      reactionsEnabled: true # 启用反应（如 👍 👎）
+      emitMetadata: true # 启用元数据（显示文章信息）
+      theme: "preferred_color_scheme" # 评论框主题，支持 "light" 或 "dark"
+      lang: "en" # 评论框语言，可以是 "en", "zh-CN" 等
+      inputPosition: "bottom"
 
 markup:
   goldmark:
