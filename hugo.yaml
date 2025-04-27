@@ -10,7 +10,7 @@ buildFuture: false
 buildExpired: false
 enableEmoji: true
 pygmentsUseClasses: true
-mainsections: ["posts", "example"]
+mainsections: ["posts", "go", "python", "vim"]
 
 minify:
   disableXML: true
