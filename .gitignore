@@ -37,3 +37,4 @@ Temporary Items
 
 public/
 themes/
+.hugo_build.lock

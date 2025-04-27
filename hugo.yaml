@@ -1,6 +1,6 @@
 baseURL: https://pemako.cn/
 languageCode: en-us
-title: Pemako Site
+title: pemako
 theme: [PaperMod]
 
 enableInlineShortcodes: true
@@ -82,15 +82,23 @@ params:
         url: tags
 
   homeInfoParams:
-    Title: "PaperMod's Demo"
+    Title: "Terminal & Coffee"
     Content: >
-      👋 Welcome to demo page of Hugo's theme PaperMod!
+      ☕️ 一个后端工程师的数字化生存指南  
 
-      - **PaperMod**  is designed to be clean and simple but fast and responsive theme with useful feature-set that enhances UX.
+      🐹 日常战报: 写 Go 代码 → 用 `pprof` 灭火 → 泡咖啡 → 循环  
 
-      - Feel free to show your support by giving us a star 🌟 on GitHub and sharing with your friends and social media .
+      🐍 日常战报: 写 Python 时：▇▇▇▇▇ 自动化脚本加载中...  🐞 捕获 BUG：TypeError ×3   
 
-      - PaperMod is based on theme [Paper](https://github.com/nanxiaobei/hugo-paper/tree/4330c8b12aa48bfdecbcad6ad66145f679a430b3).
+      💻 日常战报: 写 Shell 时：[[ $? -eq 0 ]] || 重启玄学调试模式  
+
+      🚀 代表作：[Go 限流中间件](https://github.com/yourname) (被 CNCF 项目引用)  
+
+      ⚡️ 副业觉醒：无  
+
+      🌿 非技术时刻：骑行川藏线记录 | 胶片摄影暗房教程  
+
+      💡 终极真理：echo "rm -rf /" > deploy.sh
 
   socialIcons:
     - name: github
@@ -106,20 +114,16 @@ params:
     #   title: Buy me a Ko-Fi :)
     #   url: "https://ko-fi.com/adityatelange"
 
-  # editPost:
-  #   URL: "https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content"
-  #   Text: "Suggest Changes" # edit text
-  #   appendFilePath: true # to append file path to Edit link
+  editPost:
+    URL: "https://github.com/pemako/pemako.github.io/tree/main/content/posts"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
 
-  # label:
-  # iconSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>'
-  # text: "Home"
-  # icon: icon.png
-  # iconHeight: 35
-
-  # analytics:
-  #     google:
-  #         SiteVerificationTag: "XYZabc"
+  label:
+  iconSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>'
+  text: "Home"
+  icon: icon.png
+  iconHeight: 35
 
   assets:
     disableHLJS: true
