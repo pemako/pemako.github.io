@@ -2,6 +2,10 @@
 date: '2025-05-09T01:59:28+08:00'
 draft: false
 title: 'Install Gitlab'
+description: "在 mac 电脑使用使用 docker 部署 gitlab"
+summary: ""
+tags: ["gitlab", "docker"]
+categories: ["gitlab"]
 ---
 
 - 展示下启动完成后的效果
