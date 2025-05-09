@@ -63,12 +63,21 @@ services:
 set -euo pipefail
 
 # 获取 en0 网卡的本机 IP 地址
-GITLAB_HOST_IP=$(ipconfig getifaddr en0 || true)
+#GITLAB_HOST_IP=$(ipconfig getifaddr en0 || true)
+GITLAB_HOST_IP=$(ipconfig getifaddr en0 2>/dev/null || hostname -I | awk '{print $1}' || true)
+GITLAB_DOMAIN="web.gitlab.local"
 GITLAB_PORT=8929
 GITLAB_SHELL_SSH_PORT=2224
 EXTERNAL_URL="http://${GITLAB_HOST_IP}:${GITLAB_PORT}"
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+HOSTS_FILE="/etc/hosts"
 
+info() {
+ echo "✅ Detected IP: ${GITLAB_HOST_IP}"
+ echo "📁 PROJECT_ROOT: ${PROJECT_ROOT}"
+ echo "🌍 Using external URL: ${EXTERNAL_URL}"
+ echo "🌍 Domain Name: http://${GITLAB_DOMAIN}:${GITLAB_PORT}"
+}
 
 init() {
  if [ -z "$GITLAB_HOST_IP" ]; then
@@ -76,10 +85,22 @@ init() {
   exit 1
  fi
 
- echo "✅ Detected IP: ${GITLAB_HOST_IP}"
- echo "🌍 Using external URL: ${EXTERNAL_URL}"
- echo "📁 PROJECT_ROOT: ${PROJECT_ROOT}"
+ info
+ # 修改 /etc/hosts 绑定域名
+ if grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox,.venv,venv} -q "[[:space:]]$GITLAB_DOMAIN\$" "$HOSTS_FILE"; then
+  sudo sed -i '' "/[[:space:]]$GITLAB_DOMAIN$/c\\
+$GITLAB_HOST_IP $GITLAB_DOMAIN
+" "$HOSTS_FILE"
+  echo "✅ 已更新 $GITLAB_DOMAIN -> $GITLAB_HOST_IP"
+ else
+  echo "$GITLAB_HOST_IP $GITLAB_DOMAIN" | sudo tee -a "$HOSTS_FILE" >/dev/null
+  echo "✅ 新增 $GITLAB_DOMAIN -> $GITLAB_HOST_IP"
+ fi
 
+ # 注意这里如果想要一直使用域名访问的话，可以把写入到 .env 文件中的 IP 地址
+ # 更换为 GITLAB_DOMAIN 这样就可以直接使用自定义的域名访问
+ # 也可以直接覆盖 GITLAB_HOST_IP=$GITLAB_DOMAIN
+ # GITLAB_HOST_IP="$GITLAB_DOMAIN" # 取消该行注释可以直接使用 GITLAB_DOMAIN:GITLAB_PORT 访问
  env_tmp="${PROJECT_ROOT}/.env.tmp"
  cat >"$env_tmp" <<EOF
 GITLAB_HOST_IP=${GITLAB_HOST_IP}
@@ -110,10 +131,9 @@ EOF
 
 help() {
  echo "Usage: $0 {start|stop|restart|status|log}"
-}
-
-web() {
- echo "🌐 Web URL: http://${GITLAB_HOST_IP}:${GITLAB_PORT}"
+ echo ""
+ info
+ echo ""
 }
 
 main() {
@@ -124,63 +144,24 @@ main() {
   docker-compose up -d
   ;;
  stop)
-  init
   docker-compose down
   ;;
  restart)
-  init
   docker-compose down
+  init
   docker-compose up -d
   ;;
  status)
-  init
   docker-compose ps
   ;;
  log)
   docker-compose logs -f
   ;;
  *)
-  web
   help
   ;;
  esac
 }
 
 main "$@"
-```
-
-- 绑定 `/etc/hosts` 指定域名, 执行脚本，存在更新不存在新增
-
-> 修改 `control.sh` 脚本中的 `GITLAB_HOST_IP` 为上面绑定的域名 `web.gitlab.local`，则后续可以直接使用该域名:port 进行访问
-
-```shell
-mk::util::gitlab () {
-  HOSTNAME="web.gitlab.local" # 需要绑定的域名
-  HOSTS_FILE="/etc/hosts"
-
-  # 获取本机局域网 IP（排除 127.* 和 docker 虚拟网卡）
-  CURRENT_IP=$(ipconfig getifaddr en0 2>/dev/null || hostname -I | awk '{print $1}')
-
-  if [[ -z "$CURRENT_IP" ]]; then
-    echo "无法获取当前 IP 地址"
-    exit 1
-  fi
-
-  echo "当前 IP: $CURRENT_IP"
-
-  # 检查是否已经存在该主机名
-  if grep -q "[[:space:]]$HOSTNAME\$" "$HOSTS_FILE"; then
-    # 如果已存在，则更新对应的 IP
-    sudo sed -i '' "/[[:space:]]$HOSTNAME$/c\\
-$CURRENT_IP $HOSTNAME
-" "$HOSTS_FILE"
-    echo "✅ 已更新 $HOSTNAME -> $CURRENT_IP"
-  else
-    # 如果不存在，则添加新行
-    echo "$CURRENT_IP $HOSTNAME" | sudo tee -a "$HOSTS_FILE" > /dev/null
-    echo "✅ 新增 $HOSTNAME -> $CURRENT_IP"
-  fi
-}
-
-mk::util::gitlab
 ```
