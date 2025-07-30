@@ -10,7 +10,7 @@ buildFuture: false
 buildExpired: false
 enableEmoji: true
 pygmentsUseClasses: true
-mainsections: ["posts", "go", "python", "vim"]
+mainsections: ["posts", "go", "python", "vim", "lua"]
 
 minify:
   disableXML: true
@@ -18,7 +18,7 @@ minify:
 
 pagination:
   disableAliases: false
-  pagerSize: 5
+  pagerSize: 10
 
 languages:
   en:
