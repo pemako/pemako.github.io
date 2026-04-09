@@ -19,20 +19,19 @@ params:
   BookDateFormat: "2006-01-02"
 
   comments:
-    waline:
-      serverURL: "https://comment-anb36zsnx-pemakos-projects.vercel.app"
-      lang: "zh-CN"
-    # giscus:
-    #   repo: "pemako/pemako.github.io"
-    #   repoId: "R_kgDOOf3OGw"
-    #   category: "Announcements"
-    #   categoryId: "DIC_kwDOOf3OG84Cpfhr"
-    #   mapping: "pathname"
-    #   reactionsEnabled: true
-    #   emitMetadata: true
-    #   theme: "preferred_color_scheme"
-    #   lang: "en"
-    #   inputPosition: "bottom"
+    giscus:
+      repo: "pemako/pemako.github.io"
+      repoId: "R_kgDOOf3OGw"
+      category: "Announcements"
+      categoryId: "DIC_kwDOOf3OG84Cpfhr"
+      mapping: "pathname"
+      reactionsEnabled: true
+      emitMetadata: true
+      lang: "en"
+      inputPosition: "bottom"
+    # waline:
+    #   serverURL: "https://comment-anb36zsnx-pemakos-projects.vercel.app"
+    #   lang: "zh-CN"
 
 markup:
   goldmark:
