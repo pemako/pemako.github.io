@@ -20,7 +20,7 @@ params:
 
   comments:
     waline:
-      serverURL: "https://your-waline-server.vercel.app"  # 替换为你的 Waline 服务地址
+      serverURL: "https://comment-anb36zsnx-pemakos-projects.vercel.app"
       lang: "zh-CN"
     # giscus:
     #   repo: "pemako/pemako.github.io"
