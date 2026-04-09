@@ -10,7 +10,7 @@
     data-reactions-enabled="{{ default "1" .Site.Params.comments.giscus.reactionsEnabled }}"
     data-emit-metadata="{{ default "0" .Site.Params.comments.giscus.emitMetadata }}"
     data-input-position="{{ default "bottom" .Site.Params.comments.giscus.inputPosition }}"
-    data-theme="preferred_color_scheme"
+    data-theme="{{ if eq (default "auto" .Site.Params.BookTheme) "light" }}light{{ else if eq .Site.Params.BookTheme "dark" }}dark{{ else }}preferred_color_scheme{{ end }}"
     data-lang="{{ default "en" .Site.Params.comments.giscus.lang }}"
     crossorigin="anonymous"
     async>
