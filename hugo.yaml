@@ -10,7 +10,7 @@ enableEmoji: true
 params:
   env: production
   BookSection: blog
-  BookTheme: auto
+  BookTheme: light
   BookToC: true
   BookSearch: true
   BookComments: true
@@ -36,4 +36,5 @@ markup:
     renderer:
       unsafe: true
   highlight:
-    noClasses: false
+    noClasses: true
+    style: monokai
