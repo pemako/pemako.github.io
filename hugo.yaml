@@ -1,159 +1,34 @@
 baseURL: https://pemako.cn/
-languageCode: en-us
+languageCode: zh-cn
 title: pemako
-theme: [PaperMod]
+theme: hugo-book
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
-buildDrafts: false
-buildFuture: false
-buildExpired: false
 enableEmoji: true
-pygmentsUseClasses: true
-mainsections: ["posts", "go", "python", "vim", "lua"]
-
-minify:
-  disableXML: true
-  # minifyOutput: true
-
-pagination:
-  disableAliases: false
-  pagerSize: 10
-
-languages:
-  en:
-    languageName: "English"
-    weight: 1
-    taxonomies:
-      category: categories
-      tag: tags
-      series: series
-    menu:
-      main:
-        - name: Archive
-          url: archives
-          weight: 5
-        - name: Search
-          url: search/
-          weight: 10
-        - name: Tags
-          url: tags/
-          weight: 10
-
-outputs:
-  home:
-    - HTML
-    - RSS
-    - JSON
 
 params:
-  env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  description: "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
-  author: Theme PaperMod
-  # author: ["Me", "You"] # multiple authors
-
-  defaultTheme: auto
-  # disableThemeToggle: true
-  ShowShareButtons: false
-  ShowReadingTime: true
-  # disableSpecial1stPost: true
-  displayFullLangName: true
-  ShowPostNavLinks: true
-  ShowBreadCrumbs: true
-  ShowCodeCopyButtons: true
-  ShowRssButtonInSectionTermList: true
-  ShowAllPagesInArchive: true
-  ShowPageNums: true
-  ShowToc: true
-  # comments: false
-  images: ["images/papermod-cover.png"]
-
-  profileMode:
-    enabled: false
-    title: PaperMod
-    imageUrl: "#"
-    imageTitle: my image
-    # imageWidth: 120
-    # imageHeight: 120
-    buttons:
-      - name: Archives
-        url: archives
-      - name: Tags
-        url: tags
-
-  homeInfoParams:
-    Title: "Terminal & Coffee"
-    Content: >
-      ☕️ 一个后端工程师的数字化生存指南  
-
-      🐹 日常战报: 写 Go 代码 → 用 `pprof` 灭火 → 泡咖啡 → 循环  
-
-      🐍 日常战报: 写 Python 时：▇▇▇▇▇ 自动化脚本加载中...  🐞 捕获 BUG：TypeError ×3   
-
-      💻 日常战报: 写 Shell 时：[[ $? -eq 0 ]] || 重启玄学调试模式  
-
-      🌿 非技术时刻：骑行川藏线记录 | 胶片摄影暗房教程  
-
-      💡 终极真理：echo "rm -rf /" > deploy.sh
-
-  socialIcons:
-    - name: github
-      title: View Source on Github
-      url: "https://github.com/pemako/pemako.github.io"
-    # - name: Discord
-    #   title: Join discord community
-    #   url: "https://discord.gg/ahpmTvhVmp"
-    # - name: X
-    #   title: Share PaperMod on X/Twitter
-    #   url: "https://x.com/intent/tweet/?text=Checkout%20Hugo%20PaperMod%20%E2%9C%A8%0AA%20fast,%20clean,%20responsive%20Hugo%20theme.&url=https://github.com/adityatelange/hugo-PaperMod&hashtags=Hugo,PaperMod"
-    # - name: KoFi
-    #   title: Buy me a Ko-Fi :)
-    #   url: "https://ko-fi.com/adityatelange"
-
-  # editPost:
-  #   URL: "https://github.com/pemako/pemako.github.io/tree/main/content/posts"
-  #   Text: "Suggest Changes" # edit text
-  #   appendFilePath: true # to append file path to Edit link
-
-  label:
-  iconSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>'
-  text: "Home"
-  icon: icon.png
-  iconHeight: 35
-
-  assets:
-    disableHLJS: true
-  #     favicon: "<link / abs url>"
-  #     favicon16x16: "<link / abs url>"
-  #     favicon32x32: "<link / abs url>"
-  #     apple_touch_icon: "<link / abs url>"
-  #     safari_pinned_tab: "<link / abs url>"
-
-  # cover:
-  #     hidden: true # hide everywhere but not in structured data
-  #     hiddenInList: true # hide on list pages and home
-  #     hiddenInSingle: true # hide on single page
-
-  # fuseOpts:
-  #     isCaseSensitive: false
-  #     shouldSort: true
-  #     location: 0
-  #     distance: 1000
-  #     threshold: 0.4
-  #     minMatchCharLength: 0
-  #     keys: ["title", "permalink", "summary", "content"]
+  env: production
+  BookSection: blog
+  BookTheme: auto
+  BookToC: true
+  BookSearch: true
+  BookComments: true
+  BookCollapseSection: true
+  BookRepo: https://github.com/pemako/pemako.github.io
+  BookDateFormat: "2006-01-02"
 
   comments:
     giscus:
-      repo: "pemako/pemako.github.io" # 替换为你的 GitHub 仓库
-      repoId: "R_kgDOOf3OGw" # 替换为仓库的 ID（通常由 Giscus 自动生成）
-      category: "Announcements" # 替换为评论类别
-      categoryId: "DIC_kwDOOf3OG84Cpfhr" # 替换为类别的 ID
-      mapping: "pathname" # 评论映射模式，可以是 `url`, `title`, `identifier`
-      reactionsEnabled: true # 启用反应（如 👍 👎）
-      emitMetadata: true # 启用元数据（显示文章信息）
-      theme: "preferred_color_scheme" # 评论框主题，支持 "light" 或 "dark"
-      lang: "en" # 评论框语言，可以是 "en", "zh-CN" 等
+      repo: "pemako/pemako.github.io"
+      repoId: "R_kgDOOf3OGw"
+      category: "Announcements"
+      categoryId: "DIC_kwDOOf3OG84Cpfhr"
+      mapping: "pathname"
+      reactionsEnabled: true
+      emitMetadata: true
+      theme: "preferred_color_scheme"
+      lang: "en"
       inputPosition: "bottom"
 
 markup:
@@ -162,32 +37,3 @@ markup:
       unsafe: true
   highlight:
     noClasses: false
-    # anchorLineNos: true
-    # codeFences: true
-    # guessSyntax: true
-    # lineNos: true
-    # style: monokai
-
-# privacy:
-#   vimeo:
-#     disabled: false
-#     simple: true
-
-#   twitter:
-#     disabled: false
-#     enableDNT: true
-#     simple: true
-
-#   instagram:
-#     disabled: false
-#     simple: true
-
-#   youtube:
-#     disabled: false
-#     privacyEnhanced: true
-
-services:
-  instagram:
-    disableInlineCSS: true
-  x:
-    disableInlineCSS: true
