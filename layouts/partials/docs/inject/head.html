@@ -1,4 +1,4 @@
-{{- if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production") }}
+{{- if and (eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production")) .Site.Params.cloudflareToken }}
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-  data-cf-beacon='{"token": "d5d130fff0df4aaa8f7b0be914e46afb"}'></script>
+  data-cf-beacon='{"token": "{{ .Site.Params.cloudflareToken }}"}'></script>
 {{- end }}

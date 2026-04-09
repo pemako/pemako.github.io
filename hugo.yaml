@@ -9,6 +9,7 @@ enableEmoji: true
 
 params:
   env: production
+  cloudflareToken: "d5d130fff0df4aaa8f7b0be914e46afb"
   BookSection: docs
   BookTheme: light
   BookToC: true
