@@ -21,11 +21,11 @@ Migrate `pemako.cn` from the PaperMod theme to `hugo-book` (github.com/alex-shpa
 Before:
 ```
 content/
-  posts/       (45 files)
+  posts/       (35 files)
   go/          (9 files)
   python/      (1 file)
   lua/         (1 file)
-  tools/       (11 files)
+  tools/       (13 files)
   archives.md  (PaperMod-specific, delete)
   search.md    (PaperMod-specific, delete)
 ```
