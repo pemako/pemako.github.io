@@ -68,7 +68,14 @@ enableInlineShortcodes: true
 enableRobotsTXT: true
 enableEmoji: true
 
+outputs:
+  home:
+    - HTML
+    - RSS
+    - SEARCH    # required for BookSearch to generate the search index
+
 params:
+  env: production   # keep for extend_head.html production guard
   BookSection: blog
   BookTheme: auto
   BookToC: true
@@ -85,7 +92,9 @@ markup:
     noClasses: false
 ```
 
-Removed: `profileMode`, `homeInfoParams`, `socialIcons`, `mainsections`, `pagination`, `outputs` (JSON/search), PaperMod `params.*` fields.
+Removed: `profileMode`, `homeInfoParams`, `socialIcons`, `mainsections`, `pagination`, PaperMod `params.*` fields (except `env`).
+
+The existing `params.comments.giscus.*` block must be carried over verbatim — it is used by the migrated `content.html` partial.
 
 ## Layouts / Partials
 
@@ -93,15 +102,15 @@ hugo-book provides injection points under `layouts/partials/docs/inject/`:
 
 | Old file | New location | Action |
 |---|---|---|
-| `layouts/partials/comments.html` | `layouts/partials/docs/inject/body.html` | Move + wrap in giscus container |
-| `layouts/partials/extend_head.html` | `layouts/partials/docs/inject/head.html` | Move |
-| `layouts/partials/footer.html` | — | Delete (PaperMod-specific) |
+| `layouts/partials/comments.html` | `layouts/partials/docs/inject/content.html` | Move (hugo-book injects after article content) |
+| `layouts/partials/extend_head.html` | `layouts/partials/docs/inject/head.html` | Move as-is (`params.env` is preserved in new config) |
+| `layouts/partials/footer.html` | — | Delete (PaperMod-specific; hugo-book provides its own footer) |
 
 ## Archetypes
 
 Remove PaperMod-specific fields (`ShowToc`, `TocOpen`, `summary`, `description`) from all archetypes. Add `weight: 1` for sidebar ordering.
 
-Updated front matter template:
+New archetype front matter template:
 ```yaml
 ---
 title: '{{ replace .File.ContentBaseName "-" " " | title }}'
@@ -113,6 +122,28 @@ weight: 1
 ```
 
 Section-specific archetypes (go.md, lua.md, tools.md, etc.) keep their relevant tags.
+
+## Section Index Files (_index.md)
+
+Each section under `content/blog/` requires an `_index.md` with hugo-book front matter to control sidebar title, ordering, and collapse behavior:
+
+```yaml
+---
+title: "Posts"        # displayed in sidebar
+weight: 10            # lower weight = higher in sidebar
+bookCollapseSection: true   # collapsed by default
+---
+```
+
+Suggested weights:
+| Section | Title | Weight |
+|---|---|---|
+| blog | Blog | 1 |
+| blog/go | Go | 10 |
+| blog/python | Python | 20 |
+| blog/lua | Lua | 30 |
+| blog/tools | Tools | 40 |
+| blog/posts | Posts | 50 |
 
 ## Git Submodule
 
