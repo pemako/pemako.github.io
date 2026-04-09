@@ -19,17 +19,20 @@ params:
   BookDateFormat: "2006-01-02"
 
   comments:
-    giscus:
-      repo: "pemako/pemako.github.io"
-      repoId: "R_kgDOOf3OGw"
-      category: "Announcements"
-      categoryId: "DIC_kwDOOf3OG84Cpfhr"
-      mapping: "pathname"
-      reactionsEnabled: true
-      emitMetadata: true
-      theme: "preferred_color_scheme"
-      lang: "en"
-      inputPosition: "bottom"
+    waline:
+      serverURL: "https://your-waline-server.vercel.app"  # 替换为你的 Waline 服务地址
+      lang: "zh-CN"
+    # giscus:
+    #   repo: "pemako/pemako.github.io"
+    #   repoId: "R_kgDOOf3OGw"
+    #   category: "Announcements"
+    #   categoryId: "DIC_kwDOOf3OG84Cpfhr"
+    #   mapping: "pathname"
+    #   reactionsEnabled: true
+    #   emitMetadata: true
+    #   theme: "preferred_color_scheme"
+    #   lang: "en"
+    #   inputPosition: "bottom"
 
 markup:
   goldmark:

@@ -1,3 +1,20 @@
+{{ if .Site.Params.comments.waline.serverURL }}
+{{- $theme := default "auto" .Site.Params.BookTheme -}}
+<link rel="stylesheet" href="https://unpkg.com/waline@latest/dist/waline.css" />
+<div id="waline"></div>
+<script type="module">
+  import { init } from 'https://unpkg.com/waline@latest/dist/waline.mjs';
+  init({
+    el: '#waline',
+    serverURL: '{{ .Site.Params.comments.waline.serverURL }}',
+    lang: '{{ default "zh-CN" .Site.Params.comments.waline.lang }}',
+    dark: {{ if eq $theme "dark" }}'html'{{ else if eq $theme "auto" }}'auto'{{ else }}false{{ end }},
+    path: window.location.pathname,
+  });
+</script>
+{{ end }}
+
+{{/* giscus 配置已注释，如需切换回来，取消 hugo.yaml 中的 giscus 注释并启用以下代码
 {{ if .Site.Params.comments.giscus }}
 <div id="comments">
   <script src="https://giscus.app/client.js"
@@ -16,6 +33,5 @@
     async>
   </script>
 </div>
-
 {{ end }}
-
+*/}}
