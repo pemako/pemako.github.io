@@ -19,18 +19,18 @@ params:
   BookDateFormat: "2006-01-02"
 
   comments:
-    cusdis:
-      appId: "f622b4b1-9f0f-4a47-847e-7e654c96e4a3"
-    # giscus:
-    #   repo: "pemako/pemako.github.io"
-    #   repoId: "R_kgDOOf3OGw"
-    #   category: "Announcements"
-    #   categoryId: "DIC_kwDOOf3OG84Cpfhr"
-    #   mapping: "pathname"
-    #   reactionsEnabled: true
-    #   emitMetadata: true
-    #   lang: "en"
-    #   inputPosition: "bottom"
+    giscus:
+      repo: "pemako/pemako.github.io"
+      repoId: "R_kgDOOf3OGw"
+      category: "Announcements"
+      categoryId: "DIC_kwDOOf3OG84Cpfhr"
+      mapping: "pathname"
+      reactionsEnabled: true
+      emitMetadata: true
+      lang: "en"
+      inputPosition: "bottom"
+    # cusdis:
+    #   appId: "f622b4b1-9f0f-4a47-847e-7e654c96e4a3"
     # waline:
     #   serverURL: "https://comment-anb36zsnx-pemakos-projects.vercel.app"
     #   lang: "zh-CN"

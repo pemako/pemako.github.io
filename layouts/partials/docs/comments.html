@@ -1,15 +1,3 @@
-{{ if .Site.Params.comments.cusdis.appId }}
-<div id="cusdis_thread"
-  data-host="https://cusdis.com"
-  data-app-id="{{ .Site.Params.comments.cusdis.appId }}"
-  data-page-id="{{ .RelPermalink }}"
-  data-page-url="{{ .Permalink }}"
-  data-page-title="{{ .Title }}"
-></div>
-<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
-{{ end }}
-
-{{/* giscus（需登录 GitHub）
 {{ if .Site.Params.comments.giscus }}
 <div id="comments">
   <script src="https://giscus.app/client.js"
@@ -29,4 +17,3 @@
   </script>
 </div>
 {{ end }}
-*/}}
