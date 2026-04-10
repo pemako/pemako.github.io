@@ -2,10 +2,13 @@
 {{- $type := "" -}}
 {{- if strings.HasPrefix $text "<p><strong>INFO</strong>" -}}
   {{- $type = "info" -}}
+  {{- $text = $text | replaceRE `<strong>INFO</strong>\s*` "" | safeHTML -}}
 {{- else if strings.HasPrefix $text "<p><strong>WARNING</strong>" -}}
   {{- $type = "warning" -}}
+  {{- $text = $text | replaceRE `<strong>WARNING</strong>\s*` "" | safeHTML -}}
 {{- else if strings.HasPrefix $text "<p><strong>DANGER</strong>" -}}
   {{- $type = "danger" -}}
+  {{- $text = $text | replaceRE `<strong>DANGER</strong>\s*` "" | safeHTML -}}
 {{- end -}}
 
 {{- if $type -}}
