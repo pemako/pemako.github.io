@@ -1,0 +1,4 @@
+{{ if .Page.Store.Get "hasMermaid" }}
+<script src="{{ "mermaid.min.js" | relURL }}"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: "default" });</script>
+{{ end }}

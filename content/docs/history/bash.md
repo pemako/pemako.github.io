@@ -18,7 +18,7 @@ TocOpen: true
 
 > 下面的流程是双向的，由于目前markdown中的编辑器不支持双向箭头操作，故先暂时这样。[双向箭头](https://mermaid-js.github.io/mermaid/#/flowchart?id=beta-multi-directional-arrows), 同时也不支持[subgraphs](https://mermaid-js.github.io/mermaid/#/flowchart?id=subgraphs)。
 
-{{< mermaid >}}
+```mermaid
 flowchart LR
 subgraph User
     用户
@@ -37,7 +37,7 @@ subgraph Kernel
     OS<-->网络I/O
     OS<-->其它操作
 end
-{{< /mermaid >}}
+```
 
 > 这里上传到github按照图片存储展示
 
