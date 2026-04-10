@@ -1,0 +1,19 @@
+{{- $text := .Text | safeHTML -}}
+{{- $type := "" -}}
+{{- if strings.HasPrefix $text "<p><strong>INFO</strong>" -}}
+  {{- $type = "info" -}}
+{{- else if strings.HasPrefix $text "<p><strong>WARNING</strong>" -}}
+  {{- $type = "warning" -}}
+{{- else if strings.HasPrefix $text "<p><strong>DANGER</strong>" -}}
+  {{- $type = "danger" -}}
+{{- end -}}
+
+{{- if $type -}}
+<div class="book-hint {{ $type }}">
+{{ $text }}
+</div>
+{{- else -}}
+<blockquote>
+{{ $text }}
+</blockquote>
+{{- end -}}

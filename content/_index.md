@@ -10,14 +10,14 @@
 
 系统整理的技术专题，持续更新。
 
-| 专题 | 章节 |
-|------|------|
-| [Shell 教程](/docs/shell/) | 变量、控制流、函数、重定向、实用脚本 |
-| [MySQL 教程](/docs/mysql/) | 数据类型、CRUD、索引、事务、性能优化 |
-| [PostgreSQL 教程](/docs/postgresql/) | psql 命令行、数据类型、索引、高级特性 |
-| [Golang 教程](/docs/golang/) | 类型系统、并发、错误处理、标准库、工程实践 |
-| [Python 教程](/docs/python/) | 数据结构、函数、面向对象、异步、标准库 |
-| [TypeScript 教程](/docs/typescript/) | 基础类型、接口、泛型、高级类型 |
+| 专题                                 | 章节                                       |
+| ------------------------------------ | ------------------------------------------ |
+| [Shell 教程](/docs/shell/)           | 变量、控制流、函数、重定向、实用脚本       |
+| [MySQL 教程](/docs/mysql/)           | 数据类型、CRUD、索引、事务、性能优化       |
+| [PostgreSQL 教程](/docs/postgresql/) | psql 命令行、数据类型、索引、高级特性      |
+| [Golang 教程](/docs/golang/)         | 类型系统、并发、错误处理、标准库、工程实践 |
+| [Python 教程](/docs/python/)         | 数据结构、函数、面向对象、异步、标准库     |
+| [TypeScript 教程](/docs/typescript/) | 基础类型、接口、泛型、高级类型             |
 
 ---
 

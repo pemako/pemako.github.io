@@ -86,3 +86,11 @@ $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\r
 ```
 $$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
 ```
+
+## 提示块示例
+
+> **INFO** 这是普通提示，适合补充说明。
+
+> **WARNING** 这是警告，需要注意。
+
+> **DANGER** 这是危险操作，请谨慎。

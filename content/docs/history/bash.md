@@ -16,8 +16,6 @@ TocOpen: true
 
 `sh` 是一种标准,`bash`是符合这个标准的实现。
 
-> 下面的流程是双向的，由于目前markdown中的编辑器不支持双向箭头操作，故先暂时这样。[双向箭头](https://mermaid-js.github.io/mermaid/#/flowchart?id=beta-multi-directional-arrows), 同时也不支持[subgraphs](https://mermaid-js.github.io/mermaid/#/flowchart?id=subgraphs)。
-
 ```mermaid
 flowchart LR
 subgraph User
@@ -38,10 +36,6 @@ subgraph Kernel
     OS<-->其它操作
 end
 ```
-
-> 这里上传到github按照图片存储展示
-
-![](https://raw.githubusercontent.com/pemako/imgs/master/public/youdao/mermaid-diagram-20210818111907.png)
 
 #### `Login Bash`
 
