@@ -87,10 +87,21 @@ $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\r
 $$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
 ```
 
+```mermaid
+stateDiagram-v2
+  State1: The state with a note
+  note right of State1
+      Important information! You can write
+      notes.
+  end note
+  State1 --> State2
+  note left of State2 : This is the note to the left.
+```
+
 ## 提示块示例
 
-> **INFO** 这是普通提示，适合补充说明。
+> **INFO** **Markdown content** Lorem markdownum insigne. Olympo signis Delphis! Retexi Nereius nova develat stringit, frustra Saturnius uteroque inter! Oculis non ritibus Telethusa
 
-> **WARNING** 这是警告，需要注意。
+> **WARNING** **Markdown content** Lorem markdownum insigne. Olympo signis Delphis! Retexi Nereius nova develat stringit, frustra Saturnius uteroque inter! Oculis non ritibus Telethusa
 
-> **DANGER** 这是危险操作，请谨慎。
+> **DANGER** **Markdown content** Lorem markdownum insigne. Olympo signis Delphis! Retexi Nereius nova develat stringit, frustra Saturnius uteroque inter! Oculis non ritibus Telethusa
