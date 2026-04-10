@@ -1,5 +1,5 @@
 ---
-title: "数学公式示例"
+title: '数学公式示例'
 weight: 1
 math: true
 ---
@@ -33,3 +33,26 @@ $$
 矩阵：
 
 $$\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}$$
+
+## 常用符号速查
+
+| 符号 | 命令      | 符号 | 命令      |
+| ---- | --------- | ---- | --------- |
+| ∫    | `\int`    | ∑    | `\sum`    |
+| ∞    | `\infty`  | ±    | `\pm`     |
+| ×    | `\times`  | √    | `\sqrt{}` |
+| α    | `\alpha`  | β    | `\beta`   |
+| γ    | `\gamma`  | δ    | `\delta`  |
+| ξ    | `\xi`     | π    | `\pi`     |
+| σ    | `\sigma`  | μ    | `\mu`     |
+| λ    | `\lambda` | ω    | `\omega`  |
+
+完整符号列表参考：[KaTeX Supported Functions](https://katex.org/docs/supported.html)
+
+## 注意事项
+
+多行公式（矩阵等）需写在一行内，避免换行被 Markdown 解析器处理：
+
+```
+$$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$$
+```
