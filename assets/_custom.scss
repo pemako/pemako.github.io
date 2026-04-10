@@ -3,9 +3,10 @@
 }
 
 .markdown .book-hint {
-  border-left-width: 4px;
-  border-radius: 4px;
-  padding: .75rem 1rem;
+  margin: 1rem 0;
+  padding: .5rem 1rem .5rem .75rem;
+  border-inline-start: .25rem solid;
+  border-radius: .25rem;
 
   &.info {
     border-color: #4a9eff;
