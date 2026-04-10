@@ -34,16 +34,16 @@ $$
 
 $$
 \begin{pmatrix}
-a & b \\
-c & d
+a \& b \\\\
+c \& d
 \end{pmatrix}
 \begin{pmatrix}
-x \\
+x \\\\
 y
 \end{pmatrix}
 =
 \begin{pmatrix}
-ax + by \\
+ax + by \\\\
 cx + dy
 \end{pmatrix}
 $$
