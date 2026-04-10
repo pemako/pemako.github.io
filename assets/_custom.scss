@@ -1,3 +1,24 @@
 .container {
   max-width: 100rem;
 }
+
+.markdown .book-hint {
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: .75rem 1rem;
+
+  &.info {
+    border-color: #4a9eff;
+    background-color: rgba(74, 158, 255, .12);
+  }
+
+  &.warning {
+    border-color: #f0a500;
+    background-color: rgba(240, 165, 0, .12);
+  }
+
+  &.danger {
+    border-color: #e53935;
+    background-color: rgba(229, 57, 53, .12);
+  }
+}
