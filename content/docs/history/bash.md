@@ -1,11 +1,11 @@
 ---
 date: '2026-04-09T20:00:00+08:00'
 title: 'Bash'
-description: ""
-summary: ""
-tags: ["linux", "bash"]
-categories: ["linux"]
-series: ["Linux"]
+description: ''
+summary: ''
+tags: ['linux', 'bash']
+categories: ['linux']
+series: ['Linux']
 ShowToc: true
 TocOpen: true
 ---
@@ -18,7 +18,7 @@ TocOpen: true
 
 > 下面的流程是双向的，由于目前markdown中的编辑器不支持双向箭头操作，故先暂时这样。[双向箭头](https://mermaid-js.github.io/mermaid/#/flowchart?id=beta-multi-directional-arrows), 同时也不支持[subgraphs](https://mermaid-js.github.io/mermaid/#/flowchart?id=subgraphs)。
 
-```
+{{< mermaid >}}
 flowchart LR
 subgraph User
     用户
@@ -37,7 +37,7 @@ subgraph Kernel
     OS<-->网络I/O
     OS<-->其它操作
 end
-```
+{{< /mermaid >}}
 
 > 这里上传到github按照图片存储展示
 
@@ -92,7 +92,7 @@ fi
 #### 1. 花括号扩展 (brace expansion)
 
 - `echo {1..3}`
-  - `1 2 3`  
+  - `1 2 3`
 - `mkdir /data/{1,2,3,4}}`
   - 在`/data`目录下创建了`1 2 3 4`四个文件
 - `mkdir /tmp/tmp-{a..d}`
@@ -172,7 +172,7 @@ for i in $*; do
     echo "\$i: [$i]"
 done
 
-echo 
+echo
 echo 'using "$@"'
 
 for i in "$@"; do
@@ -255,35 +255,35 @@ echo "workdir: $workdir"
 
 #### 常用变量
 
-|变量 | 说明|
-|-----|---|
-|`$?` | 上一个命令的退出状态|
-|`$!` | 最后一个后台进程的`pid`|
-|`$0` | 当前脚本的名字|
-|\$\$ | 当前脚本的`pid`|
-|`$n` | n 为1,2...n 脚本或函数的参数|
-|`$@` | 脚本或函数的所有参数|
-|`$*` | 脚本或函数的所有参数|
-|`$#` | 脚本或函数的参数个数|
-|`$UID`| 当前用户的uid|
-|`$LOGNAME` | 当前用户名|
-|`$HOSTNAME` | 主机名|
-|`$RANDOM`   | `1~32767`间的随机数|
-|`$SECONDS`  | 当前脚本已经消耗的秒数|
-|`$PWD`      | 当前的工作目录|
-|`$HISTTIMEFORMAT` | 历史记录的时间格式|
+| 变量              | 说明                         |
+| ----------------- | ---------------------------- |
+| `$?`              | 上一个命令的退出状态         |
+| `$!`              | 最后一个后台进程的`pid`      |
+| `$0`              | 当前脚本的名字               |
+| \$\$              | 当前脚本的`pid`              |
+| `$n`              | n 为1,2...n 脚本或函数的参数 |
+| `$@`              | 脚本或函数的所有参数         |
+| `$*`              | 脚本或函数的所有参数         |
+| `$#`              | 脚本或函数的参数个数         |
+| `$UID`            | 当前用户的uid                |
+| `$LOGNAME`        | 当前用户名                   |
+| `$HOSTNAME`       | 主机名                       |
+| `$RANDOM`         | `1~32767`间的随机数          |
+| `$SECONDS`        | 当前脚本已经消耗的秒数       |
+| `$PWD`            | 当前的工作目录               |
+| `$HISTTIMEFORMAT` | 历史记录的时间格式           |
 
 #### 环境变量
 
 环境变量是`bash`或用户预设置的变量，可被继承并直接使用；有些环境变量会影响`shell`的行为。
 
- 命令     | 说明
-----------|---
-`$PATH`   | 命令搜索路径名
-`$LANG`   | local 默认值
-`$LC_ALL` | local 强制设置，如果设置了其它设置不生效
-`TERM`    | 终端类型，一般为 `xterm`
-`ENITOR`  | 系统默认编辑器
+| 命令      | 说明                                     |
+| --------- | ---------------------------------------- |
+| `$PATH`   | 命令搜索路径名                           |
+| `$LANG`   | local 默认值                             |
+| `$LC_ALL` | local 强制设置，如果设置了其它设置不生效 |
+| `TERM`    | 终端类型，一般为 `xterm`                 |
+| `ENITOR`  | 系统默认编辑器                           |
 
 - 环境变量的设置
   - `export name=value`
@@ -378,12 +378,12 @@ done
 echo xxx > file
 echo xxx 1> file  # 和上一行效果一样
 echo xxx >> file
-read line < file 
+read line < file
 some command 2> log.err
 some command > /dev/null 2>&1  # 把 1和2都重新定向到 /dev/null
 some command &> /dev/null  # 推荐
 some command &>> log       # 可惜，不支持
-some command >> log 2>&1   
+some command >> log 2>&1
 ```
 
 - 块重定向1
@@ -410,7 +410,7 @@ fi >> "$log"
 echo message1 >> "$log"
 echo message2 >> "$log"
 
-#### 
+####
 {
     echo message1
     echo message2
@@ -441,7 +441,7 @@ echo "total:[$cnt]"
 
 ### 函数
 
-- 调用  需先定义后调用。名字+参数
+- 调用 需先定义后调用。名字+参数
 - 参数 $1, $2 .... $#, $@
 - 返回值 标准输出
 - 退出状态 return $num; 或最后一个命令的退出状态
@@ -469,7 +469,6 @@ echo "total:[$cnt]"
 1. [《abs-guide》](https://tldp.org/LDP/abs/abs-guide.pdf)
 2. [《Linux.Shell.Scripting.Cookbook》](https://gutl.jovenclub.cu/wp-content/uploads/2013/10/Linux.Shell_.Scripting.Cookbook.pdf)
 3. Sed于Awk
-
 
 ---
 
@@ -560,7 +559,7 @@ done
 ```
 
 > 注意为什么设置IFS的时候使用 `$'\n'` 而不直接使用 `'\n'`
-`echo -e 'a\nb\nc'` 会对特殊字符转义；采用 `echo $'a\nb\nc'` 同 -e效果一致。
+> `echo -e 'a\nb\nc'` 会对特殊字符转义；采用 `echo $'a\nb\nc'` 同 -e效果一致。
 
 > 如果设置 IFS='\n' 其实就是 'n'的话 则如 `anbncn` 会直接打印 `a b c`
 
@@ -578,7 +577,7 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 
 IFS=':'
 for line in $(cat /etc/passwd | grep ^root)
-do 
+do
     echo $line
 done
 # 输出如下内容
@@ -593,7 +592,7 @@ System Administrator
 
 ## `$@` 和 `$*` `IFS`总结
 
-> 你只的了解 $@ $* 吗(IFS=:) 设置默认IFS为 :
+> 你只的了解 $@ $\* 吗(IFS=:) 设置默认IFS为 :
 
 ```bash
 #!/bin/bash
@@ -641,8 +640,7 @@ echo '"$*"---' "$*" # "$*"--- one:two:2:three::3:33:four 4::five,5
 - 匹配(#)/贪婪匹配(##)之后的: `${parameter%word}, ${parameter%%word}`
 - 字符串替换: ${parameter/pattern/string}, ${parameter//pattern/string}
 - ${parameter/#pattern/string}, ${parameter/%pattern/string}
-- ${!variable}  -> eval echo \$${variable}
--判断参数是否存在，不存在使用word替换: ${parameter:-word}, ${parameter:=word}
+- ${!variable}  -> eval echo \$${variable} -判断参数是否存在，不存在使用word替换: ${parameter:-word}, ${parameter:=word}
 - ${parameter:?word}. ${parameter:+word}
 -
 
@@ -658,7 +656,7 @@ echo '"$*"---' "$*" # "$*"--- one:two:2:three::3:33:four 4::five,5
 - expr $x : "abc"-> 3
 - expr $x : "bc" -> 0
 - expr $x : '\(ab[a-z]\{2\}\)’ ->a bcd
-- expr $x : '.*\([a-z]ab\)'-> dab
+- expr $x : '.\*\([a-z]ab\)'-> dab
 - expr index $x "b"-> 2
 - expr index $x "e"-> 0
 - expr length $x -> echo ${#x}
@@ -686,14 +684,13 @@ awk '{print "bug: miss value--"$0}';
 done
 ```
 
-
 ---
 
 # Advanced Bash Scripting Guide
 
 ## Special Characters
 
-1. `#` 
+1. `#`
 
 - Comments. Lines beginning with a `#`(with the exception of `#!`) are comments and will not be executed.
 - a quoted or an escaped `#` in an echo statement does not begin a comment. Likewise, a `#` apperas in certain parameter-substitution constructs and in numerical constant expressions. (某些参数替换结构和数值常数表达式)
@@ -702,21 +699,22 @@ done
 
 - Command separator [semicolon]. Permits putting two or more commands on the same line.
 
-    ```bash
-    echo hello; echo there
-    ```
+  ```bash
+  echo hello; echo there
+  ```
+
 - Note that the ";" sometimes needs to be escaped.
 
 3. `;;`
 
 - Terminator in a case option [double semicolon]
 
-    ```bash
-    case "$variable" in
-      abc) echo "\$variable = abc" ;;
-      xyz) echo "\$variable = xzy" ;;
-    esac
-    ```
+  ```bash
+  case "$variable" in
+    abc) echo "\$variable = abc" ;;
+    xyz) echo "\$variable = xzy" ;;
+  esac
+  ```
 
 4. `;;&` `;&`
 
@@ -742,18 +740,20 @@ done
 
 - comma operator. The comma operator links together a series of arithmetic operations. All are evaluated, but only the last one is returned.
 
-    ```bash
-    let "t2 = ((a=9, 15 / 3))"
-    # Set "a = 9" and "t2 = 15 / 3"
-    ```
+  ```bash
+  let "t2 = ((a=9, 15 / 3))"
+  # Set "a = 9" and "t2 = 15 / 3"
+  ```
+
 - The comma operator can also concatenate string.
 
-    ```bash
-    for file in /{,use/}bin/*cal; do echo $file; done
-    #/bin/cal
-	#/bin/ncal
-	#/use/bin/*cal
-    ```
+  ```bash
+  for file in /{,use/}bin/*cal; do echo $file; done
+  #/bin/cal
+  #/bin/ncal
+  #/use/bin/*cal
+  ```
+
 9. `,,` `,`
 
 - Lowercase conversion in parameter substitution (added in version 4 of Bash)
@@ -775,49 +775,49 @@ done
 
 - null command [colon]. This is the shell equivalent of a "NOP" (no op, a do-nothing operation). It may be considered a synonym for the shell builtin true. The ":" command is itself a Bash builtin, and its exit status is true (0).
 
-	```bash
-	:
-	echo $? # 0
-	```
+  ```bash
+  :
+  echo $? # 0
+  ```
 
-	```bash
-	while : # same as while true
-	do
-		....	
-	done
+  ```bash
+  while : # same as while true
+  do
+  	....
+  done
 
-	: > data.xxx # File "data.xxx" now empty
-	# Same effect as cat /dev/null >data.xxx
-	# However, this does not fork a new process, since ":" is a builtin.
+  : > data.xxx # File "data.xxx" now empty
+  # Same effect as cat /dev/null >data.xxx
+  # However, this does not fork a new process, since ":" is a builtin.
 
-	# 检查环境变量是否设置，并在未设置时显示错误信息并退出脚本
-	: ${HOSTNAME?} ${USER?} ${MAIL?}
-	# prints error message if one or more of essential environmental variables not set.
+  # 检查环境变量是否设置，并在未设置时显示错误信息并退出脚本
+  : ${HOSTNAME?} ${USER?} ${MAIL?}
+  # prints error message if one or more of essential environmental variables not set.
 
-	```
+  ```
 
 - a colon can serve as a placeholder in an otherwise empty function
 
-	```bash
-	not_empty()
-	{
-	  :
-	} # Contains a : (null command), and so is not empty.
-	```
+  ```bash
+  not_empty()
+  {
+    :
+  } # Contains a : (null command), and so is not empty.
+  ```
 
 14. `!`
 
 - 测试条件中取反；执行命令取反
 - 间接引用变量, 适用场景
-	- 动态变量名： 例如:在处理带有索引或前缀的多个变量时。
-	- 数组模拟: 虽然 Bash 也支持数组，但在某些情况下，间接引用可以用于实现类似数组的效果。
-	- 参数传递: 在脚本中传递变量名，并在函数中间接引用这些变量。
+  - 动态变量名： 例如:在处理带有索引或前缀的多个变量时。
+  - 数组模拟: 虽然 Bash 也支持数组，但在某些情况下，间接引用可以用于实现类似数组的效果。
+  - 参数传递: 在脚本中传递变量名，并在函数中间接引用这些变量。
 
-	```bash
-	variable_name="foo"
-	foo="Hello, World!"
-	echo ${!variable_name} # Hello, World!
-	```
+  ```bash
+  variable_name="foo"
+  foo="Hello, World!"
+  echo ${!variable_name} # Hello, World!
+  ```
 
 15: `*`
 
@@ -827,15 +827,15 @@ done
 16. `?`
 
 - test operator. condition?result-if-true:result-if-false
-	```bash
-	(( var0 = var1<98?9:21 ))
-	# if [ "$var1" -lt 98 ]
-	# then
-	#   var0=9
-	# else
-	#   var0=21
-	# fi	
-	```
+  ```bash
+  (( var0 = var1<98?9:21 ))
+  # if [ "$var1" -lt 98 ]
+  # then
+  #   var0=9
+  # else
+  #   var0=21
+  # fi
+  ```
 - wild card.
 
 16. `$`
@@ -867,9 +867,9 @@ done
 
 - command group
 
-    ```bash
-    (a=hello; echo $a)
-    ```
+  ```bash
+  (a=hello; echo $a)
+  ```
 
 - array initialization
 
@@ -877,22 +877,22 @@ done
 
 - brace expansion.
 
-    ```bash
-    echo \"{These,words,are,quoted}\" # " prefix and subffix
-    # "These" "words" "are" "quoted"
-    
-    cp file2.{txt,backup} # Copies "file2.txt" to "file2.backup"
-    ```
+  ```bash
+  echo \"{These,words,are,quoted}\" # " prefix and subffix
+  # "These" "words" "are" "quoted"
+
+  cp file2.{txt,backup} # Copies "file2.txt" to "file2.backup"
+  ```
 
 24. `{a..z}`
 
 - Extended brace expansion.
 
-    ```bash
-    echo {a..z} # a b c d e f g h i j k l m n o p q r s t u v w x y z
+  ```bash
+  echo {a..z} # a b c d e f g h i j k l m n o p q r s t u v w x y z
 
-    echo {0..3} # 0 1 2 3
-    ```
+  echo {0..3} # 0 1 2 3
+  ```
 
 25. `{}`
 
@@ -914,7 +914,6 @@ done
 - test.
 
 29. ``
-
 
 ---
 
@@ -1054,21 +1053,20 @@ printf "%-10s | %5d\n" "Name" 100  # 格式化输出
 
 **总结**
 
-| **高级特性**          | **示例**                               | **作用**               |
+| **高级特性**      | **示例**                             | **作用**             |
 | ----------------- | ------------------------------------ | -------------------- |
-| 进程替换              | diff <(ls dir1) <(ls dir2)           | 省去临时文件               |
-| mapfile           | mapfile -t arr < file.txt            | 高效读取数组               |
-| coproc            | coproc myproc { grep "error" file; } | 并行协程                 |
-| exec              | exec > output.log 2>&1               | 全局重定向                |
-| declare           | declare -i num=10                    | 变量类型限制               |
-| timeout           | timeout 5 command                    | 超时控制                 |
+| 进程替换          | diff <(ls dir1) <(ls dir2)           | 省去临时文件         |
+| mapfile           | mapfile -t arr < file.txt            | 高效读取数组         |
+| coproc            | coproc myproc { grep "error" file; } | 并行协程             |
+| exec              | exec > output.log 2>&1               | 全局重定向           |
+| declare           | declare -i num=10                    | 变量类型限制         |
+| timeout           | timeout 5 command                    | 超时控制             |
 | jq                | `echo “$json”                        | jq ‘.name’`          |
-| set -euo pipefail | set -euo pipefail                    | 让脚本更健壮               |
+| set -euo pipefail | set -euo pipefail                    | 让脚本更健壮         |
 | xargs -P          | `echo {1..5}                         | xargs -n1 -P3 sleep` |
 | printf            | `printf “%-10s                       | %5d\n” “Name” 100`   |
 
 🚀 **掌握这些 Shell 高级语法，可以让脚本更高效、更健壮、更优雅！**
-
 
 ---
 
@@ -1192,34 +1190,31 @@ install_dependencies
 
 ---
 
+---
+
+| 格式                       | 说明                                                                        |
+| -------------------------- | --------------------------------------------------------------------------- |
+| ${string: start :length}   | 从 string 字符串的左边第 start 个字符开始，向右截取 length 个字符。         |
+| ${string: start}           | 从 string 字符串的左边第 start 个字符开始截取，直到最后。                   |
+| ${string: 0-start :length} | 从 string 字符串的右边第 start 个字符开始，向右截取 length 个字符。         |
+| ${string: 0-start}         | 从 string 字符串的右边第 start 个字符开始截取，直到最后。                   |
+| ${string#\*chars}          | 从 string 字符串第一次出现 *chars 的位置开始，截取*chars 右边的所有字符。   |
+| ${string##\*chars}         | 从 string 字符串最后一次出现 *chars 的位置开始，截取*chars 右边的所有字符。 |
+| ${string%\*chars}          | 从 string 字符串第一次出现 *chars 的位置开始，截取*chars 左边的所有字符。   |
+| ${string%%\*chars}         | 从 string 字符串最后一次出现 *chars 的位置开始，截取*chars 左边的所有字符。 |
 
 ---
 
-
-格式 | 说明
----|---
-${string: start :length} | 从 string 字符串的左边第 start 个字符开始，向右截取 length 个字符。
-${string: start}   | 从 string 字符串的左边第 start 个字符开始截取，直到最后。
-${string: 0-start :length} | 从 string 字符串的右边第 start 个字符开始，向右截取 length 个字符。
-${string: 0-start}   | 从 string 字符串的右边第 start 个字符开始截取，直到最后。
-${string#*chars}   | 从 string 字符串第一次出现 *chars 的位置开始，截取*chars 右边的所有字符。
-${string##*chars}   | 从 string 字符串最后一次出现 *chars 的位置开始，截取*chars 右边的所有字符。
-${string%*chars}   | 从 string 字符串第一次出现 *chars 的位置开始，截取*chars 左边的所有字符。
-${string%%*chars}   | 从 string 字符串最后一次出现 *chars 的位置开始，截取*chars 左边的所有字符。
-
-
----
-
-| 使用场景         | trap 处理方式                       |     |
-| ------------ | ------------------------------- | --- |
-| 退出时清理资源      | trap cleanup EXIT               |     |
+| 使用场景         | trap 处理方式                     |     |
+| ---------------- | --------------------------------- | --- |
+| 退出时清理资源   | trap cleanup EXIT                 |     |
 | 防止 Ctrl+C 终止 | trap 'echo "忽略 Ctrl+C";' SIGINT |     |
-| 任务完成后通知      | trap notify_exit EXIT           |     |
-| 记录错误日志       | trap log_error ERR              |     |
-| 超时终止任务       | trap timeout_handler SIGALRM    |     |
-| 进程退出保存进度     | trap save_progress EXIT         |     |
-| 监听后台任务完成     | trap 'echo "任务结束";' CHLD        |     |
-| 遇错立即退出       | set -e + trap '...' ERR         |     |
+| 任务完成后通知   | trap notify_exit EXIT             |     |
+| 记录错误日志     | trap log_error ERR                |     |
+| 超时终止任务     | trap timeout_handler SIGALRM      |     |
+| 进程退出保存进度 | trap save_progress EXIT           |     |
+| 监听后台任务完成 | trap 'echo "任务结束";' CHLD      |     |
+| 遇错立即退出     | set -e + trap '...' ERR           |     |
 
 ## 1. trap 使用
 
@@ -1250,14 +1245,14 @@ cleanup() {
 - 忽略信号
 
 ```bash
-# 忽略Ctrl+C信号 
+# 忽略Ctrl+C信号
 trap '' SIGINT
 ```
 
 - 重置信号处理
 
 ```bash
-# 恢复Ctrl+C信号的默认处理 
+# 恢复Ctrl+C信号的默认处理
 trap - SIGINT
 ```
 
@@ -1291,7 +1286,7 @@ cleanup() {
  echo "执行清理操作..."
 }
 
-# 注册 trap, 确保无论脚本如何退出，都执行 cleanup 
+# 注册 trap, 确保无论脚本如何退出，都执行 cleanup
 trap cleanup EXIT
 
 echo "运行脚本..."
@@ -1303,7 +1298,7 @@ exit 0
 ```shell
 #!/bin/bash
 
-# 仅在脚本异常退出时执行 cleanup 
+# 仅在脚本异常退出时执行 cleanup
 cleanup() {
  echo "发生错误，执行清理..."
 }
@@ -1318,7 +1313,7 @@ echo "这句不会执行"
 ```
 
 - 捕获 Ctrl+C （SIGINT）
- 	- INT 信号代表 Ctrl+C，触发 cleanup。
+  - INT 信号代表 Ctrl+C，触发 cleanup。
 
 ```shell
 #!/bin/bash
@@ -1349,13 +1344,11 @@ echo "执行任务..."
 ls /nonexistent  # 触发错误
 ```
 
-
 ---
 
 <https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-bashrc-zshrc-etc/>
 
 <https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html>
-
 
 ---
 
@@ -1372,5 +1365,5 @@ ls /nonexistent  # 触发错误
   - `yum makecache`
 
 - 重载
-  - dnf clean all   # 清除所有的缓存文件
-  - dnf makecache   # 制作元数据缓存
+  - dnf clean all # 清除所有的缓存文件
+  - dnf makecache # 制作元数据缓存
