@@ -34,6 +34,36 @@ $$
 
 $$\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}$$
 
+## 折叠公式推导
+
+<details>
+<summary>展开：傅里叶变换推导过程</summary>
+
+傅里叶变换将时域信号转换为频域：
+
+$$f(x) = \int_{-\infty}^\infty\hat f(\xi)\,e^{2 \pi i \xi x}\,d\xi$$
+
+其逆变换为：
+
+$$\hat f(\xi) = \int_{-\infty}^\infty f(x)\,e^{-2 \pi i \xi x}\,dx$$
+
+两者互为一对，$\xi$ 表示频率变量。
+
+</details>
+
+<details>
+<summary>展开：正态分布参数说明</summary>
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$
+
+- $\mu$：均值，控制分布中心位置
+- $\sigma$：标准差，控制分布宽窄
+- $\sigma^2$：方差
+
+当 $\mu=0, \sigma=1$ 时为**标准正态分布**。
+
+</details>
+
 ## 常用符号速查
 
 | 符号 | 命令      | 符号 | 命令      |
