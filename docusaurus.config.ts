@@ -47,15 +47,6 @@ export default async function createConfig(): Promise<Config> {
     },
 
     themes: [
-      [
-        require.resolve('@easyops-cn/docusaurus-search-local'),
-        {
-          hashed: true,
-          language: ['en', 'zh'],
-          highlightSearchTermsOnTargetPage: true,
-          explicitSearchResultPath: true,
-        },
-      ],
       '@docusaurus/theme-mermaid',
     ],
 
@@ -122,6 +113,11 @@ export default async function createConfig(): Promise<Config> {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+      },
+      algolia: {
+        appId: 'Y9XSC9L6NU',
+        apiKey: '3dac86dfbd55883ff6387b1c10c7872d',
+        indexName: 'pemakocn',
       },
     } satisfies Preset.ThemeConfig,
   }
