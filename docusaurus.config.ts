@@ -25,6 +25,16 @@ export default async function createConfig(): Promise<Config> {
 
     onBrokenLinks: 'warn',
 
+    headTags: [
+      {
+        tagName: 'meta',
+        attributes: {
+          name: 'algolia-site-verification',
+          content: 'E05D471637DA27D1',
+        },
+      },
+    ],
+
     markdown: {
       format: 'detect',
       mermaid: true,
