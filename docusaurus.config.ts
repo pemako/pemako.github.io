@@ -9,7 +9,7 @@ export default async function createConfig(): Promise<Config> {
   const rehypeKatex = (await import('rehype-katex')).default
 
   return {
-    title: 'mk4.top',
+    title: 'pemako.cn',
     tagline: '技术笔记',
     favicon: 'img/favicon.ico',
 
@@ -95,9 +95,9 @@ export default async function createConfig(): Promise<Config> {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'mk4.top',
+        title: 'pemako.cn',
         logo: {
-          alt: 'mk4.top Logo',
+          alt: 'pemako.cn Logo',
           src: 'img/logo.svg',
         },
         items: [
