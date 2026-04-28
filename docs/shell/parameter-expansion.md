@@ -1,8 +1,10 @@
 ---
+sidebar_position: 6
 title: Parameter Expansion
 ---
 
 > Bash 手册参考：https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion
+
 
 ---
 

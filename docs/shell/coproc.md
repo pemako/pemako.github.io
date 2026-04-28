@@ -1,3 +1,7 @@
+---
+sidebar_position: 16
+---
+
 # Bash 协进程（coproc）
 
 ## 语法
@@ -5,6 +9,7 @@
 ```bash
 coproc [NAME] command [redirections]
 ```
+
 
 ## 变量说明
 

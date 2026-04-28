@@ -1,7 +1,5 @@
 ---
-title: Bash `{varname}` 文件描述符重定向详解
-date: 2026-04-24
-authors: [pemako]
+sidebar_position: 9
 ---
 
 # Bash `{varname}` 文件描述符重定向详解
@@ -17,8 +15,6 @@ authors: [pemako]
 | 0 | stdin | 终端输入 |
 | 1 | stdout | 终端输出 |
 | 2 | stderr | 终端输出 |
-
-<!--truncate-->
 
 ---
 
@@ -193,7 +189,7 @@ cat data.txt
 exec {inp}<words.txt
 
 while IFS= read -r -u "$inp" line; do
-    echo "读到: $line"
+  echo "读到: $line"
 done
 
 exec {inp}<&-
@@ -210,9 +206,9 @@ exec {stdout_log}>stdout.log
 exec {stderr_log}>stderr.log
 
 run_task() {
-    local name=$1
-    echo "[INFO]  Task $name started"  >&$stdout_log
-    echo "[ERROR] Task $name failed"   >&$stderr_log
+  local name=$1
+  echo "[INFO]  Task $name started"  >&$stdout_log
+  echo "[ERROR] Task $name failed"   >&$stderr_log
 }
 
 run_task "alpha"
@@ -240,7 +236,7 @@ exec {from_child}</tmp/from_child
 
 # 子进程：从管道读命令，写回结果
 ( while IFS= read -r -u 0 cmd; do
-      echo "processed: $cmd"
+    echo "processed: $cmd"
   done < /tmp/to_child > /tmp/from_child ) &
 
 # 父进程发送数据
@@ -251,7 +247,7 @@ exec {to_child}>&-     # 关闭写端，让子进程 EOF 退出
 
 # 父进程读回结果
 while IFS= read -r -u "$from_child" reply; do
-    echo "reply: $reply"
+  echo "reply: $reply"
 done
 
 exec {from_child}<&-
