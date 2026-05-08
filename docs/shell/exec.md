@@ -88,7 +88,7 @@ echo "这行不会被执行"
 
 **场景**：Docker 容器中，PID 1 必须能正确处理信号（SIGTERM 等）。用 `exec` 让应用直接成为 PID 1，避免信号被 shell 拦截。
 
-```dockerfile
+```docker
 # 错误写法：shell 是 PID 1，应用无法收到 SIGTERM
 CMD ["/bin/sh", "-c", "/app/server"]
 
@@ -107,7 +107,7 @@ envsubst < /etc/app/config.template > /etc/app/config.yaml
 exec "$@"
 ```
 
-```dockerfile
+```docker
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/app/server", "--port", "8080"]
 ```

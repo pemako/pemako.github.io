@@ -123,6 +123,7 @@ export default async function createConfig(): Promise<Config> {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['awk', 'docker'],
       },
       algolia: {
         appId: 'Y9XSC9L6NU',

@@ -75,7 +75,7 @@ sidebar_position: 17
 
 ### 按键绑定
 
-```inputrc
+```bash
 "\C-o": "> output.log"              # 插入字符串
 "\C-x\C-l": clear-screen            # 绑定到命令
 Control-Meta-u: universal-argument
@@ -85,7 +85,7 @@ Control-Meta-u: universal-argument
 
 ### 条件解析
 
-```inputrc
+```bash
 $if mode=emacs
   "\C-w": backward-kill-word
 $endif
@@ -204,7 +204,7 @@ $ docker run --rm -v ...(很长)... image cmd   # 懒得左右箭头改
 
 `.inputrc` 里：
 
-```inputrc
+```bash
 "\ep": "| less -R"
 "\eg": " | grep "
 "\et": " 2>&1 | tee /tmp/out.log"
@@ -245,7 +245,7 @@ $ cat M-. M-.          # 多次按取更早的 arg
 
 ### 8. 贴大段代码避免误触发
 
-```inputrc
+```bash
 set enable-bracketed-paste on
 ```
 
@@ -253,7 +253,7 @@ set enable-bracketed-paste on
 
 ### 9. vi 模式下给命令模式加快捷键
 
-```inputrc
+```bash
 set editing-mode vi
 $if mode=vi
   set keymap vi-command
@@ -308,7 +308,7 @@ complete -o nospace -o dirnames cd pushd
 
 加 `.inputrc`：
 
-```inputrc
+```bash
 set colored-stats on
 set mark-symlinked-directories on
 set visible-stats on

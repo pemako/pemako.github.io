@@ -220,7 +220,7 @@ Thompson sh（1971，Unix 原始 shell）
 
 `csh` 语法仿照 C 语言，与 POSIX shell 完全不兼容：
 
-```csh
+```bash
 set name = "world"
 if ($name == "world") then
   echo "hello $name"

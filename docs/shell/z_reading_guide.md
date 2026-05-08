@@ -150,7 +150,7 @@ $'\n'               ← 一个真正的换行符（ANSI-C quoting）
 
 ### 4.3 `: $RANDOM` 空命令展开（z.sh:238, 243）
 
-```zsh
+```bash
 _z_precmd() {
     (_z --add "${PWD:a}" &)
     : $RANDOM
